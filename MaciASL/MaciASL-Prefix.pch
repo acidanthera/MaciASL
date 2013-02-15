@@ -1,0 +1,69 @@
+//
+// Prefix header for all source files of the 'MaciASL' target in the 'MaciASL' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
+
+#define kMaciASLDomain @"MaciASLDomain"
+#define kAMLfileType @"org.acpica.aml"
+#define kDSLfileType @"org.acpica.dsl"
+#define kCompilerError 1
+#define kFileError 2
+#define kACPIError 3
+#define kNavigatorError 4
+#define kDecompileError 5
+#define kAScriptFileError 6
+#define kURLStandardError 7
+#define kNULLSSDTError 8
+#define kFreqRangeError 9
+#define kNSComparisonPredicateError 10
+#define kLockError 11
+
+#define lineForRange(x,y) [x substringWithRange:[x lineRangeForRange:y]]
+#define assignWithNotice(x,y,z) [x willChangeValueForKey:@""#y];y=z;[x didChangeValueForKey:@""#y];
+#define muteWithNotice(x,y,z) [x willChangeValueForKey:@""#y];z;[x didChangeValueForKey:@""#y];
+NS_INLINE NSError* ModalError(NSError *error){
+    if (error)
+        [[NSAlert alertWithError:error] runModal];
+    return error;
+}
+NS_INLINE void SplitView(NSSplitView *splitView){
+    NSArray *rects = [NSUserDefaults.standardUserDefaults stringArrayForKey:[@"NSSplitView Subview Frames " stringByAppendingString:splitView.autosaveName]];
+    if (!rects) return;
+    NSRect rect = NSRectFromString([rects objectAtIndex:0]);
+    [splitView setPosition:splitView.isVertical?NSMaxX(rect):NSMaxY(rect) ofDividerAtIndex:0];
+}
+NS_INLINE NSUInteger CountCharInStr(NSString *string, unichar c) {
+    NSUInteger count = 0;
+    NSUInteger i = string.length;
+    while (i-- > 0)
+        if ([string characterAtIndex:i] == c)
+            count++;
+    return count;
+}
+NS_INLINE BOOL LoadNib(NSString *nib, id owner) {
+#if MACOSX_DEPLOMENT_TARGET > MAC_OS_X_VERSION_10_7
+    return [NSBundle.mainBundle loadNibNamed:nib owner:owner topLevelObjects:nil];
+#else
+    return [NSBundle loadNibNamed:nib owner:owner];
+#endif
+}
+NS_INLINE NSString* NSStringForData(NSData *data, NSStringEncoding encoding) {
+    return [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:encoding];
+}
+NS_INLINE void AsynchFetch(NSURL *url, SEL selector, id obj, id hold) {
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60] queue:[NSOperationQueue mainQueue] completionHandler:^void(NSURLResponse *response, NSData *data, NSError *err){
+        if ([(NSHTTPURLResponse *)response statusCode] != 200) {
+            if (!err)
+                err = [NSError errorWithDomain:NSURLErrorDomain code:[(NSHTTPURLResponse *)response statusCode] userInfo:@{NSLocalizedDescriptionKey:@"File Fetch Error",NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"URL '%@' said '%@'",url,[NSHTTPURLResponse localizedStringForStatusCode:[(NSHTTPURLResponse *)response statusCode]]]}];
+            ModalError(err);
+        }
+        else
+            #pragma clang diagnostic push
+            #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [obj performSelector:selector withObject:@{@"response":NSStringForData(data, NSUTF8StringEncoding), @"hold":!hold?NSNull.null:hold}];
+            #pragma clang diagnostic pop
+    }];
+}
