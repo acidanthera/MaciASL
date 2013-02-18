@@ -64,6 +64,7 @@ static SSDTGen *sharedSSDT;
         return;
     }
     AsynchFetch(url.standardizedURL, @selector(loadGenerator:), self, nil);
+    [sender deselectAll:sender];
 }
 -(IBAction)reset:(id)sender{
     assignWithNotice(self, tdp, nil)

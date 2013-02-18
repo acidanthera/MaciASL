@@ -53,6 +53,7 @@
         return;
     }
     AsynchFetch(url.standardizedURL, @selector(loadPatch:), self, nil);
+    [sender deselectAll:sender];
 }
 -(void)loadPatch:(NSDictionary *)dict{
     assignWithNotice(self, patch, [dict objectForKey:@"response"])

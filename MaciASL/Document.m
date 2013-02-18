@@ -218,10 +218,10 @@
 }
 #pragma mark Functions
 -(NSRange)rangeForLine:(NSUInteger)ln{
-    __block NSUInteger i = 1;
+    __block NSUInteger i = 0;
     __block NSUInteger offset = 0;
     [text.string enumerateLinesUsingBlock:^void(NSString *line, BOOL *stop){
-        if (i++ == ln) *stop = true;
+        if (++i == ln) *stop = true;
         else offset += line.length+1;
     }];
     return [text.string lineRangeForRange:NSMakeRange(offset, 0)];
