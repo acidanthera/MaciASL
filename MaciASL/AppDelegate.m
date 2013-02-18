@@ -65,7 +65,7 @@
     [self.ssdt show:sender];
 }
 -(IBAction)swapPreference:(id)sender{
-    [self viewPreference:[sender tag]];
+    [self viewPreference:sender];
 }
 -(IBAction)documentFromACPI:(id)sender{
     [self newDocumentFromACPI:[sender title]];
@@ -106,25 +106,32 @@
     [doc.textView setSelectedRange:NSMakeRange(0, 0)];
     return doc;
 }
--(void)viewPreference:(NSInteger)tag{
+-(void)viewPreference:(id)sender{
     NSWindow *preferences = [NSApp keyWindow];
-    NSView *new;
-    switch (tag) {
+    NSUInteger index;
+    if (!sender) {
+        index = [NSUserDefaults.standardUserDefaults integerForKey:@"preference"];
+        sender = [preferences.toolbar.items objectAtIndex:index];
+    }
+    else {
+        index = [preferences.toolbar.items indexOfObject:sender];
+        if (index != NSNotFound)
+            [NSUserDefaults.standardUserDefaults setInteger:index forKey:@"preference"];
+    }
+    switch (index) {
         case 0:
-            new = general;
+            [preferences setContentView:general];
             break;
         case 1:
-            new = iasl;
+            [preferences setContentView:iasl];
             break;
         case 2:
-            new = sources;
+            [preferences setContentView:sources];
             break;
         default:
             return;
-            break;
     }
-    [preferences setContentView:new];
-    [NSUserDefaults.standardUserDefaults setInteger:tag forKey:@"preference"];
+    [preferences.toolbar setSelectedItemIdentifier:[sender itemIdentifier]];
 }
 -(void)changeFont:(id)sender{
     NSFont *font = [sender convertFont:[sender selectedFont]];
@@ -135,9 +142,7 @@
 
 #pragma mark Window Delegate
 -(void)windowDidBecomeKey:(NSNotification *)notification{
-    NSToolbar *tb = [notification.object toolbar];
-    [tb setSelectedItemIdentifier:[[tb.visibleItems objectAtIndex:[NSUserDefaults.standardUserDefaults integerForKey:@"preference"]] itemIdentifier]];
-    [self viewPreference:[NSUserDefaults.standardUserDefaults integerForKey:@"preference"]];
+    [self viewPreference:nil];
 }
 @end
 

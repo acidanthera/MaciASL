@@ -189,10 +189,8 @@
         if (temp.count && [temp objectAtIndex:0] == oldNav) [temp removeObjectAtIndex:0];
         [nav setChildren:temp];
     }
-    [navView setTag:1];
     [self didChangeValueForKey:@"nav"];
     [navView expandItem:[navView itemAtRow:0]];
-    [navView setTag:0];
     [self textViewDidChangeSelection:nil];
 }
 -(IBAction)patch:(id)sender{
@@ -243,9 +241,7 @@
         [self filterTree:filter];
         return;
     }
-    [navView setTag:1];
     assignWithNotice(self, nav, [DefinitionBlock build:text.string])
-    [navView setTag:0];
     if (!navView) return;
     [navView expandItem:[navView itemAtRow:0]];
     [self textViewDidChangeSelection:nil];
@@ -260,7 +256,7 @@
 }
 #pragma mark NSOutlineViewDelegate
 -(void)outlineViewSelectionDidChange:(NSNotification *)notification{//TODO: better integration, use Tab/Return/Esc hotkeys?
-    if (!navView.tag)
+    if (navView == navView.window.firstResponder)
         [textView scrollRangeToVisible:NSMakeRange([[[navView itemAtRow:navView.selectedRow] representedObject] range].location, 0)];
 }
 #pragma mark NSTextStorageDelegate
@@ -302,9 +298,7 @@
         if (i) break;
     }
     i = [navView rowForItem:obj];
-    [navView setTag:1];
     [navView selectRowIndexes:[NSIndexSet indexSetWithIndex:i] byExtendingSelection:false];
-    [navView setTag:0];
     [navView scrollRowToVisible:i];
 }
 

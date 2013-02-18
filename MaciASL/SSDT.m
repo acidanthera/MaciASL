@@ -48,9 +48,10 @@ static SSDTGen *sharedSSDT;
 
 #pragma mark GUI
 -(IBAction)show:(id)sender{
+    bool first = ([window windowNumber] == -1);
     [window makeKeyAndOrderFront:sender];
-    if (!sourceView.tag++)
-        [[NSApp delegate] changeFont:NSFontManager.sharedFontManager];
+    if (first)
+        [[NSApp delegate] changeFont:nil];
     SplitView([[window.contentView subviews] objectAtIndex:0]);
     SplitView((NSSplitView *)generatorView.superview.superview.superview.superview);
     [self expandTree];
