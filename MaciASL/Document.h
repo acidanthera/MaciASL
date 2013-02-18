@@ -10,7 +10,7 @@
 @class DefinitionBlock;
 @class Colorize;
 
-@interface Document : NSDocument <NSTextViewDelegate, NSTextStorageDelegate, NSOutlineViewDelegate, NSTableViewDelegate> {
+@interface Document : NSDocument <NSTextViewDelegate, NSTextStorageDelegate, NSOutlineViewDelegate> {
     @private
     DefinitionBlock *oldNav;
     Patcher *_patch;
@@ -18,7 +18,6 @@
 
 @property (assign) IBOutlet NSTextView *textView;
 @property (assign) IBOutlet NSOutlineView *navView;
-@property (assign) IBOutlet NSPanel *summaryView;
 @property (assign) IBOutlet NSTreeController *navController;
 @property (assign) IBOutlet NSSearchField *filter;
 @property (assign) IBOutlet NSWindow *jump;

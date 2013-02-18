@@ -10,13 +10,13 @@
 #import "iASL.h"
 #import "Navigator.h"
 #import "Colorize.h"
+#import "AppDelegate.h"
 
 @implementation Document
 
 @synthesize textView;
 @synthesize navView;
 @synthesize navController;
-@synthesize summaryView;
 @synthesize jump;
 @synthesize jumpLine;
 @synthesize nav;
@@ -94,7 +94,7 @@
                 ModalError(err);
         }
         else if (outError != NULL) {
-            [summaryView makeKeyAndOrderFront:self];
+            [[NSApp delegate] showSummary:self];
             *outError = [NSError errorWithDomain:kMaciASLDomain code:kCompilerError userInfo:@{NSLocalizedDescriptionKey:@"Compilation Failed", NSLocalizedFailureReasonErrorKey:@"\nThe compiler returned one or more errors."}];
         }
     }
@@ -198,7 +198,7 @@
 }
 -(IBAction)compile:(id)sender{
     [self quickCompile:false hold:false];
-    [summaryView makeKeyAndOrderFront:sender];
+    [[NSApp delegate] showSummary:sender];
 }
 -(IBAction)hexConvert:(id)sender{
     //TODO: hex converter popup or sheet

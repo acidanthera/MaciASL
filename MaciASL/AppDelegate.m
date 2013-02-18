@@ -25,6 +25,7 @@
 @synthesize sourceView;
 @synthesize sourceController;
 @synthesize logView;
+@synthesize summaryView;
 
 #pragma mark Application Delegate
 -(void)awakeFromNib{
@@ -76,6 +77,9 @@
 }
 -(IBAction)showLog:(id)sender{
     [logView makeKeyAndOrderFront:sender];
+}
+-(IBAction)showSummary:(id)sender{
+    [summaryView makeKeyAndOrderFront:sender];
 }
 -(IBAction)update:(id)sender{//TODO: download progress?
     NSString *version = [[[[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"] componentsSeparatedByString:@"."] objectAtIndex:1];
@@ -145,7 +149,11 @@
     [[NSDocumentController.sharedDocumentController documents] makeObjectsPerformSelector:@selector(changeRuler)];
 }
 
-#pragma mark Window Delegate
+#pragma mark NSTableViewDelegate
+-(void)tableViewSelectionDidChange:(NSNotification *)notification{
+    [[NSDocumentController.sharedDocumentController documentForWindow:[NSApp mainWindow]] tableViewSelectionDidChange:notification];
+}
+#pragma mark NSWindowDelegate
 -(void)windowDidBecomeKey:(NSNotification *)notification{
     [self viewPreference:nil];
 }

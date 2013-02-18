@@ -9,7 +9,7 @@
 #import "Document.h"
 #import "SSDT.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate/*, NSFontManagerDelegate*/>{
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTableViewDelegate/*, NSFontManagerDelegate*/>{
     @private
     SSDTGen *_ssdt;
 }
@@ -23,6 +23,7 @@
 @property (assign) IBOutlet NSView *iasl;
 @property (assign) IBOutlet NSView *sources;
 @property (assign) IBOutlet NSWindow *logView;
+@property (assign) IBOutlet NSWindow *summaryView;
 @property (assign) IBOutlet NSTableView *sourceView;
 @property (assign) IBOutlet NSArrayController *sourceController;
 
@@ -32,6 +33,7 @@
 -(IBAction)swapPreference:(id)sender;
 -(IBAction)documentFromACPI:(id)sender;
 -(IBAction)showLog:(id)sender;
+-(IBAction)showSummary:(id)sender;
 -(void)logEntry:(NSString *)entry;
 
 @end
