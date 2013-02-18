@@ -50,7 +50,7 @@
     [textView.layoutManager replaceTextStorage:text];
     [textView setEnabledTextCheckingTypes:0];
     SplitView([[aController.window.contentView subviews] objectAtIndex:0]);
-    [self changeFont];
+    [self changeRuler];
     NSTextContainer *cont = textView.textContainer;
     [cont setContainerSize:NSMakeSize(1e7, 1e7)];
     [cont setWidthTracksTextView:false];
@@ -228,8 +228,8 @@
     [text setAttributedString:[[NSAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName:[NSFontManager.sharedFontManager selectedFont]}]];
     [colorize observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
 }
--(void)changeFont{
-    CGFloat size = [[NSFontManager.sharedFontManager selectedFont] pointSize];
+-(void)changeRuler{
+    CGFloat size = NSFontManager.sharedFontManager.selectedFont.pointSize;
     [NSRulerView registerUnitWithName:[NSString stringWithFormat:@"Lines%lf", size] abbreviation:@"ln" unitToPointsConversionFactor:size+2 stepUpCycle:@[@10] stepDownCycle:@[@0.5]];
     [textView.enclosingScrollView.verticalRulerView setMeasurementUnits:[NSString stringWithFormat:@"Lines%lf", size]];
     [textView.enclosingScrollView.verticalRulerView setOriginOffset:-(size+2)];

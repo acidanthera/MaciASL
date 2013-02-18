@@ -134,10 +134,11 @@
     [preferences.toolbar setSelectedItemIdentifier:[sender itemIdentifier]];
 }
 -(void)changeFont:(id)sender{
-    NSFont *font = [sender convertFont:[sender selectedFont]];
+    NSFontManager *mgr = NSFontManager.sharedFontManager;
+    NSFont *font = [mgr convertFont:[mgr selectedFont]];
     [NSUserDefaults.standardUserDefaults setObject:@{@"name":font.displayName, @"size":@(font.pointSize)} forKey:@"font"];
-    muteWithNotice(sender, selectedFont, [sender setSelectedFont:font isMultiple:false])
-    [[NSDocumentController.sharedDocumentController documents] makeObjectsPerformSelector:@selector(changeFont)];
+    muteWithNotice(mgr, selectedFont, [mgr setSelectedFont:font isMultiple:false])
+    [[NSDocumentController.sharedDocumentController documents] makeObjectsPerformSelector:@selector(changeRuler)];
 }
 
 #pragma mark Window Delegate
