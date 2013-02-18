@@ -44,7 +44,8 @@ static NSDictionary *themes;
     regKeywords = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"\\W(%@|%@)\\W", [keywords componentsJoinedByString:@"|"], [arguments componentsJoinedByString:@"|"]] options:0 error:nil];
     regResources = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"\\W(%@)\\W", [resources componentsJoinedByString:@"|"]] options:0 error:nil];
     regPredefined = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"\\W(%@|%@|%@)\\W", [[controls componentsJoinedByString:@"(?=\\s*\\()|"] stringByAppendingString:@"(?=\\s*\\()"], [predefined componentsJoinedByString:@"|"], [constants objectAtIndex:2]] options:0 error:nil];
-    themes = @{@"light":[ColorTheme create:[NSColor blackColor] background:[NSColor whiteColor] string:ColorRGB(196.0, 26.0, 22.0) number:ColorRGB(28.0,0,207.0) comment:ColorRGB(0,116.0,0) operator:ColorRGB(92.0,38.0,153.0) opNoArg:ColorRGB(92.0,38.0,153.0) keyword:ColorRGB(170.0,13.0,145.0) resource:ColorRGB(63.0,110.0,116.0) predefined:ColorRGB(100.0,56.0,32.0)], @"dark":[ColorTheme create:[NSColor whiteColor] background:ColorRGB(30.0,32.0,40.0) string:ColorRGB(219.0,44.0,56.0) number:ColorRGB(120.0,109.0,196.0) comment:ColorRGB(65.0,182.0,69.0) operator:ColorRGB(0,160.0,190.0) opNoArg:ColorRGB(0,160.0,190.0) keyword:ColorRGB(178.0,24.0,137.0) resource:ColorRGB(131.0,192.0,87.0) predefined:ColorRGB(198.0,124.0,72.0)]};
+    themes = @{@"Light":[ColorTheme create:[NSColor blackColor] background:[NSColor whiteColor] string:ColorRGB(196.0, 26.0, 22.0) number:ColorRGB(28.0,0,207.0) comment:ColorRGB(0,116.0,0) operator:ColorRGB(92.0,38.0,153.0) opNoArg:ColorRGB(92.0,38.0,153.0) keyword:ColorRGB(170.0,13.0,145.0) resource:ColorRGB(63.0,110.0,116.0) predefined:ColorRGB(100.0,56.0,32.0)], @"Dark":[ColorTheme create:[NSColor whiteColor] background:ColorRGB(30.0,32.0,40.0) string:ColorRGB(219.0,44.0,56.0) number:ColorRGB(120.0,109.0,196.0) comment:ColorRGB(65.0,182.0,69.0) operator:ColorRGB(0,160.0,190.0) opNoArg:ColorRGB(0,160.0,190.0) keyword:ColorRGB(178.0,24.0,137.0) resource:ColorRGB(131.0,192.0,87.0) predefined:ColorRGB(198.0,124.0,72.0)]};
+    muteWithNotice([NSApp delegate], themes, nil)
 }
 
 @synthesize view;
@@ -64,8 +65,8 @@ static NSDictionary *themes;
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    if (!(theme = [themes objectForKey:[[NSUserDefaults.standardUserDefaults stringForKey:@"theme"] lowercaseString]]))
-        theme = [themes objectForKey:@"light"];
+    if (!(theme = [themes objectForKey:[NSUserDefaults.standardUserDefaults stringForKey:@"theme"]]))
+        theme = [themes.allKeys objectAtIndex:0];
     [view setBackgroundColor:theme.background];
     [view setTextColor:theme.text];
     [view setInsertionPointColor:theme.text];
@@ -128,6 +129,9 @@ static NSDictionary *themes;
 @synthesize resource;
 @synthesize predefined;
 
++(NSDictionary *)allThemes{
+    return themes;
+}
 +(ColorTheme *)create:(NSColor *)text background:(NSColor *)background string:(NSColor *)string number:(NSColor *)number comment:(NSColor *)comment operator:(NSColor *)operator opNoArg:(NSColor *)opNoArg keyword:(NSColor *)keyword resource:(NSColor *)resource predefined:(NSColor *)predefined{
     ColorTheme *temp = [ColorTheme new];
     temp.background = background;

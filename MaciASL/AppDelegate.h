@@ -17,6 +17,7 @@
 @property NSMutableArray *log;
 @property NSString *compiler;
 @property (nonatomic) SSDTGen *ssdt;
+@property (nonatomic) NSArray *themes;
 @property (assign) IBOutlet NSMenu *tables;
 @property (assign) IBOutlet NSView *general;
 @property (assign) IBOutlet NSView *iasl;

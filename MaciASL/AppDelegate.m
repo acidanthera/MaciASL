@@ -8,6 +8,7 @@
 
 #import "Source.h"
 #import "AppDelegate.h"
+#import "Colorize.h"
 #import "iASL.h"
 #import <sys/sysctl.h>
 #import <sys/types.h>
@@ -43,6 +44,9 @@
 -(SSDTGen *)ssdt{
     if (!_ssdt) _ssdt = [SSDTGen new];
     return _ssdt;
+}
+-(NSArray *)themes{
+    return [[ColorTheme allThemes] allKeys];
 }
 
 #pragma mark Logging

@@ -19,6 +19,7 @@
 @property NSColor *resource;
 @property NSColor *predefined;
 
++(NSDictionary *)allThemes;
 +(ColorTheme *)create:(NSColor *)text background:(NSColor *)background string:(NSColor *)string number:(NSColor *)number comment:(NSColor *)comment operator:(NSColor *)operator opNoArg:(NSColor *)opNoArg keyword:(NSColor *)keyword resource:(NSColor *)resource predefined:(NSColor *)predefined;
 
 @end
