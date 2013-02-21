@@ -67,12 +67,9 @@
 		B01CAF931618EB4900AB9F0C /* Colorize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colorize.h; sourceTree = "<group>"; };
 		B01CAF941618EB4900AB9F0C /* Colorize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colorize.m; sourceTree = "<group>"; };
 		B0207DDE161C356E008CF4E9 /* ToolbarUtilitiesFolderIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ToolbarUtilitiesFolderIcon.icns; path = ../../../../../../System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarUtilitiesFolderIcon.icns; sourceTree = "<group>"; };
-		B05171AB160C52F800771EB1 /* MaciASL.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaciASL.pxm; sourceTree = SOURCE_ROOT; };
-		B05171AC160C52F800771EB1 /* MaciASL work.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MaciASL work.pxm"; sourceTree = SOURCE_ROOT; };
 		B059B86B16999332004DB0A9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B0899352161D781C00FE7BD8 /* AML.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AML.icns; sourceTree = SOURCE_ROOT; };
 		B0899353161D781C00FE7BD8 /* DSL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = DSL.icns; sourceTree = SOURCE_ROOT; };
-		B0970F071628C9E600C1AB8A /* MaciASL Document.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MaciASL Document.pxm"; sourceTree = SOURCE_ROOT; };
 		B0A6BF8C161A827700DDE1EF /* Patch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Patch.h; sourceTree = "<group>"; };
 		B0A6BF8D161A827700DDE1EF /* Patch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Patch.m; sourceTree = "<group>"; };
 		B0A6BF90161A865500DDE1EF /* Patch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Patch.xib; sourceTree = "<group>"; };
@@ -182,13 +179,10 @@
 				B01056A1161CE6CB006A21AC /* MaciASL.icns */,
 				B0899352161D781C00FE7BD8 /* AML.icns */,
 				B0CABE541652CE8A00A04C7E /* MaciASL.sdef */,
-				B0970F071628C9E600C1AB8A /* MaciASL Document.pxm */,
 				B0899353161D781C00FE7BD8 /* DSL.icns */,
 				B0207DDE161C356E008CF4E9 /* ToolbarUtilitiesFolderIcon.icns */,
 				B013B82E160C529600F6A7F2 /* MaciASL-Info.plist */,
 				B013B832160C529600F6A7F2 /* main.m */,
-				B05171AB160C52F800771EB1 /* MaciASL.pxm */,
-				B05171AC160C52F800771EB1 /* MaciASL work.pxm */,
 				B013B834160C529600F6A7F2 /* MaciASL-Prefix.pch */,
 			);
 			name = "Supporting Files";
