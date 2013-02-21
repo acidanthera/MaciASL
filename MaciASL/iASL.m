@@ -21,7 +21,7 @@ static NSString *bootlog;
     io_service_t expert;
     if ((expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert")))) {
         tables = (__bridge NSDictionary *)IORegistryEntryCreateCFProperty(expert, CFSTR("ACPI Tables"), kCFAllocatorDefault, 0);
-        for (NSString *table in [tables.allKeys sortedArrayUsingSelector:@selector(compare:)])
+        for (NSString *table in [tables.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)])
             [[[NSApp delegate] tables] addItem:[[NSMenuItem alloc] initWithTitle:table action:@selector(documentFromACPI:) keyEquivalent:@""]];
         IOObjectRelease(expert);
     }
