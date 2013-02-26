@@ -61,7 +61,7 @@
 
 #pragma mark NSWindowDelegate
 -(void)cancelOperation:(id)sender{
-    if (patchView.selectedRange.length)
+    if (patchView.selectedRange.length && [NSUserDefaults.standardUserDefaults boolForKey:@"isolation"])
         [patchView setSelectedRange:NSMakeRange(patchView.selectedRange.location, 0)];
     else [self close:sender];
 }
@@ -77,7 +77,7 @@
 
 #pragma mark NSTextViewDelegate
 -(void)textViewDidChangeSelection:(NSNotification *)notification{
-    if (patchView.selectedRange.length || [[notification.userInfo objectForKey:@"NSOldSelectedCharacterRange"] rangeValue].length)
+    if ((patchView.selectedRange.length || [[notification.userInfo objectForKey:@"NSOldSelectedCharacterRange"] rangeValue].length) && [NSUserDefaults.standardUserDefaults boolForKey:@"isolation"])
         [self preview];
 }
 
@@ -120,7 +120,7 @@
     [sourceView expandItem:nil expandChildren:true];
 }
 -(void)preview{
-    bool selection = (patchView.selectedRange.length);
+    bool selection = (patchView.selectedRange.length && [NSUserDefaults.standardUserDefaults boolForKey:@"isolation"]);
     assignWithNotice(self, busy, true)
     assignWithNotice(self, legend, @"")
     assignWithNotice(self, patchFile, [PatchFile create:selection?[patch substringWithRange:patchView.selectedRange]:patch])
