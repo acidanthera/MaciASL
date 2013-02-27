@@ -269,7 +269,7 @@
 -(BOOL)textView:(NSTextView *)view doCommandBySelector:(SEL)commandSelector{//TODO: Re-indent selection?
     if (commandSelector == @selector(insertNewline:)) {
         NSRange range = view.selectedRange;
-        [textView insertText:[@"\n" stringByAppendingString:[Patcher entab:lineForRange(text.string, NSMakeRange(NSMaxRange(range)+1, 0)) with:lineForRange(text.string, range)]]];
+        [textView insertText:[@"\n" stringByAppendingString:[Patcher entab:lineForRange(text.string, NSMakeRange(NSMaxRange(range)+(range.location!=text.string.length), 0)) with:lineForRange(text.string, range)]]];
         return true;
     }
     else if (commandSelector == @selector(insertTab:)) {
