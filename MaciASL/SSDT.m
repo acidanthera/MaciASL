@@ -38,6 +38,7 @@ static SSDTGen *sharedSSDT;
 }
 -(void)loadGenerator:(NSDictionary *)dict{
     assignWithNotice(self, generator, [dict objectForKey:@"response"])
+    [window makeFirstResponder:generatorView];
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     [self performSelector:@selector(expandTree) withObject:nil afterDelay:0];

@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
 		<string key="IBDocument.SystemVersion">12C60</string>
-		<string key="IBDocument.InterfaceBuilderVersion">2844</string>
+		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">2844</string>
+			<string key="NS.object.0">3084</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBNSLayoutConstraint</string>
@@ -821,7 +821,7 @@
 																			<string key="NSFrameSize">{378, 212}</string>
 																			<reference key="NSSuperview" ref="578529725"/>
 																			<reference key="NSWindow"/>
-																			<reference key="NSNextKeyView" ref="521434630"/>
+																			<reference key="NSNextKeyView" ref="567758074"/>
 																			<string key="NSReuseIdentifierKey">_NS:13</string>
 																			<object class="NSTextContainer" key="NSTextContainer" id="598801839">
 																				<object class="NSLayoutManager" key="NSLayoutManager">
@@ -1046,7 +1046,6 @@ wGw</bytes>
 																	<string key="NSFrame">{{379, 1}, {15, 212}}</string>
 																	<reference key="NSSuperview" ref="515334822"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView"/>
 																	<string key="NSReuseIdentifierKey">_NS:83</string>
 																	<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 																	<reference key="NSTarget" ref="515334822"/>
@@ -1073,7 +1072,7 @@ wGw</bytes>
 															<string key="NSFrameSize">{395, 214}</string>
 															<reference key="NSSuperview" ref="229638001"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView" ref="567758074"/>
+															<reference key="NSNextKeyView" ref="578529725"/>
 															<string key="NSReuseIdentifierKey">_NS:9</string>
 															<int key="NSsFlags">133138</int>
 															<reference key="NSVScroller" ref="521434630"/>
@@ -1498,6 +1497,7 @@ wGw</bytes>
 										<reference key="NSTextColor" ref="592528752"/>
 									</object>
 									<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
+									<bool key="NSControlAllowsExpansionToolTips">YES</bool>
 								</object>
 							</array>
 							<string key="NSFrame">{{1, 0}, {176, 20}}</string>

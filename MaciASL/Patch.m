@@ -57,6 +57,7 @@
 }
 -(void)loadPatch:(NSDictionary *)dict{
     assignWithNotice(self, patch, [dict objectForKey:@"response"])
+    [window makeFirstResponder:patchView];
 }
 
 #pragma mark NSWindowDelegate
