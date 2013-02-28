@@ -58,3 +58,9 @@
 -(BOOL)becomesKeyOnlyIfNeeded;
 
 @end
+
+@interface FSTextView : NSTextView
+
+-(void)scrollRangeToVisible:(NSRange)range;
+
+@end

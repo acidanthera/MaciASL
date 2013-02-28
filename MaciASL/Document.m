@@ -212,7 +212,7 @@
     if ([[sender title] isEqualToString:@"Cancel"]) return;
     NSRange range = [self rangeForLine:jumpLine];
     [textView scrollRangeToVisible:range];
-    [textView setSelectedRange:range];
+    [textView showFindIndicatorForRange:range];
 }
 #pragma mark Functions
 -(NSRange)rangeForLine:(NSUInteger)ln{
@@ -223,6 +223,25 @@
         else offset += line.length+1;
     }];
     return [text.string lineRangeForRange:NSMakeRange(offset, 0)];
+}
+-(NSInteger)navRowForRange:(NSRange)range{
+    NSTreeNode *obj = [navView itemAtRow:0];
+    NSUInteger i = 0;
+    NSUInteger length = obj.childNodes.count;
+    while (length) {
+        while (i < length) {
+            if (NSLocationInRange(range.location, [(NavObject *)[[obj.childNodes objectAtIndex:i] representedObject] range])) {
+                obj = [obj.childNodes objectAtIndex:i];
+                [navView expandItem:obj];
+                length = [obj.childNodes count];
+                i = 0;
+                break;
+            }
+            i++;
+        }
+        if (i) break;
+    }
+    return [navView rowForItem:obj];
 }
 -(void)setDocument:(NSString *)string{
     [text setAttributedString:[[NSAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName:[NSFontManager.sharedFontManager selectedFont]}]];
@@ -252,12 +271,14 @@
     Notice *notice = [[summary objectForKey:@"notices"] objectAtIndex:[notification.object selectedRow]];
     NSRange range = [self rangeForLine:notice.line.integerValue];
     [textView scrollRangeToVisible:range];
-    [textView setSelectedRange:range];
+    [textView showFindIndicatorForRange:range];
 }
 #pragma mark NSOutlineViewDelegate
 -(void)outlineViewSelectionDidChange:(NSNotification *)notification{//TODO: better integration, use Tab/Return/Esc hotkeys?
-    if (navView == navView.window.firstResponder)
-        [textView scrollRangeToVisible:NSMakeRange([[[navView itemAtRow:navView.selectedRow] representedObject] range].location, 0)];
+    if (navView != navView.window.firstResponder) return;
+    NSRange range = NSMakeRange([[[navView itemAtRow:navView.selectedRow] representedObject] range].location, 0);
+    [textView scrollRangeToVisible:range];
+    [textView showFindIndicatorForRange:[text.string lineRangeForRange:range]];
 }
 #pragma mark NSTextStorageDelegate
 -(void)textStorageDidProcessEditing:(NSNotification *)notification{
@@ -281,25 +302,13 @@
 -(void)textViewDidChangeSelection:(NSNotification *)notification{
     NSRange sel = textView.selectedRange;
     if (!sel.location || sel.location == text.string.length) return;
-    NSTreeNode *obj = [navView itemAtRow:0];
-    NSUInteger i = 0;
-    NSUInteger length = obj.childNodes.count;
-    while (length) {
-        while (i < length) {
-            if (NSLocationInRange(sel.location, [(NavObject *)[[obj.childNodes objectAtIndex:i] representedObject] range])) {
-                obj = [obj.childNodes objectAtIndex:i];
-                [navView expandItem:obj];
-                length = [obj.childNodes count];
-                i = 0;
-                break;
-            }
-            i++;
-        }
-        if (i) break;
-    }
-    i = [navView rowForItem:obj];
+    NSInteger i = [self navRowForRange:sel];
     [navView selectRowIndexes:[NSIndexSet indexSetWithIndex:i] byExtendingSelection:false];
     [navView scrollRowToVisible:i];
+}
+-(void)textViewDidShowFindIndicator:(NSNotification *)notification{
+    [navView selectRowIndexes:[NSIndexSet indexSetWithIndex:[self navRowForRange:[[notification.userInfo objectForKey:@"NSFindIndicatorRange"] rangeValue]]] byExtendingSelection:false];
+    [navView scrollRowToVisible:navView.selectedRow];
 }
 
 @end

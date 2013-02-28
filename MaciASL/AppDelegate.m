@@ -180,10 +180,21 @@
 }
 
 @end
+
 @implementation FSPanel
 
 -(BOOL)becomesKeyOnlyIfNeeded{
     return true;
+}
+
+@end
+
+@implementation FSTextView
+
+-(void)scrollRangeToVisible:(NSRange)range{
+    [super scrollRangeToVisible:range];
+    if (!NSEqualRanges(range, self.selectedRange) && [[[NSTextFinder class] performSelector:@selector(_globalTextFinder)] client] == (id)self && [self.delegate respondsToSelector:@selector(textViewDidShowFindIndicator:)])
+        [self.delegate performSelector:@selector(textViewDidShowFindIndicator:) withObject:[NSNotification notificationWithName:@"NSTextViewDidShowFindIndicatorNotification" object:self userInfo:@{@"NSFindIndicatorRange":[NSValue valueWithRange:range]}]];
 }
 
 @end
