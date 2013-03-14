@@ -49,7 +49,7 @@ static NSCharacterSet *unset;
     for (NavObject *child in children) {
         if (NSMaxRange(check) < child.range.location)
             return true;
-        if (NSLocationInRange(check.location, child.range))
+        if (NSIntersectionRange(check, child.range).location)
             return false;
     }
     return true;
