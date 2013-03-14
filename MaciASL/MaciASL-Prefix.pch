@@ -31,10 +31,10 @@ NS_INLINE NSError* ModalError(NSError *error){
     return error;
 }
 NS_INLINE void SplitView(NSSplitView *splitView){
-    NSArray *rects = [NSUserDefaults.standardUserDefaults stringArrayForKey:[@"NSSplitView Subview Frames " stringByAppendingString:splitView.autosaveName]];
-    if (!rects) return;
-    NSRect rect = NSRectFromString([rects objectAtIndex:0]);
-    [splitView setPosition:splitView.isVertical?NSMaxX(rect):NSMaxY(rect) ofDividerAtIndex:0];
+    NSUInteger i = 0;
+    for (NSString *frame in [NSUserDefaults.standardUserDefaults stringArrayForKey:[@"NSSplitView Subview Frames " stringByAppendingString:splitView.autosaveName]])
+         [[splitView.subviews objectAtIndex:i++] setFrame:NSRectFromString(frame)];
+    [splitView setNeedsLayout:true];
 }
 NS_INLINE NSUInteger CountCharInStr(NSString *string, unichar c) {
     NSUInteger count = 0;
