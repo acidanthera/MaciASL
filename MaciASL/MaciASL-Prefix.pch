@@ -20,6 +20,7 @@
 #define kFreqRangeError 9
 #define kNSComparisonPredicateError 10
 #define kLockError 11
+#define kStoreError 12
 
 #define lineForRange(x,y) [x substringWithRange:[x lineRangeForRange:y]]
 #define assignWithNotice(x,y,z) [x willChangeValueForKey:@""#y];y=z;[x didChangeValueForKey:@""#y];

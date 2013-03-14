@@ -20,10 +20,10 @@
  REGEX
  extent     into,into_all
  predicate  code_regex,code_regex_not
- action     replace_matched,replaceall_matched,remove_matched,removeall_matched,store_eight,store_nine
+ action     replace_matched,replaceall_matched,remove_matched,removeall_matched,store_%8,store_%9
  
  No Arguments
- remove_entry,remove_matched,removeall_matched,store_eight,store_nine
+ remove_entry,remove_matched,removeall_matched,store_%8,store_%9
  
  single-line comments start with '#'
  patches separated by ';'

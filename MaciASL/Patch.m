@@ -453,12 +453,15 @@ static NSRegularExpression *hid;
             result = @[[PatchDelta create:node.range withReplacement:@""]];
             break;
         case store_eight:
-            if (!reg) break;
-            eight = [text substringWithRange:[[reg firstMatchInString:text options:0 range:[node contentRange:text]] rangeAtIndex:1]];
-            break;
         case store_nine:
-            if (!reg) break;
-            nine = [text substringWithRange:[[reg firstMatchInString:text options:0 range:[node contentRange:text]] rangeAtIndex:1]];
+            if (!reg)
+                ModalError([NSError errorWithDomain:kMaciASLDomain code:kStoreError userInfo:@{NSLocalizedDescriptionKey:@"No Regular Expression", NSLocalizedRecoverySuggestionErrorKey:@"Tried to store without an expression."}]);
+            else if (!reg.numberOfCaptureGroups)
+                ModalError([NSError errorWithDomain:kMaciASLDomain code:kStoreError userInfo:@{NSLocalizedDescriptionKey:@"No Regular Expression Groups", NSLocalizedRecoverySuggestionErrorKey:@"Tried to store from an expression with no captured groups."}]);
+            else if (patch.action == store_eight)
+                eight = [text substringWithRange:[[reg firstMatchInString:text options:0 range:[node contentRange:text]] rangeAtIndex:1]];
+            else
+                nine = [text substringWithRange:[[reg firstMatchInString:text options:0 range:[node contentRange:text]] rangeAtIndex:1]];
             break;
     }
     if (!patch.all && result) @throw result;
@@ -496,9 +499,10 @@ static NSRegularExpression *template;
     return [[[template stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"] stringByReplacingOccurrencesOfString:@"\\t" withString:@"\t"];
 }
 -(NSString *)argAsTemplate:(NSString *)eight nine:(NSString *)nine{
-    NSString *temp = eight?[argument stringByReplacingOccurrencesOfString:@"%8" withString:eight]:argument;
+    NSString *temp = [Patch unescape:argument];
+    if (eight) temp = [temp stringByReplacingOccurrencesOfString:@"%8" withString:eight];
     if (nine) temp = [temp stringByReplacingOccurrencesOfString:@"%9" withString:nine];
-    return [Patch unescape:[template stringByReplacingMatchesInString:temp options:0 range:NSMakeRange(0, temp.length) withTemplate:@"\\$$1"]];
+    return [template stringByReplacingMatchesInString:temp options:0 range:NSMakeRange(0, temp.length) withTemplate:@"\\$$1"];
 }
 -(NSString *)argAsInsertion:(NSString *)line{
     NSMutableString *temp = [NSMutableString stringWithString:@"\n"];
