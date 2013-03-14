@@ -66,6 +66,34 @@
 }
 
 #pragma mark GUI
+-(IBAction)copy:(id)sender{
+    NSResponder *obj = [[NSApp keyWindow] firstResponder];
+    if (obj.class == NSTableView.class || obj.class == FSTableView.class) {
+        if (![(NSTableView *)obj numberOfSelectedRows]) return;
+        bool viewBased = ([(NSTableView *)obj rowViewAtRow:[(NSTableView *)obj selectedRow] makeIfNecessary:false]);
+        __block NSMutableArray *rows = [NSMutableArray array];
+        [[(NSTableView *)obj selectedRowIndexes] enumerateIndexesUsingBlock:^void(NSUInteger idx, BOOL *stop){
+            NSUInteger i = 0, j = [(NSTableView *)obj numberOfColumns];
+            NSMutableArray *row = [NSMutableArray array];
+            if (viewBased) {
+                NSText *view;
+                while (i < j)
+                    if ((view = [(NSTableView *)obj viewAtColumn:i++ row:idx makeIfNecessary:false]) && [view isKindOfClass:NSText.class])
+                        [row addObject:[view.string stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet]];
+            }
+            else {
+                NSCell *cell;
+                while (i < j)
+                    if ((cell = [(NSTableView *)obj preparedCellAtColumn:i++ row:idx]) && [cell isKindOfClass:NSTextFieldCell.class])
+                        [row addObject:[cell.stringValue stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceAndNewlineCharacterSet]];
+            }
+            [row removeObject:@""];
+            [rows addObject:[row componentsJoinedByString:@", "]];
+        }];
+        [NSPasteboard.generalPasteboard clearContents];
+        [NSPasteboard.generalPasteboard writeObjects:@[[rows componentsJoinedByString:@"\n"]]];
+    }
+}
 -(IBAction)showSSDT:(id)sender{
     [self.ssdt show:sender];
 }
@@ -155,7 +183,8 @@
 }
 #pragma mark NSWindowDelegate
 -(void)windowDidBecomeKey:(NSNotification *)notification{
-    [self viewPreference:nil];
+    if ([[notification.object title] isEqualToString:@"Preferences"])
+        [self viewPreference:nil];
 }
 @end
 
