@@ -123,10 +123,12 @@
 #pragma mark Functions
 -(void)newDocumentFromACPI:(NSString *)name{
     NSString *file = [iASL wasInjected:name];
-    if (file && [NSFileManager.defaultManager fileExistsAtPath:file] && [[NSFileManager.defaultManager contentsAtPath:file] isEqualToData:[iASL fetchTable:name]])
+    NSData *aml;
+    if (!(aml = [iASL fetchTable:name])) return;
+    if (file && [NSFileManager.defaultManager fileExistsAtPath:file] && [[NSFileManager.defaultManager contentsAtPath:file] isEqualToData:aml])
         [NSDocumentController.sharedDocumentController openDocumentWithContentsOfURL:[NSURL fileURLWithPath:file] display:true completionHandler:nil];
     else {
-        NSDictionary *decompile = [iASL decompile:[iASL fetchTable:name]];
+        NSDictionary *decompile = [iASL decompile:aml];
         if ([[decompile objectForKey:@"status"] boolValue])
             [self newDocument:[decompile objectForKey:@"object"] withName:[NSString stringWithFormat:!file?@"System %@":@"Pre-Edited %@", name]];
         else

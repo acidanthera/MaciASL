@@ -18,11 +18,18 @@ static NSString *bootlog;
 @synthesize status;
 
 +(void)initialize{
+    NSDictionary *names = @{@"APIC":@"Advanced Programmable Interrupt Controller", @"ASF!":@"Alert Standard Format", @"BOOT":@"Simple Boot Flag", @"BERT":@"Boot Error Record", @"BGRT":@"Boot Graphics Resource", @"CPEP":@"Corrected Platform Error Polling", @"DBGP":@"Debug Port", @"DMAR":@"DMA Remapping", @"DRTM":@"Dynamic Root of Trust for Measurement", @"DSDT": @"Differentiated System Description", @"ECDT":@"Embedded Controller Boot Resources", @"EINJ":@"Error Injection", @"ERST":@"Error Record Serialization", @"FACP":@"Fixed ACPI Control Pointer", @"FACS":@"Firmware ACPI Control Structure", @"FADT":@"Fixed ACPI Description", @"FPDT":@"Firmware Performance Data", @"GTDT":@"Generic Timer Description", @"HEST":@"Hardware Error Source", @"HPET":@"High Precision Event Timer", @"MPST":@"Memory Power State", @"IVRS":@"I/O Virtualization Reporting Structure", @"MADT":@"Multiple APIC Description", @"MCFG":@"PCI Memory Mapped Configuration", @"MCHI":@"Management Controller Host Interface", @"MSCT":@"Maximum System Characteristics", @"PCCT":@"Platform Communications Channel", @"PMTT":@"Platform Memory Topology", @"RASF":@"RAS Feature", @"RSDP":@"Root System Description Pointer", @"RSDT":@"Root System Description", @"SBST":@"Smart Battery Specification", @"SLIC":@"Software Licensing Description", @"SLIT":@"System Locality Distance Information", @"SPCR":@"Serial Port Console Redirection", @"SPMI":@"Server Platform Management Interface", @"SRAT":@"System Resource Affinity", @"SSDT":@"Secondary System Description", @"TCPA":@"Trusted Computing Platform Alliance", @"UEFI":@"Uefi Boot Optimization", @"WAET":@"Windows ACPI Emulated devices", @"WDAT":@"Watchdog Action", @"WDDT":@"Watchdog Timer Description", @"WDRT":@"Watchdog Resource", @"XSDT":@"Extended System Description"};
     io_service_t expert;
     if ((expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert")))) {
         tables = (__bridge NSDictionary *)IORegistryEntryCreateCFProperty(expert, CFSTR("ACPI Tables"), kCFAllocatorDefault, 0);
-        for (NSString *table in [tables.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)])
-            [[[NSApp delegate] tables] addItem:[[NSMenuItem alloc] initWithTitle:table action:@selector(documentFromACPI:) keyEquivalent:@""]];
+        for (NSString *table in [tables.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]) {
+            NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:table action:@selector(documentFromACPI:) keyEquivalent:@""];
+            if (table.length >= 4 && [names objectForKey:[table substringToIndex:4]]) {
+                [item setAttributedTitle:[[NSAttributedString alloc] initWithRTF:[[NSString stringWithFormat:@"{\\rtf1\\ansi {\\fonttbl\\f0 LucidaGrande;}\\fs28 %@\\line\\fs20 %@}", table, [names objectForKey:[table substringToIndex:4]]] dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:NULL]];
+                [item setTitle:table];
+            }
+            [[[NSApp delegate] tables] addItem:item];
+        }
         IOObjectRelease(expert);
     }
     if ((expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("IOPlatformExpertDevice")))){
