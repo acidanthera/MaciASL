@@ -38,7 +38,7 @@
 -(IBAction)open:(id)sender{
     NSOpenPanel *open = [NSOpenPanel openPanel];
     if ([open runModal] != NSFileHandlingPanelOKButton) return;
-    assignWithNotice(self, patch, NSStringForData([NSFileManager.defaultManager contentsAtPath:open.URL.path], NSUTF8StringEncoding))
+    assignWithNotice(self, patch, [[NSString alloc] initWithData:[NSFileManager.defaultManager contentsAtPath:open.URL.path] encoding:NSUTF8StringEncoding])
 }
 -(IBAction)close:(id)sender{
     [NSApp endSheet:window];
@@ -126,7 +126,7 @@
     assignWithNotice(self, legend, @"")
     assignWithNotice(self, patchFile, [PatchFile create:selection?[patch substringWithRange:patchView.selectedRange]:patch])
     if (!patchFile.patches.count) return;
-    [patchFile setText:[NSMutableString stringWithString:parent.text.string]];
+    [patchFile setText:[parent.text.string mutableCopy]];
     [patchFile apply];
     [self willChangeValueForKey:@"legend"];
     legend = [NSString stringWithFormat:@"%ld Patch%@, %ld Change%@, %ld Reject%@", patchFile.patches.count, (patchFile.patches.count == 1)?@"":@"es", patchFile.preview.count-patchFile.rejects, (patchFile.preview.count-patchFile.rejects == 1)?@"":@"s", patchFile.rejects, (patchFile.rejects == 1)?@"":@"s"];
@@ -216,7 +216,7 @@ static NSRegularExpression *hid;
                 }
                 [conditions addObject:[PatchPredicate create:(enum predicate)index withSelector:obj]];
             }
-            [patch setPredicates:[NSArray arrayWithArray:conditions]];
+            [patch setPredicates:[conditions copy]];
             index = [actions indexOfObject:token.lowercaseString];
             if (index == NSNotFound) continue;
             [patch setAction:(enum action)index];
@@ -295,10 +295,10 @@ static NSRegularExpression *hid;
                 [offsets addObject:[NSValue valueWithPoint:NSMakePoint(before.location, offset)]];
         }
         if (!results.count) continue;
-        [temp addObject:[NSArray arrayWithArray:results]];
+        [temp addObject:[results copy]];
     }
-    changes = [NSArray arrayWithArray:temp];
-    assignWithNotice(self, preview, [NSArray arrayWithArray:list])
+    changes = [temp copy];
+    assignWithNotice(self, preview, [list copy])
 }
 -(NSDictionary *)context:(NSRange)range with:(NSString *)string{
     NSRange context = [text lineRangeForRange:range];
@@ -313,7 +313,7 @@ static NSRegularExpression *hid;
     [before setAttributes:black range:range];
     [after replaceCharactersInRange:range withString:string];
     [after setAttributes:black range:NSMakeRange(range.location, string.length)];
-    return @{@"before":[[NSAttributedString alloc] initWithAttributedString:before], @"after":[[NSAttributedString alloc] initWithAttributedString:after]};
+    return @{@"before":[before copy], @"after":[after copy]};
 }
 -(NSArray *)walk:(Scope *)node of:(Scope *)parent with:(Patch *)patch{
     NSMutableArray *results = [NSMutableArray array];
@@ -348,7 +348,7 @@ static NSRegularExpression *hid;
     for (Scope *child in node.children)
         @try { [results addObjectsFromArray:[self walk:child of:node with:patch]]; }
         @catch (NSArray *result) { @throw [results arrayByAddingObjectsFromArray:result]; }
-    return [NSArray arrayWithArray:results];
+    return [results copy];
 }
 -(NSArray *)patch:(Scope *)node of:(Scope *)parent with:(Patch *)patch{
     __block NSRange range;
@@ -446,7 +446,7 @@ static NSRegularExpression *hid;
                 if (patch.action == replace_matched || patch.action == remove_matched)
                     *stop = true;
             }];
-            if (results.count) result = [NSArray arrayWithArray:results];
+            if (results.count) result = [results copy];
             break;
         }
         case remove_entry:
@@ -492,8 +492,8 @@ static NSRegularExpression *template;
         [[dict objectForKey:domain] setObject:[patch substringWithRange:[result rangeAtIndex:3]] forKey:[patch substringWithRange:[result rangeAtIndex:2]]];
     }];
     for (NSString *key in dict)
-        [dict setObject:[NSDictionary dictionaryWithDictionary:[dict objectForKey:key]] forKey:key];
-    return [NSDictionary dictionaryWithDictionary:dict];
+        [dict setObject:[[dict objectForKey:key] copy] forKey:key];
+    return [dict copy];
 }
 +(NSString *)unescape:(NSString *)template{
     return [[[template stringByReplacingOccurrencesOfString:@"\n" withString:@""] stringByReplacingOccurrencesOfString:@"\\n" withString:@"\n"] stringByReplacingOccurrencesOfString:@"\\t" withString:@"\t"];
@@ -505,14 +505,14 @@ static NSRegularExpression *template;
     return [template stringByReplacingMatchesInString:temp options:0 range:NSMakeRange(0, temp.length) withTemplate:@"\\$$1"];
 }
 -(NSString *)argAsInsertion:(NSString *)line{
-    NSMutableString *temp = [NSMutableString stringWithString:@"\n"];
+    NSMutableString *temp = [@"\n" mutableCopy];
     for (__strong NSString *ln in [[Patch unescape:argument] componentsSeparatedByString:@"\n"]) {
         ln = [ln stringByTrimmingCharactersInSet:white];
         if (!ln.length) continue;
         line = [[Patcher entab:ln with:line] stringByAppendingFormat:@"%@\n",ln];
         [temp appendString:line];
     }
-    return [NSString stringWithString:temp];
+    return [temp copy];
 }
 
 @end

@@ -100,7 +100,7 @@ static SourceList *sharedList;
             [dsdt addObject:[SourcePatch create:[temp objectAtIndex:0] withURL:[realURL URLByAppendingPathComponent:temp.lastObject]]];
     }
     if (dsdt.count + ssdt.count == 0) return;
-    SourceProvider *temp = [SourceProvider create:name withURL:realURL andChildren:@{@"DSDT":[NSArray arrayWithArray:dsdt], @"SSDT":[NSArray arrayWithArray:ssdt]}];
+    SourceProvider *temp = [SourceProvider create:name withURL:realURL andChildren:@{@"DSDT":[dsdt copy], @"SSDT":[ssdt copy]}];
     [archive setObject:temp forKey:url];
     muteWithNotice(self, providers, [providers addObject:temp])
 }

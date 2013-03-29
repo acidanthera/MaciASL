@@ -24,7 +24,7 @@
 @property NSUInteger jumpLine;
 @property NSTextStorage *text;
 @property DefinitionBlock *nav;
-@property (nonatomic) Patcher *patch;
+@property (readonly) Patcher *patch;
 @property NSDictionary *summary;
 @property Colorize *colorize;
 

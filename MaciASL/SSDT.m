@@ -115,7 +115,7 @@ static SSDTGen *sharedSSDT;
     while (cpus < logicalCpus)
         [ssdt appendFormat:@"    External (\\_PR_.CPU%lX, DeviceObj)\n", cpus++];
     [ssdt appendFormat:@"\n    Scope (_PR.CPU0)\n    {\n        Name (APSN, 0x%02lX)\n        Name (APSS, Package (0x%02lX)\n        {\n", turboFreq, pkgs];
-    NSMutableDictionary *variables = [NSMutableDictionary dictionaryWithDictionary:@{@"maxRatio":@((double)maxRatio),  @"freq":@((double)freq), @"tdp":@((double)thermal*1000)}];
+    NSMutableDictionary *variables = [@{@"maxRatio":@((double)maxRatio),  @"freq":@((double)freq), @"tdp":@((double)thermal*1000)} mutableCopy];
     while (pkgs-- > 0) {
         [ssdt appendFormat:@"\n            Package (0x06)\n            {\n                0x%08lX,\n", maxFreq];
         NSInteger ratio = maxFreq / 100;

@@ -105,7 +105,7 @@
     // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
     // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
     if ([typeName isEqualToString:kDSLfileType])
-        [self setDocument:NSStringForData(data, NSASCIIStringEncoding)];
+        [self setDocument:[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]];
     else if ([typeName isEqualToString:kAMLfileType]) {
         NSDictionary *decompile = [iASL decompile:data];
         if ([[decompile objectForKey:@"status"] boolValue])
@@ -157,7 +157,7 @@
     }
     NSString *path = [[command.arguments objectForKey:@"patchfile"] path];
     if ([NSFileManager.defaultManager fileExistsAtPath:path]) {
-        [self quickPatch:NSStringForData([NSFileManager.defaultManager contentsAtPath:path], NSUTF8StringEncoding)];
+        [self quickPatch:[[NSString alloc] initWithData:[NSFileManager.defaultManager contentsAtPath:path] encoding:NSUTF8StringEncoding]];
         return @{@"patches":[NSNumber numberWithLong:self.patch.patchFile.patches.count], @"changes":[NSNumber numberWithLong:self.patch.patchFile.preview.count-self.patch.patchFile.rejects], @"rejects":[NSNumber numberWithLong:self.patch.patchFile.rejects]};
     } else {
         [command setScriptErrorNumber:kAScriptFileError];
@@ -171,7 +171,7 @@
     NSMutableArray *temp = [NSMutableArray arrayWithObjects:[NSMutableArray array], [NSMutableArray array], [NSMutableArray array], [NSMutableArray array], [NSMutableArray array], [NSMutableArray array], nil];
     for (Notice *notice in [summary objectForKey:@"notices"])
         [[temp objectAtIndex:notice.type] addObject:[NSString stringWithFormat:@"%@: %@", notice.line, notice.message]];
-    return @{@"errors":[NSArray arrayWithArray:[temp objectAtIndex:3]], @"warnings":[NSArray arrayWithArray:[temp objectAtIndex:0]], @"remarks":[NSArray arrayWithArray:[temp objectAtIndex:4]], @"optimizations":[NSArray arrayWithArray:[temp objectAtIndex:5]]};
+    return @{@"errors":[[temp objectAtIndex:3] copy], @"warnings":[[temp objectAtIndex:0] copy], @"remarks":[[temp objectAtIndex:4] copy], @"optimizations":[[temp objectAtIndex:5] copy]};
 }
 
 #pragma mark GUI

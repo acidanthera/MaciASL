@@ -51,9 +51,6 @@ NS_INLINE BOOL LoadNib(NSString *nib, id owner) {
     return [NSBundle loadNibNamed:nib owner:owner];
 #endif
 }
-NS_INLINE NSString* NSStringForData(NSData *data, NSStringEncoding encoding) {
-    return [[NSString alloc] initWithBytes:data.bytes length:data.length encoding:encoding];
-}
 NS_INLINE void AsynchFetch(NSURL *url, SEL selector, id obj, id hold) {
     [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60] queue:[NSOperationQueue mainQueue] completionHandler:^void(NSURLResponse *response, NSData *data, NSError *err){
         if ([response respondsToSelector:@selector(statusCode)] && [(NSHTTPURLResponse *)response statusCode] != 200) {
@@ -64,7 +61,7 @@ NS_INLINE void AsynchFetch(NSURL *url, SEL selector, id obj, id hold) {
         else
             #pragma clang diagnostic push
             #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [obj performSelector:selector withObject:@{@"response":NSStringForData(data, NSUTF8StringEncoding), @"hold":!hold?NSNull.null:hold}];
+            [obj performSelector:selector withObject:@{@"response":[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding], @"hold":!hold?NSNull.null:hold}];
             #pragma clang diagnostic pop
     }];
 }

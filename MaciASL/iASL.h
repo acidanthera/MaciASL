@@ -53,8 +53,8 @@ enum noticeType {
 
 @property SEL callback;
 @property id listener;
-@property (nonatomic) NSArray *stdOut;
-@property (nonatomic) NSArray *stdErr;
+@property (readonly) NSArray *stdOut;
+@property (readonly) NSArray *stdErr;
 
 +(NSTask *)create:(NSString *)path args:(NSArray *)arguments callback:(SEL)selector listener:(id)object;
 -(void)launchAndWait;

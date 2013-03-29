@@ -151,7 +151,7 @@ static NSDictionary *attr;
         [names insertAttributedString:separator atIndex:0];
         [names insertAttributedString:[[NSAttributedString alloc] initWithString:[[value representedObject] name] attributes:attr] atIndex:0];
     }
-    return [[NSAttributedString alloc] initWithAttributedString:names];
+    return [names copy];
 }
 
 @end
