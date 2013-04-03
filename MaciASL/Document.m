@@ -109,7 +109,7 @@
     else if ([typeName isEqualToString:kAMLfileType]) {
         NSDictionary *decompile = [iASL decompile:data];
         if ([[decompile objectForKey:@"status"] boolValue])
-            [self setDocument:[NSString stringWithString:[decompile objectForKey:@"object"]]];
+            [self setDocument:[decompile objectForKey:@"object"]];
         else if (outError != NULL)
             *outError = [decompile objectForKey:@"object"];
     }

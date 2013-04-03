@@ -77,7 +77,7 @@ static NSString *bootlog;
 +(NSData *)fetchTable:(NSString *)name{
     if ([tables objectForKey:name])
         return [tables objectForKey:name];
-    ModalError([NSError errorWithDomain:kMaciASLDomain code:kCompilerError userInfo:@{NSLocalizedDescriptionKey:@"Table Retrieval Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"Error fetching %@ from IOCatalogue",name]}]);
+    ModalError([NSError errorWithDomain:kMaciASLDomain code:kCompilerError userInfo:@{NSLocalizedDescriptionKey:@"Table Retrieval Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"Error fetching %@ from IORegistry",name]}]);
     return nil;
 }
 +(NSDictionary *)decompile:(NSData *)aml{
