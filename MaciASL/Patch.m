@@ -33,12 +33,12 @@
             [view insertText:change.after replacementRange:change.before];
     [view.undoManager endUndoGrouping];
     [patchFile setState:applied];
-    assignWithNotice(self, patch, @"")
+    self.patch = nil;
 }
 -(IBAction)open:(id)sender{
     NSOpenPanel *open = [NSOpenPanel openPanel];
     if ([open runModal] != NSFileHandlingPanelOKButton) return;
-    assignWithNotice(self, patch, [[NSString alloc] initWithData:[NSFileManager.defaultManager contentsAtPath:open.URL.path] encoding:NSUTF8StringEncoding])
+    self.patch = [[NSString alloc] initWithData:[NSFileManager.defaultManager contentsAtPath:open.URL.path] encoding:NSUTF8StringEncoding];
 }
 -(IBAction)close:(id)sender{
     [NSApp endSheet:window];
@@ -56,7 +56,7 @@
     [sender deselectAll:sender];
 }
 -(void)loadPatch:(NSDictionary *)dict{
-    assignWithNotice(self, patch, [dict objectForKey:@"response"])
+    self.patch = [dict objectForKey:@"response"];
     [window makeFirstResponder:patchView];
 }
 
@@ -122,17 +122,17 @@
 }
 -(void)preview{
     bool selection = (patchView.selectedRange.length && [NSUserDefaults.standardUserDefaults boolForKey:@"isolation"]);
-    assignWithNotice(self, busy, true)
-    assignWithNotice(self, legend, @"")
-    assignWithNotice(self, patchFile, [PatchFile create:selection?[patch substringWithRange:patchView.selectedRange]:patch])
+    self.busy = true;
+    self.legend = nil;
+    self.patchFile = [PatchFile create:selection?[patch substringWithRange:patchView.selectedRange]:patch];
     if (!patchFile.patches.count) return;
     [patchFile setText:[parent.text.string mutableCopy]];
     [patchFile apply];
     [self willChangeValueForKey:@"legend"];
-    legend = [NSString stringWithFormat:@"%ld Patch%@, %ld Change%@, %ld Reject%@", patchFile.patches.count, (patchFile.patches.count == 1)?@"":@"es", patchFile.preview.count-patchFile.rejects, (patchFile.preview.count-patchFile.rejects == 1)?@"":@"s", patchFile.rejects, (patchFile.rejects == 1)?@"":@"s"];
+    legend = [NSString stringWithFormat:@"%ld Patch%s, %ld Change%s, %ld Reject%s", patchFile.patches.count, (patchFile.patches.count == 1)?"":"es", patchFile.preview.count-patchFile.rejects, (patchFile.preview.count-patchFile.rejects == 1)?"":"s", patchFile.rejects, (patchFile.rejects == 1)?"":"s"];
     [self didChangeValueForKey:@"legend"];
     if (!patchFile.preview.count) return;
-    assignWithNotice(self, busy, selection)
+    self.busy = selection;
 }
 
 @end
@@ -298,7 +298,7 @@ static NSRegularExpression *hid;
         [temp addObject:[results copy]];
     }
     changes = [temp copy];
-    assignWithNotice(self, preview, [list copy])
+    self.preview = [list copy];
 }
 -(NSDictionary *)context:(NSRange)range with:(NSString *)string{
     NSRange context = [text lineRangeForRange:range];

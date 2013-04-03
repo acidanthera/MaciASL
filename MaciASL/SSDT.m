@@ -37,7 +37,7 @@ static SSDTGen *sharedSSDT;
     return self;
 }
 -(void)loadGenerator:(NSDictionary *)dict{
-    assignWithNotice(self, generator, [dict objectForKey:@"response"])
+    self.generator = [dict objectForKey:@"response"];
     [window makeFirstResponder:generatorView];
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
@@ -69,17 +69,17 @@ static SSDTGen *sharedSSDT;
     [sender deselectAll:sender];
 }
 -(IBAction)reset:(id)sender{
-    assignWithNotice(self, tdp, nil)
-    assignWithNotice(self, mtf, nil)
+    self.tdp = nil;
+    self.mtf = nil;
     NSInteger logical = 0;
     NSInteger freq = 0;
     NSUInteger size = 4;
     sysctlbyname("hw.logicalcpu", &logical, &size, NULL, 0);
     size = 8;
     sysctlbyname("hw.cpufrequency", &freq, &size, NULL, 0);
-    assignWithNotice(self, logicalcpus, @(logical))
-    assignWithNotice(self, cpufrequency, @(freq/1E6))
-    assignWithNotice(self, generator, @"")
+    self.logicalcpus = @(logical);
+    self.cpufrequency = @(freq/1E6);
+    self.generator = nil;
 }
 -(IBAction)generate:(id)sender {
     if (!mtf || !logicalcpus || !cpufrequency || !tdp) {

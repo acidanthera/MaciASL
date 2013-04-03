@@ -61,7 +61,7 @@
     [temp.task launchAndWait];
     NSArray *lines = [[temp.stdOut componentsSeparatedByString:@"\n"] subarrayWithRange:NSMakeRange(0, 3)];
     for (NSString *line in lines) [self logEntry:line];
-    assignWithNotice(self, compiler, [lines componentsJoinedByString:@"\n"])
+    self.compiler = [lines componentsJoinedByString:@"\n"];
     [[NSDocumentController.sharedDocumentController documents] makeObjectsPerformSelector:@selector(compile:) withObject:self];
 }
 

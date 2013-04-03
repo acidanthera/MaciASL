@@ -138,7 +138,7 @@
 //TODO: add object actions to navigator (delete, copy?)
 #pragma mark Actions
 -(void)quickCompile:(bool)force hold:(bool)hold{
-    assignWithNotice(self, summary, [iASL compile:text.string force:force])
+    self.summary = [iASL compile:text.string force:force];
     if (hold || ![[summary objectForKey:@"success"] boolValue]) return;
     [NSFileManager.defaultManager removeItemAtPath:[summary objectForKey:@"aml"] error:nil];
 }
@@ -260,7 +260,7 @@
         [self filterTree:filter];
         return;
     }
-    assignWithNotice(self, nav, [DefinitionBlock build:text.string])
+    self.nav = [DefinitionBlock build:text.string];
     if (!navView) return;
     [navView expandItem:[navView itemAtRow:0]];
     [self textViewDidChangeSelection:nil];

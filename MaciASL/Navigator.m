@@ -144,7 +144,7 @@ static NSDictionary *attr;
     return false;
 }
 -(id)transformedValue:(id)value{
-    if (![value count]) return @"";
+    if (![value count]) return nil;
     value = [value objectAtIndex:0];
     NSMutableAttributedString *names = [[NSMutableAttributedString alloc] initWithString:[[value representedObject] name] attributes:attr];
     while ((value = [value parentNode]) && [[value representedObject] isKindOfClass:[NavObject class]]) {
