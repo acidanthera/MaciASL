@@ -54,7 +54,7 @@ static SSDTGen *sharedSSDT;
     if (first)
         [[NSApp delegate] changeFont:nil];
     SplitView([[window.contentView subviews] objectAtIndex:0]);
-    SplitView((NSSplitView *)generatorView.superview.superview.superview.superview);
+    SplitView((NSSplitView *)generatorView.superview.superview.superview);
     [self expandTree];
 }
 -(IBAction)chooseGenerator:(id)sender{
