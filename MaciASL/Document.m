@@ -178,15 +178,15 @@
 -(IBAction)filterTree:(id)sender{//TODO: keep parents, or use oldNav for breadcrumb?
     [self willChangeValueForKey:@"nav"];
     if (![[sender stringValue] length]) {
-        nav = oldNav;
-        oldNav = nil;
+        nav = _oldNav;
+        _oldNav = nil;
     }
     else {
-        if (!oldNav) oldNav = nav;
-        nav = [DefinitionBlock create:oldNav.name withRange:oldNav.range];
-        NSMutableArray *temp = [oldNav flat];
+        if (!_oldNav) _oldNav = nav;
+        nav = [DefinitionBlock create:_oldNav.name withRange:_oldNav.range];
+        NSMutableArray *temp = [_oldNav flat];
         [temp filterUsingPredicate:[NSPredicate predicateWithFormat:@"name contains[c] %@", [sender stringValue]]];
-        if (temp.count && [temp objectAtIndex:0] == oldNav) [temp removeObjectAtIndex:0];
+        if (temp.count && [temp objectAtIndex:0] == _oldNav) [temp removeObjectAtIndex:0];
         [nav setChildren:temp];
     }
     [self didChangeValueForKey:@"nav"];
@@ -256,7 +256,7 @@
 -(void)buildNav{
     if (!navView) return;
     if (filter.stringValue.length) {
-        oldNav = [DefinitionBlock build:text.string];
+        _oldNav = [DefinitionBlock build:text.string];
         [self filterTree:filter];
         return;
     }

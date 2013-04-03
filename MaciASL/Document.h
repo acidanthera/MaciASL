@@ -12,7 +12,7 @@
 
 @interface Document : NSDocument <NSTextViewDelegate, NSTextStorageDelegate, NSOutlineViewDelegate> {
     @private
-    DefinitionBlock *oldNav;
+    DefinitionBlock *_oldNav;
     Patcher *_patch;
 }
 
