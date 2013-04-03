@@ -140,6 +140,11 @@ static NSString *bootlog;
 @end
 
 @implementation Notice
+@synthesize type;
+@synthesize line;
+@synthesize code;
+@synthesize message;
+
 static NSRegularExpression *note;
 static NSArray *typeIndex;
 
@@ -150,9 +155,9 @@ static NSArray *typeIndex;
 +(Notice *)create:(NSString *)entry{
     __block Notice *temp = [Notice new];
     [note enumerateMatchesInString:entry options:0 range:NSMakeRange(0, entry.length) usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
-        temp.line = @([[entry substringWithRange:[result rangeAtIndex:1]] integerValue]);
+        temp.line = [[entry substringWithRange:[result rangeAtIndex:1]] integerValue];
         temp.type = (enum noticeType)[typeIndex indexOfObject:[[entry substringWithRange:[result rangeAtIndex:2]] lowercaseString]];
-        temp.code = @([[entry substringWithRange:[result rangeAtIndex:3]] integerValue]);
+        temp.code = [[entry substringWithRange:[result rangeAtIndex:3]] integerValue];
         temp.message = [entry substringWithRange:[result rangeAtIndex:4]];
     }];
     return !temp.message?nil:temp;

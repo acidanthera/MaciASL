@@ -33,8 +33,8 @@ enum noticeType {
 @interface Notice : NSObject
 
 @property enum noticeType type;
-@property NSNumber *line;
-@property NSNumber *code;
+@property NSUInteger line;
+@property NSUInteger code;
 @property NSString *message;
 
 +(Notice *)create:(NSString *)entry;

@@ -170,7 +170,7 @@
     [self quickCompile:false hold:false];
     NSMutableArray *temp = [NSMutableArray arrayWithObjects:[NSMutableArray array], [NSMutableArray array], [NSMutableArray array], [NSMutableArray array], [NSMutableArray array], [NSMutableArray array], nil];
     for (Notice *notice in [summary objectForKey:@"notices"])
-        [[temp objectAtIndex:notice.type] addObject:[NSString stringWithFormat:@"%@: %@", notice.line, notice.message]];
+        [[temp objectAtIndex:notice.type] addObject:[NSString stringWithFormat:@"%ld: %@", notice.line, notice.message]];
     return @{@"errors":[[temp objectAtIndex:3] copy], @"warnings":[[temp objectAtIndex:0] copy], @"remarks":[[temp objectAtIndex:4] copy], @"optimizations":[[temp objectAtIndex:5] copy]};
 }
 
@@ -269,7 +269,7 @@
 -(void)tableViewSelectionDidChange:(NSNotification *)notification{//TODO: autofixes or suggestions
     if ([notification.object selectedRow] == -1) return;
     Notice *notice = [[summary objectForKey:@"notices"] objectAtIndex:[notification.object selectedRow]];
-    NSRange range = [self rangeForLine:notice.line.integerValue];
+    NSRange range = [self rangeForLine:notice.line];
     [textView scrollRangeToVisible:range];
     [textView showFindIndicatorForRange:range];
 }
