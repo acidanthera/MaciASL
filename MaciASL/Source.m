@@ -74,7 +74,7 @@ static SourceList *sharedList;
         }
     }
     NSArray *newNames = [new valueForKey:@"name"];
-    for (SourceProvider *provider in providers)
+    for (SourceProvider *provider in [providers copy])
         if (![newNames containsObject:provider.name]) {
             muteWithNotice(self, providers, [providers removeObject:provider])
         }
