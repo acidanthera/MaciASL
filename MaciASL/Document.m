@@ -176,9 +176,8 @@
 
 #pragma mark GUI
 -(IBAction)filterTree:(id)sender{//TODO: keep parents, or use oldNav for breadcrumb?
-    [self willChangeValueForKey:@"nav"];
     if (![[sender stringValue] length]) {
-        nav = _oldNav;
+        self.nav = _oldNav;
         _oldNav = nil;
     }
     else {
@@ -187,9 +186,8 @@
         NSMutableArray *temp = [_oldNav flat];
         [temp filterUsingPredicate:[NSPredicate predicateWithFormat:@"name contains[c] %@", [sender stringValue]]];
         if (temp.count && [temp objectAtIndex:0] == _oldNav) [temp removeObjectAtIndex:0];
-        [nav setChildren:temp];
+        muteWithNotice(self, nav, [nav setChildren:temp])
     }
-    [self didChangeValueForKey:@"nav"];
     [navView expandItem:[navView itemAtRow:0]];
     [self textViewDidChangeSelection:nil];
 }
