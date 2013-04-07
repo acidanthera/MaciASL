@@ -247,7 +247,7 @@ static NSRegularExpression *hid;
                 if (![token.lowercaseString isEqualToString:@"begin"]) continue;
                 [subscan scanCharactersFromSet:set intoString:nil];
                 token = [subscan.string substringFromIndex:subscan.scanLocation];
-                if (![token.lowercaseString hasSuffix:@"end"]) continue;
+                if ([token isEqualToString:@"end"] || ![token.lowercaseString hasSuffix:@"end"]) continue;
                 [patch setArgument:[token substringToIndex:token.length-4]];
             } @catch (id obj) {}
             [patches addObject:patch];

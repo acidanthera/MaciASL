@@ -36,6 +36,7 @@
     NSDictionary *font = [NSUserDefaults.standardUserDefaults objectForKey:@"font"];
     [NSFontManager.sharedFontManager setSelectedFont:[NSFont fontWithName:[font objectForKey:@"name"] size:[[font objectForKey:@"size"] floatValue]] isMultiple:false];
     [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+    [logView setLevel:NSNormalWindowLevel];
 }
 -(BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender{
     if (![NSUserDefaults.standardUserDefaults boolForKey:@"dsdt"]) return true;
