@@ -41,7 +41,7 @@
 }
 -(BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender{
     if (![NSUserDefaults.standardUserDefaults boolForKey:@"dsdt"]) return true;
-    [self newDocumentFromACPI:@"DSDT"];
+    [self newDocumentFromACPI:@"DSDT" saveFirst:false];
     return false;
 }
 -(SSDTGen *)ssdt{
@@ -100,7 +100,7 @@
     [self viewPreference:sender];
 }
 -(IBAction)documentFromACPI:(id)sender{
-    [self newDocumentFromACPI:[sender title]];
+    [self newDocumentFromACPI:[sender title] saveFirst:[[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask];
 }
 -(IBAction)showLog:(id)sender{
     [logView makeKeyAndOrderFront:sender];
@@ -132,10 +132,18 @@
     self.compiler = [lines componentsJoinedByString:@"\n"];
     [[NSDocumentController.sharedDocumentController documents] makeObjectsPerformSelector:@selector(compile:) withObject:self];
 }
--(void)newDocumentFromACPI:(NSString *)name{
+-(void)newDocumentFromACPI:(NSString *)name saveFirst:(bool)save{
     NSString *file = [iASL wasInjected:name];
     NSData *aml;
     if (!(aml = [iASL fetchTable:name])) return;
+    if (save && !file) {
+        NSSavePanel *save = [NSSavePanel savePanel];
+        save.prompt = @"Presave";
+        save.nameFieldStringValue = name;
+        save.allowedFileTypes = @[kAMLfileType];
+        if ([save runModal] == NSFileHandlingPanelOKButton && [NSFileManager.defaultManager createFileAtPath:save.URL.path contents:aml attributes:nil])
+            file = save.URL.path;
+    }
     if (file && [NSFileManager.defaultManager fileExistsAtPath:file] && [[NSFileManager.defaultManager contentsAtPath:file] isEqualToData:aml])
         [NSDocumentController.sharedDocumentController openDocumentWithContentsOfURL:[NSURL fileURLWithPath:file] display:true completionHandler:nil];
     else {
