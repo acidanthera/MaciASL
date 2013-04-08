@@ -55,7 +55,7 @@
     [cont setContainerSize:NSMakeSize(1e7, 1e7)];
     [cont setWidthTracksTextView:false];
     [cont setHeightTracksTextView:false];
-    colorize = [Colorize create:textView];
+    [self colorizeDidChange:[NSUserDefaults.standardUserDefaults objectForKey:@"colorize"]];
 }
 + (BOOL)autosavesInPlace {
     return true;
@@ -213,6 +213,15 @@
     [textView showFindIndicatorForRange:range];
 }
 #pragma mark Functions
+-(void)colorizeDidChange:(NSNumber *)value {
+    if ([value boolValue]) {
+        if (!colorize) colorize = [Colorize create:textView];
+    }
+    else if (colorize) {
+        colorize = nil;
+        [textView.textContainer.layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:NSMakeRange(0, text.string.length)];
+    }
+}
 -(NSRange)rangeForLine:(NSUInteger)ln{
     __block NSUInteger i = 0;
     __block NSUInteger offset = 0;
@@ -243,7 +252,8 @@
 }
 -(void)setDocument:(NSString *)string{
     [text setAttributedString:[[NSAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName:[NSFontManager.sharedFontManager selectedFont]}]];
-    [colorize observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+    if (colorize) [colorize observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+    else [self performSelectorOnMainThread:@selector(textStorageDidProcessEditing:) withObject:nil waitUntilDone:false];
 }
 -(void)changeRuler{
     CGFloat size = NSFontManager.sharedFontManager.selectedFont.pointSize;

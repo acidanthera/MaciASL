@@ -31,7 +31,8 @@
 -(void)awakeFromNib{
     log = [NSMutableArray array];
     [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"acpi" options:0 context:NULL];
-    [NSUserDefaults.standardUserDefaults registerDefaults:@{@"theme":@"Light", @"dsdt":@(YES), @"suggest":@(NO), @"acpi":@4, @"context":@(NO), @"isolation":@(NO), @"remarks":@(YES), @"optimizations": @(NO), @"werror": @(NO), @"preference": @0, @"font": @{@"name":@"Menlo", @"size": @11}, @"sources":@[@{@"name":@"Sourceforge", @"url":@"http://maciasl.sourceforge.net"}]}];
+    [NSUserDefaults.standardUserDefaults registerDefaults:@{@"theme":@"Light", @"dsdt":@(YES), @"suggest":@(NO), @"acpi":@4, @"context":@(NO), @"isolation":@(NO), @"colorize":@(YES), @"remarks":@(YES), @"optimizations": @(NO), @"werror": @(NO), @"preference": @0, @"font": @{@"name":@"Menlo", @"size": @11}, @"sources":@[@{@"name":@"Sourceforge", @"url":@"http://maciasl.sourceforge.net"}]}];
+    [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"colorize" options:0 context:NULL];
     [NSFontManager.sharedFontManager setTarget:self];
     NSDictionary *font = [NSUserDefaults.standardUserDefaults objectForKey:@"font"];
     [NSFontManager.sharedFontManager setSelectedFont:[NSFont fontWithName:[font objectForKey:@"name"] size:[[font objectForKey:@"size"] floatValue]] isMultiple:false];
@@ -57,13 +58,10 @@
     [CATransaction flush];
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    iASL *temp = [iASL new];
-    temp.task = [NSTask create:[NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]] args:@[] callback:NULL listener:nil];
-    [temp.task launchAndWait];
-    NSArray *lines = [[temp.stdOut componentsSeparatedByString:@"\n"] subarrayWithRange:NSMakeRange(0, 3)];
-    for (NSString *line in lines) [self logEntry:line];
-    self.compiler = [lines componentsJoinedByString:@"\n"];
-    [[NSDocumentController.sharedDocumentController documents] makeObjectsPerformSelector:@selector(compile:) withObject:self];
+    if ([keyPath isEqualToString:@"acpi"])
+        [self acpiDidChangeTo:[object integerForKey:keyPath]];
+    else if ([keyPath isEqualToString:@"colorize"])
+        [self colorizeDidChange:[object objectForKey:keyPath]];
 }
 
 #pragma mark GUI
@@ -122,6 +120,18 @@
 }
 
 #pragma mark Functions
+-(void)colorizeDidChange:(NSNumber *)value {
+    [[NSDocumentController.sharedDocumentController documents] makeObjectsPerformSelector:@selector(colorizeDidChange:) withObject:value];
+}
+-(void)acpiDidChangeTo:(NSInteger)acpi {
+    iASL *temp = [iASL new];
+    temp.task = [NSTask create:[NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", acpi]] args:@[] callback:NULL listener:nil];
+    [temp.task launchAndWait];
+    NSArray *lines = [[temp.stdOut componentsSeparatedByString:@"\n"] subarrayWithRange:NSMakeRange(0, 3)];
+    for (NSString *line in lines) [self logEntry:line];
+    self.compiler = [lines componentsJoinedByString:@"\n"];
+    [[NSDocumentController.sharedDocumentController documents] makeObjectsPerformSelector:@selector(compile:) withObject:self];
+}
 -(void)newDocumentFromACPI:(NSString *)name{
     NSString *file = [iASL wasInjected:name];
     NSData *aml;
@@ -157,15 +167,22 @@
         if (index != NSNotFound)
             [NSUserDefaults.standardUserDefaults setInteger:index forKey:@"preference"];
     }
+    NSSize newSize;
     switch (index) {
         case 0:
+            newSize = general.frame.size;
             [preferences setContentView:general];
+            [preferences setContentSize:newSize];
             break;
         case 1:
+            newSize = iasl.frame.size;
             [preferences setContentView:iasl];
+            [preferences setContentSize:newSize];
             break;
         case 2:
+            newSize = sources.frame.size;
             [preferences setContentView:sources];
+            [preferences setContentSize:newSize];
             break;
         default:
             return;
