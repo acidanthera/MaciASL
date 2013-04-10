@@ -130,6 +130,7 @@ static NSDictionary *themes;
 @synthesize predefined;
 
 +(NSDictionary *)allThemes{
+    if (!themes) [Colorize initialize];
     return themes;
 }
 +(ColorTheme *)create:(NSColor *)text background:(NSColor *)background string:(NSColor *)string number:(NSColor *)number comment:(NSColor *)comment operator:(NSColor *)operator opNoArg:(NSColor *)opNoArg keyword:(NSColor *)keyword resource:(NSColor *)resource predefined:(NSColor *)predefined{
