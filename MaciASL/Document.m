@@ -220,6 +220,9 @@
     else if (colorize) {
         colorize = nil;
         [textView.textContainer.layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:NSMakeRange(0, text.string.length)];
+        [textView setBackgroundColor:NSColor.whiteColor];
+        [textView setInsertionPointColor:NSColor.blackColor];
+        [textView setTextColor:NSColor.blackColor];
     }
 }
 -(NSRange)rangeForLine:(NSUInteger)ln{
