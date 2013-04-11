@@ -223,7 +223,6 @@
 											<string key="NSFrame">{{1, 119}, {238, 15}}</string>
 											<reference key="NSSuperview" ref="151118728"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:60</string>
 											<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 											<int key="NSsFlags">1</int>
@@ -310,7 +309,6 @@
 													<string key="NSFrame">{{322, 14}, {59, 32}}</string>
 													<reference key="NSSuperview" ref="524217775"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView"/>
 													<string key="NSReuseIdentifierKey">_NS:9</string>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSButtonCell" key="NSCell" id="470441223">
@@ -1070,16 +1068,23 @@ wGw</bytes>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<int key="NSDividerStyle">2</int>
 									<string key="NSAutosaveName">ssdtSubFrame</string>
+									<object class="NSMutableDictionary" key="NSHoldingPriorities">
+										<integer value="0" key="NS.key.0"/>
+										<real value="249" key="NS.object.0"/>
+									</object>
 								</object>
 							</array>
 							<string key="NSFrameSize">{577, 401}</string>
 							<reference key="NSSuperview" ref="47066156"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSIsVertical">YES</bool>
 							<int key="NSDividerStyle">2</int>
 							<string key="NSAutosaveName">ssdtMainFrame</string>
+							<object class="NSMutableDictionary" key="NSHoldingPriorities">
+								<integer value="1" key="NS.key.0"/>
+								<real value="249" key="NS.object.0"/>
+							</object>
 						</object>
 					</array>
 					<string key="NSFrameSize">{577, 401}</string>

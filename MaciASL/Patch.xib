@@ -627,7 +627,6 @@ wGw</bytes>
 															<string key="NSFrame">{{1, 147}, {452, 15}}</string>
 															<reference key="NSSuperview" ref="314227059"/>
 															<reference key="NSWindow"/>
-															<reference key="NSNextKeyView"/>
 															<string key="NSReuseIdentifierKey">_NS:33</string>
 															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 															<int key="NSsFlags">1</int>
@@ -833,10 +832,13 @@ wGw</bytes>
 											<string key="NSFrame">{{0, 39}, {469, 329}}</string>
 											<reference key="NSSuperview" ref="351136481"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<int key="NSDividerStyle">2</int>
 											<string key="NSAutosaveName">patchSubFrame</string>
+											<object class="NSMutableDictionary" key="NSHoldingPriorities">
+												<integer value="0" key="NS.key.0"/>
+												<real value="249" key="NS.object.0"/>
+											</object>
 										</object>
 									</array>
 									<string key="NSFrame">{{130, 0}, {469, 368}}</string>
@@ -850,11 +852,14 @@ wGw</bytes>
 							<string key="NSFrameSize">{599, 368}</string>
 							<reference key="NSSuperview" ref="313582362"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSIsVertical">YES</bool>
 							<int key="NSDividerStyle">2</int>
 							<string key="NSAutosaveName">patchMainFrame</string>
+							<object class="NSMutableDictionary" key="NSHoldingPriorities">
+								<integer value="1" key="NS.key.0"/>
+								<real value="249" key="NS.object.0"/>
+							</object>
 						</object>
 					</array>
 					<string key="NSFrameSize">{599, 368}</string>
