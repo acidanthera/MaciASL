@@ -28,7 +28,6 @@
 @property NSDictionary *summary;
 @property Colorize *colorize;
 
--(void)setDocument:(NSString *)string;
 -(IBAction)filterTree:(id)sender;
 -(IBAction)hexConvert:(id)sender;
 -(IBAction)jumpToLine:(id)sender;

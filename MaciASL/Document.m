@@ -56,6 +56,7 @@
     [cont setWidthTracksTextView:false];
     [cont setHeightTracksTextView:false];
     colorize = [Colorize create:textView];
+    [[NSApp delegate] changeFont:nil];
 }
 + (BOOL)autosavesInPlace {
     return true;
@@ -105,11 +106,11 @@
     // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
     // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
     if ([typeName isEqualToString:kDSLfileType])
-        [self setDocument:[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]];
+        [text replaceCharactersInRange:NSMakeRange(0, 0) withString:[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]];
     else if ([typeName isEqualToString:kAMLfileType]) {
         NSDictionary *decompile = [iASL decompile:data];
         if ([[decompile objectForKey:@"status"] boolValue])
-            [self setDocument:[decompile objectForKey:@"object"]];
+            [text replaceCharactersInRange:NSMakeRange(0, 0) withString:[decompile objectForKey:@"object"]];
         else if (outError != NULL)
             *outError = [decompile objectForKey:@"object"];
     }
@@ -240,11 +241,6 @@
         if (i) break;
     }
     return [navView rowForItem:obj];
-}
--(void)setDocument:(NSString *)string{
-    [text setAttributedString:[[NSAttributedString alloc] initWithString:string attributes:@{NSFontAttributeName:[NSFontManager.sharedFontManager selectedFont]}]];
-    if (colorize) [colorize observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
-    else [self performSelectorOnMainThread:@selector(textStorageDidProcessEditing:) withObject:nil waitUntilDone:false];
 }
 -(void)buildNav{
     if (!navView) return;

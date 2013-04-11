@@ -146,11 +146,12 @@
 }
 -(Document *)newDocument:(NSString *)text withName:(NSString *)name{
     NSError *err;
-    Document *doc = [NSDocumentController.sharedDocumentController openUntitledDocumentAndDisplay:true error:&err];
+    Document *doc = [NSDocumentController.sharedDocumentController openUntitledDocumentAndDisplay:false error:&err];
     if (ModalError(err)) return nil;
-    [[[doc.windowControllers objectAtIndex:0] window] setTitle:name];
-    [doc setDocument:text];
-    [doc.textView setSelectedRange:NSMakeRange(0, 0)];
+    doc.displayName = name;
+    [doc.text replaceCharactersInRange:NSMakeRange(0, 0) withString:text];
+    [doc makeWindowControllers];
+    [doc showWindows];
     return doc;
 }
 -(void)viewPreference:(id)sender{
