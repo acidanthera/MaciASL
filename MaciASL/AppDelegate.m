@@ -263,7 +263,7 @@ static NSParagraphStyle *pstyle;
 }
 -(void)drawHashMarksAndLabelsInRect:(NSRect)rect {
     NSInteger height = [[self.scrollView.documentView layoutManager] defaultLineHeightForFont:NSFontManager.sharedFontManager.selectedFont], start = (self.scrollView.documentVisibleRect.origin.y+rect.origin.y)/height+1, stop = 1+start+rect.size.height/height;
-    if (self.ruleThickness != ((NSInteger)log10(stop)+1)*8) {
+    if (self.ruleThickness != MAX(16,((NSInteger)log10(stop)+1)*8)) {
         self.ruleThickness = ((NSInteger)log10(stop)+1)*8;
         return;
     }

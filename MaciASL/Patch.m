@@ -41,6 +41,8 @@
     self.patch = [[NSString alloc] initWithData:[NSFileManager.defaultManager contentsAtPath:open.URL.path] encoding:NSUTF8StringEncoding];
 }
 -(IBAction)close:(id)sender{
+    [[[window.contentView subviews] objectAtIndex:0] performSelector:@selector(adjustSubviews)];
+    [[[[[[[window.contentView subviews] objectAtIndex:0] subviews] objectAtIndex:1] subviews] objectAtIndex:0] performSelector:@selector(adjustSubviews)];
     [NSApp endSheet:window];
     [window orderOut:sender];
 }
