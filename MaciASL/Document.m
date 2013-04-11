@@ -55,7 +55,7 @@
     [cont setContainerSize:NSMakeSize(1e7, 1e7)];
     [cont setWidthTracksTextView:false];
     [cont setHeightTracksTextView:false];
-    [self colorizeDidChange:[NSUserDefaults.standardUserDefaults objectForKey:@"colorize"]];
+    colorize = [Colorize create:textView];
 }
 + (BOOL)autosavesInPlace {
     return true;
@@ -213,18 +213,6 @@
     [textView showFindIndicatorForRange:range];
 }
 #pragma mark Functions
--(void)colorizeDidChange:(NSNumber *)value {
-    if ([value boolValue]) {
-        if (!colorize) colorize = [Colorize create:textView];
-    }
-    else if (colorize) {
-        colorize = nil;
-        [textView.textContainer.layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:NSMakeRange(0, text.string.length)];
-        [textView setBackgroundColor:NSColor.whiteColor];
-        [textView setInsertionPointColor:NSColor.blackColor];
-        [textView setTextColor:NSColor.blackColor];
-    }
-}
 -(NSRange)rangeForLine:(NSUInteger)ln{
     __block NSUInteger i = 0;
     __block NSUInteger offset = 0;
