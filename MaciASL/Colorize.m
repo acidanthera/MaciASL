@@ -56,30 +56,34 @@ static NSDictionary *themes;
     Colorize *temp = [Colorize new];
     temp.view = view;
     temp.mgr = view.textContainer.layoutManager;
-    [NSNotificationCenter.defaultCenter addObserver:temp selector:@selector(coalesce:) name:NSViewBoundsDidChangeNotification object:view.superview];
-    [NSNotificationCenter.defaultCenter addObserver:temp selector:@selector(coalesce:) name:NSViewFrameDidChangeNotification object:view.superview];
     [NSUserDefaults.standardUserDefaults addObserver:temp forKeyPath:@"theme" options:0 context:NULL];
-    [temp coalesce:[NSNotification notificationWithName:NSViewBoundsDidChangeNotification object:view.superview]];
-    [temp observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+    [NSUserDefaults.standardUserDefaults addObserver:temp forKeyPath:@"colorize" options:0 context:NULL];
+    [temp observeValueForKeyPath:@"theme" ofObject:nil change:nil context:nil];
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"colorize"]) [temp arm];
     return temp;
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    if (!(theme = [themes objectForKey:[NSUserDefaults.standardUserDefaults stringForKey:@"theme"]]))
-        theme = [themes.allKeys objectAtIndex:0];
-    [view setBackgroundColor:theme.background];
-    [view setTextColor:theme.text];
-    [view setInsertionPointColor:theme.text];
-    [self colorize];
+    if ([keyPath isEqualToString:@"colorize"]) {
+        if ([NSUserDefaults.standardUserDefaults boolForKey:keyPath]) {
+            [self arm];
+            [self colorize];
+        }
+        else [self disarm];
+    }
+    else if ([keyPath isEqualToString:@"theme"]) {
+        if (!(theme = [themes objectForKey:[NSUserDefaults.standardUserDefaults stringForKey:@"theme"]]))
+            theme = [themes.allKeys objectAtIndex:0];
+        [view setBackgroundColor:theme.background];
+        [view setTextColor:theme.text];
+        [view setInsertionPointColor:theme.text];
+    }
 }
 
 -(void)textStorageDidProcessEditing:(NSNotification *)notification{
+    if (notification.object != view.superview || ![NSUserDefaults.standardUserDefaults boolForKey:@"colorize"]) return;
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(colorize) object:nil];
     [self performSelector:@selector(colorize) withObject:nil afterDelay:0.15];
-}
-
--(void)coalesce:(NSNotification *)notification{
-    if (notification.object == view.superview) [self textStorageDidProcessEditing:notification];
 }
 
 -(void)colorize{
@@ -110,9 +114,19 @@ static NSDictionary *themes;
         [mgr addTemporaryAttribute:NSForegroundColorAttributeName value:theme.comment forCharacterRange:result.range];
     }];
 }
--(void)dealloc{
+-(void)arm {
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(textStorageDidProcessEditing:) name:NSViewBoundsDidChangeNotification object:view.superview];
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(textStorageDidProcessEditing:) name:NSViewFrameDidChangeNotification object:view.superview];
+}
+-(void)disarm {
     [NSNotificationCenter.defaultCenter removeObserver:self name:NSViewBoundsDidChangeNotification object:view.superview];
     [NSNotificationCenter.defaultCenter removeObserver:self name:NSViewFrameDidChangeNotification object:view.superview];
+    [mgr removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:NSMakeRange(0, view.string.length)];
+}
+
+-(void)dealloc{
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"colorize"]) [self disarm];
+    [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:@"colorize"];
     [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:@"theme"];
 }
 @end

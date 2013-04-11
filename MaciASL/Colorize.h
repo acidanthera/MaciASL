@@ -32,7 +32,6 @@
 
 +(Colorize *)create:(NSView *)view;
 
--(void)coalesce:(NSNotification *)aNotification;
 -(void)colorize;
 
 @end
