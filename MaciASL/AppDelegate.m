@@ -202,7 +202,6 @@
     NSFont *font = [mgr convertFont:[mgr selectedFont]];
     [NSUserDefaults.standardUserDefaults setObject:@{@"name":font.displayName, @"size":@(font.pointSize)} forKey:@"font"];
     muteWithNotice(mgr, selectedFont, [mgr setSelectedFont:font isMultiple:false])
-    [[NSDocumentController.sharedDocumentController documents] makeObjectsPerformSelector:@selector(changeRuler)];
 }
 
 #pragma mark NSTableViewDelegate
@@ -252,6 +251,39 @@
     [super scrollRangeToVisible:range];
     if (!NSEqualRanges(range, self.selectedRange) && [[[NSTextFinder class] performSelector:@selector(_globalTextFinder)] client] == (id)self && [self.delegate respondsToSelector:@selector(textViewDidShowFindIndicator:)])
         [self.delegate performSelector:@selector(textViewDidShowFindIndicator:) withObject:[NSNotification notificationWithName:@"NSTextViewDidShowFindIndicatorNotification" object:self userInfo:@{@"NSFindIndicatorRange":[NSValue valueWithRange:range]}]];
+}
+
+@end
+
+@implementation FSRulerView
+static NSParagraphStyle *pstyle;
+
++(void)initialize {
+    NSMutableParagraphStyle *temp = [NSMutableParagraphStyle new];
+    [temp setAlignment:NSRightTextAlignment];
+    pstyle = [temp copy];
+}
+-(id)init {
+    self = [super init];
+    if (self) {
+        super.reservedThicknessForMarkers = 0;
+    }
+    return self;
+}
+-(void)drawHashMarksAndLabelsInRect:(NSRect)rect {
+    NSInteger height = [[self.scrollView.documentView layoutManager] defaultLineHeightForFont:NSFontManager.sharedFontManager.selectedFont], start = (self.scrollView.documentVisibleRect.origin.y+rect.origin.y)/height+1, stop = 1+start+rect.size.height/height;
+    if (self.ruleThickness != ((NSInteger)log10(stop)+1)*8) {
+        self.ruleThickness = ((NSInteger)log10(stop)+1)*8;
+        return;
+    }
+    NSDictionary *style = @{NSFontAttributeName:[NSFont systemFontOfSize:NSFont.smallSystemFontSize], NSParagraphStyleAttributeName:pstyle};
+    rect.size.width -= 2;
+    rect.origin.y -= (NSInteger)(self.scrollView.documentVisibleRect.origin.y+rect.origin.y) % height - (height-(NSFont.smallSystemFontSize+2))/2;
+    rect.size.height = height;
+    while (start <= stop) {
+        [[NSString stringWithFormat:@"%ld", start++] drawWithRect:rect options:NSStringDrawingUsesLineFragmentOrigin attributes:style];
+        rect.origin.y += height;
+    }
 }
 
 @end

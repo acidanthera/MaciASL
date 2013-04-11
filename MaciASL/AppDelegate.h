@@ -64,3 +64,9 @@
 -(void)scrollRangeToVisible:(NSRange)range;
 
 @end
+
+@interface FSRulerView : NSRulerView
+
+-(void)drawHashMarksAndLabelsInRect:(NSRect)rect;
+
+@end
