@@ -38,7 +38,7 @@ static NSDictionary *themes;
     predefined = @[@"__DATE__", @"__FILE__", @"__LINE__", @"__PATH__"];
     regString = [NSRegularExpression regularExpressionWithPattern:@"\"[^\"]*\"" options:0 error:nil];
     regNumber = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"(?<=\\W)(0x[0-9A-Fa-f]+|\\d+|%@)(?=\\W)", [constants componentsJoinedByString:@"|"]] options:0 error:nil];
-    regComment = [NSRegularExpression regularExpressionWithPattern:@"/\\*(?:(?!/\\*).|[\r\n])*\\*/|//.*$" options:NSRegularExpressionAnchorsMatchLines error:nil];
+    regComment = [NSRegularExpression regularExpressionWithPattern:@"//.*$" options:NSRegularExpressionAnchorsMatchLines error:nil];
     regOperator = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"(?<=\\W|^)(%@)\\s*\\(", [operators componentsJoinedByString:@"|"]] options:NSRegularExpressionCaseInsensitive error:nil];
     regOpNoArg = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"\\W(%@)\\W", [operators objectAtIndex:31]] options:0 error:nil];
     regKeywords = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"\\W(%@|%@)\\W", [keywords componentsJoinedByString:@"|"], [arguments componentsJoinedByString:@"|"]] options:0 error:nil];
@@ -113,6 +113,22 @@ static NSDictionary *themes;
     [regComment enumerateMatchesInString:mgr.attributedString.string options:0 range:range usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
         [mgr addTemporaryAttribute:NSForegroundColorAttributeName value:theme.comment forCharacterRange:result.range];
     }];
+    NSUInteger open = [mgr.attributedString.string rangeOfString:@"/*" options:0 range:range].location, close = [mgr.attributedString.string rangeOfString:@"*/" options:0 range:range].location;
+    if (open == close) return;
+    NSScanner *comments = [NSScanner scannerWithString:mgr.attributedString.string];
+    comments.scanLocation = range.location;
+    if (open < close) [comments scanUpToString:@"/*" intoString:nil];
+    close = NSMaxRange(range);
+    while (comments.scanLocation < close) {
+        NSRange range;
+        range.location = comments.scanLocation;
+        [comments scanString:@"/*" intoString:nil];
+        [comments scanUpToString:@"*/" intoString:nil];
+        [comments scanString:@"*/" intoString:nil];
+        range.length = comments.scanLocation-range.location;
+        [mgr addTemporaryAttribute:NSForegroundColorAttributeName value:theme.comment forCharacterRange:range];
+        [comments scanUpToString:@"/*" intoString:nil];
+    }
 }
 -(void)arm {
     [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(textStorageDidProcessEditing:) name:NSViewBoundsDidChangeNotification object:view.superview];
