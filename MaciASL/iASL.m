@@ -120,7 +120,7 @@ static NSString *bootlog;
         [arguments insertObject:@"-vr" atIndex:0];
     if ([NSUserDefaults.standardUserDefaults boolForKey:@"optimizations"])
         [arguments insertObject:@"-vo" atIndex:0];
-    if ([NSUserDefaults.standardUserDefaults boolForKey:@"werror"] && [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] != 4)
+    if ([NSUserDefaults.standardUserDefaults boolForKey:@"werror"] && [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] > 4)
         [arguments insertObject:@"-we" atIndex:0];
     temp.task = [NSTask create:[NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]] args:arguments callback:@selector(logEntry:) listener:[NSApp delegate]];
     if (file) [temp.task setCurrentDirectoryPath:file.stringByDeletingLastPathComponent];
@@ -314,7 +314,7 @@ static char kLockKey;
     [df setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
     [df setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
     NSDate *urlmtime = [df dateFromString:urlmstr];
-    bool changed = ([filemtime laterDate:urlmtime] == urlmtime);
+    bool changed = ([filemtime compare:urlmtime] == NSOrderedAscending);
     if (changed)
         if (![[NSData dataWithContentsOfURL:url] writeToFile:file options:NSDataWritingAtomic error:&err])
             if (ModalError(err)) return false;

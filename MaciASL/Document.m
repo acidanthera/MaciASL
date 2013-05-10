@@ -106,11 +106,11 @@
     // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
     // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
     if ([typeName isEqualToString:kDSLfileType])
-        [text replaceCharactersInRange:NSMakeRange(0, 0) withString:[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]];
+        [text.mutableString setString:[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]];
     else if ([typeName isEqualToString:kAMLfileType]) {
         NSDictionary *decompile = [iASL decompile:data];
         if ([[decompile objectForKey:@"status"] boolValue])
-            [text replaceCharactersInRange:NSMakeRange(0, 0) withString:[decompile objectForKey:@"object"]];
+            [text.mutableString setString:[decompile objectForKey:@"object"]];
         else if (outError != NULL)
             *outError = [decompile objectForKey:@"object"];
     }
