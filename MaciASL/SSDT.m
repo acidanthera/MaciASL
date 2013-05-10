@@ -113,8 +113,8 @@ static SSDTGen *sharedSSDT;
     NSMutableString *ssdt = [NSMutableString stringWithFormat:@"// Translated from RevoGirl's ssdtPRGen script v0.9\n// Generated with %ldW TDP, %ldMHz Max Turbo Freq\n", thermal, maxFreq];
     [ssdt appendString:@"DefinitionBlock (\"SSDT.aml\", \"SSDT\", 1, \"APPLE \", \"CpuPm\", 0x00001000)\n{\n"];
     while (cpus < logicalCpus)
-        [ssdt appendFormat:@"    External (\\_PR_.CPU%lX, DeviceObj)\n", cpus++];
-    [ssdt appendFormat:@"\n    Scope (_PR.CPU0)\n    {\n        Name (APSN, 0x%02lX)\n        Name (APSS, Package (0x%02lX)\n        {\n", turboFreq, pkgs];
+        [ssdt appendFormat:@"    External (\\_PR_.%@, DeviceObj)\n", [self cpuString:cpus++]];
+    [ssdt appendFormat:@"\n    Scope (_PR.%@)\n    {\n        Name (APSN, 0x%02lX)\n        Name (APSS, Package (0x%02lX)\n        {\n", [self cpuString:0], turboFreq, pkgs];
     NSMutableDictionary *variables = [@{@"maxRatio":@((double)maxRatio),  @"freq":@((double)freq), @"tdp":@((double)thermal*1000)} mutableCopy];
     while (pkgs-- > 0) {
         [ssdt appendFormat:@"\n            Package (0x06)\n            {\n                0x%08lX,\n", maxFreq];
@@ -128,10 +128,13 @@ static SSDTGen *sharedSSDT;
     [ssdt appendString:@"        })\n\n        Method (ACST, 0, NotSerialized)\n        {\n            Return (Package (0x06)\n            {\n                One,\n                0x04,\n                Package (0x04)\n                {\n                    ResourceTemplate ()\n                    {\n                        Register (FFixedHW,\n                            0x01,               // Bit Width\n                            0x02,               // Bit Offset\n                            0x0000000000000000, // Address\n                            0x01,               // Access Size\n                            )\n                    },\n\n                    One,\n                    0x03,\n                    0x03E8\n                },\n\n                Package (0x04)\n                {\n                    ResourceTemplate ()\n                    {\n                        Register (FFixedHW,\n                            0x01,               // Bit Width\n                            0x02,               // Bit Offset\n                            0x0000000000000010, // Address\n                            0x03,               // Access Size\n                            )\n                    },\n\n                    0x03,\n                    0xCD,\n                    0x01F4\n                },\n\n                Package (0x04)\n                {\n                    ResourceTemplate ()\n                    {\n                        Register (FFixedHW,\n                            0x01,               // Bit Width\n                            0x02,               // Bit Offset\n                            0x0000000000000020, // Address\n                            0x03,               // Access Size\n                            )\n                    },\n\n                    0x06,\n                    0xF5,\n                    0x015E\n                },\n\n                Package (0x04)\n                {\n                    ResourceTemplate ()\n                    {\n                        Register (FFixedHW,\n                            0x01,               // Bit Width\n                            0x02,               // Bit Offset\n                            0x0000000000000030, // Address\n                            0x03,               // Access Size\n                            )\n                    },\n\n                    0x07,\n                    0xF5,\n                    0xC8\n                }\n            })\n        }\n    }\n"];
     cpus = 1;
     while (cpus < logicalCpus)
-        [ssdt appendFormat:@"\n    Scope (\\_PR.CPU%lX)\n    {\n        Method (APSS, 0, NotSerialized)\n        {\n            Return (\\_PR.CPU0.APSS)\n        }\n    }\n", cpus++];
+        [ssdt appendFormat:@"\n    Scope (\\_PR.%@)\n    {\n        Method (APSS, 0, NotSerialized)\n        {\n            Return (\\_PR.%@.APSS)\n        }\n    }\n", [self cpuString:cpus++], [self cpuString:0]];
     [ssdt appendString:@"}\n"];
     Document *doc = [[NSApp delegate] newDocument:ssdt withName:@"Generated SSDT"];
     if (doc) [doc quickPatch:generator];
+}
+-(NSString *)cpuString:(NSUInteger)cpu {
+    return [logicalcpus isGreaterThan:@16]?[NSString stringWithFormat:@"C%lX0%lX", cpu/16, cpu%16]:[NSString stringWithFormat:@"CPU%lX", cpu];
 }
 
 @end
