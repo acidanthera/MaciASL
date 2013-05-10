@@ -108,7 +108,7 @@
     if ([typeName isEqualToString:kDSLfileType])
         [text.mutableString setString:[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]];
     else if ([typeName isEqualToString:kAMLfileType]) {
-        NSDictionary *decompile = [iASL decompile:data];
+        NSDictionary *decompile = [iASL decompile:data withResolution:nil];
         if ([[decompile objectForKey:@"status"] boolValue])
             [text.mutableString setString:[decompile objectForKey:@"object"]];
         else if (outError != NULL)

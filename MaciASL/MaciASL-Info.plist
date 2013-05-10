@@ -34,6 +34,20 @@
 			<key>NSDocumentClass</key>
 			<string>Document</string>
 		</dict>
+		<dict>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.maciasl.tableset</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>ACPI.icns</string>
+			<key>CFBundleTypeName</key>
+			<string>ACPI Tableset</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>NSDocumentClass</key>
+			<string>Document</string>
+		</dict>
 	</array>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
@@ -69,6 +83,25 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>aml</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeDescription</key>
+			<string>ACPI Tableset</string>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.property-list</string>
+				<string>public.content</string>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.maciasl.tableset</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>acpi</string>
 				</array>
 			</dict>
 		</dict>

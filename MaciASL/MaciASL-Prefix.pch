@@ -9,6 +9,8 @@
 #define kMaciASLDomain @"MaciASLDomain"
 #define kAMLfileType @"org.acpica.aml"
 #define kDSLfileType @"org.acpica.dsl"
+#define kTablesetFileType @"net.sourceforge.maciasl.tableset"
+#define kSystemTableset @"//System"
 #define kCompilerError 1
 #define kFileError 2
 #define kACPIError 3
@@ -21,6 +23,7 @@
 #define kNSComparisonPredicateError 10
 #define kLockError 11
 #define kStoreError 12
+#define kTablesetError 13
 
 #define lineForRange(x,y) [x substringWithRange:[x lineRangeForRange:y]]
 #define assignWithNotice(x,y,z) [x willChangeValueForKey:@""#y];y=z;[x didChangeValueForKey:@""#y];

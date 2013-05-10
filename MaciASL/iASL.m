@@ -11,21 +11,22 @@
 #import <objc/objc-runtime.h>
 
 @implementation iASL
-static NSDictionary *tables;
+static NSDictionary *tableset;
+static NSDictionary *stdTables;
 static NSString *bootlog;
 
 @synthesize task;
 @synthesize status;
 
 +(void)initialize{
-    NSDictionary *names = @{@"APIC":@"Advanced Programmable Interrupt Controller", @"ASF!":@"Alert Standard Format", @"BOOT":@"Simple Boot Flag", @"BERT":@"Boot Error Record", @"BGRT":@"Boot Graphics Resource", @"CPEP":@"Corrected Platform Error Polling", @"DBGP":@"Debug Port", @"DMAR":@"DMA Remapping", @"DRTM":@"Dynamic Root of Trust for Measurement", @"DSDT": @"Differentiated System Description", @"ECDT":@"Embedded Controller Boot Resources", @"EINJ":@"Error Injection", @"ERST":@"Error Record Serialization", @"FACP":@"Fixed ACPI Control Pointer", @"FACS":@"Firmware ACPI Control Structure", @"FADT":@"Fixed ACPI Description", @"FPDT":@"Firmware Performance Data", @"GTDT":@"Generic Timer Description", @"HEST":@"Hardware Error Source", @"HPET":@"High Precision Event Timer", @"MPST":@"Memory Power State", @"IVRS":@"I/O Virtualization Reporting Structure", @"MADT":@"Multiple APIC Description", @"MCFG":@"PCI Memory Mapped Configuration", @"MCHI":@"Management Controller Host Interface", @"MSCT":@"Maximum System Characteristics", @"PCCT":@"Platform Communications Channel", @"PMTT":@"Platform Memory Topology", @"RASF":@"RAS Feature", @"RSDP":@"Root System Description Pointer", @"RSDT":@"Root System Description", @"SBST":@"Smart Battery Specification", @"SLIC":@"Software Licensing Description", @"SLIT":@"System Locality Distance Information", @"SPCR":@"Serial Port Console Redirection", @"SPMI":@"Server Platform Management Interface", @"SRAT":@"System Resource Affinity", @"SSDT":@"Secondary System Description", @"TCPA":@"Trusted Computing Platform Alliance", @"UEFI":@"Uefi Boot Optimization", @"WAET":@"Windows ACPI Emulated devices", @"WDAT":@"Watchdog Action", @"WDDT":@"Watchdog Timer Description", @"WDRT":@"Watchdog Resource", @"XSDT":@"Extended System Description"};
+    stdTables = @{@"APIC":@"Advanced Programmable Interrupt Controller", @"ASF!":@"Alert Standard Format", @"BOOT":@"Simple Boot Flag", @"BERT":@"Boot Error Record", @"BGRT":@"Boot Graphics Resource", @"CPEP":@"Corrected Platform Error Polling", @"DBGP":@"Debug Port", @"DMAR":@"DMA Remapping", @"DRTM":@"Dynamic Root of Trust for Measurement", @"DSDT": @"Differentiated System Description", @"ECDT":@"Embedded Controller Boot Resources", @"EINJ":@"Error Injection", @"ERST":@"Error Record Serialization", @"FACP":@"Fixed ACPI Control Pointer", @"FACS":@"Firmware ACPI Control Structure", @"FADT":@"Fixed ACPI Description", @"FPDT":@"Firmware Performance Data", @"GTDT":@"Generic Timer Description", @"HEST":@"Hardware Error Source", @"HPET":@"High Precision Event Timer", @"MPST":@"Memory Power State", @"IVRS":@"I/O Virtualization Reporting Structure", @"MADT":@"Multiple APIC Description", @"MCFG":@"PCI Memory Mapped Configuration", @"MCHI":@"Management Controller Host Interface", @"MSCT":@"Maximum System Characteristics", @"PCCT":@"Platform Communications Channel", @"PMTT":@"Platform Memory Topology", @"RASF":@"RAS Feature", @"RSDP":@"Root System Description Pointer", @"RSDT":@"Root System Description", @"SBST":@"Smart Battery Specification", @"SLIC":@"Software Licensing Description", @"SLIT":@"System Locality Distance Information", @"SPCR":@"Serial Port Console Redirection", @"SPMI":@"Server Platform Management Interface", @"SRAT":@"System Resource Affinity", @"SSDT":@"Secondary System Description", @"TCPA":@"Trusted Computing Platform Alliance", @"UEFI":@"Uefi Boot Optimization", @"WAET":@"Windows ACPI Emulated devices", @"WDAT":@"Watchdog Action", @"WDDT":@"Watchdog Timer Description", @"WDRT":@"Watchdog Resource", @"XSDT":@"Extended System Description"};
     io_service_t expert;
     if ((expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert")))) {
-        tables = (__bridge NSDictionary *)IORegistryEntryCreateCFProperty(expert, CFSTR("ACPI Tables"), kCFAllocatorDefault, 0);
-        for (NSString *table in [tables.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]) {
+        tableset = (__bridge NSDictionary *)IORegistryEntryCreateCFProperty(expert, CFSTR("ACPI Tables"), kCFAllocatorDefault, 0);
+        for (NSString *table in [tableset.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]) {
             NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:table action:@selector(documentFromACPI:) keyEquivalent:@""];
-            if (table.length >= 4 && [names objectForKey:[table substringToIndex:4]]) {
-                [item setAttributedTitle:[[NSAttributedString alloc] initWithRTF:[[NSString stringWithFormat:@"{\\rtf1\\ansi {\\fonttbl\\f0 LucidaGrande;}\\fs28 %@\\line\\fs20 %@}", table, [names objectForKey:[table substringToIndex:4]]] dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:NULL]];
+            if (table.length >= 4 && [stdTables objectForKey:[table substringToIndex:4]]) {
+                [item setAttributedTitle:[[NSAttributedString alloc] initWithRTF:[[NSString stringWithFormat:@"{\\rtf1\\ansi {\\fonttbl\\f0 LucidaGrande;}\\fs28 %@\\line\\fs20 %@}", table, [stdTables objectForKey:[table substringToIndex:4]]] dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:NULL]];
                 [item setTitle:table];
             }
             [[[NSApp delegate] tables] addItem:item];
@@ -49,6 +50,9 @@ static NSString *bootlog;
         IOObjectRelease(expert);
     }
     if (!bootlog) bootlog = @"";
+}
++(NSDictionary *)tableset {
+    return tableset;
 }
 +(NSString *)wasInjected:(NSString *)table{
     NSString *file;
@@ -75,20 +79,37 @@ static NSString *bootlog;
     return [NSFileManager.defaultManager stringWithFileSystemRepresentation:temp length:strlen(temp)];
 }
 +(NSData *)fetchTable:(NSString *)name{
-    if ([tables objectForKey:name])
-        return [tables objectForKey:name];
+    if ([tableset objectForKey:name])
+        return [tableset objectForKey:name];
     ModalError([NSError errorWithDomain:kMaciASLDomain code:kCompilerError userInfo:@{NSLocalizedDescriptionKey:@"Table Retrieval Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"Error fetching %@ from IORegistry",name]}]);
     return nil;
 }
-+(NSDictionary *)decompile:(NSData *)aml{
++(NSDictionary *)decompile:(NSData *)aml withResolution:(NSString *)tableset {
+    NSArray *args = @[];
+    NSMutableArray *amls;
+    NSDictionary *tabs;
+    if (tableset && (tabs = [tableset isEqualToString:kSystemTableset]?self.tableset:[[NSDictionary dictionaryWithContentsOfFile:tableset] objectForKey:@"Tables"]) && [[tabs allKeysForObject:aml] containsObject:@"DSDT"]) {
+        amls = [NSMutableArray array];
+        for (NSString *table in tabs) {
+            if (![table hasPrefix:@"SSDT"]) continue;
+            [amls addObject:[iASL tempFile:@"iASLXXXXXX.aml"]];
+            [NSFileManager.defaultManager createFileAtPath:amls.lastObject contents:[tabs objectForKey:table] attributes:nil];
+        }
+        args = @[@"-e",[[amls valueForKey:@"lastPathComponent"] componentsJoinedByString:@","]];
+    }
     NSString *path = [iASL tempFile:@"iASLXXXXXX.aml"];
     [NSFileManager.defaultManager createFileAtPath:path contents:aml attributes:nil];
-    iASL *decompile = [iASL create:@[@"-d",path.lastPathComponent] withFile:path];
-    if (!decompile.status)
-        return @{@"status":@(decompile.status), @"object":[NSError errorWithDomain:kMaciASLDomain code:kDecompileError userInfo:@{NSLocalizedDescriptionKey:@"Decompilation Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"iASL returned:\n%@\n%@", decompile.stdOut, decompile.stdErr]}]};
+    iASL *decompile = [iASL create:[args arrayByAddingObjectsFromArray:@[@"-d",path.lastPathComponent]] withFile:path];
+    NSError *err;
+    for (NSString *aml in amls)
+        if (![NSFileManager.defaultManager removeItemAtPath:aml error:&err])
+            ModalError(err);
+    if (!decompile.status) {
+        if (amls) return [self decompile:aml withResolution:nil];
+        else return @{@"status":@(decompile.status), @"object":[NSError errorWithDomain:kMaciASLDomain code:kDecompileError userInfo:@{NSLocalizedDescriptionKey:@"Decompilation Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"iASL returned:\n%@\n%@", decompile.stdOut, decompile.stdErr]}]};
+    }
     path = [path.stringByDeletingPathExtension stringByAppendingPathExtension:@"dsl"];
     NSString *dsl = [[NSString alloc] initWithData:[NSFileManager.defaultManager contentsAtPath:path] encoding:NSASCIIStringEncoding];
-    NSError *err;
     if (![NSFileManager.defaultManager removeItemAtPath:path error:&err])
         ModalError(err);
     NSRange block = [dsl rangeOfString:@"/*\n * "];

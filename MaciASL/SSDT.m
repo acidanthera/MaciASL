@@ -130,7 +130,7 @@ static SSDTGen *sharedSSDT;
     while (cpus < logicalCpus)
         [ssdt appendFormat:@"\n    Scope (\\_PR.%@)\n    {\n        Method (APSS, 0, NotSerialized)\n        {\n            Return (\\_PR.%@.APSS)\n        }\n    }\n", [self cpuString:cpus++], [self cpuString:0]];
     [ssdt appendString:@"}\n"];
-    Document *doc = [[NSApp delegate] newDocument:ssdt withName:@"Generated SSDT"];
+    Document *doc = [FSDocumentController.sharedDocumentController newDocument:ssdt withName:@"Generated SSDT"];
     if (doc) [doc quickPatch:generator];
 }
 -(NSString *)cpuString:(NSUInteger)cpu {
