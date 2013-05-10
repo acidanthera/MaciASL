@@ -485,6 +485,7 @@ static NSRegularExpression *template;
     template = [NSRegularExpression regularExpressionWithPattern:@"%(\\d+)" options:0 error:nil];
 }
 +(NSDictionary *)fields:(NSString *)patch{
+    if (!patch) patch = @"";
     __block NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [field enumerateMatchesInString:patch options:0 range:NSMakeRange(0, patch.length) usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
         NSString *domain = [patch substringWithRange:[result rangeAtIndex:1]];
