@@ -105,7 +105,10 @@ static NSString *bootlog;
         if (![NSFileManager.defaultManager removeItemAtPath:aml error:&err])
             ModalError(err);
     if (!decompile.status) {
-        if (amls) return [self decompile:aml withResolution:nil];
+        if (amls) {
+            [[NSApp delegate] logEntry:@"Decompilation with resolution failed, trying without resolution"];
+            return [self decompile:aml withResolution:nil];
+        }
         else return @{@"status":@(decompile.status), @"object":[NSError errorWithDomain:kMaciASLDomain code:kDecompileError userInfo:@{NSLocalizedDescriptionKey:@"Decompilation Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"iASL returned:\n%@\n%@", decompile.stdOut, decompile.stdErr]}]};
     }
     path = [path.stringByDeletingPathExtension stringByAppendingPathExtension:@"dsl"];
