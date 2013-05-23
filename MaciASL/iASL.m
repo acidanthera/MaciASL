@@ -23,13 +23,22 @@ static NSString *bootlog;
     io_service_t expert;
     if ((expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert")))) {
         tableset = (__bridge NSDictionary *)IORegistryEntryCreateCFProperty(expert, CFSTR("ACPI Tables"), kCFAllocatorDefault, 0);
+        NSString *prefix = @"Presave ";
         for (NSString *table in [tableset.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]) {
-            NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:table action:@selector(documentFromACPI:) keyEquivalent:@""];
+            NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:table action:@selector(documentFromACPI:) keyEquivalent:@""], *alternate = [item copy];
+            alternate.keyEquivalentModifierMask = NSAlternateKeyMask;
+            alternate.alternate = true;
             if (table.length >= 4 && [stdTables objectForKey:[table substringToIndex:4]]) {
-                [item setAttributedTitle:[[NSAttributedString alloc] initWithRTF:[[NSString stringWithFormat:@"{\\rtf1\\ansi {\\fonttbl\\f0 LucidaGrande;}\\fs28 %@\\line\\fs20 %@}", table, [stdTables objectForKey:[table substringToIndex:4]]] dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:NULL]];
-                [item setTitle:table];
+                NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithRTF:[[NSString stringWithFormat:@"{\\rtf1\\ansi {\\fonttbl\\f0 LucidaGrande;}\\fs28 %@\\line\\fs20 %@}", table, [stdTables objectForKey:[table substringToIndex:4]]] dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:NULL];
+                item.attributedTitle = title;
+                [title replaceCharactersInRange:NSMakeRange(0, 0) withString:prefix];
+                alternate.attributedTitle = title;
+                item.title = table;
             }
+            else alternate.attributedTitle = [[NSAttributedString alloc] initWithString:[prefix stringByAppendingString:table] attributes:@{NSFontAttributeName:[NSFont systemFontOfSize:14.0]}];
+            alternate.title = table;
             [[[NSApp delegate] tables] addItem:item];
+            [[[NSApp delegate] tables] addItem:alternate];
         }
         IOObjectRelease(expert);
     }
