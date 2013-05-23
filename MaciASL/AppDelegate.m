@@ -308,12 +308,12 @@
 @end
 
 @implementation FSRulerView
-static NSParagraphStyle *pstyle;
+static NSDictionary *style;
 
 +(void)initialize {
     NSMutableParagraphStyle *temp = [NSMutableParagraphStyle new];
     [temp setAlignment:NSRightTextAlignment];
-    pstyle = [temp copy];
+    style = @{NSFontAttributeName:[NSFont systemFontOfSize:NSFont.smallSystemFontSize], NSParagraphStyleAttributeName:[temp copy]};
 }
 -(id)init {
     self = [super init];
@@ -328,7 +328,6 @@ static NSParagraphStyle *pstyle;
         self.ruleThickness = ((NSInteger)log10(stop)+1)*8;
         return;
     }
-    NSDictionary *style = @{NSFontAttributeName:[NSFont systemFontOfSize:NSFont.smallSystemFontSize], NSParagraphStyleAttributeName:pstyle};
     rect.size.width -= 2;
     rect.origin.y -= (NSInteger)(self.scrollView.documentVisibleRect.origin.y+rect.origin.y) % height - (height-(NSFont.smallSystemFontSize+2))/2;
     rect.size.height = height;
