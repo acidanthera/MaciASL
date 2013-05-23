@@ -323,7 +323,7 @@ static NSDictionary *style;
     return self;
 }
 -(void)drawHashMarksAndLabelsInRect:(NSRect)rect {
-    NSInteger height = [[self.scrollView.documentView layoutManager] defaultLineHeightForFont:NSFontManager.sharedFontManager.selectedFont], start = (self.scrollView.documentVisibleRect.origin.y+rect.origin.y)/height+1, stop = 1+start+rect.size.height/height;
+    NSInteger height = [[self.scrollView.documentView layoutManager] defaultLineHeightForFont:NSFontManager.sharedFontManager.selectedFont], start = floor((self.scrollView.documentVisibleRect.origin.y+rect.origin.y)/height)+1, stop = 1+start+ceil(rect.size.height/height);
     if (self.ruleThickness < MAX(16,((NSInteger)log10(stop)+1)*8)) {
         self.ruleThickness = ((NSInteger)log10(stop)+1)*8;
         return;
@@ -331,7 +331,7 @@ static NSDictionary *style;
     rect.size.width -= 2;
     rect.origin.y -= (NSInteger)(self.scrollView.documentVisibleRect.origin.y+rect.origin.y) % height - (height-(NSFont.smallSystemFontSize+2))/2;
     rect.size.height = height;
-    while (start <= stop) {
+    while (start < stop) {
         [[NSString stringWithFormat:@"%ld", start++] drawWithRect:rect options:NSStringDrawingUsesLineFragmentOrigin attributes:style];
         rect.origin.y += height;
     }
