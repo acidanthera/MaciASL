@@ -81,7 +81,7 @@ static NSDictionary *themes;
 }
 
 -(void)textStorageDidProcessEditing:(NSNotification *)notification{
-    if (notification.object != view.superview || ![NSUserDefaults.standardUserDefaults boolForKey:@"colorize"]) return;
+    if (![NSUserDefaults.standardUserDefaults boolForKey:@"colorize"]) return;
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(colorize) object:nil];
     [self performSelector:@selector(colorize) withObject:nil afterDelay:0.15];
 }
