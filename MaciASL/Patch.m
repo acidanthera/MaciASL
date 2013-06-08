@@ -415,7 +415,7 @@ static NSRegularExpression *hid;
     switch (patch.action) {
         case insert:
             range = NSMakeRange(NSMaxRange([node contentRange:text]), 0);
-            if ([text characterAtIndex:NSMaxRange(range)]=='\n' && range.length++)
+            if ([text characterAtIndex:NSMaxRange(range)]=='\n' && ++range.length)
             result = @[[PatchDelta create:range withReplacement:[patch argAsInsertion:lineForRange(text, range)]]];
             else {
                 NSString *insert = [patch argAsInsertion:lineForRange(text, range)];
