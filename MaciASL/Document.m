@@ -186,7 +186,9 @@
         if (!_oldNav) _oldNav = nav;
         nav = [DefinitionBlock create:_oldNav.name withRange:_oldNav.range];
         NSMutableArray *temp = [_oldNav flat];
-        [temp filterUsingPredicate:[NSPredicate predicateWithFormat:@"name contains[c] %@", [sender stringValue]]];
+        [temp filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings){
+            return [[evaluatedObject name] rangeOfString:[sender stringValue] options:NSCaseInsensitiveSearch].location != NSNotFound;
+        }]];
         if (temp.count && [temp objectAtIndex:0] == _oldNav) [temp removeObjectAtIndex:0];
         muteWithNotice(self, nav, [nav setChildren:temp])
     }
