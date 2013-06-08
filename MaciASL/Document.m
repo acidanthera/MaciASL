@@ -203,7 +203,12 @@
     [[NSApp delegate] showSummary:sender];
 }
 -(IBAction)hexConvert:(id)sender{
-    //TODO: hex converter popup or sheet
+    NSString *number = [text.string substringWithRange:textView.selectedRange];
+    if (!number.length) return;
+    errno = 0;
+    UInt64 internal = strtoll(number.UTF8String, nil, 0);
+    if (errno) NSBeep();
+    else [textView insertText:[NSString stringWithFormat:[number hasPrefix:@"0x"]?@"%lld":@"0x%llX",internal] replacementRange:textView.selectedRange];
 }
 -(IBAction)jumpToLine:(id)sender{
     [NSApp beginSheet:jump modalForWindow:[self windowForSheet] modalDelegate:nil didEndSelector:nil contextInfo:nil];
