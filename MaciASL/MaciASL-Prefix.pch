@@ -37,7 +37,7 @@ NS_INLINE void SplitView(NSSplitView *splitView){
     NSUInteger i = 0;
     for (NSString *frame in [NSUserDefaults.standardUserDefaults stringArrayForKey:[@"NSSplitView Subview Frames " stringByAppendingString:splitView.autosaveName]])
          [[splitView.subviews objectAtIndex:i++] setFrame:NSRectFromString(frame)];
-    [splitView setNeedsLayout:true];
+    splitView.needsLayout = true;
 }
 NS_INLINE NSUInteger CountCharInStr(NSString *string, unichar c) {
     NSUInteger count = 0;

@@ -25,14 +25,14 @@
 #pragma mark GUI
 -(IBAction)apply:(id)sender{
     if (patchFile.state == applied) return;
-    [patchFile setState:applying];
+    patchFile.state = applying;
     NSTextView *view = parent.textView;
     [view.undoManager beginUndoGrouping];
     for (NSArray *changes in patchFile.changes)
         for (PatchDelta *change in changes)
             [view insertText:change.after replacementRange:change.before];
     [view.undoManager endUndoGrouping];
-    [patchFile setState:applied];
+    patchFile.state = applied;
     self.patch = nil;
 }
 -(IBAction)open:(id)sender{
@@ -65,7 +65,7 @@
 #pragma mark NSWindowDelegate
 -(void)cancelOperation:(id)sender{
     if (patchView.selectedRange.length && [NSUserDefaults.standardUserDefaults boolForKey:@"isolation"])
-        [patchView setSelectedRange:NSMakeRange(patchView.selectedRange.location, 0)];
+        patchView.selectedRange = NSMakeRange(patchView.selectedRange.location, 0);
     else [self close:sender];
 }
 
@@ -107,7 +107,7 @@
     [NSApp beginSheet:window modalForWindow:[parent windowForSheet] modalDelegate:nil didEndSelector:nil contextInfo:nil];
     SplitView([[window.contentView subviews] objectAtIndex:0]);
     SplitView([[[[[[window.contentView subviews] objectAtIndex:0] subviews] objectAtIndex:1] subviews] objectAtIndex:0]);
-    [patchView setEnabledTextCheckingTypes:0];
+    patchView.enabledTextCheckingTypes = 0;
     [self expandTree];
     [self preview];
 }
@@ -128,7 +128,7 @@
     self.legend = nil;
     self.patchFile = [PatchFile create:selection?[patch substringWithRange:patchView.selectedRange]:patch];
     if (!patchFile.patches.count) return;
-    [patchFile setText:[parent.text.string mutableCopy]];
+    patchFile.text = [parent.text.string mutableCopy];
     [patchFile apply];
     self.legend = [NSString stringWithFormat:@"%ld Patch%s, %ld Change%s, %ld Reject%s", patchFile.patches.count, (patchFile.patches.count == 1)?"":"es", patchFile.preview.count-patchFile.rejects, (patchFile.preview.count-patchFile.rejects == 1)?"":"s", patchFile.rejects, (patchFile.rejects == 1)?"":"s"];
     if (!patchFile.preview.count) return;
@@ -175,7 +175,7 @@ static NSRegularExpression *hid;
     __autoreleasing NSString *token;
     NSScanner *scan = [NSScanner scannerWithString:[patch stringByTrimmingCharactersInSet:set]];
     NSScanner *subscan;
-    [scan setCharactersToBeSkipped:nil];
+    scan.charactersToBeSkipped = nil;
     while(![scan isAtEnd]){
         [scan scanString:@"\n" intoString:nil];
         if (![[scan.string substringFromIndex:scan.scanLocation].lowercaseString hasPrefix:@"into"]) {
@@ -185,17 +185,17 @@ static NSRegularExpression *hid;
         [scan scanUpToString:@";" intoString:&token];
         [scan scanString:@";" intoString:nil];
         subscan = [NSScanner scannerWithString:token];
-        [subscan setCharactersToBeSkipped:nil];
+        subscan.charactersToBeSkipped = nil;
         [subscan scanUpToCharactersFromSet:set intoString:&token];
         NSUInteger index = [extents indexOfObject:token.lowercaseString];
         if (index == NSNotFound) continue;
         Patch *patch = [Patch new];
-        [patch setAll:(index == 1)];
+        patch.all = (index == 1);
         [subscan scanCharactersFromSet:set intoString:nil];
         [subscan scanUpToCharactersFromSet:set intoString:&token];
         index = [scopes indexOfObject:token.lowercaseString];
         if (index == NSNotFound) continue;
-        [patch setScope:(enum scope)index];
+        patch.scope = (enum scope)index;
         NSMutableArray *conditions = [NSMutableArray array];
         @try {
             while (![subscan isAtEnd]) {
@@ -216,10 +216,10 @@ static NSRegularExpression *hid;
                 }
                 [conditions addObject:[PatchPredicate create:(enum predicate)index withSelector:obj]];
             }
-            [patch setPredicates:[conditions copy]];
+            patch.predicates = [conditions copy];
             index = [actions indexOfObject:token.lowercaseString];
             if (index == NSNotFound) continue;
-            [patch setAction:(enum action)index];
+            patch.action = (enum action)index;
             [subscan scanCharactersFromSet:set intoString:nil];
             @try {
                 if ([subscan isAtEnd])
@@ -248,7 +248,7 @@ static NSRegularExpression *hid;
                 [subscan scanCharactersFromSet:set intoString:nil];
                 token = [subscan.string substringFromIndex:subscan.scanLocation];
                 if ([token isEqualToString:@"end"] || ![token.lowercaseString hasSuffix:@"end"]) continue;
-                [patch setArgument:[token substringToIndex:token.length-4]];
+                patch.argument = [token substringToIndex:token.length-4];
             } @catch (id obj) {}
             [patches addObject:patch];
         } @catch (id obj) {}

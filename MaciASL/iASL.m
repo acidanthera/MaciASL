@@ -156,7 +156,7 @@ static NSString *bootlog;
     if ([NSUserDefaults.standardUserDefaults boolForKey:@"werror"] && [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] > 4)
         [arguments insertObject:@"-we" atIndex:0];
     temp.task = [NSTask create:[NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]] args:arguments callback:@selector(logEntry:) listener:[NSApp delegate]];
-    if (file) [temp.task setCurrentDirectoryPath:file.stringByDeletingLastPathComponent];
+    if (file) temp.task.currentDirectoryPath = file.stringByDeletingLastPathComponent;
     [temp.task launchAndWait];
     NSError *err;
     if (file && ![NSFileManager.defaultManager removeItemAtPath:file error:&err])
@@ -303,7 +303,7 @@ static char kLockKey;
                 if (self.listener) [self.listener performSelector:self.callback withObject:line];
                 [lines addObject:line];
             }
-            [buffer setString:temp.lastObject];
+            buffer.string = temp.lastObject;
         }
     }
     #pragma clang diagnostic pop
@@ -337,15 +337,15 @@ static char kLockKey;
     NSDate *filemtime = [[NSFileManager.defaultManager attributesOfItemAtPath:file error:&err] fileModificationDate];
     if (ModalError(err)) return false;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"HEAD"];
+    request.HTTPMethod = @"HEAD";
     NSHTTPURLResponse *response;
     [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
     if (ModalError(err)) return false;
     NSString *urlmstr = [response.allHeaderFields objectForKey:@"Last-Modified"];
     NSDateFormatter *df = [NSDateFormatter new];
-    [df setDateFormat:@"EEE',' dd MMM yyyy HH':'mm':'ss 'GMT'"];
-    [df setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
-    [df setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"]];
+    df.dateFormat = @"EEE',' dd MMM yyyy HH':'mm':'ss 'GMT'";
+    df.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    df.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
     NSDate *urlmtime = [df dateFromString:urlmstr];
     bool changed = ([filemtime compare:urlmtime] == NSOrderedAscending);
     if (changed)

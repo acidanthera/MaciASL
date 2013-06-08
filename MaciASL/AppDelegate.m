@@ -34,11 +34,11 @@
     log = [NSMutableArray array];
     [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"acpi" options:0 context:NULL];
     [NSUserDefaults.standardUserDefaults registerDefaults:@{@"theme":@"Light", @"dsdt":@(YES), @"suggest":@(NO), @"acpi":@4, @"context":@(NO), @"isolation":@(NO), @"colorize":@(YES), @"remarks":@(YES), @"optimizations": @(NO), @"werror": @(NO), @"preference": @0, @"font": @{@"name":@"Menlo", @"size": @11}, @"sources":@[@{@"name":@"Sourceforge", @"url":@"http://maciasl.sourceforge.net"}]}];
-    [NSFontManager.sharedFontManager setTarget:self];
+    NSFontManager.sharedFontManager.target = self;
     NSDictionary *font = [NSUserDefaults.standardUserDefaults objectForKey:@"font"];
     [NSFontManager.sharedFontManager setSelectedFont:[NSFont fontWithName:[font objectForKey:@"name"] size:[[font objectForKey:@"size"] floatValue]] isMultiple:false];
     [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
-    [logView setLevel:NSNormalWindowLevel];
+    logView.level = NSNormalWindowLevel;
 }
 -(BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender{
     if (![NSUserDefaults.standardUserDefaults boolForKey:@"dsdt"]) return true;
@@ -179,23 +179,23 @@
     switch (index) {
         case 0:
             newSize = general.frame.size;
-            [preferences setContentView:general];
-            [preferences setContentSize:newSize];
+            preferences.contentView = general;
+            preferences.contentSize = newSize;
             break;
         case 1:
             newSize = iasl.frame.size;
-            [preferences setContentView:iasl];
-            [preferences setContentSize:newSize];
+            preferences.contentView = iasl;
+            preferences.contentSize = newSize;
             break;
         case 2:
             newSize = sources.frame.size;
-            [preferences setContentView:sources];
-            [preferences setContentSize:newSize];
+            preferences.contentView = sources;
+            preferences.contentSize = newSize;
             break;
         default:
             return;
     }
-    [preferences.toolbar setSelectedItemIdentifier:[sender itemIdentifier]];
+    preferences.toolbar.selectedItemIdentifier = [sender itemIdentifier];
 }
 -(void)changeFont:(id)sender{
     NSFontManager *mgr = NSFontManager.sharedFontManager;
@@ -249,7 +249,7 @@
     Document *doc = [self openUntitledDocumentAndDisplay:false error:&err];
     if (ModalError(err)) return nil;
     doc.displayName = name;
-    [doc.text.mutableString setString:text];
+    doc.text.mutableString.string = text;
     [doc makeWindowControllers];
     [doc performSelectorOnMainThread:@selector(showWindows) withObject:nil waitUntilDone:false];
     return doc;
@@ -312,7 +312,7 @@ static NSDictionary *style;
 
 +(void)initialize {
     NSMutableParagraphStyle *temp = [NSMutableParagraphStyle new];
-    [temp setAlignment:NSRightTextAlignment];
+    temp.alignment = NSRightTextAlignment;
     style = @{NSFontAttributeName:[NSFont systemFontOfSize:NSFont.smallSystemFontSize], NSParagraphStyleAttributeName:[temp copy]};
 }
 -(id)init {

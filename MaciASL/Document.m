@@ -33,7 +33,7 @@
         jumpLine = 1;
         nav = [DefinitionBlock create:@"Unknown" withRange:NSMakeRange(0, 0)];
         text = [NSTextStorage new];
-        [text setDelegate:self];
+        text.delegate = self;
     }
     return self;
 }
@@ -45,16 +45,17 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
     [super windowControllerDidLoadNib:aController];
     // Add any code here that needs to be executed once the windowController has loaded the document's window.
-    [textView.enclosingScrollView setHasVerticalRuler:true];
-    [textView.enclosingScrollView setVerticalRulerView:[FSRulerView new]];
-    [textView.enclosingScrollView setRulersVisible:true];
+    [navView registerForDraggedTypes:@[NSPasteboardTypeMultipleTextSelection]];
+    textView.enclosingScrollView.hasVerticalRuler = true;
+    textView.enclosingScrollView.verticalRulerView = [FSRulerView new];
+    textView.enclosingScrollView.rulersVisible = true;
     [textView.layoutManager replaceTextStorage:text];
-    [textView setEnabledTextCheckingTypes:0];
+    textView.enabledTextCheckingTypes = 0;
     SplitView([[aController.window.contentView subviews] objectAtIndex:0]);
     NSTextContainer *cont = textView.textContainer;
-    [cont setContainerSize:NSMakeSize(1e7, 1e7)];
-    [cont setWidthTracksTextView:false];
-    [cont setHeightTracksTextView:false];
+    cont.containerSize = NSMakeSize(1e7, 1e7);
+    cont.widthTracksTextView = false;
+    cont.heightTracksTextView = false;
     colorize = [Colorize create:textView];
     [[NSApp delegate] changeFont:nil];
 }
@@ -106,11 +107,11 @@
     // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
     // If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
     if ([typeName isEqualToString:kDSLfileType])
-        [text.mutableString setString:[[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding]];
+        text.mutableString.string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     else if ([typeName isEqualToString:kAMLfileType]) {
         NSDictionary *decompile = [iASL decompile:data withResolution:nil];
         if ([[decompile objectForKey:@"status"] boolValue])
-            [text.mutableString setString:[decompile objectForKey:@"object"]];
+            text.mutableString.string = [decompile objectForKey:@"object"];
         else if (outError != NULL)
             *outError = [decompile objectForKey:@"object"];
     }
@@ -124,7 +125,7 @@
 }
 -(NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError *__autoreleasing *)outError{
     NSTextView *print = [[NSTextView alloc] initWithFrame:self.printInfo.imageablePageBounds];
-    [print setString:text.string];
+    print.string = text.string;
     return [NSPrintOperation printOperationWithView:print];
 }
 -(void)close{
@@ -145,15 +146,15 @@
 }
 -(void)quickPatch:(NSString *)string{
     if (self.isLocked) return;
-    [self.patch setPatch:string];
+    self.patch.patch = string;
     [NSObject cancelPreviousPerformRequestsWithTarget:self.patch selector:@selector(preview) object:nil];
     [self.patch preview];
     [self.patch apply:self];
 }
 -(id)asPatch:(NSScriptCommand *)command{
     if (self.isLocked) {
-        [command setScriptErrorNumber:kLockError];
-        [command setScriptErrorString:@"Document is locked"];
+        command.scriptErrorNumber = kLockError;
+        command.scriptErrorString = @"Document is locked";
         return nil;
     }
     NSString *path = [[command.arguments objectForKey:@"patchfile"] path];
@@ -161,9 +162,9 @@
         [self quickPatch:[[NSString alloc] initWithData:[NSFileManager.defaultManager contentsAtPath:path] encoding:NSUTF8StringEncoding]];
         return @{@"patches":[NSNumber numberWithLong:self.patch.patchFile.patches.count], @"changes":[NSNumber numberWithLong:self.patch.patchFile.preview.count-self.patch.patchFile.rejects], @"rejects":[NSNumber numberWithLong:self.patch.patchFile.rejects]};
     } else {
-        [command setScriptErrorNumber:kAScriptFileError];
-        [command setScriptErrorString:@"File not found"];
-        [command setScriptErrorOffendingObjectDescriptor:[NSAppleEventDescriptor descriptorWithString:path]];
+        command.scriptErrorNumber = kAScriptFileError;
+        command.scriptErrorString = @"File not found";
+        command.scriptErrorOffendingObjectDescriptor = [NSAppleEventDescriptor descriptorWithString:path];
         return nil;
     }
 }

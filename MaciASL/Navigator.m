@@ -97,9 +97,8 @@ static NSCharacterSet *unset;
         [scan scanCharactersFromSet:braces intoString:&test];
         Scope *child = children.lastObject;
         if ([test isEqualToString:@"{}"]) {
-            if (found && [containers containsObject:NSStringFromClass(child.class)]){
-                [child setRange:NSMakeRange(child.range.location,scan.scanLocation - child.range.location)];
-            }
+            if (found && [containers containsObject:NSStringFromClass(child.class)])
+                child.range = NSMakeRange(child.range.location,scan.scanLocation - child.range.location);
         }
         else if ([test isEqualToString:@"{"]) {
             depth++;
@@ -114,7 +113,7 @@ static NSCharacterSet *unset;
                 if ([test characterAtIndex:i++] != '}') continue;
                 if (depth-- == path.count){
                     child = path.lastObject;
-                    [child setRange:NSMakeRange(child.range.location,scan.scanLocation - child.range.location)];
+                    child.range = NSMakeRange(child.range.location,scan.scanLocation - child.range.location);
                     [path removeLastObject];
                     child = path.lastObject;
                     children = child.children;

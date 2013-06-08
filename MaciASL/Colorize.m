@@ -74,9 +74,9 @@ static NSDictionary *themes;
     else if ([keyPath isEqualToString:@"theme"]) {
         if (!(theme = [themes objectForKey:[NSUserDefaults.standardUserDefaults stringForKey:@"theme"]]))
             theme = [themes.allKeys objectAtIndex:0];
-        [view setBackgroundColor:theme.background];
-        [view setTextColor:theme.text];
-        [view setInsertionPointColor:theme.text];
+        view.backgroundColor = theme.background;
+        view.textColor = theme.text;
+        view.insertionPointColor = theme.text;
     }
 }
 
