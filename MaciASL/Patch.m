@@ -113,7 +113,7 @@
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     if ([keyPath isEqualToString:@"patch"]) {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(preview) object:nil];
+        [Patcher cancelPreviousPerformRequestsWithTarget:self selector:@selector(preview) object:nil];
         [self performSelector:@selector(preview) withObject:nil afterDelay:1.5];
     }
     else if ([keyPath isEqualToString:@"providers"])

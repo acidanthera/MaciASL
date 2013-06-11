@@ -147,7 +147,7 @@
 -(void)quickPatch:(NSString *)string{
     if (self.isLocked) return;
     self.patch.patch = string;
-    [NSObject cancelPreviousPerformRequestsWithTarget:self.patch selector:@selector(preview) object:nil];
+    [Document cancelPreviousPerformRequestsWithTarget:self.patch selector:@selector(preview) object:nil];
     [self.patch preview];
     [self.patch apply:self];
 }
@@ -280,7 +280,7 @@
 #pragma mark NSTextStorageDelegate
 -(void)textStorageDidProcessEditing:(NSNotification *)notification{
     [colorize textStorageDidProcessEditing:notification];
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(buildNav) object:nil];
+    [Document cancelPreviousPerformRequestsWithTarget:self selector:@selector(buildNav) object:nil];
     [self performSelector:@selector(buildNav) withObject:nil afterDelay:1.5];
 }
 #pragma mark NSTextViewDelegate
