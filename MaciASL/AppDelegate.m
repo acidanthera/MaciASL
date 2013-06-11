@@ -262,7 +262,7 @@
         NSSavePanel *save = [NSSavePanel savePanel];
         save.prompt = @"Presave";
         save.nameFieldStringValue = name;
-        save.allowedFileTypes = @[kAMLfileType];
+        save.allowedFileTypes = @[kUTTypeAML];
         if ([save runModal] == NSFileHandlingPanelOKButton && [NSFileManager.defaultManager createFileAtPath:save.URL.path contents:aml attributes:nil])
             file = save.URL.path;
     }

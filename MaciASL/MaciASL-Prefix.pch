@@ -7,8 +7,9 @@
 #endif
 
 #define kMaciASLDomain @"MaciASLDomain"
-#define kAMLfileType @"org.acpica.aml"
-#define kDSLfileType @"org.acpica.dsl"
+#define kUTTypeAML @"org.acpica.aml"
+#define kUTTypeDSL @"org.acpica.dsl"
+#define kUTTypeNavObject @"net.sourceforge.maciasl.navobject"
 #define kTablesetFileType @"net.sourceforge.maciasl.tableset"
 #define kSystemTableset @"//System"
 #define kCompilerError 1
