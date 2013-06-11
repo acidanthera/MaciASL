@@ -65,7 +65,7 @@ NS_INLINE void AsynchFetch(NSURL *url, SEL selector, id obj, id hold) {
         else
             #pragma clang diagnostic push
             #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [obj performSelector:selector withObject:@{@"response":[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding], @"hold":!hold?NSNull.null:hold}];
+            [obj performSelector:selector withObject:@{@"response":[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding], @"hold":hold?:NSNull.null}];
             #pragma clang diagnostic pop
     }];
 }

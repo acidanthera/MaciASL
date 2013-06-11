@@ -104,7 +104,7 @@
     [self viewPreference:sender];
 }
 -(IBAction)documentFromACPI:(id)sender{
-    [FSDocumentController.sharedDocumentController newDocumentFromACPI:[sender title] saveFirst:[[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask];
+    [FSDocumentController.sharedDocumentController newDocumentFromACPI:[sender title] saveFirst:NSEvent.modifierFlags&NSAlternateKeyMask];
 }
 -(IBAction)showLog:(id)sender{
     [logView makeKeyAndOrderFront:sender];
