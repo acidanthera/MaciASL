@@ -62,11 +62,14 @@
 + (BOOL)autosavesInPlace {
     return true;
 }
-#if MACOSX_DEPLOYMENT_TARGET <= MAC_OS_X_VERSION_10_7
 - (BOOL)isDraft {
+    if ([self.superclass instancesRespondToSelector:_cmd])
+        return [self.superclass instanceMethodForSelector:_cmd](self,_cmd) != nil;
     return !self.fileURL;
 }
 - (BOOL)isLocked {
+    if ([self.superclass instancesRespondToSelector:_cmd])
+        return [self.superclass instanceMethodForSelector:_cmd](self,_cmd) != nil;
     NSError *err;
     if (![self checkAutosavingSafetyAndReturnError:&err])
         return true;
@@ -78,7 +81,6 @@
         return true;
     return false;
 }
-#endif
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError {
     // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
     // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
