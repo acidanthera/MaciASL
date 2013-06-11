@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -304,7 +304,6 @@
 											<string key="NSFrame">{{170, 0}, {5, 460}}</string>
 											<reference key="NSSuperview" ref="853038596"/>
 											<reference key="NSWindow"/>
-											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<string key="NSOffsets">{0, 0}</string>
 											<object class="NSTextFieldCell" key="NSTitleCell">
@@ -961,7 +960,7 @@ wGw</bytes>
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="811539580">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSButton" id="498864286">
@@ -1103,7 +1102,6 @@ wGw</bytes>
 						</object>
 					</array>
 					<string key="NSFrameSize">{173, 95}</string>
-					<reference key="NSSuperview"/>
 					<reference key="NSNextKeyView" ref="218671916"/>
 					<string key="NSReuseIdentifierKey">_NS:20</string>
 				</object>
@@ -1378,6 +1376,14 @@ wGw</bytes>
 						<reference key="destination" ref="512844837"/>
 					</object>
 					<int key="connectionID">101654</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">dataSource</string>
+						<reference key="source" ref="440813510"/>
+						<reference key="destination" ref="512844837"/>
+					</object>
+					<int key="connectionID">101864</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2806,7 +2812,7 @@ wGw</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">101863</int>
+			<int key="maxID">101864</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2815,7 +2821,10 @@ wGw</bytes>
 					<string key="superclassName">NSObject</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="documentFromACPI:">id</string>
+						<string key="exportTableset:">id</string>
+						<string key="finishTableset:">id</string>
 						<string key="newSource:">id</string>
+						<string key="openTableset:">id</string>
 						<string key="showLog:">id</string>
 						<string key="showSSDT:">id</string>
 						<string key="showSummary:">id</string>
@@ -2826,8 +2835,20 @@ wGw</bytes>
 							<string key="name">documentFromACPI:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="exportTableset:">
+							<string key="name">exportTableset:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="finishTableset:">
+							<string key="name">finishTableset:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="newSource:">
 							<string key="name">newSource:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="openTableset:">
+							<string key="name">openTableset:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="showLog:">
@@ -2855,6 +2876,7 @@ wGw</bytes>
 						<string key="sourceView">NSTableView</string>
 						<string key="sources">NSView</string>
 						<string key="summaryView">NSWindow</string>
+						<string key="tableView">NSWindow</string>
 						<string key="tables">NSMenu</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -2884,6 +2906,10 @@ wGw</bytes>
 						</object>
 						<object class="IBToOneOutletInfo" key="summaryView">
 							<string key="name">summaryView</string>
+							<string key="candidateClassName">NSWindow</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tableView">
+							<string key="name">tableView</string>
 							<string key="candidateClassName">NSWindow</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="tables">

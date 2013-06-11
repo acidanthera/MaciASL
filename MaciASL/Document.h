@@ -10,7 +10,7 @@
 @class DefinitionBlock;
 @class Colorize;
 
-@interface Document : NSDocument <NSTextViewDelegate, NSTextStorageDelegate, NSOutlineViewDelegate> {
+@interface Document : NSDocument <NSTextViewDelegate, NSTextStorageDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource> {
     @private
     DefinitionBlock *_oldNav;
     Patcher *_patch;

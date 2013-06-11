@@ -45,7 +45,7 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *)aController {
     [super windowControllerDidLoadNib:aController];
     // Add any code here that needs to be executed once the windowController has loaded the document's window.
-    [navView registerForDraggedTypes:@[NSPasteboardTypeMultipleTextSelection]];
+    [navView registerForDraggedTypes:@[kUTTypeNavObject]];
     textView.enclosingScrollView.hasVerticalRuler = true;
     textView.enclosingScrollView.verticalRulerView = [FSRulerView new];
     textView.enclosingScrollView.rulersVisible = true;
@@ -274,8 +274,82 @@
 -(void)outlineViewSelectionDidChange:(NSNotification *)notification{//TODO: better integration, use Tab/Return/Esc hotkeys?
     if (navView != navView.window.firstResponder) return;
     NSRange range = NSMakeRange([[[navView itemAtRow:navView.selectedRow] representedObject] range].location, 0);
+    if (NSMaxRange(range) == 0) return;
     [textView scrollRangeToVisible:range];
     [textView showFindIndicatorForRange:[text.string lineRangeForRange:range]];
+}
+#pragma mark NSOutlineViewDataSource
+-(BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard {
+    NSMutableArray *objects = [NSMutableArray arrayWithCapacity:items.count];
+    for (NSTreeNode *item in items) {
+        NSUInteger path[item.indexPath.length];
+        [item.indexPath getIndexes:(NSUInteger *)&path];
+        [objects addObject:[NSPasteboardItem new]];
+        [objects.lastObject setData:[NSData dataWithBytes:path length:sizeof(path)] forType:kUTTypeNavObject];
+        [objects.lastObject setString:[text.string substringWithRange:[[item representedObject] range]] forType:NSPasteboardTypeString];
+    }
+    [pasteboard writeObjects:objects];
+    return true;
+}
+-(void)outlineView:(NSOutlineView *)outlineView draggingSession:(NSDraggingSession *)session endedAtPoint:(NSPoint)screenPoint operation:(NSDragOperation)operation {
+    if (operation == NSDragOperationDelete)
+        NSShowAnimationEffect(NSAnimationEffectDisappearingItemDefault, screenPoint, NSZeroSize, nil, nil, nil);
+    if (operation & (NSDragOperationDelete|NSDragOperationMove)) {
+        for (NSPasteboardItem *paste in session.draggingPasteboard.pasteboardItems) {
+            NSData *data = [paste dataForType:kUTTypeNavObject];
+            NSTreeNode *node = [navController.arrangedObjects descendantNodeAtIndexPath:[NSIndexPath indexPathWithIndexes:data.bytes length:data.length/sizeof(NSUInteger)]];
+            [textView insertText:@"" replacementRange:[[node representedObject] range]];
+            [outlineView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:[node.parentNode.childNodes indexOfObjectIdenticalTo:node]] inParent:node.parentNode withAnimation:NSTableViewAnimationEffectFade|NSTableViewAnimationSlideUp];//TODO: allow Generic?
+        }
+    }
+}
+-(NSDragOperation)outlineView:(NSOutlineView *)outlineView validateDrop:(id<NSDraggingInfo>)info proposedItem:(id)item proposedChildIndex:(NSInteger)index {//TODO: disallow replacing parent?
+    if (!item) return NSDragOperationNone;
+    if ([[item representedObject] isMemberOfClass:DefinitionBlock.class] && index == NSOutlineViewDropOnItemIndex) return NSDragOperationNone;
+    if (NSEvent.modifierFlags&NSControlKeyMask) {
+        [outlineView setDropItem:nil dropChildIndex:NSOutlineViewDropOnItemIndex];
+        if (NSCursor.currentCursor != NSCursor.disappearingItemCursor) [NSCursor.disappearingItemCursor push];
+        return NSDragOperationDelete;
+    }
+    else {
+        [NSCursor.disappearingItemCursor pop];
+        return  NSEvent.modifierFlags&NSAlternateKeyMask?NSDragOperationCopy:NSDragOperationMove;
+    }
+}
+-(BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id<NSDraggingInfo>)info item:(id)item childIndex:(NSInteger)index {
+    if (NSEvent.modifierFlags&NSControlKeyMask) return true;
+    bool move = ~NSEvent.modifierFlags&NSAlternateKeyMask, insert = index != NSOutlineViewDropOnItemIndex;
+    NSRange range;
+    if (insert) {
+        if (index) range = [[item childNodes] count]?[[[[item childNodes] objectAtIndex:index-1] representedObject] range]:[[item representedObject] range];
+        else range = NSMakeRange([[item representedObject] contentRange:text.string].location, 0);
+        range = NSMakeRange(NSMaxRange(range), 0);//TODO: better insertion range
+    }
+    else {
+        range = [[item representedObject] range];
+        index = [[[item parentNode] childNodes] indexOfObjectIdenticalTo:item];
+        item = [item parentNode];
+        [outlineView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:index] inParent:item withAnimation:NSTableViewAnimationEffectFade|NSTableViewAnimationSlideUp];
+    }
+    for (NSPasteboardItem *paste in [info.draggingPasteboard.pasteboardItems copy]) {
+        [textView.undoManager beginUndoGrouping];
+        [textView insertText:[paste stringForType:NSPasteboardTypeString] replacementRange:range];
+        if (move && info.draggingSource == outlineView) {
+            NSData *data = [paste dataForType:kUTTypeNavObject];
+            NSTreeNode *node = [navController.arrangedObjects descendantNodeAtIndexPath:[NSIndexPath indexPathWithIndexes:data.bytes length:data.length/sizeof(NSUInteger)]];
+            NSRange oldRange = [[node representedObject] range];
+            if (NSMaxRange(range) < oldRange.location) oldRange.location+=oldRange.length-range.length;
+            [textView insertText:@"" replacementRange:oldRange];
+            NSInteger oldIndex = [node.parentNode.childNodes indexOfObjectIdenticalTo:node];
+            [outlineView moveItemAtIndex:oldIndex-(item == node.parentNode && oldIndex > index && !insert) inParent:node.parentNode toIndex:index-(item == node.parentNode && oldIndex < index) inParent:item];
+        }
+        [textView.undoManager endUndoGrouping];
+        textView.selectedRange = NSMakeRange(range.location, 0);
+    }
+    if (move && info.draggingSource == outlineView) [info.draggingPasteboard clearContents];
+    [Document cancelPreviousPerformRequestsWithTarget:self selector:@selector(buildNav) object:nil];
+    [self buildNav];
+    return true;
 }
 #pragma mark NSTextStorageDelegate
 -(void)textStorageDidProcessEditing:(NSNotification *)notification{
