@@ -49,7 +49,7 @@ NS_INLINE NSUInteger CountCharInStr(NSString *string, unichar c) {
     return count;
 }
 NS_INLINE BOOL LoadNib(NSString *nib, id owner) {
-#if MACOSX_DEPLOMENT_TARGET > MAC_OS_X_VERSION_10_7
+#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_7
     return [NSBundle.mainBundle loadNibNamed:nib owner:owner topLevelObjects:nil];
 #else
     return [NSBundle loadNibNamed:nib owner:owner];
