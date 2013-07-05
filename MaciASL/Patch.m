@@ -86,14 +86,20 @@
 
 #pragma mark Class
 +(NSString *)entab:(NSString *)line with:(NSString *)previous{
-    NSInteger tab = 0;
+    NSInteger tab = 0, offset = 0, i;
     while (tab < previous.length)
-        if ([previous characterAtIndex:tab++] != ' ')
-            break;
-    NSInteger offset = CountCharInStr(previous, '{') + CountCharInStr(previous, '(') - CountCharInStr(previous, ')');
-    if ([line hasPrefix:@"}"]) offset--;
-    tab = (tab > 2)?((tab-3)/4)+1:0;
-    return [@"" stringByPaddingToLength:4*MAX(tab+offset, 0) withString:@" " startingAtIndex:0];
+        if ([previous characterAtIndex:tab] == ' ') tab++;
+        else break;
+    i = tab;
+    if ([line characterAtIndex:0] == '}') offset = -1;
+    else if ([previous characterAtIndex:tab] == '/') ;
+    else if ([previous characterAtIndex:tab] == '}') offset = 0;
+    else while (i < previous.length)
+        switch ([previous characterAtIndex:i++]) {
+            case '{': offset++; break;
+            case '}': offset--; break;
+        }
+    return [@"" stringByPaddingToLength:4*MAX(tab/4+MAX(MIN(offset, 1), -1), 0) withString:@" " startingAtIndex:0];
 }
 +(Patcher *)create:(id)sender{
     Patcher *temp = [Patcher new];

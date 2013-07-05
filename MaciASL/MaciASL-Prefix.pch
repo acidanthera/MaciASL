@@ -40,14 +40,6 @@ NS_INLINE void SplitView(NSSplitView *splitView){
          [[splitView.subviews objectAtIndex:i++] setFrame:NSRectFromString(frame)];
     splitView.needsLayout = true;
 }
-NS_INLINE NSUInteger CountCharInStr(NSString *string, unichar c) {
-    NSUInteger count = 0;
-    NSUInteger i = string.length;
-    while (i-- > 0)
-        if ([string characterAtIndex:i] == c)
-            count++;
-    return count;
-}
 NS_INLINE BOOL LoadNib(NSString *nib, id owner) {
 #if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_7
     return [NSBundle.mainBundle loadNibNamed:nib owner:owner topLevelObjects:nil];
