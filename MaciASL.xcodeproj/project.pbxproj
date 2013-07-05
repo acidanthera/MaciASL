@@ -14,14 +14,13 @@
 		B013B83D160C529600F6A7F2 /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = B013B83B160C529600F6A7F2 /* Document.xib */; };
 		B013B840160C529700F6A7F2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B013B83E160C529700F6A7F2 /* MainMenu.xib */; };
 		B01A8103169C1CEB0056B5C6 /* SSDT.m in Sources */ = {isa = PBXBuildFile; fileRef = B01A8102169C1CEB0056B5C6 /* SSDT.m */; };
-		B01A8106169C1D020056B5C6 /* SSDT.xib in Resources */ = {isa = PBXBuildFile; fileRef = B01A8105169C1D020056B5C6 /* SSDT.xib */; };
 		B01CAF951618EB4900AB9F0C /* Colorize.m in Sources */ = {isa = PBXBuildFile; fileRef = B01CAF941618EB4900AB9F0C /* Colorize.m */; };
-		B0207DDF161C356E008CF4E9 /* ToolbarUtilitiesFolderIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = B0207DDE161C356E008CF4E9 /* ToolbarUtilitiesFolderIcon.icns */; };
 		B059B86C16999332004DB0A9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B059B86B16999332004DB0A9 /* QuartzCore.framework */; };
+		B06352E2177EA65B00956EB1 /* Patch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06352E4177EA65B00956EB1 /* Patch.xib */; };
+		B06352E5177EA65F00956EB1 /* SSDT.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06352E7177EA65F00956EB1 /* SSDT.xib */; };
 		B0899354161D781C00FE7BD8 /* AML.icns in Resources */ = {isa = PBXBuildFile; fileRef = B0899352161D781C00FE7BD8 /* AML.icns */; };
 		B0899355161D781C00FE7BD8 /* DSL.icns in Resources */ = {isa = PBXBuildFile; fileRef = B0899353161D781C00FE7BD8 /* DSL.icns */; };
 		B0A6BF8E161A827700DDE1EF /* Patch.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A6BF8D161A827700DDE1EF /* Patch.m */; };
-		B0A6BF91161A865500DDE1EF /* Patch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0A6BF90161A865500DDE1EF /* Patch.xib */; };
 		B0A6BF94161A98A900DDE1EF /* Source.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A6BF93161A98A900DDE1EF /* Source.m */; };
 		B0A7EAF1173CA9A300363AD1 /* ACPI.icns in Resources */ = {isa = PBXBuildFile; fileRef = B0A7EAF0173CA9A300363AD1 /* ACPI.icns */; };
 		B0CABE551652CE8A00A04C7E /* MaciASL.sdef in Resources */ = {isa = PBXBuildFile; fileRef = B0CABE541652CE8A00A04C7E /* MaciASL.sdef */; };
@@ -64,16 +63,15 @@
 		B013B83F160C529700F6A7F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		B01A8101169C1CEB0056B5C6 /* SSDT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDT.h; sourceTree = "<group>"; };
 		B01A8102169C1CEB0056B5C6 /* SSDT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSDT.m; sourceTree = "<group>"; };
-		B01A8105169C1D020056B5C6 /* SSDT.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SSDT.xib; sourceTree = "<group>"; };
 		B01CAF931618EB4900AB9F0C /* Colorize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colorize.h; sourceTree = "<group>"; };
 		B01CAF941618EB4900AB9F0C /* Colorize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colorize.m; sourceTree = "<group>"; };
-		B0207DDE161C356E008CF4E9 /* ToolbarUtilitiesFolderIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = ToolbarUtilitiesFolderIcon.icns; path = ../../../../../../System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarUtilitiesFolderIcon.icns; sourceTree = "<group>"; };
 		B059B86B16999332004DB0A9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B06352E3177EA65B00956EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Patch.xib; sourceTree = "<group>"; };
+		B06352E6177EA65F00956EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/SSDT.xib; sourceTree = "<group>"; };
 		B0899352161D781C00FE7BD8 /* AML.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AML.icns; sourceTree = SOURCE_ROOT; };
 		B0899353161D781C00FE7BD8 /* DSL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = DSL.icns; sourceTree = SOURCE_ROOT; };
 		B0A6BF8C161A827700DDE1EF /* Patch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Patch.h; sourceTree = "<group>"; };
 		B0A6BF8D161A827700DDE1EF /* Patch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Patch.m; sourceTree = "<group>"; };
-		B0A6BF90161A865500DDE1EF /* Patch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Patch.xib; sourceTree = "<group>"; };
 		B0A6BF92161A98A900DDE1EF /* Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Source.h; sourceTree = "<group>"; };
 		B0A6BF93161A98A900DDE1EF /* Source.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Source.m; sourceTree = "<group>"; };
 		B0A7EAF0173CA9A300363AD1 /* ACPI.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ACPI.icns; sourceTree = SOURCE_ROOT; };
@@ -162,12 +160,12 @@
 				B0E0186316157084008CAC9B /* Navigator.m */,
 				B0A6BF8C161A827700DDE1EF /* Patch.h */,
 				B0A6BF8D161A827700DDE1EF /* Patch.m */,
-				B0A6BF90161A865500DDE1EF /* Patch.xib */,
+				B06352E4177EA65B00956EB1 /* Patch.xib */,
 				B0A6BF92161A98A900DDE1EF /* Source.h */,
 				B0A6BF93161A98A900DDE1EF /* Source.m */,
 				B01A8101169C1CEB0056B5C6 /* SSDT.h */,
 				B01A8102169C1CEB0056B5C6 /* SSDT.m */,
-				B01A8105169C1D020056B5C6 /* SSDT.xib */,
+				B06352E7177EA65F00956EB1 /* SSDT.xib */,
 				B013B82D160C529600F6A7F2 /* Supporting Files */,
 			);
 			path = MaciASL;
@@ -183,7 +181,6 @@
 				B0899352161D781C00FE7BD8 /* AML.icns */,
 				B0CABE541652CE8A00A04C7E /* MaciASL.sdef */,
 				B0899353161D781C00FE7BD8 /* DSL.icns */,
-				B0207DDE161C356E008CF4E9 /* ToolbarUtilitiesFolderIcon.icns */,
 				B013B82E160C529600F6A7F2 /* MaciASL-Info.plist */,
 				B013B832160C529600F6A7F2 /* main.m */,
 				B013B834160C529600F6A7F2 /* MaciASL-Prefix.pch */,
@@ -246,13 +243,12 @@
 			files = (
 				B013B83D160C529600F6A7F2 /* Document.xib in Resources */,
 				B013B840160C529700F6A7F2 /* MainMenu.xib in Resources */,
-				B0A6BF91161A865500DDE1EF /* Patch.xib in Resources */,
-				B0207DDF161C356E008CF4E9 /* ToolbarUtilitiesFolderIcon.icns in Resources */,
+				B06352E2177EA65B00956EB1 /* Patch.xib in Resources */,
 				B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */,
 				B0899354161D781C00FE7BD8 /* AML.icns in Resources */,
 				B0899355161D781C00FE7BD8 /* DSL.icns in Resources */,
 				B0CABE551652CE8A00A04C7E /* MaciASL.sdef in Resources */,
-				B01A8106169C1D020056B5C6 /* SSDT.xib in Resources */,
+				B06352E5177EA65F00956EB1 /* SSDT.xib in Resources */,
 				B0A7EAF1173CA9A300363AD1 /* ACPI.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,6 +310,22 @@
 			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
+		B06352E4177EA65B00956EB1 /* Patch.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B06352E3177EA65B00956EB1 /* en */,
+			);
+			name = Patch.xib;
+			sourceTree = "<group>";
+		};
+		B06352E7177EA65F00956EB1 /* SSDT.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B06352E6177EA65F00956EB1 /* en */,
+			);
+			name = SSDT.xib;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -363,6 +375,7 @@
 				CURRENT_MARKETING_VERSION = 1.1;
 				CURRENT_PROJECT_VERSION = 241;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

@@ -10,5 +10,7 @@
 
 int main(int argc, char *argv[])
 {
+    NSImage *temp = [[NSImage alloc] initByReferencingFile:@"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarUtilitiesFolderIcon.icns"];
+    temp.name = @"ToolbarUtilitiesFolderIcon";
     return NSApplicationMain(argc, (const char **)argv);
 }
