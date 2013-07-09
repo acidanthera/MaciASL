@@ -301,7 +301,7 @@ static char kLockKey;
             NSArray *temp = [buffer componentsSeparatedByString:@"\n"];
             for (NSString *line in [temp subarrayWithRange:NSMakeRange(0, temp.count-1)]) {
                 if (!line.length) continue;
-                if (self.listener) [self.listener performSelector:self.callback withObject:line];
+                if (self.listener) [self.listener performSelectorOnMainThread:self.callback withObject:line waitUntilDone:false];
                 [lines addObject:line];
             }
             buffer.string = temp.lastObject;

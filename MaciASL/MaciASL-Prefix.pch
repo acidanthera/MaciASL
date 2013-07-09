@@ -29,6 +29,8 @@
 #define lineForRange(x,y) [x substringWithRange:[x lineRangeForRange:y]]
 #define assignWithNotice(x,y,z) [x willChangeValueForKey:@""#y];y=z;[x didChangeValueForKey:@""#y];
 #define muteWithNotice(x,y,z) [x willChangeValueForKey:@""#y];z;[x didChangeValueForKey:@""#y];
+#define insertWithNotice(x,y,z) [x willChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:y.count] forKey:@""#y];[y addObject:z];[x didChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:y.count-1] forKey:@""#y];
+
 NS_INLINE NSError* ModalError(NSError *error){
     if (error)
         [[NSAlert alertWithError:error] runModal];

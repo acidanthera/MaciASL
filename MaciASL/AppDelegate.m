@@ -55,7 +55,7 @@
 
 #pragma mark Logging
 -(void)logEntry:(NSString *)entry{
-    muteWithNotice(self, log, [log addObject:[LogEntry create:entry]])
+    insertWithNotice(self, log, [LogEntry create:entry])
     [CATransaction flush];
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
