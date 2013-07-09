@@ -182,13 +182,14 @@ static NSRegularExpression *note;
 static NSArray *typeIndex;
 
 +(void)initialize{
-    note = [NSRegularExpression regularExpressionWithPattern:@"\\((\\d+)\\) : (warning|warning2|warning3|error|remark|optimize)\\s+(\\d+)(?: -|:) (.*)$" options:NSRegularExpressionCaseInsensitive error:nil];
+    note = [NSRegularExpression regularExpressionWithPattern:@"(?:\\((\\d+)\\) : )?(warning|warning2|warning3|error|remark|optimize)\\s+(\\d+)(?: -|:) (.*)$" options:NSRegularExpressionCaseInsensitive error:nil];
     typeIndex = @[@"warning", @"warning2", @"warning3", @"error", @"remark", @"optimize"];
 }
 +(Notice *)create:(NSString *)entry{
     __block Notice *temp = [Notice new];
     [note enumerateMatchesInString:entry options:0 range:NSMakeRange(0, entry.length) usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
-        temp.line = [[entry substringWithRange:[result rangeAtIndex:1]] integerValue];
+        NSRange line = [result rangeAtIndex:1];
+        temp.line = (line.location == NSNotFound)?1:[[entry substringWithRange:line] integerValue];
         temp.type = (enum noticeType)[typeIndex indexOfObject:[[entry substringWithRange:[result rangeAtIndex:2]] lowercaseString]];
         temp.code = [[entry substringWithRange:[result rangeAtIndex:3]] integerValue];
         temp.message = [entry substringWithRange:[result rangeAtIndex:4]];
