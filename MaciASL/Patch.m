@@ -467,9 +467,9 @@ static NSRegularExpression *hid;
             else if (!reg.numberOfCaptureGroups)
                 ModalError([NSError errorWithDomain:kMaciASLDomain code:kStoreError userInfo:@{NSLocalizedDescriptionKey:@"No Regular Expression Groups", NSLocalizedRecoverySuggestionErrorKey:@"Tried to store from an expression with no captured groups."}]);
             else if (patch.action == store_eight)
-                eight = [text substringWithRange:[[reg firstMatchInString:text options:0 range:[node contentRange:text]] rangeAtIndex:1]];
+                eight = [[text substringWithRange:[[reg firstMatchInString:text options:0 range:[node contentRange:text]] rangeAtIndex:1]] stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
             else
-                nine = [text substringWithRange:[[reg firstMatchInString:text options:0 range:[node contentRange:text]] rangeAtIndex:1]];
+                nine = [[text substringWithRange:[[reg firstMatchInString:text options:0 range:[node contentRange:text]] rangeAtIndex:1]] stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"];
             break;
     }
     if (!patch.all && result) @throw result;
