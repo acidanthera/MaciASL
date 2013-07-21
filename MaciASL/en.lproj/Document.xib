@@ -304,6 +304,7 @@
 											<string key="NSFrame">{{170, 0}, {5, 460}}</string>
 											<reference key="NSSuperview" ref="853038596"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView" ref="703094829"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<string key="NSOffsets">{0, 0}</string>
 											<object class="NSTextFieldCell" key="NSTitleCell">
@@ -889,6 +890,7 @@ wGw</bytes>
 							<string key="NSFrame">{{17, 3}, {698, 16}}</string>
 							<reference key="NSSuperview" ref="568628114"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:1535</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="967510733">
@@ -1357,7 +1359,7 @@ wGw</bytes>
 						<string key="label">selectionIndexPaths: selectionIndexPaths</string>
 						<reference key="source" ref="440813510"/>
 						<reference key="destination" ref="624111381"/>
-						<object class="NSNibBindingConnector" key="connector">
+						<object class="NSNibBindingConnector" key="connector" id="698148531">
 							<reference key="NSSource" ref="440813510"/>
 							<reference key="NSDestination" ref="624111381"/>
 							<string key="NSLabel">selectionIndexPaths: selectionIndexPaths</string>
@@ -1384,6 +1386,23 @@ wGw</bytes>
 						<reference key="destination" ref="512844837"/>
 					</object>
 					<int key="connectionID">101864</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">sortDescriptors: sortDescriptors</string>
+						<reference key="source" ref="440813510"/>
+						<reference key="destination" ref="624111381"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="440813510"/>
+							<reference key="NSDestination" ref="624111381"/>
+							<string key="NSLabel">sortDescriptors: sortDescriptors</string>
+							<string key="NSBinding">sortDescriptors</string>
+							<string key="NSKeyPath">sortDescriptors</string>
+							<reference key="NSPreviousConnector" ref="698148531"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">101866</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -2812,7 +2831,7 @@ wGw</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">101864</int>
+			<int key="maxID">101866</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

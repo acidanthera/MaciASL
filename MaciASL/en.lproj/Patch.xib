@@ -2,9 +2,9 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1080</int>
-		<string key="IBDocument.SystemVersion">12D78</string>
+		<string key="IBDocument.SystemVersion">12E55</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
-		<string key="IBDocument.AppKitVersion">1187.37</string>
+		<string key="IBDocument.AppKitVersion">1187.39</string>
 		<string key="IBDocument.HIToolboxVersion">626.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -330,6 +330,7 @@
 											<string key="NSFrame">{{380, 4}, {75, 32}}</string>
 											<reference key="NSSuperview" ref="351136481"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="377081184">
@@ -627,6 +628,7 @@ wGw</bytes>
 															<string key="NSFrame">{{1, 147}, {452, 15}}</string>
 															<reference key="NSSuperview" ref="314227059"/>
 															<reference key="NSWindow"/>
+															<reference key="NSNextKeyView" ref="821852091"/>
 															<string key="NSReuseIdentifierKey">_NS:33</string>
 															<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
 															<int key="NSsFlags">1</int>
@@ -663,7 +665,7 @@ wGw</bytes>
 																	<string key="NSFrameSize">{467, 148}</string>
 																	<reference key="NSSuperview" ref="939325751"/>
 																	<reference key="NSWindow"/>
-																	<reference key="NSNextKeyView" ref="181728117"/>
+																	<reference key="NSNextKeyView" ref="868735971"/>
 																	<string key="NSReuseIdentifierKey">_NS:13</string>
 																	<bool key="NSEnabled">YES</bool>
 																	<bool key="NSAllowsLogicalLayoutDirection">NO</bool>
@@ -815,7 +817,7 @@ wGw</bytes>
 													<string key="NSFrame">{{0, 163}, {469, 166}}</string>
 													<reference key="NSSuperview" ref="312926498"/>
 													<reference key="NSWindow"/>
-													<reference key="NSNextKeyView" ref="939325751"/>
+													<reference key="NSNextKeyView" ref="181728117"/>
 													<string key="NSReuseIdentifierKey">_NS:9</string>
 													<int key="NSsFlags">133682</int>
 													<reference key="NSVScroller" ref="868735971"/>
@@ -832,6 +834,7 @@ wGw</bytes>
 											<string key="NSFrame">{{0, 39}, {469, 329}}</string>
 											<reference key="NSSuperview" ref="351136481"/>
 											<reference key="NSWindow"/>
+											<reference key="NSNextKeyView" ref="314227059"/>
 											<string key="NSReuseIdentifierKey">_NS:9</string>
 											<int key="NSDividerStyle">2</int>
 											<string key="NSAutosaveName">patchSubFrame</string>
@@ -852,6 +855,7 @@ wGw</bytes>
 							<string key="NSFrameSize">{599, 368}</string>
 							<reference key="NSSuperview" ref="313582362"/>
 							<reference key="NSWindow"/>
+							<reference key="NSNextKeyView" ref="402568279"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSIsVertical">YES</bool>
 							<int key="NSDividerStyle">2</int>
@@ -1121,7 +1125,7 @@ wGw</bytes>
 						<string key="label">content: arrangedObjects</string>
 						<reference key="source" ref="36128810"/>
 						<reference key="destination" ref="181610350"/>
-						<object class="NSNibBindingConnector" key="connector">
+						<object class="NSNibBindingConnector" key="connector" id="422241030">
 							<reference key="NSSource" ref="36128810"/>
 							<reference key="NSDestination" ref="181610350"/>
 							<string key="NSLabel">content: arrangedObjects</string>
@@ -1131,6 +1135,40 @@ wGw</bytes>
 						</object>
 					</object>
 					<int key="connectionID">353</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectionIndexPaths: selectionIndexPaths</string>
+						<reference key="source" ref="36128810"/>
+						<reference key="destination" ref="181610350"/>
+						<object class="NSNibBindingConnector" key="connector" id="1043483541">
+							<reference key="NSSource" ref="36128810"/>
+							<reference key="NSDestination" ref="181610350"/>
+							<string key="NSLabel">selectionIndexPaths: selectionIndexPaths</string>
+							<string key="NSBinding">selectionIndexPaths</string>
+							<string key="NSKeyPath">selectionIndexPaths</string>
+							<reference key="NSPreviousConnector" ref="422241030"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">480</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">sortDescriptors: sortDescriptors</string>
+						<reference key="source" ref="36128810"/>
+						<reference key="destination" ref="181610350"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="36128810"/>
+							<reference key="NSDestination" ref="181610350"/>
+							<string key="NSLabel">sortDescriptors: sortDescriptors</string>
+							<string key="NSBinding">sortDescriptors</string>
+							<string key="NSKeyPath">sortDescriptors</string>
+							<reference key="NSPreviousConnector" ref="1043483541"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">482</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2222,7 +2260,7 @@ wGw</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">478</int>
+			<int key="maxID">482</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
