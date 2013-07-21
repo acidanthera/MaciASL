@@ -114,6 +114,8 @@
     SplitView([[window.contentView subviews] objectAtIndex:0]);
     SplitView([[[[[[window.contentView subviews] objectAtIndex:0] subviews] objectAtIndex:1] subviews] objectAtIndex:0]);
     patchView.enabledTextCheckingTypes = 0;
+    if (!sourceView.sortDescriptors.count)
+        sourceView.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:true selector:@selector(localizedStandardCompare:)]];
     [self expandTree];
     [self preview];
 }

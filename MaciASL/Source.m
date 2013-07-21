@@ -102,8 +102,7 @@ static SourceList *sharedList;
     if (dsdt.count + ssdt.count == 0) return;
     SourceProvider *temp = [SourceProvider create:name withURL:realURL andChildren:@{@"DSDT":[dsdt copy], @"SSDT":[ssdt copy]}];
     [archive setObject:temp forKey:url];
-    [providers addObject:temp];
-    muteWithNotice(self, providers, [providers sortUsingComparator:^NSComparisonResult(id obj1, id obj2){return [[obj1 name] compare:[obj2 name]];}])
+    muteWithNotice(self, providers, [providers addObject:temp])
 }
 @end
 
