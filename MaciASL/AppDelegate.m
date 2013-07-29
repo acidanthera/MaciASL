@@ -251,7 +251,7 @@
     doc.displayName = name;
     doc.text.mutableString.string = text;
     [doc makeWindowControllers];
-    [doc performSelectorOnMainThread:@selector(showWindows) withObject:nil waitUntilDone:false];
+    [doc performSelectorOnMainThread:@selector(showWindows) withObject:nil waitUntilDone:true];
     return doc;
 }
 -(id)newDocumentFromACPI:(NSString *)name saveFirst:(bool)save {
