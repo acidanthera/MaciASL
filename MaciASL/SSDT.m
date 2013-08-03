@@ -82,6 +82,15 @@ static SSDTGen *sharedSSDT;
     self.generator = nil;
 }
 -(IBAction)generate:(id)sender {
+    NSUInteger minFreq = 0;
+    NSComparisonPredicate *powerSlope;
+    NSDictionary *fields = [Patch fields:generator];
+    if ([fields objectForKey:@"SSDT"]) {
+        if ([[fields objectForKey:@"SSDT"] objectForKey:@"MinFreq"] && !(minFreq = [[[fields objectForKey:@"SSDT"] objectForKey:@"MinFreq"] integerValue]))
+            ModalError([NSError errorWithDomain:kMaciASLDomain code:kNSComparisonPredicateError userInfo:@{NSLocalizedDescriptionKey:@"Textual Math Parse Failure", NSLocalizedRecoverySuggestionErrorKey:@"The textual math entered could not be parsed by the NSPredicate parser, discarding it."}]);
+        if ([[fields objectForKey:@"SSDT"] objectForKey:@"PowerSlope"])
+            powerSlope = [NSComparisonPredicate parseExpression:[[fields objectForKey:@"SSDT"] objectForKey:@"PowerSlope"]];
+    }
     if (!mtf || !logicalcpus || !cpufrequency || !tdp) {
         ModalError([NSError errorWithDomain:kMaciASLDomain code:kNULLSSDTError userInfo:@{NSLocalizedDescriptionKey:@"Missing Value", NSLocalizedRecoverySuggestionErrorKey:@"One or more values are empty"}]);
         return;
@@ -95,15 +104,6 @@ static SSDTGen *sharedSSDT;
     NSInteger logicalCpus = logicalcpus.integerValue;
     NSInteger freq = cpufrequency.integerValue;
     NSInteger thermal = tdp.integerValue;
-    NSUInteger minFreq = 0;
-    NSComparisonPredicate *powerSlope;
-    NSDictionary *fields = [Patch fields:generator];
-    if ([fields objectForKey:@"SSDT"]) {
-        if ([[fields objectForKey:@"SSDT"] objectForKey:@"MinFreq"] && !(minFreq = [[[fields objectForKey:@"SSDT"] objectForKey:@"MinFreq"] integerValue]))
-            ModalError([NSError errorWithDomain:kMaciASLDomain code:kNSComparisonPredicateError userInfo:@{NSLocalizedDescriptionKey:@"Textual Math Parse Failure", NSLocalizedRecoverySuggestionErrorKey:@"The textual math entered could not be parsed by the NSPredicate parser, discarding it."}]);
-        if ([[fields objectForKey:@"SSDT"] objectForKey:@"PowerSlope"])
-            powerSlope = [NSComparisonPredicate parseExpression:[[fields objectForKey:@"SSDT"] objectForKey:@"PowerSlope"]];
-    }
     if (!minFreq) minFreq = 1600;
     if (!powerSlope) powerSlope = [NSComparisonPredicate parseExpression:@"max({min({floor(($freq-1)/$maxFreq),1}),0})*floor(($ratio / $maxRatio) * (((1.1 - (($maxRatio - $ratio) * 0.00625)) / 1.1) ** 2) * $tdp)+max({min({floor($maxFreq/$freq),1}),0})*$tdp"];
     NSInteger turboFreq = (maxFreq - freq) / 100;
