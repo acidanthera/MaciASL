@@ -84,26 +84,32 @@ static SSDTGen *sharedSSDT;
 -(IBAction)generate:(id)sender {
     NSUInteger minFreq = 0;
     NSComparisonPredicate *powerSlope;
+    bool ignoreValues = false;
     NSDictionary *fields = [Patch fields:generator];
     if ([fields objectForKey:@"SSDT"]) {
-        if ([[fields objectForKey:@"SSDT"] objectForKey:@"MinFreq"] && !(minFreq = [[[fields objectForKey:@"SSDT"] objectForKey:@"MinFreq"] integerValue]))
+        NSDictionary *ssdt = [fields objectForKey:@"SSDT"];
+        if ([ssdt objectForKey:@"MinFreq"])
+            minFreq = [[ssdt objectForKey:@"MinFreq"] integerValue];
+        if ([ssdt objectForKey:@"PowerSlope"] && !(powerSlope = [NSComparisonPredicate parseExpression:[ssdt objectForKey:@"PowerSlope"]]))
             ModalError([NSError errorWithDomain:kMaciASLDomain code:kNSComparisonPredicateError userInfo:@{NSLocalizedDescriptionKey:@"Textual Math Parse Failure", NSLocalizedRecoverySuggestionErrorKey:@"The textual math entered could not be parsed by the NSPredicate parser, discarding it."}]);
-        if ([[fields objectForKey:@"SSDT"] objectForKey:@"PowerSlope"])
-            powerSlope = [NSComparisonPredicate parseExpression:[[fields objectForKey:@"SSDT"] objectForKey:@"PowerSlope"]];
+        if ([@"true" caseInsensitiveCompare:[ssdt objectForKey:@"IgnoreValues"]] == NSOrderedSame)
+            ignoreValues = true;
     }
-    if (!mtf || !logicalcpus || !cpufrequency || !tdp) {
-        ModalError([NSError errorWithDomain:kMaciASLDomain code:kNULLSSDTError userInfo:@{NSLocalizedDescriptionKey:@"Missing Value", NSLocalizedRecoverySuggestionErrorKey:@"One or more values are empty"}]);
-        return;
-    }
-    if (cpufrequency.integerValue > mtf.integerValue) {
-        ModalError([NSError errorWithDomain:kMaciASLDomain code:kFreqRangeError userInfo:@{NSLocalizedDescriptionKey:@"Incorrect Range", NSLocalizedRecoverySuggestionErrorKey:@"CPU Frequency must be less than Max Turbo Frequency"}]);
-        return;
+    if (!ignoreValues) {
+        if (!mtf || !logicalcpus || !cpufrequency || !tdp) {
+            ModalError([NSError errorWithDomain:kMaciASLDomain code:kNULLSSDTError userInfo:@{NSLocalizedDescriptionKey:@"Missing Value", NSLocalizedRecoverySuggestionErrorKey:@"One or more values are empty"}]);
+            return;
+        }
+        if (cpufrequency.integerValue > mtf.integerValue) {
+            ModalError([NSError errorWithDomain:kMaciASLDomain code:kFreqRangeError userInfo:@{NSLocalizedDescriptionKey:@"Incorrect Range", NSLocalizedRecoverySuggestionErrorKey:@"CPU Frequency must be less than Max Turbo Frequency"}]);
+            return;
+        }
     }
     [window performClose:sender];
-    NSInteger maxFreq = mtf.integerValue;
-    NSInteger logicalCpus = logicalcpus.integerValue;
-    NSInteger freq = cpufrequency.integerValue;
-    NSInteger thermal = tdp.integerValue;
+    NSInteger logicalCpus = logicalcpus.integerValue?:4;
+    NSInteger freq = cpufrequency.integerValue?:2900;
+    NSInteger maxFreq = mtf.integerValue?:freq+100;
+    NSInteger thermal = tdp.integerValue?:65;
     if (!minFreq) minFreq = 1600;
     if (!powerSlope) powerSlope = [NSComparisonPredicate parseExpression:@"max({min({floor(($freq-1)/$maxFreq),1}),0})*floor(($ratio / $maxRatio) * (((1.1 - (($maxRatio - $ratio) * 0.00625)) / 1.1) ** 2) * $tdp)+max({min({floor($maxFreq/$freq),1}),0})*$tdp"];
     NSInteger turboFreq = (maxFreq - freq) / 100;
