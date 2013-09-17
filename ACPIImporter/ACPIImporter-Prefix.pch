@@ -1,0 +1,6 @@
+//
+// Prefix header for all source files of the 'ACPIImporter' target in the 'MaciASL' project
+//
+
+#ifdef __OBJC__
+#endif

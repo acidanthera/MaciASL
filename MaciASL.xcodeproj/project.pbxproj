@@ -18,6 +18,11 @@
 		B059B86C16999332004DB0A9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B059B86B16999332004DB0A9 /* QuartzCore.framework */; };
 		B06352E2177EA65B00956EB1 /* Patch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06352E4177EA65B00956EB1 /* Patch.xib */; };
 		B06352E5177EA65F00956EB1 /* SSDT.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06352E7177EA65F00956EB1 /* SSDT.xib */; };
+		B0663F3C17E815EB008D6686 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0663F3B17E815EB008D6686 /* Foundation.framework */; };
+		B0663F4417E815EB008D6686 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B0663F4317E815EB008D6686 /* main.c */; };
+		B0663F4617E815EB008D6686 /* GetMetadataForFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B0663F4517E815EB008D6686 /* GetMetadataForFile.m */; };
+		B0663F5017E81829008D6686 /* ACPI.mdimporter in Copy Spotlight Importer */ = {isa = PBXBuildFile; fileRef = B0663F3417E815EB008D6686 /* ACPI.mdimporter */; };
+		B0663F5317E81958008D6686 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0663F3517E815EB008D6686 /* CoreServices.framework */; };
 		B0899354161D781C00FE7BD8 /* AML.icns in Resources */ = {isa = PBXBuildFile; fileRef = B0899352161D781C00FE7BD8 /* AML.icns */; };
 		B0899355161D781C00FE7BD8 /* DSL.icns in Resources */ = {isa = PBXBuildFile; fileRef = B0899353161D781C00FE7BD8 /* DSL.icns */; };
 		B0A6BF8E161A827700DDE1EF /* Patch.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A6BF8D161A827700DDE1EF /* Patch.m */; };
@@ -33,7 +38,28 @@
 		B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B0FD8AB1165D847C0074DC84 /* iasl4 */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B0663F5117E8183C008D6686 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B013B819160C529600F6A7F2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B0663F3317E815EB008D6686;
+			remoteInfo = ACPI;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
+		B0663F4F17E81809008D6686 /* Copy Spotlight Importer */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/Spotlight;
+			dstSubfolderSpec = 1;
+			files = (
+				B0663F5017E81829008D6686 /* ACPI.mdimporter in Copy Spotlight Importer */,
+			);
+			name = "Copy Spotlight Importer";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B0E0186016155C85008CAC9B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -66,8 +92,15 @@
 		B01CAF931618EB4900AB9F0C /* Colorize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colorize.h; sourceTree = "<group>"; };
 		B01CAF941618EB4900AB9F0C /* Colorize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Colorize.m; sourceTree = "<group>"; };
 		B059B86B16999332004DB0A9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		B06352E3177EA65B00956EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Patch.xib; sourceTree = "<group>"; };
-		B06352E6177EA65F00956EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/SSDT.xib; sourceTree = "<group>"; };
+		B06352E3177EA65B00956EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Patch.xib; sourceTree = "<group>"; };
+		B06352E6177EA65F00956EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SSDT.xib; sourceTree = "<group>"; };
+		B0663F3417E815EB008D6686 /* ACPI.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ACPI.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0663F3517E815EB008D6686 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		B0663F3B17E815EB008D6686 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B0663F3F17E815EB008D6686 /* ACPIImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ACPIImporter-Info.plist"; sourceTree = "<group>"; };
+		B0663F4317E815EB008D6686 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		B0663F4517E815EB008D6686 /* GetMetadataForFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetMetadataForFile.m; sourceTree = "<group>"; };
+		B0663F4B17E815EB008D6686 /* ACPIImporter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ACPIImporter-Prefix.pch"; sourceTree = "<group>"; };
 		B0899352161D781C00FE7BD8 /* AML.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AML.icns; sourceTree = SOURCE_ROOT; };
 		B0899353161D781C00FE7BD8 /* DSL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = DSL.icns; sourceTree = SOURCE_ROOT; };
 		B0A6BF8C161A827700DDE1EF /* Patch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Patch.h; sourceTree = "<group>"; };
@@ -100,6 +133,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B0663F3117E815EB008D6686 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0663F5317E81958008D6686 /* CoreServices.framework in Frameworks */,
+				B0663F3C17E815EB008D6686 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -107,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				B013B82C160C529600F6A7F2 /* MaciASL */,
+				B0663F3D17E815EB008D6686 /* ACPIImporter */,
 				B013B825160C529600F6A7F2 /* Frameworks */,
 				B013B823160C529600F6A7F2 /* Products */,
 			);
@@ -116,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				B013B822160C529600F6A7F2 /* MaciASL.app */,
+				B0663F3417E815EB008D6686 /* ACPI.mdimporter */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,6 +168,8 @@
 			isa = PBXGroup;
 			children = (
 				B013B826160C529600F6A7F2 /* Cocoa.framework */,
+				B0663F3517E815EB008D6686 /* CoreServices.framework */,
+				B0663F3B17E815EB008D6686 /* Foundation.framework */,
 				B013B828160C529600F6A7F2 /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -188,6 +234,25 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B0663F3D17E815EB008D6686 /* ACPIImporter */ = {
+			isa = PBXGroup;
+			children = (
+				B0663F4517E815EB008D6686 /* GetMetadataForFile.m */,
+				B0663F3E17E815EB008D6686 /* Supporting Files */,
+			);
+			path = ACPIImporter;
+			sourceTree = "<group>";
+		};
+		B0663F3E17E815EB008D6686 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B0663F3F17E815EB008D6686 /* ACPIImporter-Info.plist */,
+				B0663F4317E815EB008D6686 /* main.c */,
+				B0663F4B17E815EB008D6686 /* ACPIImporter-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -199,16 +264,34 @@
 				B013B81F160C529600F6A7F2 /* Frameworks */,
 				B013B820160C529600F6A7F2 /* Resources */,
 				B0E0186016155C85008CAC9B /* CopyFiles */,
+				B0663F4F17E81809008D6686 /* Copy Spotlight Importer */,
 				B025E914163345EE009D5FA6 /* Increment Build Number */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B0663F5217E8183C008D6686 /* PBXTargetDependency */,
 			);
 			name = MaciASL;
 			productName = MaciASL;
 			productReference = B013B822160C529600F6A7F2 /* MaciASL.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B0663F3317E815EB008D6686 /* ACPIImporter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B0663F4E17E815EB008D6686 /* Build configuration list for PBXNativeTarget "ACPIImporter" */;
+			buildPhases = (
+				B0663F3017E815EB008D6686 /* Sources */,
+				B0663F3117E815EB008D6686 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ACPIImporter;
+			productName = ACPI;
+			productReference = B0663F3417E815EB008D6686 /* ACPI.mdimporter */;
+			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
 
@@ -232,6 +315,7 @@
 			projectRoot = "";
 			targets = (
 				B013B821160C529600F6A7F2 /* MaciASL */,
+				B0663F3317E815EB008D6686 /* ACPIImporter */,
 			);
 		};
 /* End PBXProject section */
@@ -291,7 +375,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B0663F3017E815EB008D6686 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0663F4417E815EB008D6686 /* main.c in Sources */,
+				B0663F4617E815EB008D6686 /* GetMetadataForFile.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B0663F5217E8183C008D6686 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B0663F3317E815EB008D6686 /* ACPIImporter */;
+			targetProxy = B0663F5117E8183C008D6686 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B013B83B160C529600F6A7F2 /* Document.xib */ = {
@@ -341,7 +442,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_MARKETING_VERSION = 1.3;
-				CURRENT_PROJECT_VERSION = 247;
+				CURRENT_PROJECT_VERSION = 248;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -373,7 +474,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				CURRENT_MARKETING_VERSION = 1.3;
-				CURRENT_PROJECT_VERSION = 247;
+				CURRENT_PROJECT_VERSION = 248;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -411,6 +512,44 @@
 			};
 			name = Release;
 		};
+		B0663F4C17E815EB008D6686 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ACPIImporter/ACPIImporter-Prefix.pch";
+				INFOPLIST_FILE = "ACPIImporter/ACPIImporter-Info.plist";
+				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
+				LIBRARY_STYLE = BUNDLE;
+				PRODUCT_NAME = ACPI;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = mdimporter;
+			};
+			name = Debug;
+		};
+		B0663F4D17E815EB008D6686 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ACPIImporter/ACPIImporter-Prefix.pch";
+				INFOPLIST_FILE = "ACPIImporter/ACPIImporter-Info.plist";
+				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
+				LIBRARY_STYLE = BUNDLE;
+				PRODUCT_NAME = ACPI;
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = mdimporter;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -428,6 +567,15 @@
 			buildConfigurations = (
 				B013B844160C529700F6A7F2 /* Debug */,
 				B013B845160C529700F6A7F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B0663F4E17E815EB008D6686 /* Build configuration list for PBXNativeTarget "ACPIImporter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0663F4C17E815EB008D6686 /* Debug */,
+				B0663F4D17E815EB008D6686 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
