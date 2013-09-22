@@ -13,11 +13,11 @@ static NSRegularExpression *_string;
 NSArray *StringsForAML(NSData *aml) {
     if (!_string)
         _string = [NSRegularExpression regularExpressionWithPattern:@"\x0D([\x20-\x7E]{2,})\x00" options:0 error:nil];
-    __block NSMutableArray *strings = [NSMutableArray array];
+    __block NSMutableSet *strings = [NSMutableSet set];
     [_string enumerateMatchesInString:[[NSString alloc] initWithData:aml encoding:NSASCIIStringEncoding] options:0 range:NSMakeRange(0, aml.length) usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
         [strings addObject:[[NSString alloc] initWithData:[aml subdataWithRange:[result rangeAtIndex:1]] encoding:NSASCIIStringEncoding]];
     }];
-    return [strings copy];
+    return [strings allObjects];
 }
 
 Boolean GetMetadataForFile(void *thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFStringRef pathToFile);
