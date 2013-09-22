@@ -20,6 +20,52 @@ NSArray *StringsForAML(NSData *aml) {
     return [strings allObjects];
 }
 
+bool MetadataForAML(NSData *aml, CFMutableDictionaryRef metadata) {
+    struct {
+        UInt8 Signature[4];
+        UInt32 Length;
+        UInt8 Revision;
+        UInt8 Checksum;
+        UInt8 OemId[6];
+        UInt8 OemTableId[8];
+        UInt32 OemRevision;
+        UInt8 AslCompilerId[4];
+        UInt32 AslCompilerRevision;
+    } header;
+    [aml getBytes:&header range:NSMakeRange(0, sizeof(header))];
+    CFTypeRef item = CFStringCreateWithFormat(kCFAllocatorDefault, 0, CFSTR("%c%c%c%c %d"), header.Signature[0], header.Signature[1], header.Signature[2], header.Signature[3], header.Revision);
+    CFDictionaryAddValue(metadata, kMDItemTitle, item);
+    CFRelease(item);
+    if (memcmp(header.Signature, "FACS", 4) == 0)
+        return true;
+    if (header.OemId[0]) {
+        CFTypeRef items[] = {CFStringCreateWithBytes(kCFAllocatorDefault, header.OemId, 6, kCFStringEncodingASCII, false)};
+        item = CFArrayCreate(kCFAllocatorDefault, items, 1, NULL);
+        CFDictionaryAddValue(metadata, kMDItemOrganizations, item);
+        CFRelease(item);
+    }
+    if (header.OemTableId[0]) {
+        item = CFStringCreateWithBytes(kCFAllocatorDefault, header.OemTableId, 8, kCFStringEncodingASCII, false);
+        CFDictionaryAddValue(metadata, kMDItemSubject, item);
+        CFRelease(item);
+    }
+    if (header.AslCompilerId[0]) {
+        item = CFStringCreateWithFormat(kCFAllocatorDefault, 0, CFSTR("%c%c%c%c %x"), header.AslCompilerId[0], header.AslCompilerId[1], header.AslCompilerId[2], header.AslCompilerId[3], header.AslCompilerRevision);
+        CFDictionaryAddValue(metadata, kMDItemCreator, item);
+        CFRelease(item);
+    }
+    if (header.OemRevision) {
+        item = CFStringCreateWithFormat(kCFAllocatorDefault, 0, CFSTR("%#010x"), header.OemRevision);
+        CFDictionaryAddValue(metadata, kMDItemVersion, item);
+        CFRelease(item);
+    }
+    CFStringRef string = CFStringCreateByCombiningStrings(kCFAllocatorDefault, (__bridge CFArrayRef)StringsForAML(aml), CFSTR(" "));
+    if (CFStringGetLength(string))
+        CFDictionaryAddValue(metadata, kMDItemTextContent, string);
+    CFRelease(string);
+    return true;
+}
+
 Boolean GetMetadataForFile(void *thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFStringRef pathToFile);
 
 //==============================================================================
