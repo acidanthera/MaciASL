@@ -488,7 +488,7 @@ static NSRegularExpression *template;
 @synthesize argument;
 
 +(void)initialize{
-    field = [NSRegularExpression regularExpressionWithPattern:@"\n#(\\w+):(\\w+) (.*)" options:0 error:nil];
+    field = [NSRegularExpression regularExpressionWithPattern:@"(?:^|\n)#(\\w+):(\\w+) (.*)" options:0 error:nil];
     white = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     template = [NSRegularExpression regularExpressionWithPattern:@"%(\\d+)" options:0 error:nil];
 }
