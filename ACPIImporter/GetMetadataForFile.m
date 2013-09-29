@@ -59,10 +59,10 @@ bool MetadataForAML(NSData *aml, CFMutableDictionaryRef metadata) {
         CFDictionaryAddValue(metadata, kMDItemVersion, item);
         CFRelease(item);
     }
-    CFStringRef string = CFStringCreateByCombiningStrings(kCFAllocatorDefault, (__bridge CFArrayRef)StringsForAML(aml), CFSTR(" "));
-    if (CFStringGetLength(string))
-        CFDictionaryAddValue(metadata, kMDItemTextContent, string);
-    CFRelease(string);
+    item = CFStringCreateByCombiningStrings(kCFAllocatorDefault, (__bridge CFArrayRef)StringsForAML(aml), CFSTR(" "));
+    if (CFStringGetLength(item))
+        CFDictionaryAddValue(metadata, kMDItemTextContent, item);
+    CFRelease(item);
     return true;
 }
 
