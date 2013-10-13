@@ -10,6 +10,45 @@
 #import "AppDelegate.h"
 #import <objc/objc-runtime.h>
 
+@interface DictionaryArray : NSObject
+
+@property (readonly) NSString *key;
+@property (readonly) id value;
+@property (readonly) NSArray *children;
+
++(NSArray *)createWithDictionary:(NSDictionary *)dictionary;
+
+@end
+
+@implementation DictionaryArray
+
++(DictionaryArray *)createWithKey:(NSString *)key andValue:(id)value {
+    DictionaryArray *temp = [DictionaryArray new];
+    temp->_key = key;
+    if ([value isKindOfClass:NSDictionary.class]) {
+        temp->_children = [self createWithDictionary:value];
+        temp->_value = [NSString stringWithFormat:@"%ld propert%s", [value count], [value count] == 1 ? "y" : "ies"];
+    }
+    else if ([value isKindOfClass:NSString.class])
+        temp->_value = value;
+    else if ([value isKindOfClass:NSNumber.class])
+        temp->_value = [value stringValue];
+    else if ([value isKindOfClass:NSData.class])
+        temp->_value = [value description];
+    else
+        temp->_value = @"<Bad Value>";
+    return temp;
+}
+
++(NSArray *)createWithDictionary:(NSDictionary *)dictionary {
+    NSMutableArray *temp = [NSMutableArray array];
+    for (NSString *key in dictionary)
+            [temp addObject:[self createWithKey:key andValue:[dictionary objectForKey:key]]];
+    return [temp copy];
+}
+
+@end
+
 @implementation iASL
 static NSDictionary *tableset;
 static NSDictionary *stdTables;
@@ -62,6 +101,27 @@ static NSString *bootlog;
 }
 +(NSDictionary *)tableset {
     return tableset;
+}
++(NSArray *)deviceProperties {
+    io_iterator_t iter;
+    io_registry_entry_t entry;
+    NSMutableArray *properties = [NSMutableArray array];
+    if (IORegistryEntryCreateIterator(IORegistryGetRootEntry(kIOMasterPortDefault), "IOACPIPlane", kIORegistryIterateRecursively, &iter) == KERN_SUCCESS) {
+        while ((entry = IOIteratorNext(iter))) {
+            NSMutableDictionary *prop;
+            if (IORegistryEntryCreateCFProperties(entry, (void *)&prop, kCFAllocatorDefault, 0) == KERN_SUCCESS) {
+                if ((prop = [prop objectForKey:@"device-properties"])) {
+                    [prop removeObjectsForKeys:@[@"acpi-device", @"acpi-path"]];
+                    io_name_t name;
+                    if (prop.count && IORegistryEntryGetName(entry, name) == KERN_SUCCESS)
+                        [properties addObject:[DictionaryArray createWithKey:[NSString stringWithUTF8String:name] andValue:prop]];
+                }
+            }
+            IOObjectRelease(entry);
+        }
+        IOObjectRelease(iter);
+    }
+    return [properties copy];
 }
 +(NSString *)wasInjected:(NSString *)table{
     NSString *file;

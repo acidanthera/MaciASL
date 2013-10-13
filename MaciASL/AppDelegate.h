@@ -9,13 +9,14 @@
 #import "Document.h"
 #import "SSDT.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTableViewDelegate/*, NSFontManagerDelegate*/>{
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTableViewDelegate, NSOutlineViewDelegate/*, NSFontManagerDelegate*/>{
     @private
     SSDTGen *_ssdt;
 }
 
 @property NSMutableArray *log;
 @property NSString *compiler;
+@property NSArray *deviceProperties;
 @property (readonly) SSDTGen *ssdt;
 @property (readonly) NSArray *themes;
 @property (assign) IBOutlet NSMenu *tables;

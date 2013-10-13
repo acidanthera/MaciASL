@@ -18,6 +18,7 @@ enum noticeType {
 @interface iASL : NSObject
 
 +(NSDictionary *)tableset;
++(NSArray *)deviceProperties;
 +(NSString *)wasInjected:(NSString *)table;
 +(NSData *)fetchTable:(NSString *)table;
 +(NSDictionary *)decompile:(NSData *)aml withResolution:(NSString *)tableset;

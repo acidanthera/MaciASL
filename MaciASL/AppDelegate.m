@@ -39,6 +39,7 @@
     [NSFontManager.sharedFontManager setSelectedFont:[NSFont fontWithName:[font objectForKey:@"name"] size:[[font objectForKey:@"size"] floatValue]] isMultiple:false];
     [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
     logView.level = NSNormalWindowLevel;
+    self.deviceProperties = [iASL deviceProperties];
 }
 -(BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender{
     if (![NSUserDefaults.standardUserDefaults boolForKey:@"dsdt"]) return true;
@@ -71,7 +72,7 @@
 #pragma mark GUI
 -(IBAction)copy:(id)sender{
     NSResponder *obj = [[NSApp keyWindow] firstResponder];
-    if (obj.class == NSTableView.class || obj.class == FSTableView.class) {
+    if (obj.class == NSTableView.class || obj.class == FSTableView.class || obj.class == NSOutlineView.class) {
         if (![(NSTableView *)obj numberOfSelectedRows]) return;
         bool viewBased = ([(NSTableView *)obj rowViewAtRow:[(NSTableView *)obj selectedRow] makeIfNecessary:false]);
         __block NSMutableArray *rows = [NSMutableArray array];
@@ -208,6 +209,14 @@
 -(void)tableViewSelectionDidChange:(NSNotification *)notification{
     [[NSDocumentController.sharedDocumentController documentForWindow:[NSApp mainWindow]] tableViewSelectionDidChange:notification];
 }
+-(CGFloat)outlineView:(NSOutlineView *)outlineView heightOfRowByItem:(id)item {
+    NSInteger rows = outlineView.tableColumns.count, row = [outlineView rowForItem:item];
+    CGFloat height = outlineView.rowHeight;
+    while (rows-- > 0)
+        height = MAX([[outlineView preparedCellAtColumn:rows row:row] cellSizeForBounds:NSMakeRect(0, 0, [[outlineView.tableColumns objectAtIndex:rows] width], CGFLOAT_MAX)].height,height);
+    return height;
+}
+
 #pragma mark NSWindowDelegate
 -(void)windowDidBecomeKey:(NSNotification *)notification{
     [self viewPreference:nil];
