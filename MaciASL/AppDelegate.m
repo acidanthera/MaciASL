@@ -210,8 +210,7 @@
 }
 #pragma mark NSWindowDelegate
 -(void)windowDidBecomeKey:(NSNotification *)notification{
-    if ([[notification.object title] isEqualToString:@"Preferences"])
-        [self viewPreference:nil];
+    [self viewPreference:nil];
 }
 @end
 
