@@ -324,7 +324,7 @@
     if (insert) {
         if (index) range = [[item childNodes] count]?[[[[item childNodes] objectAtIndex:index-1] representedObject] range]:[[item representedObject] range];
         else range = NSMakeRange([[item representedObject] contentRange:text.string].location, 0);
-        range = NSMakeRange(NSMaxRange(range), 0);//TODO: better insertion range
+        range = NSMakeRange(NSMaxRange(range), 0);//FIXME: better insertion range
     }
     else {
         range = [[item representedObject] range];

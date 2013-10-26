@@ -10,7 +10,8 @@
 #define kUTTypeAML @"org.acpica.aml"
 #define kUTTypeDSL @"org.acpica.dsl"
 #define kUTTypeNavObject @"net.sourceforge.maciasl.navobject"
-#define kTablesetFileType @"net.sourceforge.maciasl.tableset"
+#define kUTTypeTableset @"net.sourceforge.maciasl.tableset"
+#define kUTTypeIOJones @"net.sourceforge.iojones"
 #define kSystemTableset @"//System"
 #define kCompilerError 1
 #define kFileError 2

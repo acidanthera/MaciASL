@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "Colorize.h"
 #import "iASL.h"
+#import "DocumentController.h"
 #import <sys/sysctl.h>
 #import <sys/types.h>
 #import <QuartzCore/QuartzCore.h>
@@ -26,11 +27,9 @@
 @synthesize sourceController;
 @synthesize logView;
 @synthesize summaryView;
-@synthesize tableView;
 
 #pragma mark Application Delegate
 -(void)awakeFromNib{
-    [FSDocumentController new];
     log = [NSMutableArray array];
     [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"acpi" options:0 context:NULL];
     [NSUserDefaults.standardUserDefaults registerDefaults:@{@"theme":@"Light", @"dsdt":@(YES), @"suggest":@(NO), @"acpi":@4, @"context":@(NO), @"isolation":@(NO), @"colorize":@(YES), @"remarks":@(NO), @"optimizations": @(NO), @"werror": @(NO), @"preference": @0, @"font": @{@"name":@"Menlo", @"size": @11}, @"sources":@[@{@"name":@"Sourceforge", @"url":@"http://maciasl.sourceforge.net"}]}];
@@ -43,7 +42,7 @@
 }
 -(BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender{
     if (![NSUserDefaults.standardUserDefaults boolForKey:@"dsdt"]) return true;
-    [FSDocumentController.sharedDocumentController newDocumentFromACPI:@"DSDT" saveFirst:false];
+    [DocumentController.sharedDocumentController newDocumentFromACPI:@"DSDT" saveFirst:false];
     return false;
 }
 -(SSDTGen *)ssdt{
@@ -105,7 +104,7 @@
     [self viewPreference:sender];
 }
 -(IBAction)documentFromACPI:(id)sender{
-    [FSDocumentController.sharedDocumentController newDocumentFromACPI:[sender title] saveFirst:NSEvent.modifierFlags&NSAlternateKeyMask];
+    [DocumentController.sharedDocumentController newDocumentFromACPI:[sender title] saveFirst:NSEvent.modifierFlags&NSAlternateKeyMask];
 }
 -(IBAction)showLog:(id)sender{
     [logView makeKeyAndOrderFront:sender];
@@ -127,39 +126,12 @@
     NSSavePanel *save = [NSSavePanel savePanel];
     save.prompt = @"Export Tableset";
     save.nameFieldStringValue = NSHost.currentHost.localizedName;
-    save.allowedFileTypes = @[kTablesetFileType];
+    save.allowedFileTypes = @[kUTTypeTableset];
     if ([save runModal] == NSFileHandlingPanelOKButton) {
         NSError *err;
         NSData *data = [NSPropertyListSerialization dataWithPropertyList:@{@"Hostname":NSHost.currentHost.localizedName, @"Tables":iASL.tableset} format:NSPropertyListBinaryFormat_v1_0 options:0 error:&err];
         if (ModalError(err)) return;
         [NSFileManager.defaultManager createFileAtPath:save.URL.path contents:data attributes:nil];
-    }
-}
--(IBAction)openTableset:(id)sender {
-    NSDictionary *tableset = [NSDictionary dictionaryWithContentsOfURL:sender], *tabs = [tableset objectForKey:@"Tables"];
-    tableView.titleWithRepresentedFilename = [sender path];
-    NSView *list = [tableView initialFirstResponder];
-    [(NSPopUpButton *)list removeAllItems];
-    [(NSPopUpButton *)list addItemsWithTitles:[tabs.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]];
-    tableView.representedURL = sender;
-    [NSApp runModalForWindow:tableView];
-}
--(IBAction)finishTableset:(id)sender {
-    [NSApp stopModal];
-    [tableView orderOut:sender];
-    if ([[sender title] isEqualToString:@"Cancel"]) return;
-    NSDictionary *tableset = [NSDictionary dictionaryWithContentsOfURL:tableView.representedURL], *tabs = [tableset objectForKey:@"Tables"];
-    NSString *prefix = [[tableset objectForKey:@"Hostname"] stringByAppendingString:@" "];
-    if ([[sender title] isEqualToString:@"Open Selected"]) {
-        sender = [(NSPopUpButton *)tableView.initialFirstResponder titleOfSelectedItem];
-        tabs = @{sender:[tabs objectForKey:sender]};
-    }
-    for (NSString *table in tabs) {
-        NSDictionary *decompile = [iASL decompile:[tabs objectForKey:table] withResolution:tableView.representedURL.path];
-        if ([[decompile objectForKey:@"status"] boolValue])
-            [FSDocumentController.sharedDocumentController newDocument:[decompile objectForKey:@"object"] withName:[prefix stringByAppendingString:table]];
-        else
-            ModalError([decompile objectForKey:@"object"]);
     }
 }
 
@@ -233,57 +205,6 @@
     temp.timestamp = [NSDate date];
     temp.entry = entry;
     return temp;
-}
-
-@end
-
-@implementation FSDocumentController
-
-#pragma mark NSDocumentController
--(id)makeDocumentWithContentsOfURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError {
-    if (![typeName isEqualToString:kTablesetFileType]) return [super makeDocumentWithContentsOfURL:url ofType:typeName error:outError];
-    [[NSApp delegate] openTableset:url];
-    if (outError) *outError = [NSError errorWithDomain:kMaciASLDomain code:kTablesetError userInfo:nil];
-    return nil;
-}
--(BOOL)presentError:(NSError *)error {
-    if (error.code == kTablesetError && [error.domain isEqualToString:kMaciASLDomain]) return false;
-    else return [super presentError:error];
-}
-
-#pragma mark Functions
--(id)newDocument:(NSString *)text withName:(NSString *)name {
-    NSError *err;
-    Document *doc = [self openUntitledDocumentAndDisplay:false error:&err];
-    if (ModalError(err)) return nil;
-    doc.displayName = name;
-    doc.text.mutableString.string = text;
-    [doc makeWindowControllers];
-    [doc performSelectorOnMainThread:@selector(showWindows) withObject:nil waitUntilDone:true];
-    return doc;
-}
--(id)newDocumentFromACPI:(NSString *)name saveFirst:(bool)save {
-    NSString *file = [iASL wasInjected:name];
-    NSData *aml;
-    if (!(aml = [iASL fetchTable:name])) return nil;
-    if (save && !file) {
-        NSSavePanel *save = [NSSavePanel savePanel];
-        save.prompt = @"Presave";
-        save.nameFieldStringValue = name;
-        save.allowedFileTypes = @[kUTTypeAML];
-        if ([save runModal] == NSFileHandlingPanelOKButton && [NSFileManager.defaultManager createFileAtPath:save.URL.path contents:aml attributes:nil])
-            file = save.URL.path;
-    }
-    if (file && [NSFileManager.defaultManager fileExistsAtPath:file] && [[NSFileManager.defaultManager contentsAtPath:file] isEqualToData:aml])
-        [self openDocumentWithContentsOfURL:[NSURL fileURLWithPath:file] display:true completionHandler:nil];
-    else {
-        NSDictionary *decompile = [iASL decompile:aml withResolution:kSystemTableset];
-        if ([[decompile objectForKey:@"status"] boolValue])
-            return [self newDocument:[decompile objectForKey:@"object"] withName:[NSString stringWithFormat:!file?@"System %@":@"Pre-Edited %@", name]];
-        else
-            ModalError([decompile objectForKey:@"object"]);
-    }
-    return nil;
 }
 
 

@@ -23,7 +23,6 @@
 @property (assign) IBOutlet NSView *general;
 @property (assign) IBOutlet NSView *iasl;
 @property (assign) IBOutlet NSView *sources;
-@property (assign) IBOutlet NSWindow *tableView;
 @property (assign) IBOutlet NSWindow *logView;
 @property (assign) IBOutlet NSWindow *summaryView;
 @property (assign) IBOutlet NSTableView *sourceView;
@@ -36,8 +35,6 @@
 -(IBAction)showLog:(id)sender;
 -(IBAction)showSummary:(id)sender;
 -(IBAction)exportTableset:(id)sender;
--(IBAction)openTableset:(id)sender;
--(IBAction)finishTableset:(id)sender;
 -(void)logEntry:(NSString *)entry;
 
 @end
@@ -48,13 +45,6 @@
 @property NSString *entry;
 
 +(LogEntry *)create:(NSString *)entry;
-
-@end
-
-@interface FSDocumentController : NSDocumentController
-
--(id)newDocumentFromACPI:(NSString *)name saveFirst:(bool)save;
--(id)newDocument:(NSString *)text withName:(NSString *)name;
 
 @end
 

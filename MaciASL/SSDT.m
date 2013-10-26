@@ -11,6 +11,7 @@
 #import <sys/types.h>
 #import "AppDelegate.h"
 #import "Source.h"
+#import "DocumentController.h"
 
 @implementation SSDTGen
 static SSDTGen *sharedSSDT;
@@ -136,7 +137,7 @@ static SSDTGen *sharedSSDT;
     while (cpus < logicalCpus)
         [ssdt appendFormat:@"\n    Scope (\\_PR.%@)\n    {\n        Method (APSS, 0, NotSerialized)\n        {\n            Return (\\_PR.%@.APSS)\n        }\n    }\n", [self cpuString:cpus++], [self cpuString:0]];
     [ssdt appendString:@"}\n"];
-    Document *doc = [FSDocumentController.sharedDocumentController newDocument:ssdt withName:@"Generated SSDT"];
+    Document *doc = [DocumentController.sharedDocumentController newDocument:ssdt withName:@"Generated SSDT" display:true];
     if (doc) [doc quickPatch:generator];
 }
 -(NSString *)cpuString:(NSUInteger)cpu {

@@ -12,7 +12,7 @@
 				<string>org.acpica.dsl</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>DSL.icns</string>
+			<string>DSL</string>
 			<key>CFBundleTypeName</key>
 			<string>Disassembled ASL File</string>
 			<key>CFBundleTypeRole</key>
@@ -26,7 +26,7 @@
 				<string>org.acpica.aml</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>AML.icns</string>
+			<string>AML</string>
 			<key>CFBundleTypeName</key>
 			<string>ACPI Machine Language Binary</string>
 			<key>CFBundleTypeRole</key>
@@ -40,9 +40,21 @@
 				<string>net.sourceforge.maciasl.tableset</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>ACPI.icns</string>
+			<string>ACPI</string>
 			<key>CFBundleTypeName</key>
 			<string>ACPI Tableset</string>
+			<key>CFBundleTypeRole</key>
+			<string>Viewer</string>
+			<key>NSDocumentClass</key>
+			<string>Document</string>
+		</dict>
+		<dict>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.iojones</string>
+			</array>
+			<key>CFBundleTypeName</key>
+			<string>IOJones Document</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>NSDocumentClass</key>
@@ -73,7 +85,6 @@
 			<string>ACPI Machine Language Binary</string>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.content</string>
 				<string>public.object-code</string>
 			</array>
 			<key>UTTypeIdentifier</key>
@@ -92,8 +103,6 @@
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>com.apple.property-list</string>
-				<string>public.content</string>
-				<string>public.data</string>
 			</array>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.maciasl.tableset</string>
@@ -102,6 +111,26 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>acpi</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.property-list</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>IOJones Document</string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.iojones</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>iojones</string>
 				</array>
 			</dict>
 		</dict>
