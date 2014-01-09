@@ -37,10 +37,6 @@ static SSDTGen *sharedSSDT;
     }
     return self;
 }
--(void)loadGenerator:(NSDictionary *)dict{
-    self.generator = [dict objectForKey:@"response"];
-    [window makeFirstResponder:generatorView];
-}
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     [self performSelector:@selector(expandTree) withObject:nil afterDelay:0];
 }
@@ -66,7 +62,10 @@ static SSDTGen *sharedSSDT;
         ModalError([NSError errorWithDomain:kMaciASLDomain code:kURLStandardError userInfo:@{NSLocalizedDescriptionKey:@"URL Standardization Error", NSLocalizedRecoverySuggestionErrorKey:@"The URL provided could not be standardized and may be incorrect."}]);
         return;
     }
-    AsynchFetch(url.standardizedURL, @selector(loadGenerator:), self, nil);
+    AsynchB(url.standardizedURL, ^(NSString *response) {
+        self.generator = response;
+        [window makeFirstResponder:generatorView];
+    }, SourceList.sharedList.queue);
     [sender deselectAll:sender];
 }
 -(IBAction)reset:(id)sender{

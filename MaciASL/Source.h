@@ -22,6 +22,7 @@
 
 @property NSMutableDictionary *archive;
 @property NSMutableArray *providers;
+@property (readonly) dispatch_queue_t queue;
 +(SourceList *)sharedList;
 
 @end

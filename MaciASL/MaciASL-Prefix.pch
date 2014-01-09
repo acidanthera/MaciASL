@@ -50,17 +50,17 @@ NS_INLINE BOOL LoadNib(NSString *nib, id owner) {
     return [NSBundle loadNibNamed:nib owner:owner];
 #endif
 }
-NS_INLINE void AsynchFetch(NSURL *url, SEL selector, id obj, id hold) {
-    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60] queue:[NSOperationQueue mainQueue] completionHandler:^void(NSURLResponse *response, NSData *data, NSError *err){
+NS_INLINE void AsynchB(NSURL *url, void(^completionHandler)(NSString *), dispatch_queue_t queue) {
+    dispatch_async(queue ?: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSURLResponse *response;
+        NSError *err;
+        NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60] returningResponse:&response error:&err];
         if ([response respondsToSelector:@selector(statusCode)] && [(NSHTTPURLResponse *)response statusCode] != 200) {
             if (!err)
                 err = [NSError errorWithDomain:NSURLErrorDomain code:[(NSHTTPURLResponse *)response statusCode] userInfo:@{NSLocalizedDescriptionKey:@"File Fetch Error",NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"URL '%@' said '%@'",url,[NSHTTPURLResponse localizedStringForStatusCode:[(NSHTTPURLResponse *)response statusCode]]]}];
             ModalError(err);
         }
         else
-            #pragma clang diagnostic push
-            #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [obj performSelector:selector withObject:@{@"response":[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding], @"hold":hold?:NSNull.null}];
-            #pragma clang diagnostic pop
-    }];
+            dispatch_async(dispatch_get_main_queue(), ^{completionHandler([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);});
+    });
 }

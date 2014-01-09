@@ -54,12 +54,11 @@
         ModalError([NSError errorWithDomain:kMaciASLDomain code:kURLStandardError userInfo:@{NSLocalizedDescriptionKey:@"URL Standardization Error", NSLocalizedRecoverySuggestionErrorKey:@"The URL provided could not be standardized and may be incorrect."}]);
         return;
     }
-    AsynchFetch(url.standardizedURL, @selector(loadPatch:), self, nil);
+    AsynchB(url.standardizedURL, ^(NSString *response) {
+        self.patch = response;
+        [window makeFirstResponder:patchView];
+    }, SourceList.sharedList.queue);
     [sender deselectAll:sender];
-}
--(void)loadPatch:(NSDictionary *)dict{
-    self.patch = [dict objectForKey:@"response"];
-    [window makeFirstResponder:patchView];
 }
 
 #pragma mark NSWindowDelegate
