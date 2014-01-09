@@ -18,7 +18,6 @@
 		B059B86C16999332004DB0A9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B059B86B16999332004DB0A9 /* QuartzCore.framework */; };
 		B06352E2177EA65B00956EB1 /* Patch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06352E4177EA65B00956EB1 /* Patch.xib */; };
 		B06352E5177EA65F00956EB1 /* SSDT.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06352E7177EA65F00956EB1 /* SSDT.xib */; };
-		B0663F3C17E815EB008D6686 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0663F3B17E815EB008D6686 /* Foundation.framework */; };
 		B0663F4417E815EB008D6686 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B0663F4317E815EB008D6686 /* main.c */; };
 		B0663F4617E815EB008D6686 /* GetMetadataForFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B0663F4517E815EB008D6686 /* GetMetadataForFile.m */; };
 		B0663F5017E81829008D6686 /* ACPI.mdimporter in Copy Spotlight Importer */ = {isa = PBXBuildFile; fileRef = B0663F3417E815EB008D6686 /* ACPI.mdimporter */; };
@@ -97,7 +96,6 @@
 		B06352E6177EA65F00956EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SSDT.xib; sourceTree = "<group>"; };
 		B0663F3417E815EB008D6686 /* ACPI.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ACPI.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0663F3517E815EB008D6686 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
-		B0663F3B17E815EB008D6686 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B0663F3F17E815EB008D6686 /* ACPIImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ACPIImporter-Info.plist"; sourceTree = "<group>"; };
 		B0663F4317E815EB008D6686 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B0663F4517E815EB008D6686 /* GetMetadataForFile.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GetMetadataForFile.m; sourceTree = "<group>"; };
@@ -141,7 +139,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0663F5317E81958008D6686 /* CoreServices.framework in Frameworks */,
-				B0663F3C17E815EB008D6686 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,7 +169,6 @@
 			children = (
 				B013B826160C529600F6A7F2 /* Cocoa.framework */,
 				B0663F3517E815EB008D6686 /* CoreServices.framework */,
-				B0663F3B17E815EB008D6686 /* Foundation.framework */,
 				B013B828160C529600F6A7F2 /* Other Frameworks */,
 			);
 			name = Frameworks;

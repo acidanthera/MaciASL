@@ -6,21 +6,38 @@
 //  Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt
 //
 
-#include <Foundation/Foundation.h>
+#include <CoreServices/CoreServices.h>
 
-static NSRegularExpression *_string;
-
-NSArray *StringsForAML(NSData *aml) {
-    if (!_string)
-        _string = [NSRegularExpression regularExpressionWithPattern:@"\x0D([\x20-\x7E]{2,})\x00" options:0 error:nil];
-    __block NSMutableSet *strings = [NSMutableSet set];
-    [_string enumerateMatchesInString:[[NSString alloc] initWithData:aml encoding:NSASCIIStringEncoding] options:0 range:NSMakeRange(0, aml.length) usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
-        [strings addObject:[[NSString alloc] initWithData:[aml subdataWithRange:[result rangeAtIndex:1]] encoding:NSASCIIStringEncoding]];
-    }];
-    return [strings allObjects];
+CFArrayRef CFArrayCreateWithAML(CFReadStreamRef stream) {
+    UInt8 i;
+    CFMutableSetRef strings = NULL;
+    while (CFReadStreamGetStatus(stream) < kCFStreamStatusAtEnd) {
+        while (CFReadStreamRead(stream, &i, 1) == 1 && i != 0x0D)
+            ;
+        CFMutableDataRef data = CFDataCreateMutable(kCFAllocatorDefault, 0);
+        while (CFReadStreamRead(stream, &i, 1) == 1 && i < 0x7F && i > 0x19)
+            CFDataAppendBytes(data, &i, 1);
+        if (i == 0 && CFDataGetLength(data) > 2) {
+            if (!strings)
+                strings = CFSetCreateMutable(kCFAllocatorDefault, 0, &kCFTypeSetCallBacks);
+            CFStringRef string = CFStringCreateWithBytes(kCFAllocatorDefault, CFDataGetBytePtr(data), CFDataGetLength(data), kCFStringEncodingASCII, false);
+            CFSetAddValue(strings, string);
+            CFRelease(string);
+        }
+        CFRelease(data);
+    }
+    if (strings) {
+        CFTypeRef values[CFSetGetCount(strings)];
+        CFSetGetValues(strings, values);
+        CFArrayRef array = CFArrayCreate(kCFAllocatorDefault, values, sizeof(values)/sizeof(*values), &kCFTypeArrayCallBacks);
+        CFRelease(strings);
+        return array;
+    }
+    else
+        return NULL;
 }
 
-bool MetadataForAML(NSData *aml, CFMutableDictionaryRef metadata) {
+bool CFDictionaryAppendMetadataWithAML(CFReadStreamRef aml, CFMutableDictionaryRef metadata) {
     struct {
         UInt8 Signature[4];
         UInt32 Length;
@@ -32,7 +49,7 @@ bool MetadataForAML(NSData *aml, CFMutableDictionaryRef metadata) {
         UInt8 AslCompilerId[4];
         UInt32 AslCompilerRevision;
     } header;
-    [aml getBytes:&header range:NSMakeRange(0, sizeof(header))];
+    CFReadStreamRead(aml, (UInt8 *)&header, sizeof(header));
     CFTypeRef item = CFStringCreateWithFormat(kCFAllocatorDefault, 0, CFSTR("%c%c%c%c %d"), header.Signature[0], header.Signature[1], header.Signature[2], header.Signature[3], header.Revision);
     CFDictionaryAddValue(metadata, kMDItemTitle, item);
     CFRelease(item);
@@ -59,10 +76,14 @@ bool MetadataForAML(NSData *aml, CFMutableDictionaryRef metadata) {
         CFDictionaryAddValue(metadata, kMDItemVersion, item);
         CFRelease(item);
     }
-    item = CFStringCreateByCombiningStrings(kCFAllocatorDefault, (__bridge CFArrayRef)StringsForAML(aml), CFSTR(" "));
-    if (CFStringGetLength(item))
-        CFDictionaryAddValue(metadata, kMDItemTextContent, item);
-    CFRelease(item);
+    CFArrayRef strings = CFArrayCreateWithAML(aml);
+    if (strings) {
+        item = CFStringCreateByCombiningStrings(kCFAllocatorDefault, strings, CFSTR(" "));
+        CFRelease(strings);
+        if (CFStringGetLength(item))
+            CFDictionaryAddValue(metadata, kMDItemTextContent, item);
+        CFRelease(item);
+    }
     return true;
 }
 
@@ -88,32 +109,53 @@ Boolean GetMetadataForFile(void *thisInterface, CFMutableDictionaryRef attribute
 	// Data external record file for a specific record instances
 
     Boolean ok = FALSE;
-    @autoreleasepool {
+    CFURLRef url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, false);
+    CFReadStreamRef stream = CFReadStreamCreateWithFile(kCFAllocatorDefault, url);
+    CFRelease(url);
+    CFReadStreamOpen(stream);
+    
+    if (CFStringCompare(contentTypeUTI, CFSTR("org.acpica.aml"), 0) == kCFCompareEqualTo) {
+        // import from store file metadata
         
-        if ([(__bridge NSString *)contentTypeUTI isEqualToString:@"org.acpica.aml"]) {
-            // import from store file metadata
-            
-                // Get the information you are interested in from the dictionary
-                // "YOUR_INFO" should be replaced by key(s) you are interested in
-                
-                ok = MetadataForAML([NSData dataWithContentsOfFile:(__bridge NSString *)pathToFile], attributes);
-            
-        } else if ([(__bridge NSString *)contentTypeUTI isEqualToString:@"net.sourceforge.maciasl.tableset"]) {
-            // import from an external record file
-            
-            NSMutableArray *strings = [NSMutableArray array];
-            NSDictionary *tables = [NSDictionary dictionaryWithContentsOfFile:(__bridge NSString *)pathToFile];
-            CFDictionaryAddValue(attributes, kMDItemSubject, (__bridge CFStringRef)[tables objectForKey:@"Hostname"]);
-            tables = [tables objectForKey:@"Tables"];
-            for (NSString *table in tables) {
-                [strings addObject:table];
-                [strings addObjectsFromArray:StringsForAML([tables objectForKey:table])];
+        // Get the information you are interested in from the dictionary
+        // "YOUR_INFO" should be replaced by key(s) you are interested in
+        
+        ok = CFDictionaryAppendMetadataWithAML(stream, attributes);
+        
+    } else if (CFStringCompare(contentTypeUTI, CFSTR("net.sourceforge.maciasl.tableset"), 0) == kCFCompareEqualTo) {
+        // import from an external record file
+        
+        CFPropertyListRef set = CFPropertyListCreateWithStream(kCFAllocatorDefault, stream, 0, kCFPropertyListImmutable, NULL, NULL);
+        if (CFGetTypeID(set) == CFDictionaryGetTypeID()) {
+            CFDictionaryAddValue(attributes, kMDItemSubject, CFDictionaryGetValue(set, CFSTR("Hostname")));
+            CFDictionaryRef tables = CFDictionaryGetValue(set, CFSTR("Tables"));
+            CFIndex i = 0, j = CFDictionaryGetCount(tables);
+            CFTypeRef keys[j], values[j];
+            CFDictionaryGetKeysAndValues(tables, keys, values);
+            CFMutableArrayRef strings = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+            while (i < j) {
+                CFArrayAppendValue(strings, keys[i]);
+                CFReadStreamRef data = CFReadStreamCreateWithBytesNoCopy(kCFAllocatorDefault, CFDataGetBytePtr(values[i]), CFDataGetLength(values[i]), kCFAllocatorNull);
+                CFReadStreamOpen(data);
+                CFArrayRef array = CFArrayCreateWithAML(data);
+                if (array) {
+                    CFArrayAppendArray(strings, array, CFRangeMake(0, CFArrayGetCount(array)));
+                    CFRelease(array);
+                }
+                CFReadStreamClose(data);
+                CFRelease(data);
+                i++;
             }
-            
-            CFDictionaryAddValue(attributes, kMDItemTextContent, (__bridge CFStringRef)[strings componentsJoinedByString:@" "]);
+            CFStringRef string = CFStringCreateByCombiningStrings(kCFAllocatorDefault, strings, CFSTR(" "));
+            CFRelease(strings);
+            CFDictionaryAddValue(attributes, kMDItemTextContent, string);
+            CFRelease(string);
             ok = TRUE;
         }
+        CFRelease(set);
     }
+    CFReadStreamClose(stream);
+    CFRelease(stream);
     
 	// Return the status
     return ok;
