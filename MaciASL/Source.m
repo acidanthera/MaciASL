@@ -7,6 +7,7 @@
 //
 
 #import "Source.h"
+#import <SystemConfiguration/SystemConfiguration.h>
 
 @implementation SourcePatch
 
@@ -35,12 +36,19 @@
 
 @end
 
-@implementation SourceList
+@implementation SourceList {
+    @private
+    SCNetworkReachabilityRef _reachability;
+}
 
 static SourceList *sharedList;
 
 @synthesize archive;
 @synthesize providers;
+
+void ReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info) {
+    [(__bridge SourceList *)info reachabilityDidChange:flags];
+}
 
 +(SourceList *)sharedList{
     if (!sharedList) return [SourceList new];
@@ -54,14 +62,34 @@ static SourceList *sharedList;
         self.archive = [NSMutableDictionary dictionary];
         self.providers = [NSMutableArray array];
         _queue = dispatch_queue_create("SourceList", DISPATCH_QUEUE_CONCURRENT);
+        dispatch_set_context(_queue, (void *)true);
+        _reachability = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, "sourceforge.net");
+        SCNetworkReachabilityFlags flags;
+        SCNetworkReachabilityGetFlags(_reachability, &flags);
+        [self reachabilityDidChange:flags];
+        SCNetworkReachabilityContext context = {0, (__bridge void *)self, CFRetain, CFRelease, CFCopyDescription};
+        SCNetworkReachabilitySetCallback(_reachability, ReachabilityDidChange, &context);
+        SCNetworkReachabilitySetDispatchQueue(_reachability, dispatch_get_main_queue());
         [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"sources" options:NSKeyValueObservingOptionInitial context:nil];
         sharedList = self;
     }
     return self;
 }
+-(void)reachabilityDidChange:(SCNetworkReachabilityFlags)flags {
+    bool active = (bool)dispatch_get_context(_queue), reachable = flags & kSCNetworkFlagsReachable;
+    if (!active && reachable)
+        dispatch_resume(_queue);
+    else if (active && !reachable)
+        dispatch_suspend(_queue);
+    dispatch_set_context(_queue, (void *)reachable);
+}
 -(void)dealloc{
     if (providers)
         [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:@"sources"];
+    if (_reachability) {
+        SCNetworkReachabilitySetDispatchQueue(_reachability, NULL);
+        CFRelease(_reachability);
+    }
 }
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
     NSArray *oldNames = [providers valueForKey:@"name"];

@@ -13,6 +13,7 @@
 		B013B83A160C529600F6A7F2 /* Document.m in Sources */ = {isa = PBXBuildFile; fileRef = B013B839160C529600F6A7F2 /* Document.m */; };
 		B013B83D160C529600F6A7F2 /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = B013B83B160C529600F6A7F2 /* Document.xib */; };
 		B013B840160C529700F6A7F2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B013B83E160C529700F6A7F2 /* MainMenu.xib */; };
+		B017FB2B1861532200DA033A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B017FB2A1861532200DA033A /* SystemConfiguration.framework */; };
 		B01A8103169C1CEB0056B5C6 /* SSDT.m in Sources */ = {isa = PBXBuildFile; fileRef = B01A8102169C1CEB0056B5C6 /* SSDT.m */; };
 		B01CAF951618EB4900AB9F0C /* Colorize.m in Sources */ = {isa = PBXBuildFile; fileRef = B01CAF941618EB4900AB9F0C /* Colorize.m */; };
 		B059B86C16999332004DB0A9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B059B86B16999332004DB0A9 /* QuartzCore.framework */; };
@@ -87,6 +88,7 @@
 		B013B839160C529600F6A7F2 /* Document.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Document.m; sourceTree = "<group>"; };
 		B013B83C160C529600F6A7F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Document.xib; sourceTree = "<group>"; };
 		B013B83F160C529700F6A7F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		B017FB2A1861532200DA033A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B01A8101169C1CEB0056B5C6 /* SSDT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDT.h; sourceTree = "<group>"; };
 		B01A8102169C1CEB0056B5C6 /* SSDT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSDT.m; sourceTree = "<group>"; };
 		B01CAF931618EB4900AB9F0C /* Colorize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colorize.h; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B017FB2B1861532200DA033A /* SystemConfiguration.framework in Frameworks */,
 				B059B86C16999332004DB0A9 /* QuartzCore.framework in Frameworks */,
 				B0E0185416154CBD008CAC9B /* IOKit.framework in Frameworks */,
 				B013B827160C529600F6A7F2 /* Cocoa.framework in Frameworks */,
@@ -167,6 +170,7 @@
 		B013B825160C529600F6A7F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B017FB2A1861532200DA033A /* SystemConfiguration.framework */,
 				B013B826160C529600F6A7F2 /* Cocoa.framework */,
 				B0663F3517E815EB008D6686 /* CoreServices.framework */,
 				B013B828160C529600F6A7F2 /* Other Frameworks */,
@@ -443,7 +447,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_MARKETING_VERSION = 1.3;
-				CURRENT_PROJECT_VERSION = 250;
+				CURRENT_PROJECT_VERSION = 251;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -474,7 +478,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				CURRENT_MARKETING_VERSION = 1.3;
-				CURRENT_PROJECT_VERSION = 250;
+				CURRENT_PROJECT_VERSION = 251;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
