@@ -39,10 +39,21 @@
     tabs = [tabs objectForKey:@"Tables"];
     tableView.titleWithRepresentedFilename = [sender path];
     tableView.representedURL = sender;
-    [(NSPopUpButton *)tableView.initialFirstResponder removeAllItems];
-    [(NSPopUpButton *)tableView.initialFirstResponder addItemsWithTitles:[tabs.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]];
+    NSMenu *menu = [(NSPopUpButton *)tableView.initialFirstResponder menu];
+    [menu removeAllItems];
+    for (NSString *name in [tabs.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]) {
+        NSMenuItem *item;
+        if ([name hasPrefix:@"SSDT"]) {
+            NSString *type = [[NSString alloc] initWithData:[[tabs objectForKey:name] subdataWithRange:NSMakeRange(16, 8)] encoding:NSASCIIStringEncoding];
+            item = [[NSMenuItem alloc] initWithTitle:type ? [NSString stringWithFormat:@"%@ (%@)", name, type] : name action:NULL keyEquivalent:@""];
+        }
+        else
+            item = [[NSMenuItem alloc] initWithTitle:name action:NULL keyEquivalent:@""];
+        item.representedObject = name;
+        [menu addItem:item];
+    }
     NSInteger modal = [NSApp runModalForWindow:tableView];
-    sender = [(NSPopUpButton *)tableView.initialFirstResponder titleOfSelectedItem];
+    sender = [[(NSPopUpButton *)tableView.initialFirstResponder selectedItem] representedObject];
     if (modal == NSRunAbortedResponse)
         return nil;
     else if (modal == NSRunStoppedResponse)

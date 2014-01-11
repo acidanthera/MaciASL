@@ -68,7 +68,7 @@ static NSString *bootlog;
             alternate.keyEquivalentModifierMask = NSAlternateKeyMask;
             alternate.alternate = true;
             if (table.length >= 4 && [stdTables objectForKey:[table substringToIndex:4]]) {
-                NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithRTF:[[NSString stringWithFormat:@"{\\rtf1\\ansi {\\fonttbl\\f0 LucidaGrande;}\\f0\\fs28 %@\\line\\fs20 %@}", table, [stdTables objectForKey:[table substringToIndex:4]]] dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:NULL];
+                NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithRTF:[[NSString stringWithFormat:@"{\\rtf1\\ansi {\\fonttbl\\f0 LucidaGrande;}\\f0\\fs28 %@%@\\line\\fs20 %@}", table, [table hasPrefix:@"SSDT"] ? [NSString stringWithFormat:@" (%@)", [[NSString alloc] initWithData:[[tableset objectForKey:table] subdataWithRange:NSMakeRange(16, 8)] encoding:NSASCIIStringEncoding]] : @"", [stdTables objectForKey:[table substringToIndex:4]]] dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:NULL];
                 item.attributedTitle = title;
                 [title replaceCharactersInRange:NSMakeRange(0, 0) withString:prefix];
                 alternate.attributedTitle = title;
