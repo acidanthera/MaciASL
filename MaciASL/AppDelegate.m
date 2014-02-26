@@ -191,7 +191,8 @@
 
 #pragma mark NSWindowDelegate
 -(void)windowDidBecomeKey:(NSNotification *)notification{
-    [self viewPreference:nil];
+    if ([notification.object isMemberOfClass:NSWindow.class])
+        [self viewPreference:nil];
 }
 @end
 
