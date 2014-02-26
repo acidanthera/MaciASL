@@ -30,6 +30,7 @@
 
 -(IBAction)filterTree:(id)sender;
 -(IBAction)hexConvert:(id)sender;
+-(IBAction)comment:(id)sender;
 -(IBAction)jumpToLine:(id)sender;
 -(IBAction)landOnLine:(id)sender;
 -(void)quickPatch:(NSString *)string;

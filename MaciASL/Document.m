@@ -211,6 +211,25 @@
     if (errno) NSBeep();
     else [textView insertText:[NSString stringWithFormat:[number hasPrefix:@"0x"]?@"%lld":@"0x%llX",internal] replacementRange:textView.selectedRange];
 }
+-(IBAction)comment:(id)sender {
+    NSUInteger start, end;
+    [text.string getLineStart:&start end:&end contentsEnd:NULL forRange:textView.selectedRange];
+    NSRange range = NSMakeRange(start - 1, 0), selection = textView.selectedRange;
+    while (NSMaxRange(range) < end) {
+        range = [text.string lineRangeForRange:NSMakeRange(NSMaxRange(range) + 1, 0)];
+        bool comment = [text.string characterAtIndex:range.location] == '/'
+        && [text.string characterAtIndex:range.location + 1] == '/';
+        [textView insertText:comment? @"" : @"//" replacementRange:NSMakeRange(range.location, comment * 2)];
+        NSInteger offset = 2 - comment * 4;
+        if (range.location < selection.location)
+            selection.location += offset;
+        else
+            selection.length += offset;
+        range.length += offset;
+        end += offset;
+    }
+    textView.selectedRange = selection;
+}
 -(IBAction)jumpToLine:(id)sender{
     [NSApp beginSheet:jump modalForWindow:[self windowForSheet] modalDelegate:nil didEndSelector:nil contextInfo:nil];
 }
