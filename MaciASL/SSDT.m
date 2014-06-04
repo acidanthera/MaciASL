@@ -49,7 +49,7 @@ static SSDTGen *sharedSSDT;
     bool first = ([window windowNumber] == -1);
     [window makeKeyAndOrderFront:sender];
     if (first)
-        [[NSApp delegate] changeFont:nil];
+        [(AppDelegate *)[NSApp delegate] changeFont:nil];
     SplitView([[window.contentView subviews] objectAtIndex:0]);
     SplitView([[[[window.contentView subviews] objectAtIndex:0] subviews] objectAtIndex:1]);
     [self expandTree];

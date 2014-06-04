@@ -76,8 +76,8 @@ static NSString *bootlog;
             }
             else alternate.attributedTitle = [[NSAttributedString alloc] initWithString:[prefix stringByAppendingString:table] attributes:@{NSFontAttributeName:[NSFont systemFontOfSize:14.0]}];
             alternate.title = table;
-            [[[NSApp delegate] tables] addItem:item];
-            [[[NSApp delegate] tables] addItem:alternate];
+            [[(AppDelegate *)[NSApp delegate] tables] addItem:item];
+            [[(AppDelegate *)[NSApp delegate] tables] addItem:alternate];
         }
         IOObjectRelease(expert);
     }
@@ -175,7 +175,7 @@ static NSString *bootlog;
             ModalError(err);
     if (!decompile.status) {
         if (amls) {
-            [[NSApp delegate] logEntry:@"Decompilation with resolution failed, trying without resolution"];
+            [(AppDelegate *)[NSApp delegate] logEntry:@"Decompilation with resolution failed, trying without resolution"];
             return [self decompile:aml withResolution:nil];
         }
         else return @{@"status":@(decompile.status), @"object":[NSError errorWithDomain:kMaciASLDomain code:kDecompileError userInfo:@{NSLocalizedDescriptionKey:@"Decompilation Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"iASL returned:\n%@\n%@", decompile.stdOut, decompile.stdErr]}]};
@@ -215,7 +215,7 @@ static NSString *bootlog;
         [arguments insertObject:@"-vo" atIndex:0];
     if ([NSUserDefaults.standardUserDefaults boolForKey:@"werror"] && [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] > 4)
         [arguments insertObject:@"-we" atIndex:0];
-    temp.task = [NSTask create:[NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]] args:arguments callback:@selector(logEntry:) listener:[NSApp delegate]];
+    temp.task = [NSTask create:[NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]] args:arguments callback:@selector(logEntry:) listener:(AppDelegate *)[NSApp delegate]];
     if (file) temp.task.currentDirectoryPath = file.stringByDeletingLastPathComponent;
     [temp.task launchAndWait];
     NSError *err;

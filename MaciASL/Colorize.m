@@ -7,6 +7,7 @@
 //
 
 #import "Colorize.h"
+#import "AppDelegate.h"
 #define ColorRGB(x,y,z) [NSColor colorWithCalibratedRed:x/255.0 green:y/255.0 blue:z/255.0 alpha:1]
 
 @implementation Colorize
@@ -45,7 +46,7 @@ static NSDictionary *themes;
     regResources = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"\\W(%@)\\W", [resources componentsJoinedByString:@"|"]] options:0 error:nil];
     regPredefined = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"\\W(%@|%@|%@)\\W", [[controls componentsJoinedByString:@"(?=\\s*\\()|"] stringByAppendingString:@"(?=\\s*\\()"], [predefined componentsJoinedByString:@"|"], [constants objectAtIndex:2]] options:0 error:nil];
     themes = @{@"Light":[ColorTheme create:[NSColor blackColor] background:[NSColor whiteColor] string:ColorRGB(196.0, 26.0, 22.0) number:ColorRGB(28.0,0,207.0) comment:ColorRGB(0,116.0,0) operator:ColorRGB(92.0,38.0,153.0) opNoArg:ColorRGB(92.0,38.0,153.0) keyword:ColorRGB(170.0,13.0,145.0) resource:ColorRGB(63.0,110.0,116.0) predefined:ColorRGB(100.0,56.0,32.0)], @"Dark":[ColorTheme create:[NSColor whiteColor] background:ColorRGB(30.0,32.0,40.0) string:ColorRGB(219.0,44.0,56.0) number:ColorRGB(120.0,109.0,196.0) comment:ColorRGB(65.0,182.0,69.0) operator:ColorRGB(0,160.0,190.0) opNoArg:ColorRGB(0,160.0,190.0) keyword:ColorRGB(178.0,24.0,137.0) resource:ColorRGB(131.0,192.0,87.0) predefined:ColorRGB(198.0,124.0,72.0)], @"Sunset":[ColorTheme create:[NSColor blackColor] background:ColorRGB(255.0,255.0,224.0) string:ColorRGB(226.0, 97.0, 2.0) number:ColorRGB(28.0,0,208.0) comment:ColorRGB(61.0, 149.0, 3.0) operator:ColorRGB(92.0,38.0,153.0) opNoArg:ColorRGB(92.0,38.0,153.0) keyword:ColorRGB(170.0,13.0,145.0) resource:ColorRGB(63.0,110.0,116.0) predefined:ColorRGB(100.0,56.0,32.0)]};
-    muteWithNotice([NSApp delegate], themes, nil)
+    muteWithNotice((AppDelegate *)[NSApp delegate], themes, nil)
 }
 
 @synthesize view;

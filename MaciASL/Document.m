@@ -57,7 +57,7 @@
     cont.widthTracksTextView = false;
     cont.heightTracksTextView = false;
     colorize = [Colorize create:textView];
-    [[NSApp delegate] changeFont:nil];
+    [(AppDelegate *)[NSApp delegate] changeFont:nil];
 }
 + (BOOL)autosavesInPlace {
     return true;
@@ -98,7 +98,7 @@
                 ModalError(err);
         }
         else if (outError != NULL) {
-            [[NSApp delegate] showSummary:self];
+            [(AppDelegate *)[NSApp delegate] showSummary:self];
             *outError = [NSError errorWithDomain:kMaciASLDomain code:kCompilerError userInfo:@{NSLocalizedDescriptionKey:@"Compilation Failed", NSLocalizedFailureReasonErrorKey:@"\nThe compiler returned one or more errors."}];
         }
     }
@@ -201,7 +201,7 @@
 }
 -(IBAction)compile:(id)sender{
     [self quickCompile:false hold:false];
-    [[NSApp delegate] showSummary:sender];
+    [(AppDelegate *)[NSApp delegate] showSummary:sender];
 }
 -(IBAction)hexConvert:(id)sender{
     NSString *number = [text.string substringWithRange:textView.selectedRange];
