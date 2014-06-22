@@ -11,64 +11,121 @@
 #import <sys/types.h>
 #import "AppDelegate.h"
 #import "Source.h"
+#import "Document.h"
 #import "DocumentController.h"
 
-@implementation SSDTGen
-static SSDTGen *sharedSSDT;
+@interface NSComparisonPredicate (MathAdditions)
 
-@synthesize tdp;
-@synthesize mtf;
-@synthesize cpufrequency;
-@synthesize logicalcpus;
-@synthesize generator;
-@synthesize window;
-@synthesize sourceView;
-@synthesize generatorView;
+@end
 
-#pragma mark Class
--(id)init{
-    if (sharedSSDT) return sharedSSDT;
+@implementation NSComparisonPredicate (MathAdditions)
+
++(NSComparisonPredicate *)parseExpression:(NSString *)expression {
+    @try {
+        return (NSComparisonPredicate *)[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"(%@)=0", expression]];
+    }
+    @catch (NSException *ex) { return nil; }
+}
+
+-(NSNumber *)evaluateWithSubstitution:(NSDictionary *)substitutions {
+    @try {
+        return [[(NSComparisonPredicate *)[self predicateWithSubstitutionVariables:substitutions] leftExpression] expressionValueWithObject:nil context:nil];
+    }
+    @catch (NSException *ex) { return nil; }
+}
+
+@end
+
+@implementation SSDTGen {
+    @private
+    IBOutlet NSWindow *_window;
+    IBOutlet NSOutlineView *_sourceView;
+    IBOutlet NSTextView *_generatorView;
+}
+
+static SSDTGen *sharedGenerator;
+static NSRegularExpression *field;
+
++(void)load {
+    field = [NSRegularExpression regularExpressionWithPattern:@"(?:^|\n)#(\\w+):(\\w+) (.*)" options:0 error:nil];
+}
+
++(SSDTGen *)sharedGenerator {
+    return sharedGenerator ?: [SSDTGen new];
+}
+
++(NSDictionary *)fieldsForPatch:(NSString *)patch{
+    if (!patch) patch = @"";
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [field enumerateMatchesInString:patch options:0 range:NSMakeRange(0, patch.length) usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
+        NSString *domain = [patch substringWithRange:[result rangeAtIndex:1]];
+        if (![dict objectForKey:domain]) [dict setObject:[NSMutableDictionary dictionary] forKey:domain];
+        [(NSMutableDictionary *)[dict objectForKey:domain] setObject:[patch substringWithRange:[result rangeAtIndex:3]] forKey:[patch substringWithRange:[result rangeAtIndex:2]]];
+    }];
+    for (NSString *key in dict)
+        [dict setObject:[[dict objectForKey:key] copy] forKey:key];
+    return [dict copy];
+}
+
+#pragma mark NSObject Lifecycle
+-(instancetype)init {
+    if (sharedGenerator) return sharedGenerator;
     self = [super init];
     if (self) {
         LoadNib(@"SSDT", self);
-        [self reset:self];
+        [self resetGenerator:self];
         [SourceList.sharedList addObserver:self forKeyPath:@"providers" options:0 context:nil];
-        sharedSSDT = self;
+        sharedGenerator = self;
     }
     return self;
 }
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    [self performSelector:@selector(expandTree) withObject:nil afterDelay:0];
-}
--(void)expandTree{
-    [sourceView expandItem:nil expandChildren:true];
+
+-(void)dealloc {
+    [SourceList.sharedList removeObserver:self forKeyPath:@"providers" context:nil];
 }
 
-#pragma mark GUI
--(IBAction)show:(id)sender{
-    bool first = ([window windowNumber] == -1);
-    [window makeKeyAndOrderFront:sender];
-    if (first)
-        [(AppDelegate *)[NSApp delegate] changeFont:nil];
-    SplitView([[window.contentView subviews] objectAtIndex:0]);
-    SplitView([[[[window.contentView subviews] objectAtIndex:0] subviews] objectAtIndex:1]);
-    [self expandTree];
+#pragma mark Observation
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    [self performSelector:@selector(expandTree:) withObject:nil afterDelay:0];
 }
--(IBAction)chooseGenerator:(id)sender{
-    if ([sender selectedRow] == -1 || ![[[sender itemAtRow:[sender selectedRow]] representedObject] isMemberOfClass:[SourcePatch class]])
+
+-(IBAction)expandTree:(id)sender {
+    [_sourceView expandItem:nil expandChildren:true];
+}
+
+-(NSString *)stringForCPU:(NSUInteger)cpu {
+    return [_logicalcpus isGreaterThan:@16]
+    ? [NSString stringWithFormat:@"C%lX0%lX", cpu/16, cpu%16]
+    : [NSString stringWithFormat:@"CPU%lX", cpu];
+}
+
+#pragma mark Actions
+-(IBAction)show:(id)sender {
+    bool first = ([_window windowNumber] == -1);
+    [_window makeKeyAndOrderFront:sender];
+    if (first)
+        [(AppDelegate *)[(NSApplication *)NSApp delegate] changeFont:nil];
+    SplitView([[_window.contentView subviews] objectAtIndex:0]);
+    SplitView([[[[_window.contentView subviews] objectAtIndex:0] subviews] objectAtIndex:1]);
+    [self expandTree:sender];
+}
+
+-(IBAction)chooseGenerator:(id)sender {
+    if ([sender selectedRow] == -1 || ![[(NSTreeNode *)[sender itemAtRow:[sender selectedRow]] representedObject] isMemberOfClass:[SourcePatch class]])
         return;
-    NSURL *url = [[[sender itemAtRow:[sender selectedRow]] representedObject] url];
+    NSURL *url = [[(NSTreeNode *)[sender itemAtRow:[sender selectedRow]] representedObject] url];
     if (![url.standardizedURL isEqualTo:url]) {
         ModalError([NSError errorWithDomain:kMaciASLDomain code:kURLStandardError userInfo:@{NSLocalizedDescriptionKey:@"URL Standardization Error", NSLocalizedRecoverySuggestionErrorKey:@"The URL provided could not be standardized and may be incorrect."}]);
         return;
     }
-    AsynchB(url.standardizedURL, ^(NSString *response) {
+    [SourceList.sharedList UTF8StringWithContentsOfURL:url.standardizedURL completionHandler:^(NSString *response) {
         self.generator = response;
-        [window makeFirstResponder:generatorView];
-    }, SourceList.sharedList.queue);
+        [self->_window makeFirstResponder:self->_generatorView];
+    }];
     [sender deselectAll:sender];
 }
--(IBAction)reset:(id)sender{
+
+-(IBAction)resetGenerator:(id)sender {
     self.tdp = nil;
     self.mtf = nil;
     NSInteger logical = 0;
@@ -81,11 +138,12 @@ static SSDTGen *sharedSSDT;
     self.cpufrequency = @(freq/1E6);
     self.generator = nil;
 }
+
 -(IBAction)generate:(id)sender {
     NSUInteger minFreq = 0;
     NSComparisonPredicate *powerSlope;
     bool ignoreValues = false;
-    NSDictionary *fields = [Patch fields:generator];
+    NSDictionary *fields = [SSDTGen fieldsForPatch:_generator];
     if ([fields objectForKey:@"SSDT"]) {
         NSDictionary *ssdt = [fields objectForKey:@"SSDT"];
         if ([ssdt objectForKey:@"MinFreq"])
@@ -96,20 +154,20 @@ static SSDTGen *sharedSSDT;
             ignoreValues = true;
     }
     if (!ignoreValues) {
-        if (!mtf || !logicalcpus || !cpufrequency || !tdp) {
+        if (!_mtf || !_logicalcpus || !_cpufrequency || !_tdp) {
             ModalError([NSError errorWithDomain:kMaciASLDomain code:kNULLSSDTError userInfo:@{NSLocalizedDescriptionKey:@"Missing Value", NSLocalizedRecoverySuggestionErrorKey:@"One or more values are empty"}]);
             return;
         }
-        if (cpufrequency.integerValue > mtf.integerValue) {
+        if (_cpufrequency.integerValue > _mtf.integerValue) {
             ModalError([NSError errorWithDomain:kMaciASLDomain code:kFreqRangeError userInfo:@{NSLocalizedDescriptionKey:@"Incorrect Range", NSLocalizedRecoverySuggestionErrorKey:@"CPU Frequency must be less than Max Turbo Frequency"}]);
             return;
         }
     }
-    [window performClose:sender];
-    NSInteger logicalCpus = logicalcpus.integerValue?:4;
-    NSInteger freq = cpufrequency.integerValue?:2900;
-    NSInteger maxFreq = mtf.integerValue?:freq+100;
-    NSInteger thermal = tdp.integerValue?:65;
+    [_window performClose:sender];
+    NSInteger logicalCpus = _logicalcpus.integerValue?:4;
+    NSInteger freq = _cpufrequency.integerValue?:2900;
+    NSInteger maxFreq = _mtf.integerValue?:freq+100;
+    NSInteger thermal = _tdp.integerValue?:65;
     if (!minFreq) minFreq = 1600;
     if (!powerSlope) powerSlope = [NSComparisonPredicate parseExpression:@"max({min({floor(($freq-1)/$maxFreq),1}),0})*floor(($ratio / $maxRatio) * (((1.1 - (($maxRatio - $ratio) * 0.00625)) / 1.1) ** 2) * $tdp)+max({min({floor($maxFreq/$freq),1}),0})*$tdp"];
     NSInteger turboFreq = (maxFreq - freq) / 100;
@@ -119,8 +177,8 @@ static SSDTGen *sharedSSDT;
     NSMutableString *ssdt = [NSMutableString stringWithFormat:@"// Translated from RevoGirl's ssdtPRGen script v0.9\n// Generated with %ldW TDP, %ldMHz Max Turbo Freq\n", thermal, maxFreq];
     [ssdt appendString:@"DefinitionBlock (\"SSDT.aml\", \"SSDT\", 1, \"APPLE \", \"CpuPm\", 0x00001000)\n{\n"];
     while (cpus < logicalCpus)
-        [ssdt appendFormat:@"    External (\\_PR_.%@, DeviceObj)\n", [self cpuString:cpus++]];
-    [ssdt appendFormat:@"\n    Scope (_PR.%@)\n    {\n        Name (APSN, 0x%02lX)\n        Name (APSS, Package (0x%02lX)\n        {\n", [self cpuString:0], turboFreq, pkgs];
+        [ssdt appendFormat:@"    External (\\_PR_.%@, DeviceObj)\n", [self stringForCPU:cpus++]];
+    [ssdt appendFormat:@"\n    Scope (_PR.%@)\n    {\n        Name (APSN, 0x%02lX)\n        Name (APSS, Package (0x%02lX)\n        {\n", [self stringForCPU:0], turboFreq, pkgs];
     NSMutableDictionary *variables = [@{@"maxRatio":@((double)maxRatio),  @"freq":@((double)freq), @"tdp":@((double)thermal*1000)} mutableCopy];
     while (pkgs-- > 0) {
         [ssdt appendFormat:@"\n            Package (0x06)\n            {\n                0x%08lX,\n", maxFreq];
@@ -134,30 +192,11 @@ static SSDTGen *sharedSSDT;
     [ssdt appendString:@"        })\n\n        Method (ACST, 0, NotSerialized)\n        {\n            Return (Package (0x06)\n            {\n                One,\n                0x04,\n                Package (0x04)\n                {\n                    ResourceTemplate ()\n                    {\n                        Register (FFixedHW,\n                            0x01,               // Bit Width\n                            0x02,               // Bit Offset\n                            0x0000000000000000, // Address\n                            0x01,               // Access Size\n                            )\n                    },\n\n                    One,\n                    0x03,\n                    0x03E8\n                },\n\n                Package (0x04)\n                {\n                    ResourceTemplate ()\n                    {\n                        Register (FFixedHW,\n                            0x01,               // Bit Width\n                            0x02,               // Bit Offset\n                            0x0000000000000010, // Address\n                            0x03,               // Access Size\n                            )\n                    },\n\n                    0x03,\n                    0xCD,\n                    0x01F4\n                },\n\n                Package (0x04)\n                {\n                    ResourceTemplate ()\n                    {\n                        Register (FFixedHW,\n                            0x01,               // Bit Width\n                            0x02,               // Bit Offset\n                            0x0000000000000020, // Address\n                            0x03,               // Access Size\n                            )\n                    },\n\n                    0x06,\n                    0xF5,\n                    0x015E\n                },\n\n                Package (0x04)\n                {\n                    ResourceTemplate ()\n                    {\n                        Register (FFixedHW,\n                            0x01,               // Bit Width\n                            0x02,               // Bit Offset\n                            0x0000000000000030, // Address\n                            0x03,               // Access Size\n                            )\n                    },\n\n                    0x07,\n                    0xF5,\n                    0xC8\n                }\n            })\n        }\n    }\n"];
     cpus = 1;
     while (cpus < logicalCpus)
-        [ssdt appendFormat:@"\n    Scope (\\_PR.%@)\n    {\n        Method (APSS, 0, NotSerialized)\n        {\n            Return (\\_PR.%@.APSS)\n        }\n    }\n", [self cpuString:cpus++], [self cpuString:0]];
+        [ssdt appendFormat:@"\n    Scope (\\_PR.%@)\n    {\n        Method (APSS, 0, NotSerialized)\n        {\n            Return (\\_PR.%@.APSS)\n        }\n    }\n", [self stringForCPU:cpus++], [self stringForCPU:0]];
     [ssdt appendString:@"}\n"];
-    Document *doc = [DocumentController.sharedDocumentController newDocument:ssdt withName:@"Generated SSDT" display:true];
-    if (doc) [doc quickPatch:generator];
-}
--(NSString *)cpuString:(NSUInteger)cpu {
-    return [logicalcpus isGreaterThan:@16]?[NSString stringWithFormat:@"C%lX0%lX", cpu/16, cpu%16]:[NSString stringWithFormat:@"CPU%lX", cpu];
-}
-
-@end
-
-@implementation NSComparisonPredicate (MathAdditions)
-
-+(NSComparisonPredicate *)parseExpression:(NSString *)expression{
-    @try {
-        return (NSComparisonPredicate *)[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"(%@)=0", expression]];
-    }
-    @catch (NSException *ex) { return nil; }
-}
--(NSNumber *)evaluateWithSubstitution:(NSDictionary *)substitutions{
-    @try {
-        return [[(NSComparisonPredicate *)[self predicateWithSubstitutionVariables:substitutions] leftExpression] expressionValueWithObject:nil context:nil];
-    }
-    @catch (NSException *ex) { return nil; }
+    Document *doc = [DocumentController.sharedDocumentController newDocument:ssdt displayName:@"Generated SSDT" tableName:@"SSDT" tableset:nil display:true];
+    if (doc)
+        [doc quickPatch:_generator];
 }
 
 @end

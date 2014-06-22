@@ -8,26 +8,40 @@
 
 #import "Navigator.h"
 
-@implementation NavObject
+@implementation NavObject {
+    @private
+    NSRange _contentRange;
+}
+
 static NSArray *containers;
 static NSRegularExpression *conts;
 static NSCharacterSet *braces;
 static NSCharacterSet *unset;
 
-+(void)initialize{
++(void)load {
     containers = @[/*@"Alias", @"Buffer",*/ @"Device", @"DefinitionBlock", /*@"Function",*/ @"Method", /*@"Name", @"Package", @"PowerResource",*/ @"Processor", /*@"RawDataBuffer",*/ @"Scope", @"ThermalZone"];
-    conts = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"(%@)\\s*\\(\\s*([^),]{0,4})\\s*[),]", [containers componentsJoinedByString:@"|"]] options:0 error:nil];
+    conts = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"(%@)\\s*\\(\\s*([\\^\\\\]*[A-Z0-9_.]+)\\s*[),]", [containers componentsJoinedByString:@"|"]] options:0 error:nil];
     braces = [NSCharacterSet characterSetWithCharactersInString:@"{}"];
     unset = [[NSCharacterSet characterSetWithCharactersInString:@" \n"] invertedSet];
 }
 
-@synthesize name;
-@synthesize range;
+-(instancetype)initWithName:(NSString *)name range:(NSRange)range {
+    self = [super init];
+    if (self) {
+        _name = name;
+        _range = range;
+    }
+    return self;
+}
 
--(NSRange)contentRange:(NSString *)text{
+-(void)setRange:(NSRange)range {
+    _range = range;
+}
+
+-(NSRange)contentRange:(NSString *)text {
     if (NSMaxRange(_contentRange)) return _contentRange;
-    NSRange temp = [text rangeOfString:@"{" options:0 range:range];
-    temp = NSMakeRange(temp.location+1, NSMaxRange(range)-temp.location-2);
+    NSRange temp = [text rangeOfString:@"{" options:0 range:_range];
+    temp = NSMakeRange(temp.location+1, NSMaxRange(_range)-temp.location-2);
     _contentRange = ([text rangeOfCharacterFromSet:unset options:0 range:temp].location == NSNotFound)
     ? NSMakeRange(temp.location, 0)
     : NSUnionRange([text rangeOfCharacterFromSet:unset options:0 range:temp], [text rangeOfCharacterFromSet:unset options:NSBackwardsSearch range:temp]);
@@ -36,17 +50,25 @@ static NSCharacterSet *unset;
 
 @end
 
-@implementation Scope
-@synthesize children;
-+(id)create:(NSString *)name withRange:(NSRange)range{
-    Scope *temp = [self new];
-    temp.name = name;
-    temp.range = range;
-    temp.children = [NSMutableArray array];
-    return temp;
+@implementation Scope {
+    @protected
+    NSMutableArray *_children;
 }
--(bool)isSelf:(NSRange)check{
-    for (NavObject *child in children) {
+
+#pragma mark NSObject Lifecycle
+-(instancetype)initWithName:(NSString *)name range:(NSRange)range {
+    self = [super initWithName:name range:range];
+    if (self)
+        _children = [NSMutableArray array];
+    return self;
+}
+
+-(void)addChildrenObject:(NavObject *)object {
+    [_children addObject:object];
+}
+
+-(bool)isSelf:(NSRange)check {
+    for (NavObject *child in _children) {
         if (NSMaxRange(check) < child.range.location)
             return true;
         if (NSIntersectionRange(check, child.range).location)
@@ -54,23 +76,42 @@ static NSCharacterSet *unset;
     }
     return true;
 }
--(NSMutableArray *)flat{
+
+#pragma mark Readonly Properties
+-(NSArray *)flat {
     NSMutableArray *temp = [NSMutableArray arrayWithObject:self];
-    for (Scope *child in children)
+    for (Scope *child in _children)
         [temp addObjectsFromArray:child.flat];
-    return temp;
+    return [temp copy];
 }
+
+-(NSArray *)children {
+    return [_children copy];
+}
+
 @end
+
 @implementation Device
+
 @end
+
 @implementation Processor
+
 @end
+
 @implementation ThermalZone
+
 @end
+
 @implementation Method
+
 @end
 
 @implementation DefinitionBlock
+
++(DefinitionBlock *)emptyBlock {
+    return [[DefinitionBlock alloc] initWithName:@"Unknown" range:NSMakeRange(0, 0)];
+}
 
 +(DefinitionBlock *)build:(NSString *)dsl{
     NSString *test;
@@ -81,9 +122,9 @@ static NSCharacterSet *unset;
     [scan scanUpToString:@"\"" intoString:NULL];
     [scan scanString:@"\"" intoString:NULL];
     [scan scanUpToString:@"\"" intoString:&test];
-    DefinitionBlock *root = [DefinitionBlock create:test withRange:NSMakeRange(0, dsl.length)];
+    DefinitionBlock *root = [[DefinitionBlock alloc] initWithName:test range:NSMakeRange(0, dsl.length)];
     NSMutableArray *path = [NSMutableArray arrayWithObject:root];
-    __block NSMutableArray *children = [(Scope *)path.lastObject children];
+    Scope *container = (Scope *)path.lastObject;
     NSUInteger depth = 1;
     [scan scanUpToCharactersFromSet:braces intoString:&test];
     [scan scanCharactersFromSet:braces intoString:NULL];
@@ -92,19 +133,19 @@ static NSCharacterSet *unset;
         [scan scanUpToCharactersFromSet:braces intoString:&test];
         [conts enumerateMatchesInString:test options:0 range:NSMakeRange(0, test.length) usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
             found = true;
-            [children addObject:[NSClassFromString([test substringWithRange:[result rangeAtIndex:1]]) create:[test substringWithRange:[result rangeAtIndex:2]] withRange:NSMakeRange(result.range.location+(scan.scanLocation-test.length),result.range.length)]];
+            [container addChildrenObject:[[NSClassFromString([test substringWithRange:[result rangeAtIndex:1]]) alloc] initWithName:[test substringWithRange:[result rangeAtIndex:2]] range:NSMakeRange(result.range.location+(scan.scanLocation-test.length),result.range.length)]];
         }];
         [scan scanCharactersFromSet:braces intoString:&test];
-        Scope *child = children.lastObject;
+        Scope *child = container.children.lastObject;
         if ([test isEqualToString:@"{}"]) {
             if (found && [containers containsObject:NSStringFromClass(child.class)])
-                child.range = NSMakeRange(child.range.location,scan.scanLocation - child.range.location);
+                child.range = NSMakeRange(child.range.location, scan.scanLocation - child.range.location);
         }
         else if ([test isEqualToString:@"{"]) {
             depth++;
             if (found && [containers containsObject:NSStringFromClass(child.class)]){
                 [path addObject:child];
-                children = child.children;
+                container = child;
             }
         }
         else if ([test hasPrefix:@"}"]) {
@@ -113,10 +154,10 @@ static NSCharacterSet *unset;
                 if ([test characterAtIndex:i++] != '}') continue;
                 if (depth-- == path.count){
                     child = path.lastObject;
-                    child.range = NSMakeRange(child.range.location,scan.scanLocation - child.range.location);
+                    child.range = NSMakeRange(child.range.location, scan.scanLocation - child.range.location);
                     [path removeLastObject];
                     child = path.lastObject;
-                    children = child.children;
+                    container = child;
                 }
             }
         }
@@ -124,31 +165,42 @@ static NSCharacterSet *unset;
     return root;
 }
 
+-(instancetype)initWithName:(NSString *)name range:(NSRange)range flatChildren:(NSArray *)children {
+    self = [super initWithName:name range:range];
+    if (self)
+        [_children addObjectsFromArray:children];
+    return self;
+}
+
 @end
 
 @implementation NavTransformer
+
 static NSFont *font;
 static NSAttributedString *separator;
 static NSDictionary *attr;
 
-+(void)initialize{
++(void)load {
     font = [NSFont systemFontOfSize:12.0];
-    separator = [[NSAttributedString alloc] initWithString:@" \u2023 " attributes:@{NSForegroundColorAttributeName:[NSColor grayColor], NSFontAttributeName:font}];
+    separator = [[NSAttributedString alloc] initWithString:@" \u2023 " attributes:@{NSForegroundColorAttributeName:NSColor.grayColor, NSFontAttributeName:font}];
     attr = @{NSFontAttributeName:font};
 }
-+(Class)transformedValueClass{
+
++(Class)transformedValueClass {
     return [NSAttributedString class];
 }
-+(BOOL)allowsReverseTransformation{
+
++(BOOL)allowsReverseTransformation {
     return false;
 }
+
 -(id)transformedValue:(id)value{
     if (![value count]) return nil;
     value = [value objectAtIndex:0];
-    NSMutableAttributedString *names = [[NSMutableAttributedString alloc] initWithString:[[value representedObject] name] attributes:attr];
-    while ((value = [value parentNode]) && [[value representedObject] isKindOfClass:[NavObject class]]) {
+    NSMutableAttributedString *names = [[NSMutableAttributedString alloc] initWithString:[[(NSTreeNode *)value representedObject] name] attributes:attr];
+    while ((value = [value parentNode]) && [[(NSTreeNode *)value representedObject] isKindOfClass:[NavObject class]]) {
         [names insertAttributedString:separator atIndex:0];
-        [names insertAttributedString:[[NSAttributedString alloc] initWithString:[[value representedObject] name] attributes:attr] atIndex:0];
+        [names insertAttributedString:[[NSAttributedString alloc] initWithString:[[(NSTreeNode *)value representedObject] name] attributes:attr] atIndex:0];
     }
     return [names copy];
 }
@@ -156,15 +208,18 @@ static NSDictionary *attr;
 @end
 
 @implementation NavClassTransformer
+
 static NSString *prefix = @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Sidebar";
 
-+(Class)transformedValueClass{
++(Class)transformedValueClass {
     return [NSImage class];
 }
-+(BOOL)allowsReverseTransformation{
+
++(BOOL)allowsReverseTransformation {
     return false;
 }
--(id)transformedValue:(id)value{
+
+-(id)transformedValue:(id)value {
     NSImage *image = [NSImage alloc];
     image.template = true;
     if ([value  class] == [DefinitionBlock class])

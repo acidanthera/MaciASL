@@ -6,45 +6,17 @@
 //  Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt
 //
 
-#import "Document.h"
-#import "SSDT.h"
+@class SSDTGen;
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTableViewDelegate, NSOutlineViewDelegate/*, NSFontManagerDelegate*/>{
-    @private
-    SSDTGen *_ssdt;
-}
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTableViewDelegate, NSOutlineViewDelegate/*, NSFontManagerDelegate*/>
 
-@property NSMutableArray *log;
-@property NSString *compiler;
-@property NSArray *deviceProperties;
-@property (readonly) SSDTGen *ssdt;
-@property (readonly) NSArray *themes;
-@property (assign) IBOutlet NSMenu *tables;
-@property (assign) IBOutlet NSView *general;
-@property (assign) IBOutlet NSView *iasl;
-@property (assign) IBOutlet NSView *sources;
-@property (assign) IBOutlet NSWindow *logView;
-@property (assign) IBOutlet NSWindow *summaryView;
-@property (assign) IBOutlet NSTableView *sourceView;
-@property (assign) IBOutlet NSArrayController *sourceController;
+@property (readonly) NSArray *log, *themes, *deviceProperties;
+@property (readonly) NSString *compiler;
 
--(IBAction)showSSDT:(id)sender;
--(IBAction)newSource:(id)sender;
--(IBAction)swapPreference:(id)sender;
--(IBAction)documentFromACPI:(id)sender;
--(IBAction)showLog:(id)sender;
--(IBAction)showSummary:(id)sender;
--(IBAction)exportTableset:(id)sender;
 -(void)logEntry:(NSString *)entry;
-
-@end
-
-@interface LogEntry : NSObject
-
-@property NSDate *timestamp;
-@property NSString *entry;
-
-+(LogEntry *)create:(NSString *)entry;
+-(void)changeFont:(id)sender;
+-(IBAction)showSummary:(id)sender;
+-(IBAction)documentFromACPI:(id)sender;
 
 @end
 
@@ -57,6 +29,12 @@
 @interface FSPanel : NSPanel
 
 -(BOOL)becomesKeyOnlyIfNeeded;
+
+@end
+
+@protocol NSTextFinderIndication
+
+-(void)textViewDidShowFindIndicator:(NSNotification *)notification;
 
 @end
 

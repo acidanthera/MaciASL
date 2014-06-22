@@ -6,74 +6,58 @@
 //  Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt
 //
 
-enum noticeType {
-    warning,
-    warning2,
-    warning3,
-    error,
-    remark,
-    optimization
-};
+@interface iASLDecompilationResult : NSObject
 
-@interface iASL : NSObject
-
-+(NSDictionary *)tableset;
-+(NSArray *)deviceProperties;
-+(NSString *)wasInjected:(NSString *)table;
-+(NSData *)fetchTable:(NSString *)table;
-+(NSDictionary *)decompile:(NSData *)aml withResolution:(NSString *)tableset;
-+(NSDictionary *)compile:(NSString *)dsl force:(bool)force;
-+(iASL *)create:(NSArray *)args withFile:(NSString *)file;
--(NSString *)stdOut;
--(NSString *)stdErr;
-
-@property bool status;
-@property NSTask *task;
+@property (readonly) NSError *error;
+@property (readonly) NSString *string;
 
 @end
 
+@interface iASLCompilationResult : iASLDecompilationResult
+
+@property (readonly) NSArray *notices;
+@property (readonly) NSURL *url;
+
+@end
+
+typedef NS_ENUM(NSUInteger, iASLNoticeType) {
+    iASLNoticeTypeWarning,
+    iASLNoticeTypeWarning2,
+    iASLNoticeTypeWarning3,
+    iASLNoticeTypeError,
+    iASLNoticeTypeRemark,
+    iASLNoticeTypeOptimization
+};
+
 @interface Notice : NSObject
 
-@property enum noticeType type;
-@property NSUInteger line;
-@property NSUInteger code;
-@property NSString *message;
+@property (readonly) iASLNoticeType type;
+@property (readonly) NSUInteger line, code;
+@property (readonly) NSString *message;
 
-+(Notice *)create:(NSString *)entry;
+@end
+
+@interface iASL : NSObject
+
+extern NSURL *const kSystemTableset;
+
++(NSDictionary *)tableset;
++(NSArray *)deviceProperties;
++(NSString *)isInjected:(NSURL *)url;
++(NSURL *)wasInjected:(NSString *)table;
++(NSData *)fetchTable:(NSString *)table;
++(iASLDecompilationResult *)decompileAML:(NSData *)aml name:(NSString *)name tableset:(NSURL *)tableset;
++(iASLCompilationResult *)compileDSL:(NSString *)dsl name:(NSString *)name tableset:(NSURL *)tableset force:(bool)force;
+
 
 @end
 
 @interface TypeTransformer : NSValueTransformer
 
-+(Class)transformedValueClass;
-+(BOOL)allowsReverseTransformation;
--(id)transformedValue:(id)value;
-
-@end
-
-@interface NSTask (TaskAdditions)
-
-@property SEL callback;
-@property id listener;
-@property (readonly) NSArray *stdOut;
-@property (readonly) NSArray *stdErr;
-
-+(NSTask *)create:(NSString *)path args:(NSArray *)arguments callback:(SEL)selector listener:(id)object;
--(void)launchAndWait;
--(void)read:(NSFileHandle *)handle;
-
-@end
-
-@interface NSConditionLock (NSTaskAdditions)
-
--(void)waitOn:(NSUInteger)condition;
--(void)increment;
--(void)decrement;
-
 @end
 
 @interface URLTask : NSObject
 
-+(bool)conditionalGet:(NSURL *)url toFile:(NSString *)file;
++(void)conditionalGet:(NSURL *)url toURL:(NSURL *)file perform:(void(^)(bool))handler;
 
 @end

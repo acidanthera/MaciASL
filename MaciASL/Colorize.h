@@ -8,30 +8,14 @@
 
 @interface ColorTheme : NSObject
 
-@property NSColor *background;
-@property NSColor *text;
-@property NSColor *string;
-@property NSColor *number;
-@property NSColor *comment;
-@property NSColor *operator;
-@property NSColor *opNoArg;
-@property NSColor *keyword;
-@property NSColor *resource;
-@property NSColor *predefined;
+@property (readonly) NSColor *background, *text, *string, *number, *comment, *operator, *opNoArg, *keyword, *resource, *predefined;
 
 +(NSDictionary *)allThemes;
-+(ColorTheme *)create:(NSColor *)text background:(NSColor *)background string:(NSColor *)string number:(NSColor *)number comment:(NSColor *)comment operator:(NSColor *)operator opNoArg:(NSColor *)opNoArg keyword:(NSColor *)keyword resource:(NSColor *)resource predefined:(NSColor *)predefined;
 
 @end
 
 @interface Colorize : NSObject <NSTextStorageDelegate>
 
-@property NSTextView *view;
-@property NSLayoutManager *mgr;
-@property ColorTheme *theme;
-
-+(Colorize *)create:(NSView *)view;
-
--(void)colorize;
+-(instancetype)initWithTextView:(NSTextView *)textView;
 
 @end

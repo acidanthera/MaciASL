@@ -12,7 +12,6 @@
 #define kUTTypeNavObject @"net.sourceforge.maciasl.navobject"
 #define kUTTypeTableset @"net.sourceforge.maciasl.tableset"
 #define kUTTypeIOJones @"net.sourceforge.iojones"
-#define kSystemTableset @"//System"
 #define kCompilerError 1
 #define kFileError 2
 #define kACPIError 3
@@ -28,9 +27,9 @@
 #define kTablesetError 13
 
 #define lineForRange(x,y) [x substringWithRange:[x lineRangeForRange:y]]
-#define assignWithNotice(x,y,z) [x willChangeValueForKey:@""#y];y=z;[x didChangeValueForKey:@""#y];
-#define muteWithNotice(x,y,z) [x willChangeValueForKey:@""#y];z;[x didChangeValueForKey:@""#y];
-#define insertWithNotice(x,y,z) [x willChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:y.count] forKey:@""#y];[y addObject:z];[x didChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:y.count-1] forKey:@""#y];
+#define assignWithNotice(x,y,z) {[x willChangeValueForKey:@""#y];_##y=z;[x didChangeValueForKey:@""#y];}
+#define muteWithNotice(x,y,z) {[x willChangeValueForKey:@""#y];z;[x didChangeValueForKey:@""#y];}
+#define insertWithNotice(x,y,z) {[x willChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:_##y.count] forKey:@""#y];[_##y addObject:z];[x didChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:_##y.count-1] forKey:@""#y];}
 
 NS_INLINE NSError* ModalError(NSError *error){
     if (error)
@@ -49,18 +48,4 @@ NS_INLINE BOOL LoadNib(NSString *nib, id owner) {
 #else
     return [NSBundle loadNibNamed:nib owner:owner];
 #endif
-}
-NS_INLINE void AsynchB(NSURL *url, void(^completionHandler)(NSString *), dispatch_queue_t queue) {
-    dispatch_async(queue ?: dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSURLResponse *response;
-        NSError *err;
-        NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60] returningResponse:&response error:&err];
-        if ([response respondsToSelector:@selector(statusCode)] && [(NSHTTPURLResponse *)response statusCode] != 200) {
-            if (!err)
-                err = [NSError errorWithDomain:NSURLErrorDomain code:[(NSHTTPURLResponse *)response statusCode] userInfo:@{NSLocalizedDescriptionKey:@"File Fetch Error",NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"URL '%@' said '%@'",url,[NSHTTPURLResponse localizedStringForStatusCode:[(NSHTTPURLResponse *)response statusCode]]]}];
-            ModalError(err);
-        }
-        else
-            dispatch_async(dispatch_get_main_queue(), ^{completionHandler([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);});
-    });
 }

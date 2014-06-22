@@ -10,125 +10,135 @@
 #import "Document.h"
 #import "iASL.h"
 
-@implementation DocumentController
-
-@synthesize tableView;
+@implementation DocumentController {
+    @private
+    __unsafe_unretained IBOutlet NSWindow *_tableView;
+}
 
 #pragma mark NSDocumentController
 -(id)makeDocumentWithContentsOfURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError {
     id document;
-    if ([typeName isEqualToString:kUTTypeTableset])
-        document = [self openTableset:url];
-    else if ([typeName isEqualToString:kUTTypeIOJones])
-        document = [self openIOJones:url];
+    NSString *table;
+    if ([typeName isEqualToString:kUTTypeTableset]) {
+        if ((document = [self openTablesetTableWithContentsOfURL:url]))
+            [self noteNewRecentDocumentURL:url];
+    }
+    else if ([typeName isEqualToString:kUTTypeIOJones]) {
+        if ((document = [self openIOJonesTableWithContentsOfURL:url]))
+            [self noteNewRecentDocumentURL:url];
+    }
+    else if ((table = [iASL isInjected:url])) {
+        iASLDecompilationResult *decompile = [iASL decompileAML:[iASL fetchTable:table] name:table tableset:kSystemTableset];
+        if (!ModalError(decompile.error))
+            [(document = [self newDocument:decompile.string displayName:nil tableName:table tableset:kSystemTableset display:false]) setFileURL:url];
+    }
     else
-        return [super makeDocumentWithContentsOfURL:url ofType:typeName error:outError];
+        document = [super makeDocumentWithContentsOfURL:url ofType:typeName error:outError];
     if (!document && outError)
         *outError = [NSError errorWithDomain:kMaciASLDomain code:kTablesetError userInfo:nil];
     return document;
 }
+
 -(BOOL)presentError:(NSError *)error {
     if (error.code == kTablesetError && [error.domain isEqualToString:kMaciASLDomain]) return false;
     else return [super presentError:error];
 }
 
 #pragma mark Tableset
--(id)openTableset:(id)sender {
-    NSDictionary *tabs = [NSDictionary dictionaryWithContentsOfURL:sender];
-    NSString *prefix = [[tabs objectForKey:@"Hostname"] stringByAppendingString:@" "];
-    tabs = [tabs objectForKey:@"Tables"];
-    tableView.titleWithRepresentedFilename = [sender path];
-    tableView.representedURL = sender;
-    NSMenu *menu = [(NSPopUpButton *)tableView.initialFirstResponder menu];
-    [menu removeAllItems];
-    for (NSString *name in [tabs.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]) {
-        NSMenuItem *item;
-        if ([name hasPrefix:@"SSDT"]) {
-            NSString *type = [[NSString alloc] initWithData:[[tabs objectForKey:name] subdataWithRange:NSMakeRange(16, 8)] encoding:NSASCIIStringEncoding];
-            item = [[NSMenuItem alloc] initWithTitle:type ? [NSString stringWithFormat:@"%@ (%@)", name, type] : name action:NULL keyEquivalent:@""];
-        }
-        else
-            item = [[NSMenuItem alloc] initWithTitle:name action:NULL keyEquivalent:@""];
-        item.representedObject = name;
-        [menu addItem:item];
+-(Document *)openTablesetTableWithContentsOfURL:(NSURL *)url {
+    NSDictionary *tables = [NSDictionary dictionaryWithContentsOfURL:url];
+    NSString *prefix = [[tables objectForKey:@"Hostname"] stringByAppendingString:@" "];
+    tables = [tables objectForKey:@"Tables"];
+    _tableView.titleWithRepresentedFilename = [url path];
+    _tableView.representedURL = url;
+    NSMutableArray *tempNames = [NSMutableArray array], *tempTables = [NSMutableArray array];
+    for (NSString *name in [tables.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]) {
+        NSString *type;
+        if ([name hasPrefix:@"SSDT"])
+            type = [[NSString alloc] initWithData:[[tables objectForKey:name] subdataWithRange:NSMakeRange(16, 8)] encoding:NSASCIIStringEncoding];
+        [tempNames addObject:type ? [NSString stringWithFormat:@"%@ (%@)", name, type] : name];
+        [tempTables addObject:name];
     }
-    NSInteger modal = [NSApp runModalForWindow:tableView];
-    sender = [[(NSPopUpButton *)tableView.initialFirstResponder selectedItem] representedObject];
+    assignWithNotice(self, tableNames, [tempNames copy]);
+    NSInteger modal = [NSApp runModalForWindow:_tableView];
     if (modal == NSRunAbortedResponse)
         return nil;
     else if (modal == NSRunStoppedResponse)
-        tabs = @{sender:[tabs objectForKey:sender]};
+        tables = @{[tempTables objectAtIndex:_tableSelection]:[tables objectForKey:[tempTables objectAtIndex:_tableSelection]]};
     Document *document;
     modal = 0;
-    for (NSString *table in tabs) {
+    for (NSString *table in tables) {
         modal++;
-        NSDictionary *decompile = [iASL decompile:[tabs objectForKey:table] withResolution:tableView.representedURL.path];
-        if ([[decompile objectForKey:@"status"] boolValue])
-            document = [self newDocument:[decompile objectForKey:@"object"] withName:[prefix stringByAppendingString:table] display:modal != tabs.count];
-        else
-            ModalError([decompile objectForKey:@"object"]);
+        iASLDecompilationResult *decompile = [iASL decompileAML:[tables objectForKey:table] name:table tableset:url];
+        if (!ModalError(decompile.error))
+            document = [self newDocument:decompile.string displayName:[prefix stringByAppendingString:table] tableName:table tableset:url display:modal != tables.count];
     }
     return document;
 }
--(id)openIOJones:(id)sender {
-    NSDictionary *tabs = [NSDictionary dictionaryWithContentsOfURL:sender];
-    NSString *hostname = [[tabs objectForKey:@"system"] objectForKey:@"systemName"];
-    for (NSDictionary *object in [tabs objectForKey:@"objects"])
+
+-(Document *)openIOJonesTableWithContentsOfURL:(NSURL *)url {
+    NSDictionary *tables = [NSDictionary dictionaryWithContentsOfURL:url];
+    NSString *hostname = [(NSDictionary *)[tables objectForKey:@"system"] objectForKey:@"systemName"];
+    for (NSDictionary *object in [tables objectForKey:@"objects"])
         if ([[object objectForKey:@"class"] isEqualToString:@"AppleACPIPlatformExpert"]) {
-            tabs = [[object objectForKey:@"properties"] objectForKey:@"ACPI Tables"];
+            tables = [(NSDictionary *)[object objectForKey:@"properties"] objectForKey:@"ACPI Tables"];
             break;
         }
-    if (!tabs) return nil;
-    char *template = (char *)[[NSTemporaryDirectory() stringByAppendingPathComponent:@"tableset.XXXXXX"] fileSystemRepresentation];
-    NSURL *path = [[NSURL fileURLWithPath:[NSFileManager.defaultManager stringWithFileSystemRepresentation:mkdtemp(template) length:strlen(template)]] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.acpi", hostname]];
-    if ([@{@"Hostname":hostname, @"Tables":tabs} writeToURL:path atomically:true])
-        return [self openTableset:path];
-    else
-        return nil;
+    if (tables) {
+        char *temp;
+        mkdtemp(temp = strdup([[NSTemporaryDirectory() stringByAppendingPathComponent:@"tableset.XXXXXX"] fileSystemRepresentation]));
+        url = [(__bridge_transfer NSURL *)CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (UInt8 *)temp, strlen(temp), true) URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.acpi", hostname]];
+        free(temp);
+        if ([@{@"Hostname":hostname, @"Tables":tables} writeToURL:url atomically:true])
+            return [self openTablesetTableWithContentsOfURL:url];
+    }
+    return nil;
 }
+
 -(IBAction)finishTableset:(id)sender {
     if ([[sender title] isEqualToString:@"Cancel"])
         [NSApp abortModal];
     else if ([[sender title] isEqualToString:@"Open Selected"])
         [NSApp stopModal];
     else
-        [NSApp stopModalWithCode:NSRunContinuesResponse];
-    [tableView orderOut:sender];
+        [NSApp stopModalWithCode:NSModalResponseContinue];
+    [_tableView orderOut:sender];
 }
 
 #pragma mark New Documents
--(id)newDocument:(NSString *)text withName:(NSString *)name display:(bool)display {
+-(Document *)newDocument:(NSString *)text displayName:(NSString *)displayName tableName:(NSString *)tableName tableset:(NSURL *)tableset display:(bool)display {
     NSError *err;
-    Document *doc = [self openUntitledDocumentAndDisplay:false error:&err];
-    if (ModalError(err)) return nil;
-    doc.displayName = name;
-    doc.text.mutableString.string = text;
+    Document *doc = [[Document alloc] initWithType:kUTTypeAML tableName:tableName tableset:tableset text:text error:&err];
+    if (ModalError(err))
+        return nil;
+    doc.displayName = displayName;
+    [self addDocument:doc];
     if (display) {
         [doc makeWindowControllers];
         [doc performSelectorOnMainThread:@selector(showWindows) withObject:nil waitUntilDone:true];
     }
     return doc;
 }
--(id)newDocumentFromACPI:(NSString *)name saveFirst:(bool)save {
-    NSString *file = [iASL wasInjected:name];
+
+-(Document *)newDocumentFromACPI:(NSString *)name saveFirst:(bool)save {
     NSData *aml;
-    if (!(aml = [iASL fetchTable:name])) return nil;
-    if (save && !file) {
-        NSSavePanel *save = [NSSavePanel savePanel];
-        save.prompt = @"Presave";
-        save.nameFieldStringValue = name;
-        save.allowedFileTypes = @[kUTTypeAML];
-        if ([save runModal] == NSFileHandlingPanelOKButton && [NSFileManager.defaultManager createFileAtPath:save.URL.path contents:aml attributes:nil])
-            file = save.URL.path;
-    }
-    if (file && [NSFileManager.defaultManager fileExistsAtPath:file] && [[NSFileManager.defaultManager contentsAtPath:file] isEqualToData:aml])
-        [self openDocumentWithContentsOfURL:[NSURL fileURLWithPath:file] display:true completionHandler:nil];
-    else {
-        NSDictionary *decompile = [iASL decompile:aml withResolution:kSystemTableset];
-        if ([[decompile objectForKey:@"status"] boolValue])
-            return [self newDocument:[decompile objectForKey:@"object"] withName:[NSString stringWithFormat:!file?@"System %@":@"Pre-Edited %@", name] display:true];
-        else
-            ModalError([decompile objectForKey:@"object"]);
+    if ((aml = [iASL fetchTable:name])) {
+        NSURL *file = [iASL wasInjected:name];
+        if (save && !file) {
+            NSSavePanel *panel = [NSSavePanel savePanel];
+            panel.prompt = @"Presave";
+            panel.nameFieldStringValue = name;
+            panel.allowedFileTypes = @[kUTTypeAML];
+            if ([panel runModal] == NSFileHandlingPanelOKButton && [aml writeToURL:panel.URL atomically:true])
+                file = panel.URL;
+        }
+        if (file && [[NSData dataWithContentsOfURL:file] isEqualToData:aml])
+            [self openDocumentWithContentsOfURL:file display:true completionHandler:nil];
+        else {
+            iASLDecompilationResult *decompile = [iASL decompileAML:aml name:name tableset:kSystemTableset];
+            if (!ModalError(decompile.error))
+                return [self newDocument:decompile.string displayName:[NSString stringWithFormat:!file?@"System %@":@"Pre-Edited %@", name] tableName:name tableset:kSystemTableset display:true];
+        }
     }
     return nil;
 }

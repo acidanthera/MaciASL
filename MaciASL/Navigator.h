@@ -6,13 +6,10 @@
 //  Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt
 //
 
-@interface NavObject : NSObject {
-    @private
-    NSRange _contentRange;
-}
+@interface NavObject : NSObject
 
-@property NSString *name;
-@property NSRange range;
+@property (readonly) NSString *name;
+@property (readonly) NSRange range;
 
 -(NSRange)contentRange:(NSString *)text;
 
@@ -20,17 +17,17 @@
 
 @interface Scope : NavObject
 
-@property NSMutableArray *children;
+@property (readonly) NSArray *children, *flat;
 
-+(id)create:(NSString *)name withRange:(NSRange)range;
--(NSMutableArray *)flat;
 -(bool)isSelf:(NSRange)check;
 
 @end
 
 @interface DefinitionBlock : Scope
 
++(DefinitionBlock *)emptyBlock;
 +(DefinitionBlock *)build:(NSString *)dsl;
+-(instancetype)initWithName:(NSString *)name range:(NSRange)range flatChildren:(NSArray *)children;
 
 @end
 
@@ -48,16 +45,8 @@
 
 @interface NavTransformer : NSValueTransformer
 
-+(Class)transformedValueClass;
-+(BOOL)allowsReverseTransformation;
--(id)transformedValue:(id)value;
-
 @end
 
 @interface NavClassTransformer : NSValueTransformer
-
-+(Class)transformedValueClass;
-+(BOOL)allowsReverseTransformation;
--(id)transformedValue:(id)value;
 
 @end

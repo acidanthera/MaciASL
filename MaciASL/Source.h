@@ -8,9 +8,9 @@
 
 @interface SourcePatch : NSObject
 
-@property NSString *name;
-@property NSURL *url;
-@property NSDictionary *children;
+@property (readonly) NSString *name;
+@property (readonly) NSURL *url;
+@property (readonly) NSDictionary *children;
 
 @end
 
@@ -20,18 +20,16 @@
 
 @interface SourceList : NSObject
 
-@property NSMutableDictionary *archive;
-@property NSMutableArray *providers;
+@property (readonly) NSArray *providers;
 @property (readonly) dispatch_queue_t queue;
+
 +(SourceList *)sharedList;
+-(void)UTF8StringWithContentsOfURL:(NSURL *)url completionHandler:(void(^)(NSString *))completionHandler;
+
 
 @end
 
 @interface SrcClassTransformer : NSValueTransformer
-
-+(Class)transformedValueClass;
-+(BOOL)allowsReverseTransformation;
--(id)transformedValue:(id)value;
 
 @end
 

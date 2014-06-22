@@ -11,57 +11,48 @@
 
 @implementation SourcePatch
 
-@synthesize name;
-@synthesize url;
-@synthesize children;
+-(instancetype)initWithName:(NSString *)name URL:(NSURL *)url children:(NSDictionary *)children {
+    NSAssert(self.class == SourceProvider.class || !children, @"Bad initialization");
+    self = [super init];
+    if (self) {
+        _name = name;
+        _url = url;
+        _children = children;
+    }
+    return self;
+}
 
-+(SourcePatch *)create:(NSString *)name withURL:(NSURL *)url{
-    SourcePatch *temp = [SourcePatch new];
-    temp.name = name;
-    temp.url = url;
-    return temp;
+-(instancetype)initWithName:(NSString *)name URL:(NSURL *)url {
+    return [self initWithName:name URL:url children:nil];
 }
 
 @end
 
 @implementation SourceProvider
 
-+(SourceProvider *)create:(NSString *)name withURL:(NSURL *)url andChildren:(NSDictionary *)children{
-    SourceProvider *temp = [SourceProvider new];
-    temp.name = name;
-    temp.url = url;
-    temp.children = children;
-    return temp;
-}
-
 @end
 
 @implementation SourceList {
     @private
+    NSMutableDictionary *_archive;
+    NSMutableArray *_providers;
     SCNetworkReachabilityRef _reachability;
 }
 
 static SourceList *sharedList;
 
-@synthesize archive;
-@synthesize providers;
-
-void ReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info) {
-    [(__bridge SourceList *)info reachabilityDidChange:flags];
++(SourceList *)sharedList {
+    return sharedList ?: [SourceList new];
 }
 
-+(SourceList *)sharedList{
-    if (!sharedList) return [SourceList new];
-    return sharedList;
-}
-
--(id)init{
+#pragma mark NSObject Lifecycle
+-(instancetype)init {
     if (sharedList) return sharedList;
     self = [super init];
     if (self) {
-        self.archive = [NSMutableDictionary dictionary];
-        self.providers = [NSMutableArray array];
-        _queue = dispatch_queue_create("SourceList", DISPATCH_QUEUE_CONCURRENT);
+        _archive = [NSMutableDictionary dictionary];
+        _providers = [NSMutableArray array];
+        _queue = dispatch_queue_create("net.sourceforge.maciasl.sourcelist", DISPATCH_QUEUE_CONCURRENT);
         dispatch_set_context(_queue, (void *)true);
         _reachability = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, "sourceforge.net");
         SCNetworkReachabilityFlags flags;
@@ -70,11 +61,38 @@ void ReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkReachabilit
         SCNetworkReachabilityContext context = {0, (__bridge void *)self, CFRetain, CFRelease, CFCopyDescription};
         SCNetworkReachabilitySetCallback(_reachability, ReachabilityDidChange, &context);
         SCNetworkReachabilitySetDispatchQueue(_reachability, dispatch_get_main_queue());
-        [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"sources" options:NSKeyValueObservingOptionInitial context:nil];
+        [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"sources" options:0 context:nil];
         sharedList = self;
     }
     return self;
 }
+
+-(void)dealloc {
+    if (_providers)
+        [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:@"sources"];
+    if (_reachability) {
+        SCNetworkReachabilitySetDispatchQueue(_reachability, NULL);
+        CFRelease(_reachability);
+    }
+}
+
+-(void)UTF8StringWithContentsOfURL:(NSURL *)url completionHandler:(void (^)(NSString *))completionHandler {
+    dispatch_async(_queue, ^{
+        NSURLResponse *response;
+        NSError *err;
+        NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60] returningResponse:&response error:&err];
+        if ([response respondsToSelector:@selector(statusCode)] && [(NSHTTPURLResponse *)response statusCode] != 200)
+            ModalError(err ?: [NSError errorWithDomain:NSURLErrorDomain code:[(NSHTTPURLResponse *)response statusCode] userInfo:@{NSLocalizedDescriptionKey:@"File Fetch Error",NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"URL '%@' said '%@'",url,[NSHTTPURLResponse localizedStringForStatusCode:[(NSHTTPURLResponse *)response statusCode]]]}]);
+        else
+            dispatch_async(dispatch_get_main_queue(), ^{ completionHandler([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); });
+    });
+}
+
+#pragma mark SCNetworkReachability
+void ReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkReachabilityFlags flags, void *info) {
+    [(__bridge SourceList *)info reachabilityDidChange:flags];
+}
+
 -(void)reachabilityDidChange:(SCNetworkReachabilityFlags)flags {
     bool active = (bool)dispatch_get_context(_queue), reachable = flags & kSCNetworkFlagsReachable;
     if (!active && reachable)
@@ -83,62 +101,65 @@ void ReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkReachabilit
         dispatch_suspend(_queue);
     dispatch_set_context(_queue, (void *)reachable);
 }
--(void)dealloc{
-    if (providers)
-        [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:@"sources"];
-    if (_reachability) {
-        SCNetworkReachabilitySetDispatchQueue(_reachability, NULL);
-        CFRelease(_reachability);
-    }
-}
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    NSArray *oldNames = [providers valueForKey:@"name"];
+
+#pragma mark Observation
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSArray *oldNames = [_providers valueForKey:@"name"];
     NSArray *new = [NSUserDefaults.standardUserDefaults objectForKey:@"sources"];
     for (NSDictionary *provider in new) {
-        if (![archive objectForKey:[provider objectForKey:@"url"]]) {
+        if (![_archive objectForKey:[provider objectForKey:@"url"]]) {
             NSString *name = [provider objectForKey:@"name"], *url = [provider objectForKey:@"url"];
             if (![name isKindOfClass:[NSString class]] || ![url isKindOfClass:[NSString class]])
                 continue;
             NSURL *realURL = [NSURL URLWithString:url];
-            AsynchB([realURL URLByAppendingPathComponent:@".maciasl"], ^(NSString *response) {
+            [self UTF8StringWithContentsOfURL:[realURL URLByAppendingPathComponent:@".maciasl"] completionHandler:^(NSString *response) {
                 NSMutableArray *dsdt = [NSMutableArray array];
                 NSMutableArray *ssdt = [NSMutableArray array];
                 for(NSString *line in [response componentsSeparatedByString:@"\n"]) {
                     if ([line rangeOfString:@"\t"].location == NSNotFound) continue;
                     NSArray *temp = [line componentsSeparatedByString:@"\t"];
+                    SourcePatch *p = [[SourcePatch alloc] initWithName:[temp objectAtIndex:0] URL:[realURL URLByAppendingPathComponent:temp.lastObject]];
                     if (temp.count == 3 && [[temp objectAtIndex:1] isEqualToString:@"SSDT"])
-                        [ssdt addObject:[SourcePatch create:[temp objectAtIndex:0] withURL:[realURL URLByAppendingPathComponent:temp.lastObject]]];
+                        [ssdt addObject:p];
                     else
-                        [dsdt addObject:[SourcePatch create:[temp objectAtIndex:0] withURL:[realURL URLByAppendingPathComponent:temp.lastObject]]];
+                        [dsdt addObject:p];
                 }
                 if (dsdt.count + ssdt.count == 0) return;
-                SourceProvider *temp = [SourceProvider create:name withURL:realURL andChildren:@{@"DSDT":[dsdt copy], @"SSDT":[ssdt copy]}];
-                [archive setObject:temp forKey:url];
-                muteWithNotice(self, providers, [providers addObject:temp])
-            }, _queue);
+                SourceProvider *temp = [[SourceProvider alloc] initWithName:name URL:realURL children:@{@"DSDT":[dsdt copy], @"SSDT":[ssdt copy]}];
+                [self->_archive setObject:temp forKey:url];
+                muteWithNotice(self, providers, [self->_providers addObject:temp])
+            }];
         }
         else if (![oldNames containsObject:[provider objectForKey:@"name"]]) {
-            muteWithNotice(self, providers, [providers addObject:[archive objectForKey:[provider objectForKey:@"url"]]])
+            muteWithNotice(self, providers, [_providers addObject:[_archive objectForKey:[provider objectForKey:@"url"]]])
         }
     }
     NSArray *newNames = [new valueForKey:@"name"];
-    for (SourceProvider *provider in [providers copy])
+    for (SourceProvider *provider in [_providers copy])
         if (![newNames containsObject:provider.name]) {
-            muteWithNotice(self, providers, [providers removeObject:provider])
+            muteWithNotice(self, providers, [_providers removeObject:provider])
         }
 }
+
+#pragma mark Readonly Properties
+-(NSArray *)providers {
+    return [_providers copy];
+}
+
 @end
 
 @implementation SrcClassTransformer
 static NSString *prefix = @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Sidebar";
 
-+(Class)transformedValueClass{
++(Class)transformedValueClass {
     return [NSImage class];
 }
-+(BOOL)allowsReverseTransformation{
+
++(BOOL)allowsReverseTransformation {
     return false;
 }
--(id)transformedValue:(id)value{
+
+-(id)transformedValue:(id)value {
     NSImage *image = [NSImage alloc];
     image.template = true;
     if ([value class] == [SourcePatch class])

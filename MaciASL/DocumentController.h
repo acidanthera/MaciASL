@@ -6,13 +6,14 @@
 //  Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt
 //
 
+@class Document;
+
 @interface DocumentController : NSDocumentController
 
-@property (assign) IBOutlet NSWindow *tableView;
+@property (readonly) NSArray *tableNames;
+@property NSUInteger tableSelection;
 
--(IBAction)finishTableset:(id)sender;
-
--(id)newDocumentFromACPI:(NSString *)name saveFirst:(bool)save;
--(id)newDocument:(NSString *)text withName:(NSString *)name display:(bool)display;
+-(Document *)newDocumentFromACPI:(NSString *)name saveFirst:(bool)save;
+-(Document *)newDocument:(NSString *)text displayName:(NSString *)displayName tableName:(NSString *)tableName tableset:(NSURL *)tableset display:(bool)display;
 
 @end

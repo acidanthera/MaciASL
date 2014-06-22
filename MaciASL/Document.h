@@ -6,35 +6,20 @@
 //  Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt
 //
 
-#import "Patch.h"
 @class DefinitionBlock;
-@class Colorize;
+@class iASLCompilationResult;
 
-@interface Document : NSDocument <NSTextViewDelegate, NSTextStorageDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource> {
-    @private
-    DefinitionBlock *_oldNav;
-    Patcher *_patch;
-}
+#import "AppDelegate.h"
 
-@property (assign) IBOutlet NSTextView *textView;
-@property (assign) IBOutlet NSOutlineView *navView;
-@property (assign) IBOutlet NSTreeController *navController;
-@property (assign) IBOutlet NSSearchField *filter;
-@property (assign) IBOutlet NSWindow *jump;
+@interface Document : NSDocument <NSTextViewDelegate, NSTextStorageDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource, NSTextFinderIndication>
+
+@property (readonly) DefinitionBlock *nav;
 @property NSUInteger jumpLine;
-@property NSTextStorage *text;
-@property DefinitionBlock *nav;
-@property (readonly) Patcher *patch;
-@property NSDictionary *summary;
-@property Colorize *colorize;
+@property (readonly) iASLCompilationResult *result;
 
--(IBAction)filterTree:(id)sender;
--(IBAction)hexConvert:(id)sender;
--(IBAction)comment:(id)sender;
--(IBAction)jumpToLine:(id)sender;
--(IBAction)landOnLine:(id)sender;
--(void)quickPatch:(NSString *)string;
+-(instancetype)initWithType:(NSString *)typeName tableName:(NSString *)tableName tableset:(NSURL *)tableset text:(NSString *)text error:(NSError *__autoreleasing *)outError;
+
 -(IBAction)compile:(id)sender;
--(IBAction)patch:(id)sender;
+-(void)quickPatch:(NSString *)string;
 
 @end

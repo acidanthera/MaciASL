@@ -7,6 +7,7 @@
 //
 
 #import "iASL.h"
+#import "Source.h"
 #import "AppDelegate.h"
 #import <objc/objc-runtime.h>
 
@@ -49,20 +50,73 @@
 
 @end
 
+@implementation iASLDecompilationResult
+
+-(instancetype)initWithError:(NSError *)error string:(NSString *)string {
+    self = [super init];
+    if (self) {
+        _error = error;
+        _string = string;
+    }
+    return self;
+}
+
+@end
+
+@implementation iASLCompilationResult
+
+-(instancetype)initWithError:(NSError *)error string:(NSString *)string notices:(NSArray *)notices url:(NSURL *)url {
+    self = [super initWithError:error string:string];
+    if (self) {
+        _notices = notices;
+        _url = url;
+    }
+    return self;
+}
+
+@end
+
+@implementation Notice
+
+static NSRegularExpression *note;
+static NSArray *typeIndex;
+
++(void)load {
+    note = [NSRegularExpression regularExpressionWithPattern:@"(?:\\((\\d+)\\) : )?(warning|warning2|warning3|error|remark|optimize)\\s+(\\d+)(?: -|:) (.*)$" options:NSRegularExpressionCaseInsensitive error:nil];
+    typeIndex = @[@"warning", @"warning2", @"warning3", @"error", @"remark", @"optimize"];
+}
+
+-(instancetype)initWithLine:(NSString *)line {
+    self = [super init];
+    if (self) {
+        NSTextCheckingResult *result = [[note matchesInString:line options:0 range:NSMakeRange(0, line.length)] lastObject];
+        if (!result)
+            return nil;
+        NSRange range = [result rangeAtIndex:1];
+        _line = range.location == NSNotFound ? 1 : [[line substringWithRange:range] integerValue];
+        _type = (iASLNoticeType)[typeIndex indexOfObject:[[line substringWithRange:[result rangeAtIndex:2]] lowercaseString]];
+        _code = [[line substringWithRange:[result rangeAtIndex:3]] integerValue];
+        _message = [line substringWithRange:[result rangeAtIndex:4]];
+    }
+    return self;
+}
+
+@end
+
 @implementation iASL
-static NSDictionary *tableset;
-static NSDictionary *stdTables;
+NSURL *const kSystemTableset = (NSURL *)@"//System";
+static NSDictionary *tableset, *stdTables;
+static NSArray *deviceProperties;
+static NSMenu *menu;
 static NSString *bootlog;
 
-@synthesize task;
-@synthesize status;
-
-+(void)initialize{
++(void)initialize {
     stdTables = @{@"APIC":@"Advanced Programmable Interrupt Controller", @"ASF!":@"Alert Standard Format", @"BERT":@"Boot Error Record", @"BGRT":@"Boot Graphics Resource", @"BOOT":@"Simple Boot Flag", @"CPEP":@"Corrected Platform Error Polling", @"CSRT":@"Core System Resource", @"DBG2":@"Debug Port Type 2", @"DBGP":@"Debug Port", @"DMAR":@"DMA Remapping", @"DRTM":@"Dynamic Root of Trust for Measurement", @"DSDT":@"Differentiated System Description", @"ECDT":@"Embedded Controller Boot Resources", @"EINJ":@"Error Injection", @"ERST":@"Error Record Serialization", @"FACP":@"Fixed ACPI Control Pointer", @"FACS":@"Firmware ACPI Control Structure", @"FADT":@"Fixed ACPI Description", @"FPDT":@"Firmware Performance Data", @"GTDT":@"Generic Timer Description", @"HEST":@"Hardware Error Source", @"HPET":@"High Precision Event Timer", @"IVRS":@"I/O Virtualization Reporting Structure", @"MADT":@"Multiple APIC Description", @"MCFG":@"PCI Memory Mapped Configuration", @"MCHI":@"Management Controller Host Interface", @"MPST":@"Memory Power State", @"MSCT":@"Maximum System Characteristics", @"MTMR":@"MID Timer", @"PCCT":@"Platform Communications Channel", @"PMTT":@"Platform Memory Topology", @"RASF":@"RAS Feature", @"RSDP":@"Root System Description Pointer", @"RSDT":@"Root System Description", @"S3PT":@"S3 Performance", @"SBST":@"Smart Battery Specification", @"SLIC":@"Software Licensing Description", @"SLIT":@"System Locality Distance Information", @"SPCR":@"Serial Port Console Redirection", @"SPMI":@"Server Platform Management Interface", @"SRAT":@"System Resource Affinity", @"SSDT":@"Secondary System Description", @"TCPA":@"Trusted Computing Platform Alliance", @"TPM2":@"Trusted Platform Module", @"UEFI":@"Uefi Boot Optimization", @"VRTC":@"Virtual Real-Time Clock", @"WAET":@"Windows ACPI Emulated devices", @"WDAT":@"Watchdog Action", @"WDDT":@"Watchdog Timer Description", @"WDRT":@"Watchdog Resource", @"XSDT":@"Extended System Description"};
     io_service_t expert;
     if ((expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert")))) {
         tableset = (__bridge NSDictionary *)IORegistryEntryCreateCFProperty(expert, CFSTR("ACPI Tables"), kCFAllocatorDefault, 0);
         NSString *prefix = @"Presave ";
+        menu = [NSMenu new];
         for (NSString *table in [tableset.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]) {
             NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:table action:@selector(documentFromACPI:) keyEquivalent:@""], *alternate = [item copy];
             alternate.keyEquivalentModifierMask = NSAlternateKeyMask;
@@ -76,8 +130,8 @@ static NSString *bootlog;
             }
             else alternate.attributedTitle = [[NSAttributedString alloc] initWithString:[prefix stringByAppendingString:table] attributes:@{NSFontAttributeName:[NSFont systemFontOfSize:14.0]}];
             alternate.title = table;
-            [[(AppDelegate *)[NSApp delegate] tables] addItem:item];
-            [[(AppDelegate *)[NSApp delegate] tables] addItem:alternate];
+            [menu addItem:item];
+            [menu addItem:alternate];
         }
         IOObjectRelease(expert);
     }
@@ -98,11 +152,23 @@ static NSString *bootlog;
         IOObjectRelease(expert);
     }
     if (!bootlog) bootlog = @"";
+    [NSNotificationCenter.defaultCenter addObserver:self selector:@selector(applicationWillFinishLaunching:) name:NSApplicationWillFinishLaunchingNotification object:nil];
 }
+
++(void)applicationWillFinishLaunching:(NSNotification *)notification {
+    [NSNotificationCenter.defaultCenter removeObserver:self name:NSApplicationWillFinishLaunchingNotification object:nil];
+    NSMenu *acpi = [[[NSApp mainMenu] itemWithTitle:@"File"] submenu];
+    [[acpi insertItemWithTitle:@"New from ACPI" action:NULL keyEquivalent:@"" atIndex:[acpi indexOfItemWithTitle:@"New"] + 1] setSubmenu:menu];
+    menu = nil;
+}
+
 +(NSDictionary *)tableset {
     return tableset;
 }
+
 +(NSArray *)deviceProperties {
+    if (deviceProperties)
+        return deviceProperties;
     io_iterator_t iter;
     io_registry_entry_t entry;
     NSMutableArray *properties = [NSMutableArray array];
@@ -121,9 +187,14 @@ static NSString *bootlog;
         }
         IOObjectRelease(iter);
     }
-    return [properties copy];
+    return deviceProperties = [properties copy];
 }
-+(NSString *)wasInjected:(NSString *)table{
+
++(NSString *)isInjected:(NSURL *)url {
+    return [[self.tableset allKeysForObject:[NSData dataWithContentsOfURL:url]] objectAtIndex:0];
+}
+
++(NSURL *)wasInjected:(NSString *)table {
     NSString *file;
     NSRange range;
     if ((range = [bootlog rangeOfString:[table stringByAppendingString:@"="] options:NSCaseInsensitiveSearch]).location != NSNotFound) {
@@ -139,150 +210,171 @@ static NSString *bootlog;
         file = [[bootlog substringWithRange:NSMakeRange(NSMaxRange(range), NSMaxRange([bootlog lineRangeForRange:range])-NSMaxRange(range)-1)] stringByReplacingOccurrencesOfString:@"\\" withString:@"/"];
     else if ([bootlog rangeOfString:[table stringByAppendingString:@" found in booted volume"] options:NSCaseInsensitiveSearch].location != NSNotFound)
         file = [@"/" stringByAppendingFormat:@"%@.aml",table];
-    return file;
+    return file ? [NSURL fileURLWithPath:file] : nil;
 }
-+(NSString *)tempFile:(NSString *)template{
-    char *temp = (char *)[[NSTemporaryDirectory() stringByAppendingPathComponent:template] fileSystemRepresentation];
-    close(mkstemps(temp, (int)template.pathExtension.length+1));
-    unlink(temp);
-    return [NSFileManager.defaultManager stringWithFileSystemRepresentation:temp length:strlen(temp)];
+
++(NSURL *)tempFile:(NSString *)template {
+    char *temp;
+    close(mkstemps(temp = strdup([[NSTemporaryDirectory() stringByAppendingPathComponent:template] fileSystemRepresentation]), (int)template.pathExtension.length + 1));
+    NSURL *url = (__bridge_transfer NSURL *)CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (UInt8 *)temp, strlen(temp), false);
+    free(temp);
+    return url;
 }
-+(NSData *)fetchTable:(NSString *)name{
+
++(NSURL *)tempAML {
+    return [self tempFile:@"iASLXXXXXX.aml"];
+}
+
++(NSURL *)tempDSL {
+    return [self tempFile:@"iASLXXXXXX.dsl"];
+}
+
++(NSData *)fetchTable:(NSString *)name {
     if ([tableset objectForKey:name])
         return [tableset objectForKey:name];
     ModalError([NSError errorWithDomain:kMaciASLDomain code:kCompilerError userInfo:@{NSLocalizedDescriptionKey:@"Table Retrieval Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"Error fetching %@ from IORegistry",name]}]);
     return nil;
 }
-+(NSDictionary *)decompile:(NSData *)aml withResolution:(NSString *)tableset {
-    NSArray *args = @[];
-    NSMutableArray *amls;
-    NSDictionary *tabs;
-    if (tableset && (tabs = [tableset isEqualToString:kSystemTableset]?self.tableset:[[NSDictionary dictionaryWithContentsOfFile:tableset] objectForKey:@"Tables"]) && [[tabs allKeysForObject:aml] containsObject:@"DSDT"]) {
-        amls = [NSMutableArray array];
-        for (NSString *table in tabs) {
-            if (![table hasPrefix:@"SSDT"]) continue;
-            [amls addObject:[iASL tempFile:@"iASLXXXXXX.aml"]];
-            [NSFileManager.defaultManager createFileAtPath:amls.lastObject contents:[tabs objectForKey:table] attributes:nil];
+
++(int)taskWithURL:(NSURL *)url arguments:(NSArray *)arguments output:(NSArray * __strong *)output error:(NSArray * __strong *)error {
+    NSTask *task = [NSTask new];
+    NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
+    NSMutableArray *args = [NSMutableArray arrayWithObjects:@"-vs", @"-vi", nil];
+    NSUInteger acpi = [defaults integerForKey:@"acpi"];
+    if (![defaults boolForKey:@"remarks"])
+        [args addObject:@"-vr"];
+    if ([defaults boolForKey:@"optimizations"])
+        [args addObject:@"-vo"];
+    if ([defaults boolForKey:@"werror"] && acpi > 4)
+        [args addObject:@"-we"];
+    [args addObjectsFromArray:arguments];
+    task.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", acpi]];
+    task.arguments = [args copy];
+    task.currentDirectoryPath = url.URLByDeletingLastPathComponent.path;
+    task.standardOutput = [NSPipe pipe];
+    task.standardError = [NSPipe pipe];
+    [task launch];
+    dispatch_apply(2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t isOutput) {
+        NSFileHandle *h = [isOutput ? task.standardOutput : task.standardError fileHandleForReading];
+        NSData *d;
+        NSMutableArray *lines = [NSMutableArray array];
+        NSMutableString *buffer = [NSMutableString string];
+        while ((d = h.availableData)) {
+            if (!d.length)
+                break;
+            [buffer appendString:[[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding]];
+            NSRange r;
+            while ((r = [buffer rangeOfString:@"\n"]).location != NSNotFound) {
+                if (r.location) {
+                    [lines addObject:[buffer substringWithRange:NSMakeRange(0, r.location)]];
+                    [(AppDelegate *)[(NSApplication *)NSApp delegate] performSelectorOnMainThread:@selector(logEntry:) withObject:lines.lastObject waitUntilDone:false];
+                }
+                [buffer deleteCharactersInRange:NSMakeRange(0, NSMaxRange(r))];
+            }
         }
-        args = @[@"-e",[[amls valueForKey:@"lastPathComponent"] componentsJoinedByString:@","]];
-    }
-    NSString *path = [iASL tempFile:@"iASLXXXXXX.aml"];
-    [NSFileManager.defaultManager createFileAtPath:path contents:aml attributes:nil];
-    iASL *decompile = [iASL create:[args arrayByAddingObjectsFromArray:@[@"-d",path.lastPathComponent]] withFile:path];
+        if (buffer.length) {
+            [lines addObject:[buffer copy]];
+            [(AppDelegate *)[(NSApplication *)NSApp delegate] performSelectorOnMainThread:@selector(logEntry:) withObject:lines.lastObject waitUntilDone:false];
+        }
+        if (isOutput && output)
+            *output = [lines copy];
+        else if (!isOutput && error)
+            *error = [lines copy];
+    });
+    [task waitUntilExit];
+    return task.terminationStatus;
+}
+
++(iASLDecompilationResult *)decompileAML:(NSData *)aml name:(NSString *)name tableset:(NSURL *)tableset {
+    NSDictionary *tables = [tableset isEqual:kSystemTableset] ? self.tableset : [tableset isFileURL] ? [(NSDictionary *)[NSDictionary dictionaryWithContentsOfURL:tableset] objectForKey:@"Tables"] : nil;
+    NSMutableArray *externals;
+    if ([name hasPrefix:@"SSDT"] || [name isEqualToString:@"DSDT"])
+    for (NSString *table in tables)
+        if (![table isEqualToString:name] && ([table hasPrefix:@"SSDT"] || [table isEqualToString:@"DSDT"])) {
+            if (!externals)
+                externals = [NSMutableArray array];
+            [externals addObject:self.tempAML];
+            [[tables objectForKey:table] writeToURL:externals.lastObject atomically:true];
+        }
+    NSURL *url = self.tempAML;
+    [aml writeToURL:url atomically:true];
+    NSArray *output, *error;
+    int status = [self taskWithURL:url arguments:[externals ? @[@"-e", [[externals valueForKey:@"lastPathComponent"] componentsJoinedByString:@","]] : @[] arrayByAddingObjectsFromArray:@[@"-d", url.lastPathComponent]] output:&output error:&error];
     NSError *err;
-    for (NSString *aml in amls)
-        if (![NSFileManager.defaultManager removeItemAtPath:aml error:&err])
+    NSFileManager *manager = NSFileManager.defaultManager;
+    for (NSURL *external in externals)
+        if (![manager removeItemAtURL:external error:&err])
             ModalError(err);
-    if (!decompile.status) {
-        if (amls) {
-            [(AppDelegate *)[NSApp delegate] logEntry:@"Decompilation with resolution failed, trying without resolution"];
-            return [self decompile:aml withResolution:nil];
+    if (![manager removeItemAtURL:url error:&err])
+        ModalError(err);
+    if (status == EXIT_SUCCESS) {
+        url = [url.URLByDeletingPathExtension URLByAppendingPathExtension:@"dsl"];
+        NSString *dsl = [NSString stringWithContentsOfURL:url encoding:NSASCIIStringEncoding error:&err];
+        ModalError(err);
+        if (![manager removeItemAtURL:url error:&err])
+            ModalError(err);
+        NSRange range = [dsl rangeOfString:@"/*\n * "];
+        if (range.location) {
+            range = NSMakeRange(0, range.location - 1);
+            dsl = [dsl stringByReplacingCharactersInRange:range withString:[@"// " stringByAppendingString:[[dsl substringWithRange:range] stringByReplacingOccurrencesOfString:@"\n" withString:@"\n// "]]];
         }
-        else return @{@"status":@(decompile.status), @"object":[NSError errorWithDomain:kMaciASLDomain code:kDecompileError userInfo:@{NSLocalizedDescriptionKey:@"Decompilation Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"iASL returned:\n%@\n%@", decompile.stdOut, decompile.stdErr]}]};
+        return [[iASLDecompilationResult alloc] initWithError:nil string:dsl];
     }
-    path = [path.stringByDeletingPathExtension stringByAppendingPathExtension:@"dsl"];
-    NSString *dsl = [[NSString alloc] initWithData:[NSFileManager.defaultManager contentsAtPath:path] encoding:NSASCIIStringEncoding];
-    if (![NSFileManager.defaultManager removeItemAtPath:path error:&err])
-        ModalError(err);
-    NSRange block = [dsl rangeOfString:@"/*\n * "];
-    if (block.location) {
-        block = NSMakeRange(0, block.location-1);
-        dsl = [dsl stringByReplacingCharactersInRange:block withString:[@"// " stringByAppendingString:[[[dsl substringWithRange:block] componentsSeparatedByString:@"\n"] componentsJoinedByString:@"\n// "]]];
+    else if (externals) {
+        [(AppDelegate *)[(NSApplication *)NSApp delegate] logEntry:@"Decompilation with resolution failed, trying without resolution"];
+        return [self decompileAML:aml name:name tableset:nil];
     }
-    return @{@"status":@(decompile.status), @"object":dsl};
+    else
+        return [[iASLDecompilationResult alloc] initWithError:[NSError errorWithDomain:kMaciASLDomain code:kDecompileError userInfo:@{NSLocalizedDescriptionKey:@"Decompilation Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"iASL returned:\n%@\n%@", [output componentsJoinedByString:@"\n"], [error componentsJoinedByString:@"\n"]]}] string:nil];
 }
-//TODO: add redecompile option? how to detect smallest number of changes?
-+(NSDictionary *)compile:(NSString *)dsl force:(bool)force{
-    NSString *path = [iASL tempFile:@"iASLXXXXXX.dsl"];
-    [NSFileManager.defaultManager createFileAtPath:path contents:[dsl dataUsingEncoding:NSASCIIStringEncoding] attributes:nil];
-    NSArray *args = @[@"-p", path.lastPathComponent.stringByDeletingPathExtension, path.lastPathComponent];
-    iASL *compile = [iASL create:force?[@[@"-f"] arrayByAddingObjectsFromArray:args]:args withFile:path];
-    path = [path.stringByDeletingPathExtension stringByAppendingPathExtension:@"aml"];
-    NSMutableArray *temp = [NSMutableArray array];
-    Notice *notice;
-    for (NSString *line in ([NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == 4)?compile.task.stdOut:compile.task.stdErr)
-        if ((notice = [Notice create:line]))
-            [temp addObject:notice];
-    return @{@"notices":[temp copy], @"summary":[[[compile.task.stdOut lastObject] componentsSeparatedByString:@". "] lastObject], @"aml":path, @"success":@(compile.status && [NSFileManager.defaultManager fileExistsAtPath:path])};
-}
-+(iASL *)create:(NSArray *)args withFile:(NSString *)file{
-    NSMutableArray *arguments = [@[@"-vs", @"-vi"] mutableCopy];
-    [arguments addObjectsFromArray:args];
-    iASL *temp = [iASL new];
-    if (![NSUserDefaults.standardUserDefaults boolForKey:@"remarks"])
-        [arguments insertObject:@"-vr" atIndex:0];
-    if ([NSUserDefaults.standardUserDefaults boolForKey:@"optimizations"])
-        [arguments insertObject:@"-vo" atIndex:0];
-    if ([NSUserDefaults.standardUserDefaults boolForKey:@"werror"] && [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] > 4)
-        [arguments insertObject:@"-we" atIndex:0];
-    temp.task = [NSTask create:[NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]] args:arguments callback:@selector(logEntry:) listener:(AppDelegate *)[NSApp delegate]];
-    if (file) temp.task.currentDirectoryPath = file.stringByDeletingLastPathComponent;
-    [temp.task launchAndWait];
+
++(iASLCompilationResult *)compileDSL:(NSString *)dsl name:(NSString *)name tableset:(NSURL *)tableset force:(bool)force {
+    NSURL *url = self.tempDSL;
     NSError *err;
-    if (file && ![NSFileManager.defaultManager removeItemAtPath:file error:&err])
+    if (![dsl writeToURL:url atomically:true encoding:NSASCIIStringEncoding error:&err])
         ModalError(err);
-    temp.status = (!err && temp.task.terminationReason == NSTaskTerminationReasonExit && temp.task.terminationStatus == 0);
-    return temp;
-}
--(NSString *)stdOut{
-    return [self.task.stdOut componentsJoinedByString:@"\n"];
-}
--(NSString *)stdErr{
-    return [self.task.stdErr componentsJoinedByString:@"\n"];
-}
-@end
-
-@implementation Notice
-@synthesize type;
-@synthesize line;
-@synthesize code;
-@synthesize message;
-
-static NSRegularExpression *note;
-static NSArray *typeIndex;
-
-+(void)initialize{
-    note = [NSRegularExpression regularExpressionWithPattern:@"(?:\\((\\d+)\\) : )?(warning|warning2|warning3|error|remark|optimize)\\s+(\\d+)(?: -|:) (.*)$" options:NSRegularExpressionCaseInsensitive error:nil];
-    typeIndex = @[@"warning", @"warning2", @"warning3", @"error", @"remark", @"optimize"];
-}
-+(Notice *)create:(NSString *)entry{
-    __block Notice *temp = [Notice new];
-    [note enumerateMatchesInString:entry options:0 range:NSMakeRange(0, entry.length) usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
-        NSRange line = [result rangeAtIndex:1];
-        temp.line = (line.location == NSNotFound)?1:[[entry substringWithRange:line] integerValue];
-        temp.type = (enum noticeType)[typeIndex indexOfObject:[[entry substringWithRange:[result rangeAtIndex:2]] lowercaseString]];
-        temp.code = [[entry substringWithRange:[result rangeAtIndex:3]] integerValue];
-        temp.message = [entry substringWithRange:[result rangeAtIndex:4]];
-    }];
-    return !temp.message?nil:temp;
+    NSArray *output, *error;
+    int status = [self taskWithURL:url arguments:[force ? @[@"-f"] : @[] arrayByAddingObjectsFromArray:@[@"-p", url.lastPathComponent.stringByDeletingPathExtension, url.lastPathComponent]] output:&output error:&error];
+    NSFileManager *manager = NSFileManager.defaultManager;
+    if (![manager removeItemAtURL:url error:&err])
+        ModalError(err);
+    url = [url.URLByDeletingPathExtension URLByAppendingPathExtension:@"aml"];
+    NSMutableArray *notices = [NSMutableArray array];
+    Notice *notice;
+    for (NSString *line in [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == 4 ? output : error)
+        if ((notice = [[Notice alloc] initWithLine:line]))
+            [notices addObject:notice];
+    return [[iASLCompilationResult alloc] initWithError:status == EXIT_SUCCESS && [url checkResourceIsReachableAndReturnError:&err] ? nil : [NSError errorWithDomain:kMaciASLDomain code:kCompilerError userInfo:@{NSLocalizedDescriptionKey:@"Compilation Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"iASL returned:\n%@\n%@", [output componentsJoinedByString:@"\n"], [error componentsJoinedByString:@"\n"]]}] string:[[output.lastObject componentsSeparatedByString:@". "] lastObject] notices:[notices copy] url:url];
 }
 
 @end
 
 @implementation TypeTransformer
 
-+(Class)transformedValueClass{
++(Class)transformedValueClass {
     return [NSImage class];
 }
-+(BOOL)allowsReverseTransformation{
+
++(BOOL)allowsReverseTransformation {
     return false;
 }
--(id)transformedValue:(id)value{
+
+-(id)transformedValue:(id)value {
     if (!value) return nil;
     OSType ftc = kAlertNoteIcon;
     switch ([value integerValue]) {
-        case error:
+        case iASLNoticeTypeError:
             ftc = kAlertStopIcon;
             break;
-        case warning:
-        case warning2:
-        case warning3:
+        case iASLNoticeTypeWarning:
+        case iASLNoticeTypeWarning2:
+        case iASLNoticeTypeWarning3:
             ftc = kAlertCautionIcon;
             break;
-        case remark:
+        case iASLNoticeTypeRemark:
             ftc = kAlertNoteIcon;
             break;
-        case optimization:
+        case iASLNoticeTypeOptimization:
             ftc = kToolbarCustomizeIcon;
             break;
     }
@@ -291,130 +383,38 @@ static NSArray *typeIndex;
 
 @end
 
-@implementation NSTask (TaskAdditions)
-
-static char kCallbackKey;
-static char kListenerKey;
-static char kErrKey;
-static char kOutKey;
-static char kLockKey;
-
-@dynamic stdErr, stdOut;
--(NSArray *)stdErr{
-    return objc_getAssociatedObject(self, &kErrKey);
-}
--(NSArray *)stdOut{
-    return objc_getAssociatedObject(self, &kOutKey);
-}
--(void)setCallback:(SEL)callback{
-    objc_setAssociatedObject(self, &kCallbackKey, NSStringFromSelector(callback), OBJC_ASSOCIATION_RETAIN);
-}
--(SEL)callback{
-    return NSSelectorFromString(objc_getAssociatedObject(self, &kCallbackKey));
-}
--(void)setListener:(id)listener{
-    objc_setAssociatedObject(self, &kListenerKey, listener, OBJC_ASSOCIATION_RETAIN);
-}
--(id)listener{
-    return objc_getAssociatedObject(self, &kListenerKey);
-}
-
-+(NSTask *)create:(NSString *)path args:(NSArray *)arguments callback:(SEL)selector listener:(id)object{
-    NSTask *temp = [NSTask new];
-    objc_setAssociatedObject(temp, &kLockKey, [NSConditionLock new], OBJC_ASSOCIATION_RETAIN);
-    temp.launchPath = path;
-    temp.arguments = arguments;
-    temp.listener = object;
-    temp.callback = selector;
-    temp.standardError = [NSPipe pipe];
-    temp.standardOutput = [NSPipe pipe];
-    [temp performSelectorInBackground:@selector(read:) withObject:[temp.standardError fileHandleForReading]];
-    [temp performSelectorInBackground:@selector(read:) withObject:[temp.standardOutput fileHandleForReading]];
-    return temp;
-}
--(void)launchAndWait{
-    NSConditionLock *cond = objc_getAssociatedObject(self, &kLockKey);
-    [cond waitOn:2];
-    [self launch];
-    [self waitUntilExit];
-    [cond waitOn:0];
-}
--(void)read:(NSFileHandle *)handle{
-    NSMutableArray *lines = [NSMutableArray array];
-    NSMutableString *buffer = [NSMutableString string];
-    NSData *data;
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    NSConditionLock *cond = objc_getAssociatedObject(self, &kLockKey);
-    [cond increment];
-    while ((data = [handle availableData])){
-        if (!data.length) {
-            if (buffer.length) {
-                if (self.listener) [self.listener performSelector:self.callback withObject:buffer];
-                [lines addObject:buffer];
-            }
-            break;
-        }
-        else {
-            [buffer appendString:[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]];
-            if ([buffer rangeOfString:@"\n"].location == NSNotFound) continue;
-            NSArray *temp = [buffer componentsSeparatedByString:@"\n"];
-            for (NSString *line in [temp subarrayWithRange:NSMakeRange(0, temp.count-1)]) {
-                if (!line.length) continue;
-                if (self.listener) [self.listener performSelectorOnMainThread:self.callback withObject:line waitUntilDone:false];
-                [lines addObject:line];
-            }
-            buffer.string = temp.lastObject;
-        }
-    }
-    #pragma clang diagnostic pop
-    objc_setAssociatedObject(self, (handle == [self.standardError fileHandleForReading]) ? &kErrKey : &kOutKey, [lines copy], OBJC_ASSOCIATION_RETAIN);
-    [cond decrement];
-}
-
-@end
-
-@implementation NSConditionLock (NSTaskAdditions)
-
--(void)waitOn:(NSUInteger)condition{
-    [self lockWhenCondition:condition];
-    [self unlockWithCondition:condition];
-}
--(void)increment{
-    [self lock];
-    [self unlockWithCondition:self.condition+1];
-}
--(void)decrement{
-    [self lock];
-    [self unlockWithCondition:self.condition-1];
-}
-
-@end
-
 @implementation URLTask
+static NSDateFormatter *rfc822;
 
-+(bool)conditionalGet:(NSURL *)url toFile:(NSString *)file{
-    NSError *err;
-    NSDate *filemtime = [[NSFileManager.defaultManager attributesOfItemAtPath:file error:&err] fileModificationDate];
-    if (ModalError(err)) return false;
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = @"HEAD";
-    NSHTTPURLResponse *response;
-    [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-    if (ModalError(err)) return false;
-    NSString *urlmstr = [response.allHeaderFields objectForKey:@"Last-Modified"];
-    NSDateFormatter *df = [NSDateFormatter new];
-    df.dateFormat = @"EEE',' dd MMM yyyy HH':'mm':'ss 'GMT'";
-    df.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
-    df.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-    NSDate *urlmtime = [df dateFromString:urlmstr];
-    bool changed = ([filemtime compare:urlmtime] == NSOrderedAscending);
-    if (changed)
-        if (![[NSData dataWithContentsOfURL:url] writeToFile:file options:NSDataWritingAtomic error:&err])
-            if (ModalError(err)) return false;
-    if (![NSFileManager.defaultManager setAttributes:@{NSFileModificationDate: urlmtime} ofItemAtPath:file error:&err])
-        if (ModalError(err)) return false;
-    return changed;
++(void)load {
+    rfc822 = [NSDateFormatter new];
+    rfc822.dateFormat = @"EEE',' dd MMM yyyy HH':'mm':'ss 'GMT'";
+    rfc822.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+    rfc822.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
+}
+
++(void)conditionalGet:(NSURL *)url toURL:(NSURL *)file perform:(void(^)(bool))handler {
+    dispatch_async(SourceList.sharedList.queue, ^{
+        bool success = false;
+        NSError *err;
+        NSDate *filemtime;
+        if ([file getResourceValue:&filemtime forKey:NSURLContentModificationDateKey error:&err] && !ModalError(err)) {
+            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+            request.HTTPMethod = @"HEAD";
+            NSHTTPURLResponse *response;
+            [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
+            if (!ModalError(err)) {
+                NSDate *urlmtime = [rfc822 dateFromString:[response.allHeaderFields objectForKey:@"Last-Modified"]];
+                if (([filemtime compare:urlmtime] == NSOrderedAscending)) {
+                    if ([[NSData dataWithContentsOfURL:url] writeToURL:file options:NSDataWritingAtomic error:&err] && !ModalError(err))
+                        success = true;
+                }
+                if (![file setResourceValue:urlmtime forKey:NSURLContentModificationDateKey error:&err] || ModalError(err))
+                    success =  false;
+            }
+        }
+        handler(success);
+    });
 }
 
 @end
