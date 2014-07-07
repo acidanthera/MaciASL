@@ -8,8 +8,19 @@
 
 @interface SourcePatch : NSObject
 
+/*! \brief The name of the patch or repository
+ *
+ */
 @property (readonly) NSString *name;
+
+/*! \brief The URL of the patch or repository
+ *
+ */
 @property (readonly) NSURL *url;
+
+/*! \brief The patches contained in the repository
+ *
+ */
 @property (readonly) NSDictionary *children;
 
 @end
@@ -20,10 +31,27 @@
 
 @interface SourceList : NSObject
 
+/*! \brief The current list of patch providers
+ *
+ */
 @property (readonly) NSArray *providers;
-@property (readonly) dispatch_queue_t queue;
 
+/*! \brief The network access queue, to be used by all outgoing calls
+ *
+ * The queue may be suspended in response to network reachability
+ */
+@property (readonly) NSOperationQueue *queue;
+
+/*! \brief The shared SourceList
+ *
+ */
 +(SourceList *)sharedList;
+
+/*! \brief Fetches a remote UTF8 string from the given URL
+ *
+ * \param url The HTTP url from which to retrieve the string
+ * \param completionHandler The block which receives the string, or nil, on the main thread
+ */
 -(void)UTF8StringWithContentsOfURL:(NSURL *)url completionHandler:(void(^)(NSString *))completionHandler;
 
 

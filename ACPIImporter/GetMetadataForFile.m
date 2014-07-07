@@ -8,6 +8,11 @@
 
 #include <CoreServices/CoreServices.h>
 
+/*! \brief Parses a ReadStream for AML strings
+ *
+ * \param stream The ReadStream representing an AML file
+ * \returns An Array of Strings found in the stream
+ */
 CFArrayRef CFArrayCreateWithAML(CFReadStreamRef stream) {
     UInt8 i;
     CFMutableSetRef strings = NULL;
@@ -37,6 +42,12 @@ CFArrayRef CFArrayCreateWithAML(CFReadStreamRef stream) {
         return NULL;
 }
 
+/*! \brief Appends metadata found in an AML ReadStream to the given MutableDictionary
+ *
+ * \param aml A ReadStream representing an AML file
+ * \param metadata A Spotlight metadata dictionary
+ * \returns A boolean representing the success of the call
+ */
 bool CFDictionaryAppendMetadataWithAML(CFReadStreamRef aml, CFMutableDictionaryRef metadata) {
     struct {
         UInt8 Signature[4];

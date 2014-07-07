@@ -11,6 +11,13 @@
 
 @implementation SourcePatch
 
+/*! \brief Initializes the receiver (a repository) with the given parameters
+ *
+ * \param name The name of the repository
+ * \param url The url of the repository
+ * \param children The children of the repository, grouped by type (DSDT, SSDT, ...)
+ * \returns The initialized receiver
+ */
 -(instancetype)initWithName:(NSString *)name URL:(NSURL *)url children:(NSDictionary *)children {
     NSAssert(self.class == SourceProvider.class || !children, @"Bad initialization");
     self = [super init];
@@ -22,6 +29,12 @@
     return self;
 }
 
+/*! \brief Initalizes the receiver (a patch) with the given parameters
+ *
+ * \param name The name of the patch
+ * \param url The url of the patch
+ * \returns The initialized receiver
+ */
 -(instancetype)initWithName:(NSString *)name URL:(NSURL *)url {
     return [self initWithName:name URL:url children:nil];
 }
@@ -37,6 +50,7 @@
     NSMutableDictionary *_archive;
     NSMutableArray *_providers;
     SCNetworkReachabilityRef _reachability;
+    bool _reach;
 }
 
 static SourceList *sharedList;
@@ -52,8 +66,9 @@ static SourceList *sharedList;
     if (self) {
         _archive = [NSMutableDictionary dictionary];
         _providers = [NSMutableArray array];
-        _queue = dispatch_queue_create("net.sourceforge.maciasl.sourcelist", DISPATCH_QUEUE_CONCURRENT);
-        dispatch_set_context(_queue, (void *)true);
+        _queue = [NSOperationQueue new];
+        _queue.name = @"net.sourceforge.maciasl.sourcelist";
+        _reach = true;
         _reachability = SCNetworkReachabilityCreateWithName(kCFAllocatorDefault, "sourceforge.net");
         SCNetworkReachabilityFlags flags;
         SCNetworkReachabilityGetFlags(_reachability, &flags);
@@ -77,15 +92,14 @@ static SourceList *sharedList;
 }
 
 -(void)UTF8StringWithContentsOfURL:(NSURL *)url completionHandler:(void (^)(NSString *))completionHandler {
-    dispatch_async(_queue, ^{
-        NSURLResponse *response;
-        NSError *err;
-        NSData *data = [NSURLConnection sendSynchronousRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60] returningResponse:&response error:&err];
-        if ([response respondsToSelector:@selector(statusCode)] && [(NSHTTPURLResponse *)response statusCode] != 200)
-            ModalError(err ?: [NSError errorWithDomain:NSURLErrorDomain code:[(NSHTTPURLResponse *)response statusCode] userInfo:@{NSLocalizedDescriptionKey:@"File Fetch Error",NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"URL '%@' said '%@'",url,[NSHTTPURLResponse localizedStringForStatusCode:[(NSHTTPURLResponse *)response statusCode]]]}]);
-        else
-            dispatch_async(dispatch_get_main_queue(), ^{ completionHandler([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]); });
-    });
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60] queue:_queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([response respondsToSelector:@selector(statusCode)] && [(NSHTTPURLResponse *)response statusCode] != 200)
+                ModalError(connectionError ?: [NSError errorWithDomain:NSURLErrorDomain code:[(NSHTTPURLResponse *)response statusCode] userInfo:@{NSLocalizedDescriptionKey:@"File Fetch Error",NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"URL '%@' said '%@'",url,[NSHTTPURLResponse localizedStringForStatusCode:[(NSHTTPURLResponse *)response statusCode]]]}]);
+            else
+                completionHandler([[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+        });
+    }];
 }
 
 #pragma mark SCNetworkReachability
@@ -93,13 +107,17 @@ void ReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkReachabilit
     [(__bridge SourceList *)info reachabilityDidChange:flags];
 }
 
+/*! \brief Toggles the receiver's queue's suspension in response to network reachability
+ *
+ * \param flags The reachability flags returned by the callback
+ */
 -(void)reachabilityDidChange:(SCNetworkReachabilityFlags)flags {
-    bool active = (bool)dispatch_get_context(_queue), reachable = flags & kSCNetworkFlagsReachable;
-    if (!active && reachable)
-        dispatch_resume(_queue);
-    else if (active && !reachable)
-        dispatch_suspend(_queue);
-    dispatch_set_context(_queue, (void *)reachable);
+    bool reachable = flags & kSCNetworkFlagsReachable;
+    if (!_reach && reachable)
+        _queue.suspended = false;
+    else if (_reach && !reachable)
+        _queue.suspended = true;
+    _reach = reachable;
 }
 
 #pragma mark Observation

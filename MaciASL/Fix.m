@@ -13,7 +13,7 @@
 
 +(NSString *)suggestionForNotice:(Notice *)notice{
     NSUInteger temp = notice.code%1000;
-    switch ((enum messages)(([NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == 4) ? msg4[temp] : msg5[temp])) {
+    switch ((ASL_MSG)(([NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == 4) ? msg4[temp] : msg5[temp])) {
         case ASL_MSG_NAME_OPTIMIZATION:
             return @"";
     }

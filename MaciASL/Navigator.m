@@ -203,6 +203,10 @@ static NSCharacterSet *unset;
 
 @end
 
+@interface NavTransformer : NSValueTransformer
+
+@end
+
 @implementation NavTransformer
 
 static NSFont *font;
@@ -233,6 +237,10 @@ static NSDictionary *attr;
     }
     return [names copy];
 }
+
+@end
+
+@interface NavClassTransformer : NSValueTransformer
 
 @end
 

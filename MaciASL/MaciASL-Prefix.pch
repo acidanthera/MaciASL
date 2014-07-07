@@ -33,7 +33,7 @@
 
 NS_INLINE NSError* ModalError(NSError *error){
     if (error)
-        [[NSAlert alertWithError:error] runModal];
+        [[NSAlert alertWithError:error] performSelectorOnMainThread:@selector(runModal) withObject:nil waitUntilDone:true];
     return error;
 }
 NS_INLINE void SplitView(NSSplitView *splitView){

@@ -20,6 +20,11 @@
 
 @implementation NSComparisonPredicate (MathAdditions)
 
+/*! \brief Returns a ComparisonPredicate initialized with the given mathematical expression
+ *
+ * \param expression The expression which will be set equal to zero
+ * \return The ComparisonPredicate, or nil, resulting from the parser
+ */
 +(NSComparisonPredicate *)parseExpression:(NSString *)expression {
     @try {
         return (NSComparisonPredicate *)[NSPredicate predicateWithFormat:[NSString stringWithFormat:@"(%@)=0", expression]];
@@ -27,6 +32,11 @@
     @catch (NSException *ex) { return nil; }
 }
 
+/*! \brief Evaluates the receiver using the given substitutions
+ *
+ * \param substitutions A Dictionary of substitutions, Strings keyed to Numbers, to be used to evaluate the receiver
+ * \return A Number, or nil, which is the result of the substitutions
+ */
 -(NSNumber *)evaluateWithSubstitution:(NSDictionary *)substitutions {
     @try {
         return [[(NSComparisonPredicate *)[self predicateWithSubstitutionVariables:substitutions] leftExpression] expressionValueWithObject:nil context:nil];
@@ -54,6 +64,11 @@ static NSRegularExpression *field;
     return sharedGenerator ?: [SSDTGen new];
 }
 
+/*! \brief Parses the patch for fields
+ *
+ * \param patch The patch string to be parsed for fields
+ * \returns A Dictionary of field names keyed to field values, present in the patch
+ */
 +(NSDictionary *)fieldsForPatch:(NSString *)patch{
     if (!patch) patch = @"";
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -89,10 +104,19 @@ static NSRegularExpression *field;
     [self performSelector:@selector(expandTree:) withObject:nil afterDelay:0];
 }
 
+/*! \brief Expands the receiver's OutlineView
+ *
+ * \param sender Not used
+ */
 -(IBAction)expandTree:(id)sender {
     [_sourceView expandItem:nil expandChildren:true];
 }
 
+/*! \brief Returns a String representation of the given CPU number
+ *
+ * \param cpu The number of the CPU
+ * \returns A String in either hexadecimal or decimal, representing the CPU given
+ */
 -(NSString *)stringForCPU:(NSUInteger)cpu {
     return [_logicalcpus isGreaterThan:@16]
     ? [NSString stringWithFormat:@"C%lX0%lX", cpu/16, cpu%16]
@@ -100,6 +124,10 @@ static NSRegularExpression *field;
 }
 
 #pragma mark Actions
+/*! \brief Displays the window of the receiver
+ *
+ * \param sender Not used
+ */
 -(IBAction)show:(id)sender {
     bool first = ([_window windowNumber] == -1);
     [_window makeKeyAndOrderFront:sender];
@@ -110,6 +138,10 @@ static NSRegularExpression *field;
     [self expandTree:sender];
 }
 
+/*! \brief Called in response to a tree selection, to load the given generator
+ *
+ * \param sender The OutlineView which was clicked
+ */
 -(IBAction)chooseGenerator:(id)sender {
     if ([sender selectedRow] == -1 || ![[(NSTreeNode *)[sender itemAtRow:[sender selectedRow]] representedObject] isMemberOfClass:[SourcePatch class]])
         return;
@@ -125,6 +157,10 @@ static NSRegularExpression *field;
     [sender deselectAll:sender];
 }
 
+/*! \brief Reset's the receiver's view
+ *
+ * \param sender Not used
+ */
 -(IBAction)resetGenerator:(id)sender {
     self.tdp = nil;
     self.mtf = nil;
@@ -139,6 +175,10 @@ static NSRegularExpression *field;
     self.generator = nil;
 }
 
+/*! \brief Generates an SSDT from the view's parameters
+ *
+ * \param sender Not used
+ */
 -(IBAction)generate:(id)sender {
     NSUInteger minFreq = 0;
     NSComparisonPredicate *powerSlope;

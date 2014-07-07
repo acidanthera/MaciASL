@@ -6,7 +6,7 @@
 //  Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt
 //
 
-enum messages {
+typedef NS_ENUM(NSUInteger, ASL_MSG) {
     ASL_MSG_RESERVED,                   //
     ASL_MSG_ALIGNMENT,                  // Must be a multiple of alignment/granularity value
     ASL_MSG_ALPHANUMERIC_STRING,        // String must be entirely alphanumeric
@@ -172,7 +172,7 @@ enum messages {
     ASL_MSG_BYTES_TO_BITS,              // Field offset is in bytes, but a bit offset is required
 };
 
-static int msg5[] = {
+static NSUInteger msg5[] = {
     ASL_MSG_RESERVED,                   //
     ASL_MSG_ALIGNMENT,                  // Must be a multiple of alignment/granularity value
     ASL_MSG_ALPHANUMERIC_STRING,        // String must be entirely alphanumeric
@@ -335,7 +335,7 @@ static int msg5[] = {
     ASL_MSG_ZERO_VALUE                  // Value must be non-zero
 };
 
-static int msg4[] = {
+static NSUInteger msg4[] = {
     ASL_MSG_RESERVED,                   //
     ASL_MSG_ALPHANUMERIC_STRING,        // String must be entirely alphanumeric
     ASL_MSG_AML_NOT_IMPLEMENTED,        // Opcode is not implemented in compiler AML code generator

@@ -350,6 +350,10 @@ static NSString *bootlog;
 
 @end
 
+@interface TypeTransformer : NSValueTransformer
+
+@end
+
 @implementation TypeTransformer
 
 +(Class)transformedValueClass {
@@ -395,27 +399,25 @@ static NSDateFormatter *rfc822;
 }
 
 +(void)conditionalGet:(NSURL *)url toURL:(NSURL *)file perform:(void(^)(bool))handler {
-    dispatch_async(SourceList.sharedList.queue, ^{
-        bool success = false;
-        NSError *err;
-        NSDate *filemtime;
-        if ([file getResourceValue:&filemtime forKey:NSURLContentModificationDateKey error:&err] && !ModalError(err)) {
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-            request.HTTPMethod = @"HEAD";
-            NSHTTPURLResponse *response;
-            [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&err];
-            if (!ModalError(err)) {
-                NSDate *urlmtime = [rfc822 dateFromString:[response.allHeaderFields objectForKey:@"Last-Modified"]];
+    NSError *err;
+    NSDate *filemtime;
+    if ([file getResourceValue:&filemtime forKey:NSURLContentModificationDateKey error:&err] && !ModalError(err)) {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        request.HTTPMethod = @"HEAD";
+        [NSURLConnection sendAsynchronousRequest:[request copy] queue:SourceList.sharedList.queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            if (!ModalError(connectionError)) {
+                NSDate *urlmtime = [rfc822 dateFromString:[[(NSHTTPURLResponse *)response allHeaderFields] objectForKey:@"Last-Modified"]];
                 if (([filemtime compare:urlmtime] == NSOrderedAscending)) {
-                    if ([[NSData dataWithContentsOfURL:url] writeToURL:file options:NSDataWritingAtomic error:&err] && !ModalError(err))
-                        success = true;
+                    if ([[NSData dataWithContentsOfURL:url] writeToURL:file options:NSDataWritingAtomic error:&connectionError] && !ModalError(connectionError))
+                        dispatch_async(dispatch_get_main_queue(), ^{ handler(true); });
                 }
-                if (![file setResourceValue:urlmtime forKey:NSURLContentModificationDateKey error:&err] || ModalError(err))
-                    success =  false;
+                if (![file setResourceValue:urlmtime forKey:NSURLContentModificationDateKey error:&connectionError] || ModalError(connectionError))
+                    dispatch_async(dispatch_get_main_queue(), ^{ handler(false); });
             }
-        }
-        handler(success);
-    });
+        }];
+    }
+    else
+        dispatch_async(dispatch_get_main_queue(), ^{ handler(false); });
 }
 
 @end
