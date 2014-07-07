@@ -27,26 +27,12 @@
 
 +(DefinitionBlock *)emptyBlock;
 +(DefinitionBlock *)build:(NSString *)dsl;
--(instancetype)initWithName:(NSString *)name range:(NSRange)range flatChildren:(NSArray *)children;
 
-@end
-
-@interface Device : Scope
-@end
-
-@interface Processor : Device
-@end
-
-@interface Method : Scope
-@end
-
-@interface ThermalZone : Scope
-@end
-
-@interface NavTransformer : NSValueTransformer
-
-@end
-
-@interface NavClassTransformer : NSValueTransformer
+/*! \brief Filters the receiver
+ *
+ * \param filter The String used to filter the receiver
+ * \returns A copy of the receiver, filtered and flatten for searching
+ */
+-(DefinitionBlock *)filteredWithString:(NSString *)filter;
 
 @end

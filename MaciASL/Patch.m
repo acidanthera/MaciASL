@@ -9,7 +9,7 @@
 #import "Source.h"
 #import "Patch.h"
 #import "Document.h"
-#import "Navigator.h"
+#import "Navigator_Scopes.h"
 
 @implementation PatchPredicate
 

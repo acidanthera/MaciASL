@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "iASL.h"
 #import "Patch.h"
+#import "Navigator.h"
 
 static NSData *aml;
 static NSString *dsl;
@@ -99,6 +100,39 @@ static const char *md5 = "\xf2\x27\xc2\xa3\xf9\x28\x70\x62\xb4\x3f\xad\xf5\xd8\x
                     @"into all parent_adr 0x0000FFFF code_regex LNKS store_%9;"
                     @"into processor parent_hid 0x0000FFFF code_regex LNKS removeall_matched"];
     XCTAssertEqual([[p.results objectForKey:@"patches"] unsignedIntegerValue], 10UL, @"Patches not parsed");
+}
+
+- (void)testEmptyInjection
+{
+    XCTAssertNoThrow([iASL isInjected:nil], @"Injection test threw an exception");
+}
+
+- (void)testNestedObjects
+{
+    NSString *file = @"DefinitionBlock (\"iASLOsUUyA.aml\", \"SSDT\", 1, \"Ther_R\", \"Ther_Rvp\", 0x00001000)\
+    {\
+        Scope (\\_TZ)\
+        {\
+            Method (FOFF, 0, Serialized)\
+            {\
+            }\
+            \
+            PowerResource (FN00, 0x00, 0x0000)\
+            {\
+                Method (_STA, 0, Serialized)  // _STA: Status\
+                {\
+                    Return (Zero)\
+                }\
+                \
+                Method (_ON, 0, Serialized)  // _ON_: Power On\
+                {\
+                    Return (Zero)\
+                }\
+            }\
+        }\
+    }";
+    Scope *scope = [[[DefinitionBlock build:file] children] lastObject];
+    XCTAssertEqual(scope.children.count, 3UL, @"Object tree not built correctly");
 }
 
 @end

@@ -191,7 +191,8 @@ static NSString *bootlog;
 }
 
 +(NSString *)isInjected:(NSURL *)url {
-    return [[self.tableset allKeysForObject:[NSData dataWithContentsOfURL:url]] objectAtIndex:0];
+    NSArray *matches = [self.tableset allKeysForObject:[NSData dataWithContentsOfURL:url]];
+    return matches.count ? [matches objectAtIndex:0] : nil;
 }
 
 +(NSURL *)wasInjected:(NSString *)table {

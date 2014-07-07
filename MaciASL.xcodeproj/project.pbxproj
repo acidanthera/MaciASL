@@ -117,6 +117,7 @@
 		B073C418180CE89B00424B2F /* DocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentController.m; sourceTree = "<group>"; };
 		B0899352161D781C00FE7BD8 /* AML.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AML.icns; sourceTree = SOURCE_ROOT; };
 		B0899353161D781C00FE7BD8 /* DSL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = DSL.icns; sourceTree = SOURCE_ROOT; };
+		B0A2CABA19663455006B2BA3 /* Navigator_Scopes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Navigator_Scopes.h; sourceTree = "<group>"; };
 		B0A6BF8C161A827700DDE1EF /* Patch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Patch.h; sourceTree = "<group>"; };
 		B0A6BF8D161A827700DDE1EF /* Patch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Patch.m; sourceTree = "<group>"; };
 		B0A6BF92161A98A900DDE1EF /* Source.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Source.h; sourceTree = "<group>"; };
@@ -228,6 +229,7 @@
 				B013B83E160C529700F6A7F2 /* MainMenu.xib */,
 				B0E0186216157084008CAC9B /* Navigator.h */,
 				B0E0186316157084008CAC9B /* Navigator.m */,
+				B0A2CABA19663455006B2BA3 /* Navigator_Scopes.h */,
 				B0A6BF8C161A827700DDE1EF /* Patch.h */,
 				B0A6BF8D161A827700DDE1EF /* Patch.m */,
 				B06352E4177EA65B00956EB1 /* Patch.xib */,
@@ -537,7 +539,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_MARKETING_VERSION = 1.3;
-				CURRENT_PROJECT_VERSION = 254;
+				CURRENT_PROJECT_VERSION = 255;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -582,7 +584,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				CURRENT_MARKETING_VERSION = 1.3;
-				CURRENT_PROJECT_VERSION = 254;
+				CURRENT_PROJECT_VERSION = 255;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;

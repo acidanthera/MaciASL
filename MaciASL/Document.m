@@ -212,12 +212,7 @@
     else {
         if (!_oldNav)
             _oldNav = _nav;
-        NSMutableArray *temp = [_oldNav.flat mutableCopy];
-        [temp filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings){
-            return [[evaluatedObject name] rangeOfString:[sender stringValue] options:NSCaseInsensitiveSearch].location != NSNotFound;
-        }]];
-        if (temp.count && [temp objectAtIndex:0] == _oldNav) [temp removeObjectAtIndex:0];
-        assignWithNotice(self, nav, [[DefinitionBlock alloc] initWithName:_oldNav.name range:_oldNav.range flatChildren:temp])
+        assignWithNotice(self, nav, [_oldNav filteredWithString:[sender stringValue]])
     }
     [_navView expandItem:[_navView itemAtRow:0]];
     [self textViewDidChangeSelection:nil];

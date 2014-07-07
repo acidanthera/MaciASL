@@ -6,20 +6,24 @@
 //  Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt
 //
 
-#import "Navigator.h"
+#import "Navigator_Scopes.h"
 
 @implementation NavObject {
     @private
     NSRange _contentRange;
 }
 
-static NSArray *containers;
+static NSSet *containerClasses;
 static NSRegularExpression *conts;
 static NSCharacterSet *braces;
 static NSCharacterSet *unset;
 
 +(void)load {
-    containers = @[/*@"Alias", @"Buffer",*/ @"Device", @"DefinitionBlock", /*@"Function",*/ @"Method", /*@"Name", @"Package", @"PowerResource",*/ @"Processor", /*@"RawDataBuffer",*/ @"Scope", @"ThermalZone"];
+    NSArray *containers = @[/*@"Alias", @"Buffer",*/ @"Device", @"DefinitionBlock", /*@"Function",*/ @"Method", /*@"Name", @"Package", @"PowerResource",*/ @"Processor", /*@"RawDataBuffer",*/ @"Scope", @"ThermalZone"];
+    NSMutableSet *classes = [NSMutableSet setWithCapacity:containers.count];
+    for (NSString *cls in containers)
+        [classes addObject:NSClassFromString(cls)];
+    containerClasses = [classes copy];
     conts = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"(%@)\\s*\\(\\s*([\\^\\\\]*[A-Z0-9_.]+)\\s*[),]", [containers componentsJoinedByString:@"|"]] options:0 error:nil];
     braces = [NSCharacterSet characterSetWithCharactersInString:@"{}"];
     unset = [[NSCharacterSet characterSetWithCharactersInString:@" \n"] invertedSet];
@@ -48,6 +52,10 @@ static NSCharacterSet *unset;
     return _contentRange;
 }
 
+-(NSString *)debugDescription {
+    return [NSString stringWithFormat:@"%@ \"%@\" (%ld, %ld)", NSStringFromClass(self.class), _name, _range.location, _range.length];
+}
+
 @end
 
 @implementation Scope {
@@ -65,6 +73,10 @@ static NSCharacterSet *unset;
 
 -(void)addChildrenObject:(NavObject *)object {
     [_children addObject:object];
+}
+
+-(NSString *)debugDescription {
+    return [[super debugDescription] stringByAppendingFormat:_children.count ? @" {\n%@\n}" : @" {%@}", [[_children valueForKey:@"debugDescription"] componentsJoinedByString:@"\n"]];
 }
 
 -(bool)isSelf:(NSRange)check {
@@ -110,7 +122,7 @@ static NSCharacterSet *unset;
 @implementation DefinitionBlock
 
 +(DefinitionBlock *)emptyBlock {
-    return [[DefinitionBlock alloc] initWithName:@"Unknown" range:NSMakeRange(0, 0)];
+    return [[DefinitionBlock alloc] initWithName:@"<Empty>" range:NSMakeRange(0, 0)];
 }
 
 +(DefinitionBlock *)build:(NSString *)dsl{
@@ -138,31 +150,48 @@ static NSCharacterSet *unset;
         [scan scanCharactersFromSet:braces intoString:&test];
         Scope *child = container.children.lastObject;
         if ([test isEqualToString:@"{}"]) {
-            if (found && [containers containsObject:NSStringFromClass(child.class)])
+            if (found && [containerClasses containsObject:child.class])
                 child.range = NSMakeRange(child.range.location, scan.scanLocation - child.range.location);
         }
         else if ([test isEqualToString:@"{"]) {
             depth++;
-            if (found && [containers containsObject:NSStringFromClass(child.class)]){
+            if (found && [containerClasses containsObject:child.class]){
                 [path addObject:child];
                 container = child;
             }
+            else
+                [path addObject:NSNull.null];
         }
-        else if ([test hasPrefix:@"}"]) {
+        else if ([test characterAtIndex:0] == '}') {
             NSUInteger i = 0;
             while (i < test.length) {
                 if ([test characterAtIndex:i++] != '}') continue;
                 if (depth-- == path.count){
-                    child = path.lastObject;
-                    child.range = NSMakeRange(child.range.location, scan.scanLocation - child.range.location);
+                    if ((id)(child = path.lastObject) != NSNull.null)
+                        child.range = NSMakeRange(child.range.location, scan.scanLocation - child.range.location);
                     [path removeLastObject];
-                    child = path.lastObject;
-                    container = child;
+                    if (path.lastObject == NSNull.null) {
+                        NSUInteger item = path.count - 2;
+                        while ((id)(container = child = [path objectAtIndex:item]) == NSNull.null)
+                            item--;
+                    }
+                    else
+                        container = child = path.lastObject;
                 }
             }
         }
     }
     return root;
+}
+
+-(DefinitionBlock *)filteredWithString:(NSString *)filter {
+    NSMutableArray *temp = [self.flat mutableCopy];
+    [temp filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings){
+        return [[evaluatedObject name] rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound;
+    }]];
+    if (temp.count && [temp objectAtIndex:0] == self)
+        [temp removeObjectAtIndex:0];
+    return [[DefinitionBlock alloc] initWithName:self.name range:self.range flatChildren:temp];
 }
 
 -(instancetype)initWithName:(NSString *)name range:(NSRange)range flatChildren:(NSArray *)children {
