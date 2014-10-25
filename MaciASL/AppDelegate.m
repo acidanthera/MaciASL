@@ -75,7 +75,8 @@
     t.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]];
     t.standardOutput = [NSPipe pipe];
     [[t.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *h) { [d appendData:h.availableData]; }];
-    [t launch];
+    @try { [t launch]; }
+    @catch (NSException *e) { [self logEntry:[NSString stringWithFormat:@"Could not launch %@", t.launchPath]]; return; }
     [t waitUntilExit];
     NSArray *lines = [[[[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding] componentsSeparatedByString:@"\n"] subarrayWithRange:NSMakeRange(0, 3)];
     for (NSString *line in lines)

@@ -92,6 +92,8 @@
         if ([@{@"Hostname":hostname, @"Tables":tables} writeToURL:url atomically:true])
             return [self openTablesetTableWithContentsOfURL:url];
     }
+    else
+        ModalError([NSError errorWithDomain:kMaciASLDomain code:kTablesetError userInfo:@{NSLocalizedDescriptionKey:@"IOJones Error", NSLocalizedRecoverySuggestionErrorKey:[NSString stringWithFormat:@"Could not find /AppleACPIPlatformExpert/ACPI Tables"]}]);
     return nil;
 }
 

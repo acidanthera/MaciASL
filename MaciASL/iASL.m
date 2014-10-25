@@ -254,7 +254,8 @@ static NSString *bootlog;
     task.currentDirectoryPath = url.URLByDeletingLastPathComponent.path;
     task.standardOutput = [NSPipe pipe];
     task.standardError = [NSPipe pipe];
-    [task launch];
+    @try { [task launch]; }
+    @catch (NSException *e) { return EXIT_FAILURE; }
     dispatch_apply(2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t isOutput) {
         NSFileHandle *h = [isOutput ? task.standardOutput : task.standardError fileHandleForReading];
         NSData *d;
