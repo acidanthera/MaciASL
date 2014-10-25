@@ -82,7 +82,9 @@
     for (NSString *line in lines)
         [self logEntry:line];
     assignWithNotice(self, compiler, [lines componentsJoinedByString:@"\n"]);
-    [[NSDocumentController.sharedDocumentController documents] makeObjectsPerformSelector:@selector(compile:) withObject:self];
+    for (Document *doc in [NSDocumentController.sharedDocumentController documents])
+        if (!doc.isDocumentEdited)
+            [doc revertToContentsOfURL:doc.fileURL ofType:doc.fileType error:NULL];
 }
 
 #pragma mark Actions

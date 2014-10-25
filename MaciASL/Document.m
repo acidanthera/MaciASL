@@ -133,6 +133,16 @@
     return false;
 }
 
+-(BOOL)revertToContentsOfURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError {
+    if (url)
+        return [super revertToContentsOfURL:url ofType:typeName error:outError];
+    else if ([_tableset isEqual:kSystemTableset])
+        return [self readFromData:[iASL fetchTable:_tableName] ofType:kUTTypeAML error:outError];
+    else if (_tableset)
+        return [self readFromData:[(NSDictionary *)[(NSDictionary *)[NSDictionary dictionaryWithContentsOfURL:_tableset] objectForKey:@"Tables"] objectForKey:_tableName] ofType:kUTTypeAML error:outError];
+    return true;
+}
+
 -(instancetype)initWithType:(NSString *)typeName tableName:(NSString *)tableName tableset:(NSURL *)tableset text:(NSString *)text error:(NSError *__autoreleasing *)outError {
     self = [super initWithType:typeName error:outError];
     if (self) {
