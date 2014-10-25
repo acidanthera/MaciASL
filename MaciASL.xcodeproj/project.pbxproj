@@ -18,6 +18,7 @@
 		B01CAF951618EB4900AB9F0C /* Colorize.m in Sources */ = {isa = PBXBuildFile; fileRef = B01CAF941618EB4900AB9F0C /* Colorize.m */; };
 		B031539C1956A21B0056C7F2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B031539B1956A21B0056C7F2 /* XCTest.framework */; };
 		B03153A41956A21B0056C7F2 /* MaciASL_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B03153A31956A21B0056C7F2 /* MaciASL_Tests.m */; };
+		B034202D19FB66C80049C764 /* iasl51 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B034202B19FB54770049C764 /* iasl51 */; };
 		B06352E2177EA65B00956EB1 /* Patch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06352E4177EA65B00956EB1 /* Patch.xib */; };
 		B06352E5177EA65F00956EB1 /* SSDT.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06352E7177EA65F00956EB1 /* SSDT.xib */; };
 		B0663F4417E815EB008D6686 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B0663F4317E815EB008D6686 /* main.c */; };
@@ -77,6 +78,7 @@
 			files = (
 				B0E0186116155CB3008CAC9B /* iasl5 in CopyFiles */,
 				B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */,
+				B034202D19FB66C80049C764 /* iasl51 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +107,7 @@
 		B031539F1956A21B0056C7F2 /* MaciASL Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MaciASL Tests-Info.plist"; sourceTree = "<group>"; };
 		B03153A31956A21B0056C7F2 /* MaciASL_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaciASL_Tests.m; sourceTree = "<group>"; };
 		B03153A51956A21B0056C7F2 /* MaciASL Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MaciASL Tests-Prefix.pch"; sourceTree = "<group>"; };
+		B034202B19FB54770049C764 /* iasl51 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl51; sourceTree = SOURCE_ROOT; };
 		B06352E3177EA65B00956EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Patch.xib; sourceTree = "<group>"; };
 		B06352E6177EA65F00956EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SSDT.xib; sourceTree = "<group>"; };
 		B0663F3417E815EB008D6686 /* ACPI.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ACPI.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,6 +249,7 @@
 		B013B82D160C529600F6A7F2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B034202B19FB54770049C764 /* iasl51 */,
 				B0E0185D1615512A008CAC9B /* iasl5 */,
 				B0FD8AB1165D847C0074DC84 /* iasl4 */,
 				B0A7EAF0173CA9A300363AD1 /* ACPI.icns */,

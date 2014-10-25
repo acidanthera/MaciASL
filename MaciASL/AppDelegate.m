@@ -141,6 +141,7 @@
     };
     [URLTask conditionalGet:[NSURL URLWithString:[NSString stringWithFormat:@"http://maciasl.sourceforge.net/10.%@/iasl4", version]] toURL:[NSBundle.mainBundle URLForAuxiliaryExecutable:@"iasl4"] perform:handler];
     [URLTask conditionalGet:[NSURL URLWithString:[NSString stringWithFormat:@"http://maciasl.sourceforge.net/10.%@/iasl5", version]] toURL:[NSBundle.mainBundle URLForAuxiliaryExecutable:@"iasl5"] perform:handler];
+    [URLTask conditionalGet:[NSURL URLWithString:[NSString stringWithFormat:@"http://maciasl.sourceforge.net/10.%@/iasl51", version]] toURL:[NSBundle.mainBundle URLForAuxiliaryExecutable:@"iasl51"] perform:handler];
 }
 
 -(IBAction)newSource:(id)sender {
