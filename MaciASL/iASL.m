@@ -402,23 +402,31 @@ static NSDateFormatter *rfc822;
 +(void)conditionalGet:(NSURL *)url toURL:(NSURL *)file perform:(void(^)(bool))handler {
     NSError *err;
     NSDate *filemtime;
+    NSProgress *progress = [NSProgress progressWithTotalUnitCount:2];
     if ([file getResourceValue:&filemtime forKey:NSURLContentModificationDateKey error:&err] && !ModalError(err)) {
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         request.HTTPMethod = @"HEAD";
         [NSURLConnection sendAsynchronousRequest:[request copy] queue:SourceList.sharedList.queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+            progress.completedUnitCount++;
+            bool result = false;
             if (!ModalError(connectionError)) {
                 NSDate *urlmtime = [rfc822 dateFromString:[[(NSHTTPURLResponse *)response allHeaderFields] objectForKey:@"Last-Modified"]];
                 if (([filemtime compare:urlmtime] == NSOrderedAscending)) {
-                    if ([[NSData dataWithContentsOfURL:url] writeToURL:file options:NSDataWritingAtomic error:&connectionError] && !ModalError(connectionError))
-                        dispatch_async(dispatch_get_main_queue(), ^{ handler(true); });
+                    result = [[NSData dataWithContentsOfURL:url options:0 error:NULL] writeToURL:file options:NSDataWritingAtomic error:&connectionError] && !ModalError(connectionError);
                 }
-                if (![file setResourceValue:urlmtime forKey:NSURLContentModificationDateKey error:&connectionError] || ModalError(connectionError))
-                    dispatch_async(dispatch_get_main_queue(), ^{ handler(false); });
+                else {
+                    [file setResourceValue:urlmtime forKey:NSURLContentModificationDateKey error:&connectionError];
+                    ModalError(connectionError);
+                }
             }
+            progress.completedUnitCount++;
+            dispatch_async(dispatch_get_main_queue(), ^{ handler(result); });
         }];
     }
-    else
+    else {
+        progress.completedUnitCount += 2;
         dispatch_async(dispatch_get_main_queue(), ^{ handler(false); });
+    }
 }
 
 @end

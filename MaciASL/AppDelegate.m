@@ -134,16 +134,25 @@
 }
 
 -(IBAction)update:(id)sender {
-    NSString *version = [[[(NSDictionary *)[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"] componentsSeparatedByString:@"."] objectAtIndex:1];
     [sender setEnabled:false];
-    void(^handler)(bool) = ^(bool success){
-        if (success)
-            [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+    NSString *os = [[[(NSDictionary *)[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"] componentsSeparatedByString:@"."] objectAtIndex:1];
+    muteWithNotice(self, update, _update = [NSProgress progressWithTotalUnitCount:3]);
+    dispatch_group_t g = dispatch_group_create();
+    for (NSNumber *iasl in @[@4, @5, @51]) {
+        [_update becomeCurrentWithPendingUnitCount:1];
+        dispatch_group_enter(g);
+        [URLTask conditionalGet:[NSURL URLWithString:[NSString stringWithFormat:@"http://maciasl.sourceforge.net/10.%@/iasl%ld", os, iasl.unsignedIntegerValue]] toURL:[NSBundle.mainBundle URLForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", iasl.unsignedIntegerValue]] perform:^(bool success){
+            muteWithNotice(self->_update, fractionCompleted,);
+            if (success && [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == iasl.unsignedIntegerValue)
+                [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+            dispatch_group_leave(g);
+        }];
+        [_update resignCurrent];
+    }
+    dispatch_group_notify(g, dispatch_get_main_queue(), ^{
+        muteWithNotice(self, update, self->_update = nil);
         [sender setEnabled:true];
-    };
-    [URLTask conditionalGet:[NSURL URLWithString:[NSString stringWithFormat:@"http://maciasl.sourceforge.net/10.%@/iasl4", version]] toURL:[NSBundle.mainBundle URLForAuxiliaryExecutable:@"iasl4"] perform:handler];
-    [URLTask conditionalGet:[NSURL URLWithString:[NSString stringWithFormat:@"http://maciasl.sourceforge.net/10.%@/iasl5", version]] toURL:[NSBundle.mainBundle URLForAuxiliaryExecutable:@"iasl5"] perform:handler];
-    [URLTask conditionalGet:[NSURL URLWithString:[NSString stringWithFormat:@"http://maciasl.sourceforge.net/10.%@/iasl51", version]] toURL:[NSBundle.mainBundle URLForAuxiliaryExecutable:@"iasl51"] perform:handler];
+    });
 }
 
 -(IBAction)newSource:(id)sender {

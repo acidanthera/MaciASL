@@ -904,6 +904,20 @@
                         <binding destination="763" name="selectedObject" keyPath="values.acpi" id="2272"/>
                     </connections>
                 </popUpButton>
+                <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="1" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="iHw-yh-MgN">
+                    <rect key="frame" x="132" y="22" width="16" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <connections>
+                        <binding destination="534" name="animate" keyPath="update.indeterminate" id="RgI-5J-Mgz"/>
+                        <binding destination="534" name="hidden" keyPath="update" id="YdI-t8-7uK">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNil</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="534" name="isIndeterminate" keyPath="update.indeterminate" previousBinding="RgI-5J-Mgz" id="Wi8-H9-IfG"/>
+                        <binding destination="534" name="value" keyPath="update.fractionCompleted" id="d5h-iW-pep"/>
+                    </connections>
+                </progressIndicator>
             </subviews>
             <constraints>
                 <constraint firstItem="741" firstAttribute="top" secondItem="737" secondAttribute="bottom" constant="6" symbolic="YES" id="754"/>

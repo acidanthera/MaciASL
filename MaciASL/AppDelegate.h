@@ -12,6 +12,7 @@
 
 @property (readonly) NSArray *log, *themes, *deviceProperties;
 @property (readonly) NSString *compiler;
+@property (readonly) NSProgress *update;
 
 -(void)logEntry:(NSString *)entry;
 -(void)changeFont:(id)sender;
