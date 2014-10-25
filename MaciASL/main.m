@@ -26,7 +26,7 @@ void handle_exception(NSException *exception) {
 int main(int argc, char *argv[])
 {
     NSSetUncaughtExceptionHandler(&handle_exception);
-    NSImage *temp = [[NSImage alloc] initByReferencingFile:@"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarUtilitiesFolderIcon.icns"];
+    NSImage *temp = [[NSImage alloc] initByReferencingFile:[NSOpenGLContext instancesRespondToSelector:@selector(lock)] ? @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarCustomizeIcon.icns" : @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/ToolbarUtilitiesFolderIcon.icns"];
     temp.name = @"ToolbarUtilitiesFolderIcon";
     return NSApplicationMain(argc, (const char **)argv);
 }
