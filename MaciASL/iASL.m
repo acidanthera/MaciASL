@@ -301,7 +301,14 @@ static NSString *bootlog;
     NSURL *url = self.tempAML;
     [aml writeToURL:url atomically:true];
     NSArray *output, *error;
-    int status = [self taskWithURL:url arguments:[externals ? @[@"-e", [[externals valueForKey:@"lastPathComponent"] componentsJoinedByString:@","]] : @[] arrayByAddingObjectsFromArray:@[@"-d", url.lastPathComponent]] output:&output error:&error];
+    NSArray *args;
+    if (externals) {
+        if ([NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == 4)
+            args = @[@"-e", [[externals valueForKey:@"lastPathComponent"] componentsJoinedByString:@","]];
+        else
+            args = [@[@"-e"] arrayByAddingObjectsFromArray:[externals valueForKey:@"lastPathComponent"]];
+    }
+    int status = [self taskWithURL:url arguments:[args ?: @[] arrayByAddingObjectsFromArray:@[@"-d", url.lastPathComponent]] output:&output error:&error];
     NSError *err;
     NSFileManager *manager = NSFileManager.defaultManager;
     for (NSURL *external in externals)

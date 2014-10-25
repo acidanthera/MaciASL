@@ -60,7 +60,8 @@
         [tempTables addObject:name];
     }
     assignWithNotice(self, tableNames, [tempNames copy]);
-    NSInteger modal = [NSApp runModalForWindow:_tableView];
+    __block NSInteger modal;
+    dispatch_sync(dispatch_get_main_queue(), ^{ modal = [NSApp runModalForWindow:self->_tableView]; });
     if (modal == NSRunAbortedResponse)
         return nil;
     else if (modal == NSRunStoppedResponse)
