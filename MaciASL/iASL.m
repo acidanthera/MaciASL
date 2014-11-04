@@ -107,32 +107,13 @@ static NSArray *typeIndex;
 NSURL *const kSystemTableset = (NSURL *)@"//System";
 static NSDictionary *tableset, *stdTables;
 static NSArray *deviceProperties;
-static NSMenu *menu;
 static NSString *bootlog;
 
-+(void)initialize {
++(void)load {
     stdTables = @{@"APIC":@"Advanced Programmable Interrupt Controller", @"ASF!":@"Alert Standard Format", @"BERT":@"Boot Error Record", @"BGRT":@"Boot Graphics Resource", @"BOOT":@"Simple Boot Flag", @"CPEP":@"Corrected Platform Error Polling", @"CSRT":@"Core System Resource", @"DBG2":@"Debug Port Type 2", @"DBGP":@"Debug Port", @"DMAR":@"DMA Remapping", @"DRTM":@"Dynamic Root of Trust for Measurement", @"DSDT":@"Differentiated System Description", @"ECDT":@"Embedded Controller Boot Resources", @"EINJ":@"Error Injection", @"ERST":@"Error Record Serialization", @"FACP":@"Fixed ACPI Control Pointer", @"FACS":@"Firmware ACPI Control Structure", @"FADT":@"Fixed ACPI Description", @"FPDT":@"Firmware Performance Data", @"GTDT":@"Generic Timer Description", @"HEST":@"Hardware Error Source", @"HPET":@"High Precision Event Timer", @"IVRS":@"I/O Virtualization Reporting Structure", @"MADT":@"Multiple APIC Description", @"MCFG":@"PCI Memory Mapped Configuration", @"MCHI":@"Management Controller Host Interface", @"MPST":@"Memory Power State", @"MSCT":@"Maximum System Characteristics", @"MTMR":@"MID Timer", @"PCCT":@"Platform Communications Channel", @"PMTT":@"Platform Memory Topology", @"RASF":@"RAS Feature", @"RSDP":@"Root System Description Pointer", @"RSDT":@"Root System Description", @"S3PT":@"S3 Performance", @"SBST":@"Smart Battery Specification", @"SLIC":@"Software Licensing Description", @"SLIT":@"System Locality Distance Information", @"SPCR":@"Serial Port Console Redirection", @"SPMI":@"Server Platform Management Interface", @"SRAT":@"System Resource Affinity", @"SSDT":@"Secondary System Description", @"TCPA":@"Trusted Computing Platform Alliance", @"TPM2":@"Trusted Platform Module", @"UEFI":@"Uefi Boot Optimization", @"VRTC":@"Virtual Real-Time Clock", @"WAET":@"Windows ACPI Emulated devices", @"WDAT":@"Watchdog Action", @"WDDT":@"Watchdog Timer Description", @"WDRT":@"Watchdog Resource", @"XSDT":@"Extended System Description"};
     io_service_t expert;
     if ((expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert")))) {
         tableset = (__bridge NSDictionary *)IORegistryEntryCreateCFProperty(expert, CFSTR("ACPI Tables"), kCFAllocatorDefault, 0);
-        NSString *prefix = @"Presave ";
-        menu = [NSMenu new];
-        for (NSString *table in [tableset.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]) {
-            NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:table action:@selector(documentFromACPI:) keyEquivalent:@""], *alternate = [item copy];
-            alternate.keyEquivalentModifierMask = NSAlternateKeyMask;
-            alternate.alternate = true;
-            if (table.length >= 4 && [stdTables objectForKey:[table substringToIndex:4]]) {
-                NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithRTF:[[NSString stringWithFormat:@"{\\rtf1\\ansi {\\fonttbl\\f0 LucidaGrande;}\\f0\\fs28 %@%@\\line\\fs20 %@}", table, [table hasPrefix:@"SSDT"] ? [NSString stringWithFormat:@" (%@)", [[NSString alloc] initWithData:[[tableset objectForKey:table] subdataWithRange:NSMakeRange(16, 8)] encoding:NSASCIIStringEncoding]] : @"", [stdTables objectForKey:[table substringToIndex:4]]] dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:NULL];
-                item.attributedTitle = title;
-                [title replaceCharactersInRange:NSMakeRange(0, 0) withString:prefix];
-                alternate.attributedTitle = title;
-                item.title = table;
-            }
-            else alternate.attributedTitle = [[NSAttributedString alloc] initWithString:[prefix stringByAppendingString:table] attributes:@{NSFontAttributeName:[NSFont systemFontOfSize:14.0]}];
-            alternate.title = table;
-            [menu addItem:item];
-            [menu addItem:alternate];
-        }
         IOObjectRelease(expert);
     }
     if ((expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("IOPlatformExpertDevice")))){
@@ -157,9 +138,30 @@ static NSString *bootlog;
 
 +(void)applicationWillFinishLaunching:(NSNotification *)notification {
     [NSNotificationCenter.defaultCenter removeObserver:self name:NSApplicationWillFinishLaunchingNotification object:nil];
-    NSMenu *acpi = [[[NSApp mainMenu] itemWithTitle:@"File"] submenu];
-    [[acpi insertItemWithTitle:@"New from ACPI" action:NULL keyEquivalent:@"" atIndex:[acpi indexOfItemWithTitle:@"New"] + 1] setSubmenu:menu];
-    menu = nil;
+    io_service_t expert;
+    if ((expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert")))) {
+        NSString *prefix = @"Presave ";
+        NSMenu *menu = [NSMenu new];
+        for (NSString *table in [tableset.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]) {
+            NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:table action:@selector(documentFromACPI:) keyEquivalent:@""], *alternate = [item copy];
+            alternate.keyEquivalentModifierMask = NSAlternateKeyMask;
+            alternate.alternate = true;
+            if (table.length >= 4 && [stdTables objectForKey:[table substringToIndex:4]]) {
+                NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithRTF:[[NSString stringWithFormat:@"{\\rtf1\\ansi {\\fonttbl\\f0 LucidaGrande;}\\f0\\fs28 %@%@\\line\\fs20 %@}", table, [table hasPrefix:@"SSDT"] ? [NSString stringWithFormat:@" (%@)", [[NSString alloc] initWithData:[[tableset objectForKey:table] subdataWithRange:NSMakeRange(16, 8)] encoding:NSASCIIStringEncoding]] : @"", [stdTables objectForKey:[table substringToIndex:4]]] dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:NULL];
+                item.attributedTitle = title;
+                [title replaceCharactersInRange:NSMakeRange(0, 0) withString:prefix];
+                alternate.attributedTitle = title;
+                item.title = table;
+            }
+            else alternate.attributedTitle = [[NSAttributedString alloc] initWithString:[prefix stringByAppendingString:table] attributes:@{NSFontAttributeName:[NSFont systemFontOfSize:14.0]}];
+            alternate.title = table;
+            [menu addItem:item];
+            [menu addItem:alternate];
+        }
+        IOObjectRelease(expert);
+        NSMenu *acpi = [[[NSApp mainMenu] itemWithTitle:@"File"] submenu];
+        [[acpi insertItemWithTitle:@"New from ACPI" action:NULL keyEquivalent:@"" atIndex:[acpi indexOfItemWithTitle:@"New"] + 1] setSubmenu:menu];
+    }
 }
 
 +(NSDictionary *)tableset {
