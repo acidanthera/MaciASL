@@ -53,7 +53,7 @@
     NSDictionary *font = [NSUserDefaults.standardUserDefaults objectForKey:@"font"];
     [NSFontManager.sharedFontManager setSelectedFont:[NSFont fontWithName:[font objectForKey:@"name"] size:[[font objectForKey:@"size"] floatValue]] isMultiple:false];
     _logView.level = NSNormalWindowLevel;
-    [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"acpi" options:NSKeyValueObservingOptionInitial context:NULL];
+    [iASL addObserver:self forKeyPath:@"compiler" options:0 context:NULL];
 }
 
 -(BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender {
@@ -70,18 +70,7 @@
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    NSMutableData *d = [NSMutableData data];
-    NSTask *t = [NSTask new];
-    t.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]];
-    t.standardOutput = [NSPipe pipe];
-    [[t.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *h) { [d appendData:h.availableData]; }];
-    @try { [t launch]; }
-    @catch (NSException *e) { [self logEntry:[NSString stringWithFormat:@"Could not launch %@", t.launchPath]]; return; }
-    [t waitUntilExit];
-    NSArray *lines = [[[[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding] componentsSeparatedByString:@"\n"] subarrayWithRange:NSMakeRange(0, 3)];
-    for (NSString *line in lines)
-        [self logEntry:line];
-    assignWithNotice(self, compiler, [lines componentsJoinedByString:@"\n"]);
+    muteWithNotice(self, compiler,);
     for (Document *doc in [NSDocumentController.sharedDocumentController documents])
         if (!doc.isDocumentEdited)
             [doc revertToContentsOfURL:doc.fileURL ofType:doc.fileType error:NULL];
@@ -175,6 +164,10 @@
 }
 
 #pragma mark Readonly Properties
+-(NSString *)compiler {
+    return iASL.compiler;
+}
+
 -(NSArray *)deviceProperties {
     return iASL.deviceProperties;
 }

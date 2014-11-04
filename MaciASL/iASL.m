@@ -107,10 +107,13 @@ static NSArray *typeIndex;
 NSURL *const kSystemTableset = (NSURL *)@"//System";
 static NSDictionary *tableset, *stdTables;
 static NSArray *deviceProperties;
-static NSString *bootlog;
+static NSRegularExpression *signon;
+static NSString *bootlog, *_compiler;
+static NSUInteger _build;
 
 +(void)load {
     stdTables = @{@"APIC":@"Advanced Programmable Interrupt Controller", @"ASF!":@"Alert Standard Format", @"BERT":@"Boot Error Record", @"BGRT":@"Boot Graphics Resource", @"BOOT":@"Simple Boot Flag", @"CPEP":@"Corrected Platform Error Polling", @"CSRT":@"Core System Resource", @"DBG2":@"Debug Port Type 2", @"DBGP":@"Debug Port", @"DMAR":@"DMA Remapping", @"DRTM":@"Dynamic Root of Trust for Measurement", @"DSDT":@"Differentiated System Description", @"ECDT":@"Embedded Controller Boot Resources", @"EINJ":@"Error Injection", @"ERST":@"Error Record Serialization", @"FACP":@"Fixed ACPI Control Pointer", @"FACS":@"Firmware ACPI Control Structure", @"FADT":@"Fixed ACPI Description", @"FPDT":@"Firmware Performance Data", @"GTDT":@"Generic Timer Description", @"HEST":@"Hardware Error Source", @"HPET":@"High Precision Event Timer", @"IVRS":@"I/O Virtualization Reporting Structure", @"MADT":@"Multiple APIC Description", @"MCFG":@"PCI Memory Mapped Configuration", @"MCHI":@"Management Controller Host Interface", @"MPST":@"Memory Power State", @"MSCT":@"Maximum System Characteristics", @"MTMR":@"MID Timer", @"PCCT":@"Platform Communications Channel", @"PMTT":@"Platform Memory Topology", @"RASF":@"RAS Feature", @"RSDP":@"Root System Description Pointer", @"RSDT":@"Root System Description", @"S3PT":@"S3 Performance", @"SBST":@"Smart Battery Specification", @"SLIC":@"Software Licensing Description", @"SLIT":@"System Locality Distance Information", @"SPCR":@"Serial Port Console Redirection", @"SPMI":@"Server Platform Management Interface", @"SRAT":@"System Resource Affinity", @"SSDT":@"Secondary System Description", @"TCPA":@"Trusted Computing Platform Alliance", @"TPM2":@"Trusted Platform Module", @"UEFI":@"Uefi Boot Optimization", @"VRTC":@"Virtual Real-Time Clock", @"WAET":@"Windows ACPI Emulated devices", @"WDAT":@"Watchdog Action", @"WDDT":@"Watchdog Timer Description", @"WDRT":@"Watchdog Resource", @"XSDT":@"Extended System Description"};
+    signon = [NSRegularExpression regularExpressionWithPattern:@"Compiler version (\\d+)" options:0 error:NULL];
     io_service_t expert;
     if ((expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert")))) {
         tableset = (__bridge NSDictionary *)IORegistryEntryCreateCFProperty(expert, CFSTR("ACPI Tables"), kCFAllocatorDefault, 0);
@@ -162,6 +165,34 @@ static NSString *bootlog;
         NSMenu *acpi = [[[NSApp mainMenu] itemWithTitle:@"File"] submenu];
         [[acpi insertItemWithTitle:@"New from ACPI" action:NULL keyEquivalent:@"" atIndex:[acpi indexOfItemWithTitle:@"New"] + 1] setSubmenu:menu];
     }
+    [NSUserDefaults.standardUserDefaults addObserver:(id)self forKeyPath:@"acpi" options:NSKeyValueObservingOptionInitial context:NULL];
+}
+
+
++(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSMutableData *d = [NSMutableData data];
+    NSTask *t = [NSTask new];
+    t.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]];
+    t.standardOutput = [NSPipe pipe];
+    [[t.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *h) { [d appendData:h.availableData]; }];
+    @try { [t launch]; }
+    @catch (NSException *e) { [(AppDelegate *)[(NSApplication *)NSApp delegate] logEntry:[NSString stringWithFormat:@"Could not launch %@", t.launchPath]]; return; }
+    [t waitUntilExit];
+    NSArray *lines = [[[[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding] componentsSeparatedByString:@"\n"] subarrayWithRange:NSMakeRange(0, 3)];
+    for (NSString *line in lines)
+        [(AppDelegate *)[(NSApplication *)NSApp delegate] logEntry:line];
+    NSString *version = lines.lastObject;
+    assignWithNotice(self, compiler, [lines componentsJoinedByString:@"\n"]);
+    NSTextCheckingResult *result = [signon firstMatchInString:version options:0 range:NSMakeRange(0, version.length)];
+    assignWithNotice(self, build, [[version substringWithRange:[result rangeAtIndex:1]] integerValue]);
+}
+
++(NSString *)compiler {
+    return _compiler;
+}
+
++(NSUInteger)build {
+    return _build;
 }
 
 +(NSDictionary *)tableset {

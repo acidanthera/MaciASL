@@ -44,6 +44,10 @@ typedef NS_ENUM(NSUInteger, iASLNoticeType) {
  */
 extern NSURL *const kSystemTableset;
 
++(NSString *)compiler;
+
++(NSUInteger)build;
+
 /*! \brief Returns the system tableset
  *
  */
