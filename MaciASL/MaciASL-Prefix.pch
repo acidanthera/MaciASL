@@ -12,24 +12,27 @@
 #define kUTTypeNavObject @"net.sourceforge.maciasl.navobject"
 #define kUTTypeTableset @"net.sourceforge.maciasl.tableset"
 #define kUTTypeIOJones @"net.sourceforge.iojones"
-#define kCompilerError 1
-#define kFileError 2
-#define kACPIError 3
-#define kNavigatorError 4
-#define kDecompileError 5
-#define kAScriptFileError 6
-#define kURLStandardError 7
-#define kNULLSSDTError 8
-#define kFreqRangeError 9
-#define kNSComparisonPredicateError 10
-#define kLockError 11
-#define kStoreError 12
-#define kTablesetError 13
-
 #define lineForRange(x,y) [x substringWithRange:[x lineRangeForRange:y]]
 #define assignWithNotice(x,y,z) {[x willChangeValueForKey:@""#y];_##y=z;[x didChangeValueForKey:@""#y];}
 #define muteWithNotice(x,y,z) {[x willChangeValueForKey:@""#y];z;[x didChangeValueForKey:@""#y];}
 #define insertWithNotice(x,y,z) {[x willChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:_##y.count] forKey:@""#y];[_##y addObject:z];[x didChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndex:_##y.count-1] forKey:@""#y];}
+
+typedef NS_ENUM(NSUInteger, MaciASLError) {
+    kCompilerError = 1,
+    kFileError,
+    kACPIError,
+    kNavigatorError,
+    kDecompileError,
+    kAScriptFileError,
+    kURLStandardError,
+    kNULLSSDTError,
+    kFreqRangeError,
+    kNSComparisonPredicateError,
+    kLockError,
+    kStoreError,
+    kTablesetError,
+    kiASLBuildError
+};
 
 NS_INLINE NSError* ModalError(NSError *error){
     if (error)
