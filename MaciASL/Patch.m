@@ -10,6 +10,7 @@
 #import "Patch.h"
 #import "Document.h"
 #import "Navigator_Scopes.h"
+#import "iASL.h"
 
 @implementation PatchPredicate
 
@@ -131,6 +132,16 @@ static NSRegularExpression *lbl, *adr, *hid, *field;
         return nil;
     self = [super init];
     if (self) {
+        NSString *build = [(NSDictionary *)[[PatchFile fieldsForPatch:text] objectForKey:@"IASL"] objectForKey:@"Check"];
+        if (build)
+            @try {
+                if (![[NSPredicate predicateWithFormat:build] evaluateWithObject:nil substitutionVariables:@{@"BUILD":@(iASL.build)}])
+                    @throw [NSError errorWithDomain:kMaciASLDomain code:kiASLBuildError userInfo:@{NSLocalizedDescriptionKey:@"Compiler Version Rejected", NSLocalizedRecoverySuggestionErrorKey:@"The patch has rejected the compiler version selected in Preferences."}];
+            }
+            @catch (id e) {
+                ModalError([e class] == NSError.class ? e : [NSError errorWithDomain:kMaciASLDomain code:kiASLCheckError userInfo:@{NSLocalizedDescriptionKey:@"iASL Check Expression Invalid", NSLocalizedRecoverySuggestionErrorKey:@"The patch specified a check expression which could not be evaluated."}]);
+                return nil;
+            }
         NSMutableArray *patches = [NSMutableArray array];
         __autoreleasing NSString *token;
         NSScanner *scan = [NSScanner scannerWithString:[text stringByTrimmingCharactersInSet:set]];
