@@ -101,6 +101,7 @@ typedef NS_ENUM(NSUInteger, PatchAction) {
 @property (readonly) NSArray *preview;
 @property (readonly) NSDictionary *results;
 
++(NSDictionary *)fieldsForPatch:(NSString *)patch;
 -(instancetype)initWithPatch:(NSString *)patch;
 -(void)patchTextView:(NSTextView *)view apply:(bool)apply;
 

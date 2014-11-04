@@ -13,6 +13,7 @@
 #import "Source.h"
 #import "Document.h"
 #import "DocumentController.h"
+#import "Patch.h"
 
 @interface NSComparisonPredicate (MathAdditions)
 
@@ -54,32 +55,9 @@
 }
 
 static SSDTGen *sharedGenerator;
-static NSRegularExpression *field;
-
-+(void)load {
-    field = [NSRegularExpression regularExpressionWithPattern:@"(?:^|\n)#(\\w+):(\\w+) (.*)" options:0 error:nil];
-}
 
 +(SSDTGen *)sharedGenerator {
     return sharedGenerator ?: [SSDTGen new];
-}
-
-/*! \brief Parses the patch for fields
- *
- * \param patch The patch string to be parsed for fields
- * \returns A Dictionary of field names keyed to field values, present in the patch
- */
-+(NSDictionary *)fieldsForPatch:(NSString *)patch{
-    if (!patch) patch = @"";
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [field enumerateMatchesInString:patch options:0 range:NSMakeRange(0, patch.length) usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
-        NSString *domain = [patch substringWithRange:[result rangeAtIndex:1]];
-        if (![dict objectForKey:domain]) [dict setObject:[NSMutableDictionary dictionary] forKey:domain];
-        [(NSMutableDictionary *)[dict objectForKey:domain] setObject:[patch substringWithRange:[result rangeAtIndex:3]] forKey:[patch substringWithRange:[result rangeAtIndex:2]]];
-    }];
-    for (NSString *key in dict)
-        [dict setObject:[[dict objectForKey:key] copy] forKey:key];
-    return [dict copy];
 }
 
 #pragma mark NSObject Lifecycle
@@ -183,7 +161,7 @@ static NSRegularExpression *field;
     NSUInteger minFreq = 0;
     NSComparisonPredicate *powerSlope;
     bool ignoreValues = false;
-    NSDictionary *fields = [SSDTGen fieldsForPatch:_generator];
+    NSDictionary *fields = [PatchFile fieldsForPatch:_generator];
     if ([fields objectForKey:@"SSDT"]) {
         NSDictionary *ssdt = [fields objectForKey:@"SSDT"];
         if ([ssdt objectForKey:@"MinFreq"])

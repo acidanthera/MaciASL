@@ -91,14 +91,9 @@ static NSRegularExpression *template;
 }
 
 static NSDictionary *black;
-static NSArray *extents;
-static NSArray *scopes;
-static NSArray *predicates;
-static NSArray *actions;
+static NSArray *extents, *scopes, *predicates, *actions;
 static NSCharacterSet *set;
-static NSRegularExpression *lbl;
-static NSRegularExpression *adr;
-static NSRegularExpression *hid;
+static NSRegularExpression *lbl, *adr, *hid, *field;
 
 +(void)load {
     black = @{NSForegroundColorAttributeName:NSColor.blackColor};
@@ -110,6 +105,25 @@ static NSRegularExpression *hid;
     lbl = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"(?:%@)\\s*\\(\\s*([^\\s),]+)", [[scopes subarrayWithRange:NSMakeRange(1, scopes.count-1)] componentsJoinedByString:@"|"]] options:NSRegularExpressionCaseInsensitive error:nil];
     adr = [NSRegularExpression regularExpressionWithPattern:@"Name\\s*\\(\\s*\\_ADR\\s*,\\s*(.*)\\s*\\)" options:0 error:nil];
     hid = [NSRegularExpression regularExpressionWithPattern:@"Name\\s*\\(\\s*\\_HID\\s*,\\s*(?:EISAID\\s*\\()?\"(.*)\"\\s*\\)?\\s*\\)" options:NSRegularExpressionCaseInsensitive error:nil];
+    field = [NSRegularExpression regularExpressionWithPattern:@"(?:^|\n)#(\\w+):(\\w+) (.*)" options:0 error:nil];
+}
+
+/*! \brief Parses the patch for fields
+ *
+ * \param patch The patch string to be parsed for fields
+ * \returns A Dictionary of field names keyed to field values, present in the patch
+ */
++(NSDictionary *)fieldsForPatch:(NSString *)patch{
+    if (!patch) patch = @"";
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [field enumerateMatchesInString:patch options:0 range:NSMakeRange(0, patch.length) usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
+        NSString *domain = [patch substringWithRange:[result rangeAtIndex:1]];
+        if (![dict objectForKey:domain]) [dict setObject:[NSMutableDictionary dictionary] forKey:domain];
+        [(NSMutableDictionary *)[dict objectForKey:domain] setObject:[patch substringWithRange:[result rangeAtIndex:3]] forKey:[patch substringWithRange:[result rangeAtIndex:2]]];
+    }];
+    for (NSString *key in dict)
+        [dict setObject:[[dict objectForKey:key] copy] forKey:key];
+    return [dict copy];
 }
 
 -(instancetype)initWithPatch:(NSString *)text {
