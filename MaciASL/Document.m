@@ -177,7 +177,7 @@
 #pragma mark Actions
 -(void)quickCompile:(bool)force hold:(bool)hold {
     assignWithNotice(self, result, [iASL compileDSL:_text.string name:_tableName tableset:_tableset force:force]);
-    if (!hold && !_result.error)
+    if (!hold)
         [NSFileManager.defaultManager removeItemAtURL:_result.url error:nil];
 }
 
@@ -234,7 +234,10 @@
 
 -(IBAction)compile:(id)sender {
     [self quickCompile:false hold:false];
-    [(AppDelegate *)[(NSApplication *)NSApp delegate] showSummary:sender];
+    if (_result.error)
+        [[NSAlert alertWithError:_result.error] beginSheetModalForWindow:self.windowForSheet modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+    else
+        [(AppDelegate *)[(NSApplication *)NSApp delegate] showSummary:sender];
 }
 
 -(IBAction)hexConvert:(id)sender {
