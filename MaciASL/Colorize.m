@@ -100,7 +100,7 @@ static NSRegularExpression *regString, *regNumber, *regComment, *regOperator, *r
     }
     else if ([keyPath isEqualToString:@"theme"]) {
         if (!(_theme = [themes objectForKey:[NSUserDefaults.standardUserDefaults stringForKey:keyPath]]))
-            _theme = [themes.allKeys objectAtIndex:0];
+            _theme = themes.allKeys.firstObject;
         _view.backgroundColor = _theme.background;
         _view.textColor = _theme.text;
         _view.insertionPointColor = _theme.text;

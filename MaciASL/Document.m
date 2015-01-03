@@ -55,7 +55,7 @@
     _textView.enclosingScrollView.rulersVisible = true;
     [_textView.layoutManager replaceTextStorage:_text];
     _textView.enabledTextCheckingTypes = 0;
-    SplitView([[aController.window.contentView subviews] objectAtIndex:0]);
+    SplitView([[aController.window.contentView subviews] firstObject]);
     NSTextContainer *cont = _textView.textContainer;
     cont.containerSize = NSMakeSize(1e7, 1e7);
     cont.widthTracksTextView = false;
@@ -210,7 +210,7 @@
     NSMutableArray *temp = [NSMutableArray arrayWithObjects:[NSMutableArray array], [NSMutableArray array], [NSMutableArray array], [NSMutableArray array], [NSMutableArray array], [NSMutableArray array], nil];
     for (Notice *notice in _result.notices)
         [[temp objectAtIndex:notice.type] addObject:[NSString stringWithFormat:@"%ld: %@", notice.line, notice.message]];
-    return @{@"errors":[[temp objectAtIndex:3] copy], @"warnings":[[temp objectAtIndex:0] copy], @"remarks":[[temp objectAtIndex:4] copy], @"optimizations":[[temp objectAtIndex:5] copy]};
+    return @{@"errors":[[temp objectAtIndex:3] copy], @"warnings":[temp.firstObject copy], @"remarks":[[temp objectAtIndex:4] copy], @"optimizations":[[temp objectAtIndex:5] copy]};
 }
 
 #pragma mark GUI

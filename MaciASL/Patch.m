@@ -521,8 +521,8 @@ static NSRegularExpression *lbl, *adr, *hid, *field;
 #pragma mark Actions
 -(IBAction)show:(id)sender {
     [NSApp beginSheet:_window modalForWindow:_textView.window modalDelegate:nil didEndSelector:nil contextInfo:nil];
-    SplitView([[_window.contentView subviews] objectAtIndex:0]);
-    SplitView([[[[[[_window.contentView subviews] objectAtIndex:0] subviews] objectAtIndex:1] subviews] objectAtIndex:0]);
+    SplitView([[_window.contentView subviews] firstObject]);
+    SplitView([[[[[[_window.contentView subviews] firstObject] subviews] objectAtIndex:1] subviews] firstObject]);
     _patchView.enabledTextCheckingTypes = 0;
     if (!_sourceView.sortDescriptors.count)
         _sourceView.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:true selector:@selector(localizedStandardCompare:)]];
@@ -531,8 +531,8 @@ static NSRegularExpression *lbl, *adr, *hid, *field;
 }
 
 -(IBAction)hide:(id)sender {
-    [[[_window.contentView subviews] objectAtIndex:0] performSelector:@selector(adjustSubviews)];
-    [[[[[[[_window.contentView subviews] objectAtIndex:0] subviews] objectAtIndex:1] subviews] objectAtIndex:0] performSelector:@selector(adjustSubviews)];
+    [[[_window.contentView subviews] firstObject] performSelector:@selector(adjustSubviews)];
+    [[[[[[[_window.contentView subviews] firstObject] subviews] objectAtIndex:1] subviews] firstObject] performSelector:@selector(adjustSubviews)];
     [NSApp endSheet:_window];
     [_window orderOut:sender];
 }

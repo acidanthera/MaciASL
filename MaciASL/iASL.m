@@ -224,8 +224,7 @@ static NSUInteger _build;
 }
 
 +(NSString *)isInjected:(NSURL *)url {
-    NSArray *matches = [self.tableset allKeysForObject:[NSData dataWithContentsOfURL:url]];
-    return matches.count ? [matches objectAtIndex:0] : nil;
+    return [[self.tableset allKeysForObject:[NSData dataWithContentsOfURL:url]] firstObject];
 }
 
 +(NSURL *)wasInjected:(NSString *)table {

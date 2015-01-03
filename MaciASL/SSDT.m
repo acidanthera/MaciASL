@@ -111,8 +111,8 @@ static SSDTGen *sharedGenerator;
     [_window makeKeyAndOrderFront:sender];
     if (first)
         [(AppDelegate *)[(NSApplication *)NSApp delegate] changeFont:nil];
-    SplitView([[_window.contentView subviews] objectAtIndex:0]);
-    SplitView([[[[_window.contentView subviews] objectAtIndex:0] subviews] objectAtIndex:1]);
+    SplitView([[_window.contentView subviews] firstObject]);
+    SplitView([[[[_window.contentView subviews] firstObject] subviews] objectAtIndex:1]);
     [self expandTree:sender];
 }
 

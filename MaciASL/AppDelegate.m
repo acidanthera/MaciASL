@@ -176,6 +176,14 @@
     return [_log copy];
 }
 
+-(NSArray *)logAtIndexes:(NSIndexSet *)indexes {
+    return [_log objectsAtIndexes:indexes];
+}
+
+-(id)objectInLogAtIndex:(NSUInteger)index {
+    return [_log objectAtIndex:index];
+}
+
 -(NSArray *)themes {
     return ColorTheme.allThemes.allKeys;
 }

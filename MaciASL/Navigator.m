@@ -189,7 +189,7 @@ static NSCharacterSet *unset;
     [temp filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings){
         return [[evaluatedObject name] rangeOfString:filter options:NSCaseInsensitiveSearch].location != NSNotFound;
     }]];
-    if (temp.count && [temp objectAtIndex:0] == self)
+    if (temp.firstObject == self)
         [temp removeObjectAtIndex:0];
     return [[DefinitionBlock alloc] initWithName:self.name range:self.range flatChildren:temp];
 }
@@ -229,7 +229,7 @@ static NSDictionary *attr;
 
 -(id)transformedValue:(id)value{
     if (![value count]) return nil;
-    value = [value objectAtIndex:0];
+    value = [value firstObject];
     NSMutableAttributedString *names = [[NSMutableAttributedString alloc] initWithString:[[(NSTreeNode *)value representedObject] name] attributes:attr];
     while ((value = [value parentNode]) && [[(NSTreeNode *)value representedObject] isKindOfClass:[NavObject class]]) {
         [names insertAttributedString:separator atIndex:0];

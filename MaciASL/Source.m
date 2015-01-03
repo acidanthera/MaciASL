@@ -136,7 +136,7 @@ void ReachabilityDidChange(SCNetworkReachabilityRef target, SCNetworkReachabilit
                 for(NSString *line in [response componentsSeparatedByString:@"\n"]) {
                     if ([line rangeOfString:@"\t"].location == NSNotFound) continue;
                     NSArray *temp = [line componentsSeparatedByString:@"\t"];
-                    SourcePatch *p = [[SourcePatch alloc] initWithName:[temp objectAtIndex:0] URL:[realURL URLByAppendingPathComponent:temp.lastObject]];
+                    SourcePatch *p = [[SourcePatch alloc] initWithName:temp.firstObject URL:[realURL URLByAppendingPathComponent:temp.lastObject]];
                     if (temp.count == 3 && [[temp objectAtIndex:1] isEqualToString:@"SSDT"])
                         [ssdt addObject:p];
                     else
