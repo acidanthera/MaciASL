@@ -269,7 +269,7 @@ static NSUInteger _build;
     return nil;
 }
 
-+(NSString *)taskWithURL:(NSURL *)url arguments:(NSArray *)arguments output:(NSArray * __strong *)output error:(NSArray * __strong *)error {
++(NSError *)taskWithURL:(NSURL *)url arguments:(NSArray *)arguments output:(NSArray * __strong *)output error:(NSArray * __strong *)error {
     NSTask *task = [NSTask new];
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
     NSMutableArray *args = [NSMutableArray arrayWithObjects:@"-vs", @"-vi", nil];
@@ -287,7 +287,7 @@ static NSUInteger _build;
     task.standardOutput = [NSPipe pipe];
     task.standardError = [NSPipe pipe];
     @try { [task launch]; }
-    @catch (NSException *e) { return @"The compiler could not be found, or is not executable."; }
+    @catch (NSException *e) { return [NSError errorWithDomain:kMaciASLDomain code:0 userInfo:@{NSLocalizedFailureReasonErrorKey:@"The compiler could not be found, or is not executable."}]; }
     dispatch_apply(2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t isOutput) {
         NSFileHandle *h = [isOutput ? task.standardOutput : task.standardError fileHandleForReading];
         NSData *d;
@@ -316,7 +316,8 @@ static NSUInteger _build;
             *error = [lines copy];
     });
     [task waitUntilExit];
-    return task.terminationStatus == EXIT_SUCCESS ? nil : [NSString stringWithFormat:@"The compiler %sed with code %d, and returned:\n%@\n%@", task.terminationReason == NSTaskTerminationReasonUncaughtSignal ? "crash" : "exit", task.terminationStatus, [*output componentsJoinedByString:@"\n"], [*error componentsJoinedByString:@"\n"]];
+    NSString *suggestion = task.terminationStatus ? [NSString stringWithFormat:@"iASL returned:\n%@\n%@", [*output componentsJoinedByString:@"\n"], [*error componentsJoinedByString:@"\n"]] : nil, *failure = suggestion && task.terminationReason == NSTaskTerminationReasonUncaughtSignal ? [NSString stringWithFormat:@"The compiler crashed with code %d.", task.terminationStatus] : nil;
+    return suggestion ? [NSError errorWithDomain:kMaciASLDomain code:task.terminationStatus userInfo:failure ? @{NSLocalizedFailureReasonErrorKey:failure, NSLocalizedRecoverySuggestionErrorKey:suggestion} : @{NSLocalizedRecoverySuggestionErrorKey:suggestion}] : nil;
 }
 
 +(iASLDecompilationResult *)decompileAML:(NSData *)aml name:(NSString *)name tableset:(NSURL *)tableset {
@@ -340,7 +341,7 @@ static NSUInteger _build;
         else
             args = [@[@"-e"] arrayByAddingObjectsFromArray:[externals valueForKey:@"lastPathComponent"]];
     }
-    NSString *result = [self taskWithURL:url arguments:[args ?: @[] arrayByAddingObjectsFromArray:@[@"-d", url.lastPathComponent]] output:&output error:&error];
+    NSError *result = [self taskWithURL:url arguments:[args ?: @[] arrayByAddingObjectsFromArray:@[@"-d", url.lastPathComponent]] output:&output error:&error];
     NSError *err;
     NSFileManager *manager = NSFileManager.defaultManager;
     for (NSURL *external in externals)
@@ -365,8 +366,11 @@ static NSUInteger _build;
         [(AppDelegate *)[(NSApplication *)NSApp delegate] logEntry:@"Decompilation with resolution failed, trying without resolution"];
         return [self decompileAML:aml name:name tableset:nil];
     }
-    else
-        return [[iASLDecompilationResult alloc] initWithError:[NSError errorWithDomain:kMaciASLDomain code:kDecompileError userInfo:@{NSLocalizedDescriptionKey:@"Decompilation Error", NSLocalizedRecoverySuggestionErrorKey:result}] string:nil];
+    else {
+        NSMutableDictionary *d = [result.userInfo mutableCopy];
+        [d setObject:@"Decompilation Error" forKey:NSLocalizedDescriptionKey];
+        return [[iASLDecompilationResult alloc] initWithError:[NSError errorWithDomain:kMaciASLDomain code:kDecompileError userInfo:[d copy]] string:nil];
+    }
 }
 
 +(iASLCompilationResult *)compileDSL:(NSString *)dsl name:(NSString *)name tableset:(NSURL *)tableset force:(bool)force {
@@ -375,7 +379,7 @@ static NSUInteger _build;
     if (![dsl writeToURL:url atomically:true encoding:NSASCIIStringEncoding error:&err])
         ModalError(err);
     NSArray *output, *error;
-    NSString *result = [self taskWithURL:url arguments:[force ? @[@"-f"] : @[] arrayByAddingObjectsFromArray:@[@"-p", url.lastPathComponent.stringByDeletingPathExtension, url.lastPathComponent]] output:&output error:&error];
+    NSError *result = [self taskWithURL:url arguments:[force ? @[@"-f"] : @[] arrayByAddingObjectsFromArray:@[@"-p", url.lastPathComponent.stringByDeletingPathExtension, url.lastPathComponent]] output:&output error:&error];
     NSFileManager *manager = NSFileManager.defaultManager;
     if (![manager removeItemAtURL:url error:&err])
         ModalError(err);
@@ -385,7 +389,12 @@ static NSUInteger _build;
     for (NSString *line in [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == 4 ? output : error)
         if ((notice = [[Notice alloc] initWithLine:line]))
             [notices addObject:notice];
-    return [[iASLCompilationResult alloc] initWithError:!result && [url checkResourceIsReachableAndReturnError:&err] ? nil : [NSError errorWithDomain:kMaciASLDomain code:kCompilerError userInfo:@{NSLocalizedDescriptionKey:@"Compilation Error", NSLocalizedRecoverySuggestionErrorKey:result}] string:[[output.lastObject componentsSeparatedByString:@". "] lastObject] notices:[notices copy] url:url];
+    if (result) {
+        NSMutableDictionary *d = [result.userInfo mutableCopy];
+        [d setObject:@"Compilation Error" forKey:NSLocalizedDescriptionKey];
+        result = [NSError errorWithDomain:kMaciASLDomain code:kCompilerError userInfo:[d copy]];
+    }
+    return [[iASLCompilationResult alloc] initWithError:!result && [url checkResourceIsReachableAndReturnError:&err] ? nil : result string:[[output.lastObject componentsSeparatedByString:@". "] lastObject] notices:[notices copy] url:url];
 }
 
 @end

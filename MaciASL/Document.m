@@ -234,8 +234,9 @@
 
 -(IBAction)compile:(id)sender {
     [self quickCompile:false hold:false];
-    if (_result.error)
-        [[NSAlert alertWithError:_result.error] beginSheetModalForWindow:self.windowForSheet modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
+    NSError *e = _result.error;
+    if (e.localizedFailureReason)
+        [[NSAlert alertWithError:[NSError errorWithDomain:e.domain code:e.code userInfo:@{NSLocalizedDescriptionKey:e.localizedDescription,NSLocalizedRecoverySuggestionErrorKey:e.localizedFailureReason}]] beginSheetModalForWindow:self.windowForSheet modalDelegate:nil didEndSelector:NULL contextInfo:NULL];
     else
         [(AppDelegate *)[(NSApplication *)NSApp delegate] showSummary:sender];
 }
