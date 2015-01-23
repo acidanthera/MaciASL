@@ -246,7 +246,18 @@ static NSDictionary *attr;
 
 @implementation NavClassTransformer
 
-static NSString *prefix = @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/Sidebar";
+static NSImage *db, *sc, *mt, *dv, *pr, *tz;
+
++(void)load {
+    NSBundle *ct = [NSBundle bundleWithPath:@"/System/Library/CoreServices/CoreTypes.bundle"];
+    db = [ct imageForResource:@"SidebarHomeFolder"];
+    sc = [ct imageForResource:@"SidebarGenericFolder"];
+    mt = [ct imageForResource:@"SidebarApplicationsFolder"];
+    dv = [ct imageForResource:@"SidebarExternalDisk"];
+    pr = [ct imageForResource:@"SidebarMacPro"];
+    tz = [ct imageForResource:@"SidebarBurnFolder"];
+    db.template = sc.template = mt.template = dv.template = pr.template = tz.template = true;
+}
 
 +(Class)transformedValueClass {
     return [NSImage class];
@@ -257,21 +268,19 @@ static NSString *prefix = @"/System/Library/CoreServices/CoreTypes.bundle/Conten
 }
 
 -(id)transformedValue:(id)value {
-    NSImage *image = [NSImage alloc];
-    image.template = true;
     if ([value  class] == [DefinitionBlock class])
-        return [image initByReferencingFile:[prefix stringByAppendingString:@"HomeFolder.icns"]];
+        return db;
     else if ([value  class] == [Scope class])
-        return [image initByReferencingFile:[prefix stringByAppendingString:@"GenericFolder.icns"]];
+        return sc;
     else if ([value  class] == [Method class])
-        return [image initByReferencingFile:[prefix stringByAppendingString:@"ApplicationsFolder.icns"]];
+        return mt;
     else if ([value  class] == [Device class])
-        return [image initByReferencingFile:[prefix stringByAppendingString:@"ExternalDisk.icns"]];
+        return dv;
     else if ([value  class] == [Processor class])
-        return [image initByReferencingFile:[prefix stringByAppendingString:@"MacPro.icns"]];
+        return pr;
     else if ([value  class] == [ThermalZone class])
-        return [image initByReferencingFile:[prefix stringByAppendingString:@"BurnFolder.icns"]];
-    return image;
+        return tz;
+    return nil;
 }
 
 @end
