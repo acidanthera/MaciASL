@@ -216,7 +216,7 @@
 #pragma mark GUI
 -(IBAction)filterTree:(id)sender {
     if (![[sender stringValue] length]) {
-        assignWithNotice(self, nav, _oldNav);
+        assignWithNotice(self, nav, _oldNav ?: _nav);
         _oldNav = nil;
     }
     else {

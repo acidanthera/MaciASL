@@ -66,7 +66,11 @@
 
 #pragma mark Logging
 -(void)logEntry:(NSString *)entry {
-    insertWithNotice(self, log, [[LogEntry alloc] initWithEntry:entry])
+    if (NSThread.isMainThread) {
+        insertWithNotice(self, log, [[LogEntry alloc] initWithEntry:entry])
+    }
+    else
+        [self performSelectorOnMainThread:_cmd withObject:entry waitUntilDone:false];
 }
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
