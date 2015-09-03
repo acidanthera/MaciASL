@@ -165,5 +165,10 @@
 	<true/>
 	<key>OSAScriptingDefinition</key>
 	<string>MaciASL.sdef</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
