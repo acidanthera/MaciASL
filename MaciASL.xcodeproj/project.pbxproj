@@ -14,6 +14,7 @@
 		B013B83D160C529600F6A7F2 /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = B013B83B160C529600F6A7F2 /* Document.xib */; };
 		B013B840160C529700F6A7F2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B013B83E160C529700F6A7F2 /* MainMenu.xib */; };
 		B017FB2B1861532200DA033A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B017FB2A1861532200DA033A /* SystemConfiguration.framework */; };
+		B019680A1BC18F7F00160692 /* iasl6 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B01968081BC18F6600160692 /* iasl6 */; };
 		B01A8103169C1CEB0056B5C6 /* SSDT.m in Sources */ = {isa = PBXBuildFile; fileRef = B01A8102169C1CEB0056B5C6 /* SSDT.m */; };
 		B01CAF951618EB4900AB9F0C /* Colorize.m in Sources */ = {isa = PBXBuildFile; fileRef = B01CAF941618EB4900AB9F0C /* Colorize.m */; };
 		B031539C1956A21B0056C7F2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B031539B1956A21B0056C7F2 /* XCTest.framework */; };
@@ -79,6 +80,7 @@
 				B0E0186116155CB3008CAC9B /* iasl5 in CopyFiles */,
 				B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */,
 				B034202D19FB66C80049C764 /* iasl51 in CopyFiles */,
+				B019680A1BC18F7F00160692 /* iasl6 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +100,7 @@
 		B013B83C160C529600F6A7F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Document.xib; sourceTree = "<group>"; };
 		B013B83F160C529700F6A7F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		B017FB2A1861532200DA033A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		B01968081BC18F6600160692 /* iasl6 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl6; sourceTree = SOURCE_ROOT; };
 		B01A8101169C1CEB0056B5C6 /* SSDT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDT.h; sourceTree = "<group>"; };
 		B01A8102169C1CEB0056B5C6 /* SSDT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSDT.m; sourceTree = "<group>"; };
 		B01CAF931618EB4900AB9F0C /* Colorize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colorize.h; sourceTree = "<group>"; };
@@ -249,6 +252,7 @@
 		B013B82D160C529600F6A7F2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B01968081BC18F6600160692 /* iasl6 */,
 				B034202B19FB54770049C764 /* iasl51 */,
 				B0E0185D1615512A008CAC9B /* iasl5 */,
 				B0FD8AB1165D847C0074DC84 /* iasl4 */,

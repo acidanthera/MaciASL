@@ -131,7 +131,7 @@
     NSString *os = [[[(NSDictionary *)[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"] componentsSeparatedByString:@"."] objectAtIndex:1];
     muteWithNotice(self, update, _update = [NSProgress progressWithTotalUnitCount:3]);
     dispatch_group_t g = dispatch_group_create();
-    for (NSNumber *iasl in @[@4, @5, @51]) {
+    for (NSNumber *iasl in @[@4, @5, @51, @6]) {
         [_update becomeCurrentWithPendingUnitCount:1];
         dispatch_group_enter(g);
         [URLTask conditionalGet:[NSURL URLWithString:[NSString stringWithFormat:@"http://maciasl.sourceforge.net/10.%@/iasl%ld", os, iasl.unsignedIntegerValue]] toURL:[NSBundle.mainBundle URLForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", iasl.unsignedIntegerValue]] perform:^(bool success){
