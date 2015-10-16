@@ -438,9 +438,11 @@ static NSUInteger _build;
 @end
 
 @implementation URLTask
+static dispatch_semaphore_t s;
 static NSDateFormatter *rfc822;
 
 +(void)load {
+    s = dispatch_semaphore_create(1);
     rfc822 = [NSDateFormatter new];
     rfc822.dateFormat = @"EEE',' dd MMM yyyy HH':'mm':'ss 'GMT'";
     rfc822.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
@@ -458,8 +460,15 @@ static NSDateFormatter *rfc822;
             progress.completedUnitCount++;
             bool result = false;
             if (!ModalError(connectionError)) {
-                NSDate *urlmtime = [rfc822 dateFromString:[[(NSHTTPURLResponse *)response allHeaderFields] objectForKey:@"Last-Modified"]];
-                if (([filemtime compare:urlmtime] == NSOrderedAscending)) {
+                NSDictionary *d = [(NSHTTPURLResponse *)response allHeaderFields];
+                dispatch_semaphore_wait(s, DISPATCH_TIME_FOREVER);
+                NSDate *urlmtime = [rfc822 dateFromString:[d objectForKey:@"Last-Modified"]];
+                dispatch_semaphore_signal(s);
+				NSNumber *urlsize = @([[d objectForKey:@"Content-Length"] integerValue]), *filesize;
+				if (![file getResourceValue:&filesize forKey:NSURLFileSizeKey error:&connectionError])
+                    ModalError(connectionError);
+                else if (([filemtime compare:urlmtime] == NSOrderedAscending)
+				|| ![urlsize isEqualToNumber:filesize]) {
                     result = [[NSData dataWithContentsOfURL:url options:0 error:NULL] writeToURL:file options:NSDataWritingAtomic error:&connectionError] && !ModalError(connectionError);
                 }
                 else {
