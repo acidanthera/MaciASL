@@ -136,7 +136,7 @@
                 file = panel.URL;
         }
         if (file && [[NSData dataWithContentsOfURL:file] isEqualToData:aml])
-            [self openDocumentWithContentsOfURL:file display:true completionHandler:nil];
+            [self openDocumentWithContentsOfURL:file display:true completionHandler:^(NSDocument *document, BOOL documentWasAlreadyOpen, NSError *error) {}];
         else {
             iASLDecompilationResult *decompile = [iASL decompileAML:aml name:name tableset:kSystemTableset];
             if (!ModalError(decompile.error))

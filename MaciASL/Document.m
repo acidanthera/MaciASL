@@ -225,7 +225,7 @@
         assignWithNotice(self, nav, [_oldNav filteredWithString:[sender stringValue]])
     }
     [_navView expandItem:[_navView itemAtRow:0]];
-    [self textViewDidChangeSelection:nil];
+    [self textViewDidChangeSelection:[NSNotification notificationWithName:NSTextViewDidChangeSelectionNotification object:_textView]];
 }
 
 -(IBAction)patch:(id)sender {
@@ -324,7 +324,7 @@
     assignWithNotice(self, nav, [DefinitionBlock build:_text.string]);
     if (!_navView) return;
     [_navView expandItem:[_navView itemAtRow:0]];
-    [self textViewDidChangeSelection:nil];
+    [self textViewDidChangeSelection:[NSNotification notificationWithName:NSTextViewDidChangeSelectionNotification object:_textView]];
 }
 
 #pragma mark NSTableViewDelegate
