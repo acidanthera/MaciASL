@@ -137,7 +137,7 @@
         [URLTask conditionalGet:[NSURL URLWithString:[NSString stringWithFormat:@"http://maciasl.sourceforge.net/10.%@/iasl%ld", os, iasl.unsignedIntegerValue]] toURL:[NSBundle.mainBundle URLForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", iasl.unsignedIntegerValue]] perform:^(bool success){
             muteWithNotice(self->_update, fractionCompleted,);
             if (success && [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == iasl.unsignedIntegerValue)
-                [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+                [iASL observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
             dispatch_group_leave(g);
         }];
         [_update resignCurrent];
