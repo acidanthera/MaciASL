@@ -386,9 +386,15 @@ static NSUInteger _build;
     url = [url.URLByDeletingPathExtension URLByAppendingPathExtension:@"aml"];
     NSMutableArray *notices = [NSMutableArray array];
     Notice *notice;
-    for (NSString *line in [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == 4 ? output : error)
+    for (NSString *line in output)
         if ((notice = [[Notice alloc] initWithLine:line]))
             [notices addObject:notice];
+	// Custom-compiled iasl may output errors to stderr instead of stdout.
+	if ([NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] != 4) {
+		for (NSString *line in error)
+			if ((notice = [[Notice alloc] initWithLine:line]))
+				[notices addObject:notice];
+	}
     if (result) {
         NSMutableDictionary *d = [result.userInfo mutableCopy];
         [d setObject:@"Compilation Error" forKey:NSLocalizedDescriptionKey];
