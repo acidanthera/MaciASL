@@ -40,6 +40,7 @@
 		B0E0186416157084008CAC9B /* Navigator.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E0186316157084008CAC9B /* Navigator.m */; };
 		B0E7DD0A165DEDB700B9B67B /* Fix.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E7DD09165DEDB700B9B67B /* Fix.m */; };
 		B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B0FD8AB1165D847C0074DC84 /* iasl4 */; };
+		CE297C0720676C5800A5EF9F /* iasl62 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE297C052067690E00A5EF9F /* iasl62 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				CE297C0720676C5800A5EF9F /* iasl62 in CopyFiles */,
 				B0E0186116155CB3008CAC9B /* iasl5 in CopyFiles */,
 				B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */,
 				B034202D19FB66C80049C764 /* iasl51 in CopyFiles */,
@@ -141,6 +143,7 @@
 		B0E7DD08165DEDB700B9B67B /* Fix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fix.h; sourceTree = "<group>"; };
 		B0E7DD09165DEDB700B9B67B /* Fix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fix.m; sourceTree = "<group>"; };
 		B0FD8AB1165D847C0074DC84 /* iasl4 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl4; path = ../iasl4; sourceTree = "<group>"; };
+		CE297C052067690E00A5EF9F /* iasl62 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl62; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +255,7 @@
 		B013B82D160C529600F6A7F2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CE297C052067690E00A5EF9F /* iasl62 */,
 				B01968081BC18F6600160692 /* iasl6 */,
 				B034202B19FB54770049C764 /* iasl51 */,
 				B0E0185D1615512A008CAC9B /* iasl5 */,
