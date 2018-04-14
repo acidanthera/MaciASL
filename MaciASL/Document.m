@@ -69,14 +69,14 @@
 }
 
 - (BOOL)isDraft {
-    if ([self.superclass instancesRespondToSelector:_cmd])
-        return [self.superclass instanceMethodForSelector:_cmd](self,_cmd) != nil;
+    if ([self.superclass instancesRespondToSelector:@selector(isDraft)])
+        return ((id (*)(id, SEL))[self.superclass instanceMethodForSelector:_cmd])(self,_cmd) != nil;
     return !self.fileURL;
 }
 
 - (BOOL)isLocked {
     if ([self.superclass instancesRespondToSelector:_cmd])
-        return [self.superclass instanceMethodForSelector:_cmd](self,_cmd) != nil;
+        return ((id (*)(id, SEL))[self.superclass instanceMethodForSelector:_cmd])(self,_cmd) != nil;
     NSError *err;
     if (![self checkAutosavingSafetyAndReturnError:&err])
         return true;
@@ -367,7 +367,9 @@
             NSData *data = [paste dataForType:kUTTypeNavObject];
             NSTreeNode *node = [_navController.arrangedObjects descendantNodeAtIndexPath:[NSIndexPath indexPathWithIndexes:(NSUInteger *)data.bytes length:data.length/sizeof(NSUInteger)]];
             [_textView insertText:@"" replacementRange:[[node representedObject] range]];
-            [outlineView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:[node.parentNode.childNodes indexOfObjectIdenticalTo:node]] inParent:node.parentNode withAnimation:NSTableViewAnimationEffectFade|NSTableViewAnimationSlideUp];
+            NSTreeNode *parent = node.parentNode;
+            if (parent)
+                [outlineView removeItemsAtIndexes:[NSIndexSet indexSetWithIndex:[parent.childNodes indexOfObjectIdenticalTo:node]] inParent:parent withAnimation:NSTableViewAnimationEffectFade|NSTableViewAnimationSlideUp];
         }
     }
 }
@@ -410,8 +412,11 @@
             NSRange oldRange = [[node representedObject] range];
             if (NSMaxRange(range) < oldRange.location) oldRange.location+=oldRange.length-range.length;
             [_textView insertText:@"" replacementRange:oldRange];
-            NSInteger oldIndex = [node.parentNode.childNodes indexOfObjectIdenticalTo:node];
-            [outlineView moveItemAtIndex:oldIndex-(item == node.parentNode && oldIndex > index && !insert) inParent:node.parentNode toIndex:index-(item == node.parentNode && oldIndex < index) inParent:item];
+            NSTreeNode *parent = node.parentNode;
+            if (parent) {
+                NSInteger oldIndex = [parent.childNodes indexOfObjectIdenticalTo:node];
+                [outlineView moveItemAtIndex:oldIndex-(item == parent && oldIndex > index && !insert) inParent:parent toIndex:index-(item == parent && oldIndex < index) inParent:item];
+            }
         }
         [_textView.undoManager endUndoGrouping];
         _textView.selectedRange = NSMakeRange(range.location, 0);

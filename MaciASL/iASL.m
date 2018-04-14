@@ -175,12 +175,16 @@ static NSUInteger _build;
     t.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]];
     t.standardOutput = [NSPipe pipe];
     [[t.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *h) { [d appendData:h.availableData]; }];
+    AppDelegate *delegate = (AppDelegate *)[NSApp delegate];
     @try { [t launch]; }
-    @catch (NSException *e) { [(AppDelegate *)[(NSApplication *)NSApp delegate] logEntry:[NSString stringWithFormat:@"Could not launch %@", t.launchPath]]; return; }
+    @catch (NSException *e) {
+        if (delegate) [delegate logEntry:[NSString stringWithFormat:@"Could not launch %@", t.launchPath]];
+        return;
+    }
     [t waitUntilExit];
     NSArray *lines = [[[[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding] componentsSeparatedByString:@"\n"] subarrayWithRange:NSMakeRange(0, 3)];
     for (NSString *line in lines)
-        [(AppDelegate *)[(NSApplication *)NSApp delegate] logEntry:line];
+        if (delegate) [delegate logEntry:line];
     NSString *version = lines.lastObject;
     assignWithNotice(self, compiler, [lines componentsJoinedByString:@"\n"]);
     NSTextCheckingResult *result = [signon firstMatchInString:version options:0 range:NSMakeRange(0, version.length)];
@@ -293,6 +297,7 @@ static NSUInteger _build;
         NSData *d;
         NSMutableArray *lines = [NSMutableArray array];
         NSMutableString *buffer = [NSMutableString string];
+        AppDelegate *delegate = (AppDelegate *)[NSApp delegate];
         while ((d = h.availableData)) {
             if (!d.length)
                 break;
@@ -301,14 +306,16 @@ static NSUInteger _build;
             while ((r = [buffer rangeOfString:@"\n"]).location != NSNotFound) {
                 if (r.location) {
                     [lines addObject:[buffer substringWithRange:NSMakeRange(0, r.location)]];
-                    [(AppDelegate *)[(NSApplication *)NSApp delegate] performSelectorOnMainThread:@selector(logEntry:) withObject:lines.lastObject waitUntilDone:false];
+                    if (delegate)
+                        [delegate performSelectorOnMainThread:@selector(logEntry:) withObject:lines.lastObject waitUntilDone:false];
                 }
                 [buffer deleteCharactersInRange:NSMakeRange(0, NSMaxRange(r))];
             }
         }
         if (buffer.length) {
             [lines addObject:[buffer copy]];
-            [(AppDelegate *)[(NSApplication *)NSApp delegate] performSelectorOnMainThread:@selector(logEntry:) withObject:lines.lastObject waitUntilDone:false];
+            if (delegate)
+                [delegate performSelectorOnMainThread:@selector(logEntry:) withObject:lines.lastObject waitUntilDone:false];
         }
         if (isOutput && output)
             *output = [lines copy];

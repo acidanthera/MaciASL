@@ -283,10 +283,11 @@
 
 -(void)scrollRangeToVisible:(NSRange)range {
     [super scrollRangeToVisible:range];
+    id delegate = self.delegate;
     if (!NSEqualRanges(range, self.selectedRange)
         && NSTextFinder._globalTextFinder.client == (id)self
-        && [self.delegate conformsToProtocol:@protocol(NSTextFinderIndication)])
-        [(id<NSTextFinderIndication>)self.delegate textViewDidShowFindIndicator:[NSNotification notificationWithName:@"NSTextViewDidShowFindIndicatorNotification" object:self userInfo:@{@"NSFindIndicatorRange":[NSValue valueWithRange:range]}]];
+        && delegate && [delegate conformsToProtocol:@protocol(NSTextFinderIndication)])
+        [(id<NSTextFinderIndication>)delegate textViewDidShowFindIndicator:[NSNotification notificationWithName:@"NSTextViewDidShowFindIndicatorNotification" object:self userInfo:@{@"NSFindIndicatorRange":[NSValue valueWithRange:range]}]];
 }
 
 @end
@@ -308,13 +309,15 @@ static NSDictionary *style;
 }
 
 -(void)drawHashMarksAndLabelsInRect:(NSRect)rect {
-    NSInteger height = (NSInteger)[[(NSTextView *)self.scrollView.documentView layoutManager] defaultLineHeightForFont:NSFontManager.sharedFontManager.selectedFont], start = (NSInteger)floor((self.scrollView.documentVisibleRect.origin.y + rect.origin.y) / height) + 1, stop = 1 + start + (NSInteger)ceil(rect.size.height / height);
+    NSScrollView *scrollView = self.scrollView;
+    if (!scrollView) return;
+    NSInteger height = (NSInteger)[[(NSTextView *)scrollView.documentView layoutManager] defaultLineHeightForFont:NSFontManager.sharedFontManager.selectedFont], start = (NSInteger)floor((scrollView.documentVisibleRect.origin.y + rect.origin.y) / height) + 1, stop = 1 + start + (NSInteger)ceil(rect.size.height / height);
     if (self.ruleThickness < MAX(16,((NSInteger)log10(stop)+1)*8)) {
         self.ruleThickness = ((NSInteger)log10(stop)+1)*8;
         return;
     }
     rect.size.width -= 2;
-    rect.origin.y -= (NSInteger)(self.scrollView.documentVisibleRect.origin.y+rect.origin.y) % height - (height-(NSFont.smallSystemFontSize+2))/2 + 1;
+    rect.origin.y -= (NSInteger)(scrollView.documentVisibleRect.origin.y+rect.origin.y) % height - (height-(NSFont.smallSystemFontSize+2))/2 + 1;
     rect.size.height = height;
     while (start < stop) {
         [[NSString stringWithFormat:@"%ld", start++] drawWithRect:rect options:NSStringDrawingUsesLineFragmentOrigin attributes:style];
