@@ -126,7 +126,7 @@ static NSCharacterSet *unset;
 }
 
 +(DefinitionBlock *)build:(NSString *)dsl{
-    NSString *prefix, *test;
+    NSString *prefix, *tmpprefix, *test;
     NSScanner *scan = [NSScanner scannerWithString:dsl];
     [scan scanUpToString:@"DefinitionBlock" intoString:NULL];
     if ([scan isAtEnd]) return nil;
@@ -140,13 +140,37 @@ static NSCharacterSet *unset;
     NSUInteger depth = 1, open, close;
     [scan scanUpToCharactersFromSet:braces intoString:&test];
     [scan scanCharactersFromSet:braces intoString:NULL];
-    while (![scan isAtEnd]) {
+    while (![scan isAtEnd] && (id)container != NSNull.null) {
         __block bool found = false;
-        if ([scan scanUpToCharactersFromSet:braces intoString:&prefix])
+        NSMutableString *realprefix = nil;
+        while ([scan scanUpToCharactersFromSet:braces intoString:&tmpprefix]) {
+            // This is an ugly hack to ignore curly braces within comments.
+            NSRange comment = [tmpprefix rangeOfString:@"//" options:NSBackwardsSearch];
+            if (comment.location != NSNotFound) {
+                NSRange restOfLine = NSMakeRange(comment.location+2, tmpprefix.length-comment.location-2);
+                if ([tmpprefix rangeOfString:@"\n" options:0 range:restOfLine].location == NSNotFound) {
+                    if (realprefix)
+                        [realprefix appendString:tmpprefix];
+                    else
+                        realprefix = [NSMutableString stringWithString:tmpprefix];
+                    scan.scanLocation += prefix.length + 1;
+                    continue;
+                }
+            }
+
+            if (realprefix) {
+                [realprefix appendString:tmpprefix];
+                prefix = realprefix;
+            } else {
+                prefix = tmpprefix;
+            }
+
             [conts enumerateMatchesInString:prefix options:0 range:NSMakeRange(0, prefix.length) usingBlock:^void(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop){
                 found = true;
                 [container addChildrenObject:[[NSClassFromString([prefix substringWithRange:[result rangeAtIndex:1]]) alloc] initWithName:[prefix substringWithRange:[result rangeAtIndex:2]] range:NSMakeRange(result.range.location+(scan.scanLocation-prefix.length),result.range.length)]];
             }];
+            break;
+        }
         [scan scanCharactersFromSet:braces intoString:&test];
         Scope *child = container.children.lastObject;
         if ((open = [prefix rangeOfString:@"/*" options:NSBackwardsSearch].location) != NSNotFound
@@ -177,8 +201,11 @@ static NSCharacterSet *unset;
                     [path removeLastObject];
                     if (path.lastObject == NSNull.null) {
                         NSUInteger item = path.count - 2;
-                        while ((id)(container = child = [path objectAtIndex:item]) == NSNull.null)
+                        while ((id)(container = child = [path objectAtIndex:item]) == NSNull.null) {
+                            if (item == 0)
+                                break;
                             item--;
+                        }
                     }
                     else
                         container = child = path.lastObject;
