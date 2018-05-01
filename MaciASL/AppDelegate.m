@@ -298,7 +298,12 @@ static NSDictionary *style;
 +(void)load {
     NSMutableParagraphStyle *temp = [NSMutableParagraphStyle new];
     temp.alignment = NSRightTextAlignment;
-    style = @{NSFontAttributeName:[NSFont systemFontOfSize:NSFont.smallSystemFontSize], NSParagraphStyleAttributeName:[temp copy]};
+    NSFont *font = nil;
+    if ([NSFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
+        font = [NSFont monospacedDigitSystemFontOfSize:NSFont.smallSystemFontSize weight:NSFontWeightRegular];
+    else
+        font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
+	style = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:[temp copy]};
 }
 
 -(instancetype)init {
