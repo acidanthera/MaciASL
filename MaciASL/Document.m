@@ -291,7 +291,8 @@
         if (++i == ln) *stop = true;
         else offset += line.length+1;
     }];
-    return [_text.string lineRangeForRange:NSMakeRange(offset, 0)];
+    @try { return [_text.string lineRangeForRange:NSMakeRange(offset, 0)]; }
+    @catch (NSException *) { return NSMakeRange(0, 0); }
 }
 
 -(NSInteger)navRowForRange:(NSRange)range {
