@@ -328,6 +328,10 @@
     [self textViewDidChangeSelection:[NSNotification notificationWithName:NSTextViewDidChangeSelectionNotification object:_textView]];
 }
 
+-(void)buildNavHandler {
+	[self performSelectorOnMainThread:@selector(buildNav) withObject:nil waitUntilDone:YES];
+}
+
 #pragma mark NSTableViewDelegate
 -(void)tableViewSelectionDidChange:(NSNotification *)notification {
     if ([notification.object selectedRow] == -1) return;
@@ -423,7 +427,7 @@
         _textView.selectedRange = NSMakeRange(range.location, 0);
     }
     if (move && info.draggingSource == outlineView) [info.draggingPasteboard clearContents];
-    [Document cancelPreviousPerformRequestsWithTarget:self selector:@selector(buildNav) object:nil];
+    [Document cancelPreviousPerformRequestsWithTarget:self selector:@selector(buildNavHandler) object:nil];
     [self buildNav];
     return true;
 }
@@ -431,8 +435,8 @@
 #pragma mark NSTextStorageDelegate
 -(void)textStorageDidProcessEditing:(NSNotification *)notification {
     [_colorize textStorageDidProcessEditing:notification];
-    [Document cancelPreviousPerformRequestsWithTarget:self selector:@selector(buildNav) object:nil];
-    [self performSelector:@selector(buildNav) withObject:nil afterDelay:1.5];
+    [Document cancelPreviousPerformRequestsWithTarget:self selector:@selector(buildNavHandler) object:nil];
+	[self performSelector:@selector(buildNavHandler) withObject:nil afterDelay:1.5];
 }
 
 #pragma mark NSTextViewDelegate
