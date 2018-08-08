@@ -182,7 +182,7 @@ static NSUInteger _build;
         return;
     }
     [t waitUntilExit];
-    NSArray *lines = [[[[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding] componentsSeparatedByString:@"\n"] subarrayWithRange:NSMakeRange(0, 3)];
+    NSArray *lines = [[[[NSString alloc] initWithData:d encoding:NSUTF8StringEncoding] componentsSeparatedByString:@"\n"] subarrayWithRange:NSMakeRange(1, 5)];
     for (NSString *line in lines)
         if (delegate) [delegate logEntry:line];
     NSString *version = lines.lastObject;
@@ -348,14 +348,23 @@ static NSUInteger _build;
     NSURL *url = self.tempAML;
     [aml writeToURL:url atomically:true];
     NSArray *output, *error;
-    NSArray *args;
+
+    NSMutableArray *args = [[NSMutableArray alloc] init];
+    NSString *extra = [NSUserDefaults.standardUserDefaults stringForKey:@"extradecomp"];
+    if (extra) {
+        extra = [extra stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if ([extra length] > 0)
+            [args addObjectsFromArray:[extra componentsSeparatedByString:@" "]];
+    }
+
     if (externals) {
         if ([NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == 4)
-            args = @[@"-e", [[externals valueForKey:@"lastPathComponent"] componentsJoinedByString:@","]];
+            [args addObjectsFromArray:@[@"-e", [[externals valueForKey:@"lastPathComponent"] componentsJoinedByString:@","]]];
         else
-            args = [@[@"-e"] arrayByAddingObjectsFromArray:[externals valueForKey:@"lastPathComponent"]];
+            [args addObjectsFromArray:[@[@"-e"] arrayByAddingObjectsFromArray:[externals valueForKey:@"lastPathComponent"]]];
     }
-    NSError *result = [self taskWithURL:url arguments:[args ?: @[] arrayByAddingObjectsFromArray:@[@"-d", url.lastPathComponent]] output:&output error:&error];
+
+    NSError *result = [self taskWithURL:url arguments:[args arrayByAddingObjectsFromArray:@[@"-d", url.lastPathComponent]] output:&output error:&error];
     NSError *err;
     NSFileManager *manager = NSFileManager.defaultManager;
     for (NSURL *external in externals)
@@ -393,7 +402,20 @@ static NSUInteger _build;
     if (![dsl writeToURL:url atomically:true encoding:NSASCIIStringEncoding error:&err])
         ModalError(err);
     NSArray *output, *error;
-    NSError *result = [self taskWithURL:url arguments:[force ? @[@"-f"] : @[] arrayByAddingObjectsFromArray:@[@"-p", url.lastPathComponent.stringByDeletingPathExtension, url.lastPathComponent]] output:&output error:&error];
+
+    NSMutableArray *args = [[NSMutableArray alloc] init];
+    NSString *extra = [NSUserDefaults.standardUserDefaults stringForKey:@"extracomp"];
+    if (extra) {
+        extra = [extra stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if ([extra length] > 0)
+            [args addObjectsFromArray:[extra componentsSeparatedByString:@" "]];
+    }
+
+    if (force) {
+        [args addObject:@"-f"];
+    }
+
+    NSError *result = [self taskWithURL:url arguments:[args arrayByAddingObjectsFromArray:@[@"-p", url.lastPathComponent.stringByDeletingPathExtension, url.lastPathComponent]] output:&output error:&error];
     NSFileManager *manager = NSFileManager.defaultManager;
     if (![manager removeItemAtURL:url error:&err])
         ModalError(err);

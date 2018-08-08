@@ -134,7 +134,7 @@
 		B0E0184C161531B2008CAC9B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B0E0184D161531B2008CAC9B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B0E01850161532EB008CAC9B /* iASL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iASL.h; sourceTree = "<group>"; };
-		B0E01851161532EB008CAC9B /* iASL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iASL.m; sourceTree = "<group>"; };
+		B0E01851161532EB008CAC9B /* iASL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iASL.m; sourceTree = "<group>"; usesTabs = 0; };
 		B0E0185316154CBD008CAC9B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		B0E0185D1615512A008CAC9B /* iasl5 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl5; sourceTree = SOURCE_ROOT; };
 		B0E0186216157084008CAC9B /* Navigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Navigator.h; sourceTree = "<group>"; };
