@@ -48,7 +48,41 @@
 #pragma mark Application Delegate
 -(void)awakeFromNib {
     _log = [NSMutableArray array];
-	[NSUserDefaults.standardUserDefaults registerDefaults:@{@"theme":@"Light", @"dsdt":@(YES), @"suggest":@(NO), @"acpi":@62, @"context":@(NO), @"isolation":@(NO), @"colorize":@(YES), @"remarks":@(NO), @"optimizations": @(NO), @"werror": @(NO), @"autoloadtables": @(NO), @"extracomp": @"", @"extradecomp": @"", @"preference": @0, @"font": @{@"name":@"Menlo", @"size": @11}, @"sources":@[@{@"name":@"Sourceforge", @"url":@"http://maciasl.sourceforge.net"}, @{@"name":@"Gigabyte", @"url":@"http://maciasl.sourceforge.net/pjalm/gigabyte"}, @{@"name":@"ASUS", @"url":@"http://maciasl.sourceforge.net/pjalm/asus"}]}];
+    [NSUserDefaults.standardUserDefaults registerDefaults:
+    @{
+      @"theme": @"Light",
+      @"dsdt": @(YES),
+      @"suggest": @(NO),
+      @"acpi": @62,
+      @"context": @(NO),
+      @"isolation": @(NO),
+      @"colorize": @(YES),
+      @"remarks": @(NO),
+      @"optimizations": @(NO),
+      @"werror": @(NO),
+      @"autoloadtables": @(NO),
+      @"extracomp": @"",
+      @"extradecomp": @"",
+      @"preference": @0,
+      @"font": @{@"name": @"Menlo", @"size": @11},
+      @"sources": @[
+        @{@"name": @"Sourceforge", @"url": @"http://maciasl.sourceforge.net"},
+        @{@"name": @"Gigabyte", @"url": @"http://maciasl.sourceforge.net/pjalm/gigabyte"},
+        @{@"name": @"ASUS", @"url": @"http://maciasl.sourceforge.net/pjalm/asus"},
+        @{@"name": @"MSI", @"url": @"http://maciasl.sourceforge.net/pjalm/msi"},
+        @{@"name": @"ASRock", @"url": @"http://maciasl.sourceforge.net/pjalm/asrock"},
+        @{@"name": @"Zotac", @"url": @"http://maciasl.sourceforge.net/pjalm/zotac"},
+        @{@"name": @"General", @"url": @"http://maciasl.sourceforge.net/pjalm/general"},
+        @{@"name": @"Graphics", @"url": @"http://maciasl.sourceforge.net/pjalm/graphics"},
+        @{@"name": @"Intel Series 6", @"url": @"http://maciasl.sourceforge.net/pjalm/intel6"},
+        @{@"name": @"Intel Series 7", @"url": @"http://maciasl.sourceforge.net/pjalm/intel7"},
+        @{@"name": @"Intel Series 8", @"url": @"http://maciasl.sourceforge.net/pjalm/intel8"},
+        @{@"name": @"Intel Series 9", @"url": @"http://maciasl.sourceforge.net/pjalm/intel9"},
+        @{@"name": @"Rehabman", @"url": @"http://raw.github.com/RehabMan/Laptop-DSDT-Patch/master"},
+        @{@"name": @"Toleda HDMI", @"url": @"http://raw.github.com/toleda/audio_hdmi_uefi/master"},
+        @{@"name": @"Toleda HDMI 8", @"url": @"http://raw.github.com/toleda/audio_hdmi_8series/master"},
+        @{@"name": @"Toleda ALC", @"url": @"http://raw.github.com/toleda/audio_ALCInjection/master"},
+    ]}];
     NSFontManager.sharedFontManager.target = self;
     NSDictionary *font = [NSUserDefaults.standardUserDefaults objectForKey:@"font"];
     [NSFontManager.sharedFontManager setSelectedFont:[NSFont fontWithName:[font objectForKey:@"name"] size:[[font objectForKey:@"size"] floatValue]] isMultiple:false];

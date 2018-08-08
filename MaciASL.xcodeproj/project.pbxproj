@@ -316,7 +316,6 @@
 				B013B820160C529600F6A7F2 /* Resources */,
 				B0E0186016155C85008CAC9B /* CopyFiles */,
 				B0663F4F17E81809008D6686 /* Copy Spotlight Importer */,
-				B025E914163345EE009D5FA6 /* Increment Build Number */,
 			);
 			buildRules = (
 			);
@@ -420,24 +419,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		B025E914163345EE009D5FA6 /* Increment Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build Number";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "[ \"$CONFIGURATION\" == Debug ] && exit\nCPV=$[ CURRENT_PROJECT_VERSION + 1 ]\nsed -i '' \"s/CURRENT_PROJECT_VERSION = $CURRENT_PROJECT_VERSION/CURRENT_PROJECT_VERSION = $CPV/\" $PROJECT_NAME.xcodeproj/project.pbxproj";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B013B81E160C529600F6A7F2 /* Sources */ = {
@@ -552,7 +533,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_MARKETING_VERSION = 1.5;
-				CURRENT_PROJECT_VERSION = 281;
+				CURRENT_PROJECT_VERSION = 283;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -608,7 +589,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				CURRENT_MARKETING_VERSION = 1.5;
-				CURRENT_PROJECT_VERSION = 281;
+				CURRENT_PROJECT_VERSION = 283;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				ENABLE_NS_ASSERTIONS = NO;
