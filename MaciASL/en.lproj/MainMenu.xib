@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.3.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -503,7 +503,7 @@
                 </menuItem>
             </items>
         </menu>
-        <window title="iASL Log" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="logFrame" animationBehavior="default" id="645" customClass="NSPanel">
+        <window title="iASL Log" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="logFrame" animationBehavior="default" id="645" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="112" width="678" height="210"/>
@@ -525,7 +525,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="" editable="NO" width="116" minWidth="40" maxWidth="1000" id="683">
+                                        <tableColumn editable="NO" width="116" minWidth="40" maxWidth="1000" id="683">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Timestamp">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -542,7 +542,7 @@
                                                 <binding destination="647" name="value" keyPath="arrangedObjects.timestamp" id="695"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="" editable="NO" width="556" minWidth="40" maxWidth="1000" id="684">
+                                        <tableColumn editable="NO" width="556" minWidth="40" maxWidth="1000" id="684">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Entry">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -593,7 +593,7 @@
                 <outlet property="initialFirstResponder" destination="679" id="1260"/>
             </connections>
         </window>
-        <window title="Compiler Summary" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="compilerFrame" animationBehavior="default" id="2038" customClass="FSPanel">
+        <window title="Compiler Summary" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="compilerFrame" animationBehavior="default" id="2038" customClass="FSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES"/>
@@ -607,7 +607,7 @@
                         <rect key="frame" x="-1" y="19" width="374" height="170"/>
                         <clipView key="contentView" id="qyE-E1-0Q5">
                             <rect key="frame" x="1" y="0.0" width="372" height="169"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="2053" id="2055" customClass="FSTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="372" height="146"/>
@@ -616,7 +616,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="" editable="NO" width="16" minWidth="16" maxWidth="1000" id="2059">
+                                        <tableColumn editable="NO" width="16" minWidth="16" maxWidth="1000" id="2059">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -635,7 +635,7 @@
                                                 </binding>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="" editable="NO" width="47" minWidth="40" maxWidth="1000" id="2058">
+                                        <tableColumn editable="NO" width="47" minWidth="40" maxWidth="1000" id="2058">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Line">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -652,7 +652,7 @@
                                                 <binding destination="2039" name="value" keyPath="selection.notices.line" id="2069"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="" editable="NO" width="46" minWidth="10" maxWidth="3.4028234663852886e+38" id="2057">
+                                        <tableColumn editable="NO" width="46" minWidth="10" maxWidth="3.4028234663852886e+38" id="2057">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Code">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -669,7 +669,7 @@
                                                 <binding destination="2039" name="value" keyPath="selection.notices.code" id="2070"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="" editable="NO" width="251" minWidth="10" maxWidth="3.4028234663852886e+38" id="2056">
+                                        <tableColumn editable="NO" width="251" minWidth="10" maxWidth="3.4028234663852886e+38" id="2056">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Message">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -733,7 +733,7 @@
                 <outlet property="initialFirstResponder" destination="2055" id="2066"/>
             </connections>
         </window>
-        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="prefFrame" animationBehavior="default" id="705">
+        <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="prefFrame" animationBehavior="default" id="705">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
             <rect key="contentRect" x="196" y="207" width="480" height="270"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
@@ -774,11 +774,11 @@
             </connections>
         </window>
         <customView id="728" userLabel="iASL">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+            <rect key="frame" x="0.0" y="0.0" width="480" height="293"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="737">
-                    <rect key="frame" x="30" y="183" width="174" height="18"/>
+                    <rect key="frame" x="30" y="204" width="174" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable remark messages" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="738">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -788,7 +788,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="741">
-                    <rect key="frame" x="30" y="163" width="206" height="18"/>
+                    <rect key="frame" x="30" y="184" width="206" height="18"/>
                     <buttonCell key="cell" type="check" title="Enable optimization messages" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="742">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -798,7 +798,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="777">
-                    <rect key="frame" x="18" y="233" width="110" height="17"/>
+                    <rect key="frame" x="18" y="256" width="110" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Compiler Options" id="778">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -829,7 +829,7 @@
                     </connections>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="828">
-                    <rect key="frame" x="30" y="143" width="169" height="18"/>
+                    <rect key="frame" x="30" y="164" width="169" height="18"/>
                     <buttonCell key="cell" type="check" title="Treat warnings as errors" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="829">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -849,7 +849,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2259">
-                    <rect key="frame" x="33" y="208" width="120" height="17"/>
+                    <rect key="frame" x="33" y="231" width="120" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="ACPI Specification:" id="2260">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -857,7 +857,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2263">
-                    <rect key="frame" x="157" y="202" width="65" height="26"/>
+                    <rect key="frame" x="157" y="225" width="65" height="26"/>
                     <popUpButtonCell key="cell" type="push" title="6.2" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="f7f-js-Z3e" id="2264">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -905,8 +905,8 @@
                         <binding destination="763" name="selectedObject" keyPath="values.acpi" id="2272"/>
                     </connections>
                 </popUpButton>
-                <progressIndicator horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="1" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="iHw-yh-MgN">
-                    <rect key="frame" x="132" y="22" width="16" height="16"/>
+                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="1" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="iHw-yh-MgN">
+                    <rect key="frame" x="132" y="45" width="16" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <connections>
                         <binding destination="534" name="hidden" keyPath="update" id="YdI-t8-7uK">
@@ -919,6 +919,19 @@
                         <binding destination="534" name="isIndeterminate" keyPath="update.indeterminate" previousBinding="RgI-5J-Mgz" id="Wi8-H9-IfG"/>
                     </connections>
                 </progressIndicator>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="wGR-aH-r8c">
+                    <rect key="frame" x="30" y="144" width="248" height="18"/>
+                    <buttonCell key="cell" type="check" title="Autoload tables in the same directory" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gJB-Jr-pRb">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <connections>
+                            <binding destination="763" name="value" keyPath="values.autoloadtables" id="Znc-Xx-uYz"/>
+                        </connections>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.autoloadtables" id="Im5-wF-U4Y"/>
+                    </connections>
+                </button>
             </subviews>
             <constraints>
                 <constraint firstItem="741" firstAttribute="top" secondItem="737" secondAttribute="bottom" constant="6" symbolic="YES" id="754"/>
@@ -932,14 +945,17 @@
                 <constraint firstAttribute="trailing" secondItem="789" secondAttribute="trailing" constant="20" symbolic="YES" id="846"/>
                 <constraint firstItem="1255" firstAttribute="leading" secondItem="728" secondAttribute="leading" constant="20" symbolic="YES" id="1257"/>
                 <constraint firstAttribute="bottom" secondItem="1255" secondAttribute="bottom" constant="20" symbolic="YES" id="1258"/>
-                <constraint firstItem="785" firstAttribute="top" secondItem="828" secondAttribute="bottom" constant="8" symbolic="YES" id="1711"/>
+                <constraint firstItem="785" firstAttribute="top" secondItem="wGR-aH-r8c" secondAttribute="bottom" constant="9" id="1711"/>
                 <constraint firstItem="789" firstAttribute="top" secondItem="785" secondAttribute="bottom" constant="8" symbolic="YES" id="1712"/>
                 <constraint firstItem="1255" firstAttribute="top" secondItem="789" secondAttribute="bottom" constant="8" symbolic="YES" id="2258"/>
                 <constraint firstItem="2259" firstAttribute="top" secondItem="777" secondAttribute="bottom" constant="8" symbolic="YES" id="2261"/>
                 <constraint firstItem="2259" firstAttribute="leading" secondItem="728" secondAttribute="leading" constant="35" id="2262"/>
                 <constraint firstItem="2263" firstAttribute="leading" secondItem="2259" secondAttribute="trailing" constant="8" symbolic="YES" id="2269"/>
                 <constraint firstItem="2263" firstAttribute="baseline" secondItem="2259" secondAttribute="baseline" id="2270"/>
+                <constraint firstItem="wGR-aH-r8c" firstAttribute="top" secondItem="828" secondAttribute="bottom" constant="6" symbolic="YES" id="RnE-kL-Mbg"/>
+                <constraint firstItem="wGR-aH-r8c" firstAttribute="leading" secondItem="828" secondAttribute="leading" id="eQO-M8-yeH"/>
             </constraints>
+            <point key="canvasLocation" x="132" y="380.5"/>
         </customView>
         <customView id="758" userLabel="General">
             <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
@@ -1095,7 +1111,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="" width="116" minWidth="40" maxWidth="1000" id="1143">
+                                    <tableColumn width="116" minWidth="40" maxWidth="1000" id="1143">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1111,7 +1127,7 @@
                                             <binding destination="1153" name="value" keyPath="arrangedObjects.name" id="1159"/>
                                         </connections>
                                     </tableColumn>
-                                    <tableColumn identifier="" width="316" minWidth="40" maxWidth="1000" id="1144">
+                                    <tableColumn width="316" minWidth="40" maxWidth="1000" id="1144">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="URL">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1247,7 +1263,7 @@
                 <binding destination="-3" name="contentObject" keyPath="mainWindow.document" id="2074"/>
             </connections>
         </objectController>
-        <window title="Tableset Selection" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="2103">
+        <window title="Tableset Selection" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2103">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="207" width="335" height="102"/>
@@ -1327,7 +1343,7 @@ Gw
                 <outlet property="initialFirstResponder" destination="2117" id="2149"/>
             </connections>
         </window>
-        <window title="Device Properties" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="propertiesFrame" animationBehavior="default" id="2159" customClass="NSPanel">
+        <window title="Device Properties" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="propertiesFrame" animationBehavior="default" id="2159" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="112" width="378" height="276"/>
@@ -1349,7 +1365,7 @@ Gw
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="" editable="NO" width="147" minWidth="16" maxWidth="1000" id="2166">
+                                        <tableColumn editable="NO" width="147" minWidth="16" maxWidth="1000" id="2166">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1369,7 +1385,7 @@ Gw
                                                 </binding>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="" editable="NO" width="225" minWidth="40" maxWidth="1000" id="2167">
+                                        <tableColumn editable="NO" width="225" minWidth="40" maxWidth="1000" id="2167">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Value">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

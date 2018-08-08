@@ -112,7 +112,7 @@ static NSString *bootlog, *_compiler;
 static NSUInteger _build;
 
 +(void)load {
-	stdTables = @{@"APIC":@"Advanced Programmable Interrupt Controller", @"ASF!":@"Alert Standard Format", @"BERT":@"Boot Error Record", @"BGRT":@"Boot Graphics Resource", @"BOOT":@"Simple Boot Flag", @"CPEP":@"Corrected Platform Error Polling", @"CSRT":@"Core System Resource", @"DBG2":@"Debug Port Type 2", @"DBGP":@"Debug Port", @"DMAR":@"DMA Remapping", @"DRTM":@"Dynamic Root of Trust for Measurement", @"DSDT":@"Differentiated System Description", @"ECDT":@"Embedded Controller Boot Resources", @"EINJ":@"Error Injection", @"ERST":@"Error Record Serialization", @"FACP":@"Fixed ACPI Control Pointer", @"FACS":@"Firmware ACPI Control Structure", @"FADT":@"Fixed ACPI Description", @"FPDT":@"Firmware Performance Data", @"GTDT":@"Generic Timer Description", @"HEST":@"Hardware Error Source", @"HPET":@"High Precision Event Timer", @"IVRS":@"I/O Virtualization Reporting Structure", @"LPIT":@"Low Power Idle Table", @"MADT":@"Multiple APIC Description", @"MCFG":@"PCI Memory Mapped Configuration", @"MCHI":@"Management Controller Host Interface", @"MPST":@"Memory Power State", @"MSCT":@"Maximum System Characteristics", @"MTMR":@"MID Timer", @"PCCT":@"Platform Communications Channel", @"PMTT":@"Platform Memory Topology", @"RASF":@"RAS Feature", @"RSDP":@"Root System Description Pointer", @"RSDT":@"Root System Description", @"S3PT":@"S3 Performance", @"SBST":@"Smart Battery Specification", @"SLIC":@"Software Licensing Description", @"SLIT":@"System Locality Distance Information", @"SPCR":@"Serial Port Console Redirection", @"SPMI":@"Server Platform Management Interface", @"SRAT":@"System Resource Affinity", @"SSDT":@"Secondary System Description", @"TCPA":@"Trusted Computing Platform Alliance", @"TPM2":@"Trusted Platform Module", @"UEFI":@"Uefi Boot Optimization", @"VRTC":@"Virtual Real-Time Clock", @"WPBT":@"Windows Platform Binary", @"WAET":@"Windows ACPI Emulated devices", @"WDAT":@"Watchdog Action", @"WDDT":@"Watchdog Timer Description", @"WDRT":@"Watchdog Resource", @"XSDT":@"Extended System Description"};
+    stdTables = @{@"APIC":@"Advanced Programmable Interrupt Controller", @"ASF!":@"Alert Standard Format", @"BERT":@"Boot Error Record", @"BGRT":@"Boot Graphics Resource", @"BOOT":@"Simple Boot Flag", @"CPEP":@"Corrected Platform Error Polling", @"CSRT":@"Core System Resource", @"DBG2":@"Debug Port Type 2", @"DBGP":@"Debug Port", @"DMAR":@"DMA Remapping", @"DRTM":@"Dynamic Root of Trust for Measurement", @"DSDT":@"Differentiated System Description", @"ECDT":@"Embedded Controller Boot Resources", @"EINJ":@"Error Injection", @"ERST":@"Error Record Serialization", @"FACP":@"Fixed ACPI Control Pointer", @"FACS":@"Firmware ACPI Control Structure", @"FADT":@"Fixed ACPI Description", @"FPDT":@"Firmware Performance Data", @"GTDT":@"Generic Timer Description", @"HEST":@"Hardware Error Source", @"HPET":@"High Precision Event Timer", @"IVRS":@"I/O Virtualization Reporting Structure", @"LPIT":@"Low Power Idle Table", @"MADT":@"Multiple APIC Description", @"MCFG":@"PCI Memory Mapped Configuration", @"MCHI":@"Management Controller Host Interface", @"MPST":@"Memory Power State", @"MSCT":@"Maximum System Characteristics", @"MTMR":@"MID Timer", @"PCCT":@"Platform Communications Channel", @"PMTT":@"Platform Memory Topology", @"RASF":@"RAS Feature", @"RSDP":@"Root System Description Pointer", @"RSDT":@"Root System Description", @"S3PT":@"S3 Performance", @"SBST":@"Smart Battery Specification", @"SLIC":@"Software Licensing Description", @"SLIT":@"System Locality Distance Information", @"SPCR":@"Serial Port Console Redirection", @"SPMI":@"Server Platform Management Interface", @"SRAT":@"System Resource Affinity", @"SSDT":@"Secondary System Description", @"TCPA":@"Trusted Computing Platform Alliance", @"TPM2":@"Trusted Platform Module", @"UEFI":@"Uefi Boot Optimization", @"VRTC":@"Virtual Real-Time Clock", @"WPBT":@"Windows Platform Binary", @"WAET":@"Windows ACPI Emulated devices", @"WDAT":@"Watchdog Action", @"WDDT":@"Watchdog Timer Description", @"WDRT":@"Watchdog Resource", @"XSDT":@"Extended System Description"};
     signon = [NSRegularExpression regularExpressionWithPattern:@"Compiler version (\\d+)" options:0 error:NULL];
     io_service_t expert;
     if ((expert = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("AppleACPIPlatformExpert")))) {
@@ -328,16 +328,23 @@ static NSUInteger _build;
 }
 
 +(iASLDecompilationResult *)decompileAML:(NSData *)aml name:(NSString *)name tableset:(NSURL *)tableset {
-    NSDictionary *tables = [tableset isEqual:kSystemTableset] ? self.tableset : [tableset isFileURL] ? [(NSDictionary *)[NSDictionary dictionaryWithContentsOfURL:tableset] objectForKey:@"Tables"] : nil;
+    NSDictionary *tables = nil;
+
+    if ([tableset isEqual:kSystemTableset]) {
+        tables = self.tableset;
+    } else if ([tableset isFileURL]) {
+        tables = [(NSDictionary *)[NSDictionary dictionaryWithContentsOfURL:tableset] objectForKey:@"Tables"];
+    }
     NSMutableArray *externals;
-    if ([name hasPrefix:@"SSDT"] || [name isEqualToString:@"DSDT"])
-    for (NSString *table in tables)
-        if (![table isEqualToString:name] && ([table hasPrefix:@"SSDT"] || [table isEqualToString:@"DSDT"])) {
-            if (!externals)
-                externals = [NSMutableArray array];
-            [externals addObject:self.tempAML];
-            [[tables objectForKey:table] writeToURL:externals.lastObject atomically:true];
-        }
+    if ([name hasPrefix:@"SSDT"] || [name isEqualToString:@"DSDT"]) {
+        for (NSString *table in tables)
+            if (![table isEqualToString:name] && ([table hasPrefix:@"SSDT"] || [table isEqualToString:@"DSDT"])) {
+                if (!externals)
+                    externals = [NSMutableArray array];
+                [externals addObject:self.tempAML];
+                [[tables objectForKey:table] writeToURL:externals.lastObject atomically:true];
+            }
+    }
     NSURL *url = self.tempAML;
     [aml writeToURL:url atomically:true];
     NSArray *output, *error;
@@ -396,12 +403,12 @@ static NSUInteger _build;
     for (NSString *line in output)
         if ((notice = [[Notice alloc] initWithLine:line]))
             [notices addObject:notice];
-	// Custom-compiled iasl may output errors to stderr instead of stdout.
-	if ([NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] != 4) {
-		for (NSString *line in error)
-			if ((notice = [[Notice alloc] initWithLine:line]))
-				[notices addObject:notice];
-	}
+    // Custom-compiled iasl may output errors to stderr instead of stdout.
+    if ([NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] != 4) {
+        for (NSString *line in error)
+            if ((notice = [[Notice alloc] initWithLine:line]))
+                [notices addObject:notice];
+    }
     if (result) {
         NSMutableDictionary *d = [result.userInfo mutableCopy];
         [d setObject:@"Compilation Error" forKey:NSLocalizedDescriptionKey];
@@ -477,11 +484,11 @@ static NSDateFormatter *rfc822;
                 dispatch_semaphore_wait(s, DISPATCH_TIME_FOREVER);
                 NSDate *urlmtime = [rfc822 dateFromString:[d objectForKey:@"Last-Modified"]];
                 dispatch_semaphore_signal(s);
-				NSNumber *urlsize = @([[d objectForKey:@"Content-Length"] integerValue]), *filesize;
-				if (![file getResourceValue:&filesize forKey:NSURLFileSizeKey error:&connectionError])
+                NSNumber *urlsize = @([[d objectForKey:@"Content-Length"] integerValue]), *filesize;
+                if (![file getResourceValue:&filesize forKey:NSURLFileSizeKey error:&connectionError])
                     ModalError(connectionError);
                 else if (([filemtime compare:urlmtime] == NSOrderedAscending)
-				|| ![urlsize isEqualToNumber:filesize]) {
+                || ![urlsize isEqualToNumber:filesize]) {
                     result = [[NSData dataWithContentsOfURL:url options:0 error:NULL] writeToURL:file options:NSDataWritingAtomic error:&connectionError] && !ModalError(connectionError);
                 }
                 else {

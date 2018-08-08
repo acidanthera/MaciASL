@@ -121,6 +121,29 @@
     if ([typeName isEqualToString:kUTTypeDSL])
         _text.mutableString.string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     else if ([typeName isEqualToString:kUTTypeAML]) {
+        // Load tables in the same directory if any
+        if (!_tableset && !_tableName && [NSUserDefaults.standardUserDefaults boolForKey:@"autoloadtables"]) {
+            NSMutableDictionary *tables = [[NSMutableDictionary alloc] init];
+            NSURL *dir = [[self fileURL] URLByDeletingLastPathComponent];
+            NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:dir
+                                                           includingPropertiesForKeys:nil
+                                                                              options:NSDirectoryEnumerationSkipsHiddenFiles
+                                                                                error:nil];
+            if (files) {
+                for (NSURL *file in files) {
+                    if (([[file pathExtension] isEqualToString:@"aml"] || [[file pathExtension] isEqualToString:@"AML"]) &&
+                        ([[file lastPathComponent] hasPrefix:@"SSDT"] || [[file lastPathComponent] hasPrefix:@"DSDT"]) &&
+                        ![file isEqualTo:[self fileURL]]) {
+                        [tables setObject:[NSData dataWithContentsOfURL:file] forKey:[file lastPathComponent]];
+                    }
+                }
+            }
+
+            NSURL *ext = [iASL tempFile:@"iASLXXXXXX.plist"];
+            [@{@"Tables":tables} writeToFile:ext.path atomically:YES];
+            _tableset = ext;
+            _tableName = @"SSDT";
+        }
         iASLDecompilationResult *decompile = [iASL decompileAML:data name:_tableName tableset:_tableset];
         if (!decompile.error)
             _text.mutableString.string = decompile.string;
@@ -329,7 +352,7 @@
 }
 
 -(void)buildNavHandler {
-	[self performSelectorOnMainThread:@selector(buildNav) withObject:nil waitUntilDone:YES];
+    [self performSelectorOnMainThread:@selector(buildNav) withObject:nil waitUntilDone:YES];
 }
 
 #pragma mark NSTableViewDelegate
@@ -436,7 +459,7 @@
 -(void)textStorageDidProcessEditing:(NSNotification *)notification {
     [_colorize textStorageDidProcessEditing:notification];
     [Document cancelPreviousPerformRequestsWithTarget:self selector:@selector(buildNavHandler) object:nil];
-	[self performSelector:@selector(buildNavHandler) withObject:nil afterDelay:1.5];
+    [self performSelector:@selector(buildNavHandler) withObject:nil afterDelay:1.5];
 }
 
 #pragma mark NSTextViewDelegate

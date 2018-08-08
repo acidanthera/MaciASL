@@ -98,6 +98,13 @@ extern NSURL *const kSystemTableset;
  */
 +(iASLCompilationResult *)compileDSL:(NSString *)dsl name:(NSString *)name tableset:(NSURL *)tableset force:(bool)force;
 
+/*! \brief Creates a temp file
+ *
+ * \param template
+ *
+ * \returns temporary filename
+ */
++(NSURL *)tempFile:(NSString *)template;
 
 @end
 

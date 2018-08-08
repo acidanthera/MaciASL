@@ -48,7 +48,7 @@
 #pragma mark Application Delegate
 -(void)awakeFromNib {
     _log = [NSMutableArray array];
-    [NSUserDefaults.standardUserDefaults registerDefaults:@{@"theme":@"Light", @"dsdt":@(YES), @"suggest":@(NO), @"acpi":@62, @"context":@(NO), @"isolation":@(NO), @"colorize":@(YES), @"remarks":@(NO), @"optimizations": @(NO), @"werror": @(NO), @"preference": @0, @"font": @{@"name":@"Menlo", @"size": @11}, @"sources":@[@{@"name":@"Sourceforge", @"url":@"http://maciasl.sourceforge.net"}, @{@"name":@"Gigabyte", @"url":@"http://maciasl.sourceforge.net/pjalm/gigabyte"}, @{@"name":@"ASUS", @"url":@"http://maciasl.sourceforge.net/pjalm/asus"}]}];
+    [NSUserDefaults.standardUserDefaults registerDefaults:@{@"theme":@"Light", @"dsdt":@(YES), @"suggest":@(NO), @"acpi":@62, @"context":@(NO), @"isolation":@(NO), @"colorize":@(YES), @"remarks":@(NO), @"optimizations": @(NO), @"werror": @(NO), @"autoloadtables": @(NO), @"preference": @0, @"font": @{@"name":@"Menlo", @"size": @11}, @"sources":@[@{@"name":@"Sourceforge", @"url":@"http://maciasl.sourceforge.net"}, @{@"name":@"Gigabyte", @"url":@"http://maciasl.sourceforge.net/pjalm/gigabyte"}, @{@"name":@"ASUS", @"url":@"http://maciasl.sourceforge.net/pjalm/asus"}]}];
     NSFontManager.sharedFontManager.target = self;
     NSDictionary *font = [NSUserDefaults.standardUserDefaults objectForKey:@"font"];
     [NSFontManager.sharedFontManager setSelectedFont:[NSFont fontWithName:[font objectForKey:@"name"] size:[[font objectForKey:@"size"] floatValue]] isMultiple:false];
@@ -129,8 +129,8 @@
 -(IBAction)update:(id)sender {
     [sender setEnabled:false];
     NSString *os = [[[(NSDictionary *)[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"] componentsSeparatedByString:@"."] objectAtIndex:1];
-	int osmajor = [os intValue];
-	if (osmajor > 11) osmajor = 11;
+    int osmajor = [os intValue];
+    if (osmajor > 11) osmajor = 11;
     muteWithNotice(self, update, _update = [NSProgress progressWithTotalUnitCount:3]);
     dispatch_group_t g = dispatch_group_create();
     for (NSNumber *iasl in @[@4, @5, @51, @6]) {
@@ -303,7 +303,7 @@ static NSDictionary *style;
         font = [NSFont monospacedDigitSystemFontOfSize:NSFont.smallSystemFontSize weight:NSFontWeightRegular];
     else
         font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
-	style = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:[temp copy]};
+    style = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:[temp copy]};
 }
 
 -(instancetype)init {
