@@ -143,6 +143,7 @@
 		CE297C052067690E00A5EF9F /* iasl62 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl62; path = Dist/iasl62; sourceTree = SOURCE_ROOT; };
 		CE775907211C24190063EAE6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CE775908211C24190063EAE6 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		CE77590D211C54530063EAE6 /* Changelog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,6 +307,7 @@
 		CE775906211C24080063EAE6 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
+				CE77590D211C54530063EAE6 /* Changelog.md */,
 				CE775908211C24190063EAE6 /* LICENSE.txt */,
 				CE775907211C24190063EAE6 /* README.md */,
 			);
@@ -458,7 +460,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"${TARGET_BUILD_DIR}\"\n\ndist=(\"$FULL_PRODUCT_NAME\")\nif [ -d \"$DWARF_DSYM_FILE_NAME\" ]; then dist+=(\"$DWARF_DSYM_FILE_NAME\"); fi\n\narchive=\"${CURRENT_MARKETING_VERSION}-${CURRENT_PROJECT_VERSION} ($(echo $CONFIGURATION | tr /a-z/ /A-Z/)).zip\"\nrm -rf *.zip\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n  strip -x -T \"${EXECUTABLE_PATH}\" &>/dev/null || strip -x \"${EXECUTABLE_PATH}\"\nfi\nzip -qry \"${archive}\" \"${dist[@]}\"\n";
+			shellScript = "cd \"${TARGET_BUILD_DIR}\"\n\ndist=(\"$FULL_PRODUCT_NAME\")\nif [ -d \"$DWARF_DSYM_FILE_NAME\" ]; then dist+=(\"$DWARF_DSYM_FILE_NAME\"); fi\n\narchive=\"${CURRENT_MARKETING_VERSION} ($(echo $CONFIGURATION | tr /a-z/ /A-Z/)).zip\"\nrm -rf *.zip\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n  strip -x -T \"${EXECUTABLE_PATH}\" &>/dev/null || strip -x \"${EXECUTABLE_PATH}\"\nfi\nzip -qry \"${archive}\" \"${dist[@]}\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -574,8 +576,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_MARKETING_VERSION = 1.5;
-				CURRENT_PROJECT_VERSION = 283;
+				CURRENT_MARKETING_VERSION = 1.5.1;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -630,8 +631,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_MARKETING_VERSION = 1.5;
-				CURRENT_PROJECT_VERSION = 283;
+				CURRENT_MARKETING_VERSION = 1.5.1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEPLOYMENT_POSTPROCESSING = YES;
 				ENABLE_NS_ASSERTIONS = NO;
