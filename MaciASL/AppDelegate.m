@@ -167,8 +167,8 @@
     for (NSNumber *iasl in @[@4, @5, @51, @6, @62]) {
         [_update becomeCurrentWithPendingUnitCount:1];
         dispatch_group_enter(g);
-		NSURL *src = [NSURL URLWithString:[NSString stringWithFormat:@"https://github.com/acidanthera/MaciASL/raw/master/Dist/iasl%ld", iasl.unsignedIntegerValue]];
-		NSURL *dst = [[[NSBundle.mainBundle executableURL] URLByDeletingLastPathComponent] URLByAppendingPathComponent:[NSString stringWithFormat:@"iasl%ld", iasl.unsignedIntegerValue]];
+        NSURL *src = [NSURL URLWithString:[NSString stringWithFormat:@"https://github.com/acidanthera/MaciASL/raw/master/Dist/iasl%ld", iasl.unsignedIntegerValue]];
+        NSURL *dst = [[[NSBundle.mainBundle executableURL] URLByDeletingLastPathComponent] URLByAppendingPathComponent:[NSString stringWithFormat:@"iasl%ld", iasl.unsignedIntegerValue]];
         [URLTask conditionalGet:src toURL:dst perform:^(bool success){
             muteWithNotice(self->_update, fractionCompleted,);
             if (success && [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == iasl.unsignedIntegerValue)
@@ -333,12 +333,12 @@ static NSDictionary *style;
     temp.alignment = NSRightTextAlignment;
     NSFont *font = nil;
 #ifdef __MAC_10_11
-	if ([NSFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
-		font = [NSFont monospacedDigitSystemFontOfSize:NSFont.smallSystemFontSize weight:NSFontWeightRegular];
-	else
-		font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
+    if ([NSFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
+        font = [NSFont monospacedDigitSystemFontOfSize:NSFont.smallSystemFontSize weight:NSFontWeightRegular];
+    else
+        font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
 #else
-	font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
+    font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
 #endif
     style = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:[temp copy]};
 }

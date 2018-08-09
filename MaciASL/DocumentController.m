@@ -28,7 +28,7 @@
             [self noteNewRecentDocumentURL:url];
     }
     else if ((table = [iASL isInjected:url])) {
-        iASLDecompilationResult *decompile = [iASL decompileAML:[iASL fetchTable:table] name:table tableset:kSystemTableset];
+        iASLDecompilationResult *decompile = [iASL decompileAML:[iASL fetchTable:table] name:table tableset:kSystemTableset refs:nil];
         if (!ModalError(decompile.error))
             [(document = [self newDocument:decompile.string displayName:nil tableName:table tableset:kSystemTableset display:false]) setFileURL:url];
     }
@@ -70,7 +70,7 @@
     modal = 0;
     for (NSString *table in tables) {
         modal++;
-        iASLDecompilationResult *decompile = [iASL decompileAML:[tables objectForKey:table] name:table tableset:url];
+        iASLDecompilationResult *decompile = [iASL decompileAML:[tables objectForKey:table] name:table tableset:url refs:nil];
         if (!ModalError(decompile.error))
             document = [self newDocument:decompile.string displayName:[prefix stringByAppendingString:table] tableName:table tableset:url display:modal != tables.count];
     }
@@ -138,7 +138,7 @@
         if (file && [[NSData dataWithContentsOfURL:file] isEqualToData:aml])
             [self openDocumentWithContentsOfURL:file display:true completionHandler:^(NSDocument *document, BOOL documentWasAlreadyOpen, NSError *error) {}];
         else {
-            iASLDecompilationResult *decompile = [iASL decompileAML:aml name:name tableset:kSystemTableset];
+            iASLDecompilationResult *decompile = [iASL decompileAML:aml name:name tableset:kSystemTableset refs:nil];
             if (!ModalError(decompile.error))
                 return [self newDocument:decompile.string displayName:[NSString stringWithFormat:!file?@"System %@":@"Pre-Edited %@", name] tableName:name tableset:kSystemTableset display:true];
         }

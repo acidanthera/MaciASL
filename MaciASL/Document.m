@@ -122,6 +122,7 @@
         _text.mutableString.string = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
     else if ([typeName isEqualToString:kUTTypeAML]) {
         // Load tables in the same directory if any
+        NSURL *refs = nil;
         if (!_tableset && !_tableName && [NSUserDefaults.standardUserDefaults boolForKey:@"autoloadtables"]) {
             NSMutableDictionary *tables = [[NSMutableDictionary alloc] init];
             NSURL *dir = [[self fileURL] URLByDeletingLastPathComponent];
@@ -143,8 +144,12 @@
             [@{@"Tables":tables} writeToFile:ext.path atomically:YES];
             _tableset = ext;
             _tableName = @"SSDT";
+
+            refs = [dir URLByAppendingPathComponent:@"refs.txt"];
+            if (![[NSFileManager defaultManager] fileExistsAtPath:refs.path])
+                refs = nil;
         }
-        iASLDecompilationResult *decompile = [iASL decompileAML:data name:_tableName tableset:_tableset];
+        iASLDecompilationResult *decompile = [iASL decompileAML:data name:_tableName tableset:_tableset refs:refs];
         if (!decompile.error)
             _text.mutableString.string = decompile.string;
         else if (outError != NULL)

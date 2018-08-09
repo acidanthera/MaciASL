@@ -333,7 +333,7 @@ static NSUInteger _build;
     return suggestion ? [NSError errorWithDomain:kMaciASLDomain code:task.terminationStatus userInfo:failure ? @{NSLocalizedFailureReasonErrorKey:failure, NSLocalizedRecoverySuggestionErrorKey:suggestion} : @{NSLocalizedRecoverySuggestionErrorKey:suggestion}] : nil;
 }
 
-+(iASLDecompilationResult *)decompileAML:(NSData *)aml name:(NSString *)name tableset:(NSURL *)tableset {
++(iASLDecompilationResult *)decompileAML:(NSData *)aml name:(NSString *)name tableset:(NSURL *)tableset refs:(NSURL *)refs {
     NSDictionary *tables = nil;
 
     if ([tableset isEqual:kSystemTableset]) {
@@ -370,6 +370,10 @@ static NSUInteger _build;
             [args addObjectsFromArray:[@[@"-e"] arrayByAddingObjectsFromArray:[externals valueForKey:@"lastPathComponent"]]];
     }
 
+    if (refs) {
+        [args addObjectsFromArray:@[@"-fe", refs.path]];
+    }
+
     NSError *result = [self taskWithURL:url arguments:[args arrayByAddingObjectsFromArray:@[@"-d", url.lastPathComponent]] output:&output error:&error];
     NSError *err;
     NSFileManager *manager = NSFileManager.defaultManager;
@@ -393,7 +397,7 @@ static NSUInteger _build;
     }
     else if (externals) {
         [(AppDelegate *)[(NSApplication *)NSApp delegate] logEntry:@"Decompilation with resolution failed, trying without resolution"];
-        return [self decompileAML:aml name:name tableset:nil];
+        return [self decompileAML:aml name:name tableset:nil refs:nil];
     }
     else {
         NSMutableDictionary *d = [result.userInfo mutableCopy];

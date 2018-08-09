@@ -84,9 +84,10 @@ extern NSURL *const kSystemTableset;
  * \param aml The AML representation of the table
  * \param name The name of the table, used to determine the type of table
  * \param tableset The tableset to be used in external symbol resolution
+ * \param refs External reference file used passed to iasl
  * \returns The decompilation result
  */
-+(iASLDecompilationResult *)decompileAML:(NSData *)aml name:(NSString *)name tableset:(NSURL *)tableset;
++(iASLDecompilationResult *)decompileAML:(NSData *)aml name:(NSString *)name tableset:(NSURL *)tableset refs:(NSURL *)refs;
 
 /*! \brief Compiles a DSL representation to an AML representation
  *
