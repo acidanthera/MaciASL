@@ -333,10 +333,14 @@ static NSDictionary *style;
     NSMutableParagraphStyle *temp = [NSMutableParagraphStyle new];
     temp.alignment = NSRightTextAlignment;
     NSFont *font = nil;
-    if ([NSFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
-        font = [NSFont monospacedDigitSystemFontOfSize:NSFont.smallSystemFontSize weight:NSFontWeightRegular];
-    else
-        font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
+#ifdef __MAC_10_11
+	if ([NSFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
+		font = [NSFont monospacedDigitSystemFontOfSize:NSFont.smallSystemFontSize weight:NSFontWeightRegular];
+	else
+		font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
+#else
+	font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
+#endif
     style = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:[temp copy]};
 }
 

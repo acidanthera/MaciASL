@@ -175,7 +175,7 @@ static NSUInteger _build;
     t.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]];
     t.standardOutput = [NSPipe pipe];
     [[t.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *h) { [d appendData:h.availableData]; }];
-    AppDelegate *delegate = (AppDelegate *)[NSApp delegate];
+    AppDelegate *delegate = (AppDelegate *)[(NSApplication *)NSApp delegate];
     @try { [t launch]; }
     @catch (NSException *e) {
         if (delegate) [delegate logEntry:[NSString stringWithFormat:@"Could not launch %@", t.launchPath]];
@@ -297,7 +297,7 @@ static NSUInteger _build;
         NSData *d;
         NSMutableArray *lines = [NSMutableArray array];
         NSMutableString *buffer = [NSMutableString string];
-        AppDelegate *delegate = (AppDelegate *)[NSApp delegate];
+        AppDelegate *delegate = (AppDelegate *)[(NSApplication *)NSApp delegate];;
         while ((d = h.availableData)) {
             if (!d.length)
                 break;
