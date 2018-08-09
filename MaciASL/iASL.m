@@ -171,12 +171,14 @@ static NSUInteger _build;
 
 +(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     NSMutableData *d = [NSMutableData data];
-    NSTask *t = [NSTask new];
-    t.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]];
-    t.standardOutput = [NSPipe pipe];
-    [[t.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *h) { [d appendData:h.availableData]; }];
     AppDelegate *delegate = (AppDelegate *)[(NSApplication *)NSApp delegate];
-    @try { [t launch]; }
+    NSTask *t = [NSTask new];
+    @try {
+        t.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]];
+        t.standardOutput = [NSPipe pipe];
+        [[t.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *h) { [d appendData:h.availableData]; }];
+        [t launch];
+    }
     @catch (NSException *e) {
         if (delegate) [delegate logEntry:[NSString stringWithFormat:@"Could not launch %@", t.launchPath]];
         return;
@@ -285,13 +287,17 @@ static NSUInteger _build;
     if ([defaults boolForKey:@"werror"] && acpi > 4)
         [args addObject:@"-we"];
     [args addObjectsFromArray:arguments];
-    task.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", acpi]];
-    task.arguments = [args copy];
-    task.currentDirectoryPath = url.URLByDeletingLastPathComponent.path;
-    task.standardOutput = [NSPipe pipe];
-    task.standardError = [NSPipe pipe];
-    @try { [task launch]; }
-    @catch (NSException *e) { return [NSError errorWithDomain:kMaciASLDomain code:0 userInfo:@{NSLocalizedRecoverySuggestionErrorKey:@"The compiler could not be found, or is not executable."}]; }
+    @try {
+        task.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", acpi]];
+        task.arguments = [args copy];
+        task.currentDirectoryPath = url.URLByDeletingLastPathComponent.path;
+        task.standardOutput = [NSPipe pipe];
+        task.standardError = [NSPipe pipe];
+        [task launch];
+    }
+    @catch (NSException *e) {
+        return [NSError errorWithDomain:kMaciASLDomain code:0 userInfo:@{NSLocalizedRecoverySuggestionErrorKey:@"The compiler could not be found, or is not executable."}];
+    }
     dispatch_apply(2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t isOutput) {
         NSFileHandle *h = [isOutput ? task.standardOutput : task.standardError fileHandleForReading];
         NSData *d;
@@ -492,10 +498,11 @@ static NSDateFormatter *rfc822;
 }
 
 +(void)conditionalGet:(NSURL *)url toURL:(NSURL *)file perform:(void(^)(bool))handler {
-    NSError *err;
-    NSDate *filemtime;
+    NSError *err = nil;
+    NSDate *filemtime = nil;
     NSProgress *progress = [NSProgress progressWithTotalUnitCount:2];
-    if ([file getResourceValue:&filemtime forKey:NSURLContentModificationDateKey error:&err] && !ModalError(err)) {
+    BOOL present = [file getResourceValue:&filemtime forKey:NSURLContentModificationDateKey error:&err];
+    if ((present && !ModalError(err)) || !present) {
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         request.HTTPMethod = @"HEAD";
         [NSURLConnection sendAsynchronousRequest:[request copy] queue:SourceList.sharedList.queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
@@ -507,15 +514,27 @@ static NSDateFormatter *rfc822;
                 NSDate *urlmtime = [rfc822 dateFromString:[d objectForKey:@"Last-Modified"]];
                 dispatch_semaphore_signal(s);
                 NSNumber *urlsize = @([[d objectForKey:@"Content-Length"] integerValue]), *filesize;
-                if (![file getResourceValue:&filesize forKey:NSURLFileSizeKey error:&connectionError])
-                    ModalError(connectionError);
-                else if (([filemtime compare:urlmtime] == NSOrderedAscending)
-                || ![urlsize isEqualToNumber:filesize]) {
-                    result = [[NSData dataWithContentsOfURL:url options:0 error:NULL] writeToURL:file options:NSDataWritingAtomic error:&connectionError] && !ModalError(connectionError);
+                BOOL download = NO;
+                if (present) {
+                    if (![file getResourceValue:&filesize forKey:NSURLFileSizeKey error:&connectionError])
+                        ModalError(connectionError);
+                    else if ([filemtime compare:urlmtime] == NSOrderedAscending && ![urlsize isEqualToNumber:filesize])
+                        download = YES;
+                } else {
+                    download = YES;
                 }
-                else {
-                    [file setResourceValue:urlmtime forKey:NSURLContentModificationDateKey error:&connectionError];
-                    ModalError(connectionError);
+
+                if (download) {
+                    result = [[NSData dataWithContentsOfURL:url options:0 error:NULL] writeToURL:file
+                                                                                         options:NSDataWritingAtomic
+                                                                                           error:&connectionError];
+                    if (result) {
+                        [[NSFileManager defaultManager] setAttributes:@{ NSFilePosixPermissions : @0755 }
+                                                         ofItemAtPath:file.path
+                                                                error:nil];
+                        [file setResourceValue:urlmtime forKey:NSURLContentModificationDateKey error:&connectionError];
+                        ModalError(connectionError);
+                    }
                 }
             }
             progress.completedUnitCount++;
