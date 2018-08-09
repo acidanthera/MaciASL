@@ -2,3 +2,5 @@
 DerivedData
 project.xcworkspace
 xcuserdata
+clang-analyze
+build

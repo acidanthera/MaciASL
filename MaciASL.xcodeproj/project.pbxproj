@@ -141,6 +141,8 @@
 		B0E0186316157084008CAC9B /* Navigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Navigator.m; sourceTree = "<group>"; };
 		B0FD8AB1165D847C0074DC84 /* iasl4 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl4; path = ../iasl4; sourceTree = "<group>"; };
 		CE297C052067690E00A5EF9F /* iasl62 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl62; sourceTree = SOURCE_ROOT; };
+		CE775907211C24190063EAE6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		CE775908211C24190063EAE6 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +178,7 @@
 		B013B817160C529600F6A7F2 = {
 			isa = PBXGroup;
 			children = (
+				CE775906211C24080063EAE6 /* Docs */,
 				B013B82C160C529600F6A7F2 /* MaciASL */,
 				B0663F3D17E815EB008D6686 /* ACPIImporter */,
 				B031539D1956A21B0056C7F2 /* MaciASL Tests */,
@@ -304,6 +307,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		CE775906211C24080063EAE6 /* Docs */ = {
+			isa = PBXGroup;
+			children = (
+				CE775908211C24190063EAE6 /* LICENSE.txt */,
+				CE775907211C24190063EAE6 /* README.md */,
+			);
+			name = Docs;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -316,6 +328,7 @@
 				B013B820160C529600F6A7F2 /* Resources */,
 				B0E0186016155C85008CAC9B /* CopyFiles */,
 				B0663F4F17E81809008D6686 /* Copy Spotlight Importer */,
+				CE775909211C252C0063EAE6 /* Archive */,
 			);
 			buildRules = (
 			);
@@ -419,6 +432,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CE775909211C252C0063EAE6 /* Archive */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Archive;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"${TARGET_BUILD_DIR}\"\n\ndist=(\"$FULL_PRODUCT_NAME\")\nif [ -d \"$DWARF_DSYM_FILE_NAME\" ]; then dist+=(\"$DWARF_DSYM_FILE_NAME\"); fi\n\narchive=\"${CURRENT_MARKETING_VERSION}-${CURRENT_PROJECT_VERSION} ($(echo $CONFIGURATION | tr /a-z/ /A-Z/)).zip\"\nrm -rf *.zip\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n  strip -x -T \"${EXECUTABLE_PATH}\" &>/dev/null || strip -x \"${EXECUTABLE_PATH}\"\nfi\nzip -qry \"${archive}\" \"${dist[@]}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B013B81E160C529600F6A7F2 /* Sources */ = {
