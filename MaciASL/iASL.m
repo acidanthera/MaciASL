@@ -183,7 +183,7 @@ static NSUInteger _build;
                   @"WSMT":@"Windows SMM Security Migrations Table",
                   @"XENV":@"Xen Project Table",
                   @"XSDT":@"Extended System Description Table",
-                  @"XXXX":@"Intermediate AML Header for ASL/ASL+ Converter",                  
+                  @"XXXX":@"Intermediate AML Header for ASL/ASL+ Converter"                  
     };
     signon = [NSRegularExpression regularExpressionWithPattern:@"Compiler version (\\d+)" options:0 error:NULL];
     io_service_t expert;
