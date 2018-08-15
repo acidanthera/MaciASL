@@ -594,7 +594,7 @@ static NSDateFormatter *rfc822;
                 if (present) {
                     if (![file getResourceValue:&filesize forKey:NSURLFileSizeKey error:&connectionError])
                         ModalError(connectionError);
-                    else if ([filemtime compare:urlmtime] == NSOrderedAscending && ![urlsize isEqualToNumber:filesize])
+                    else if ((!urlmtime || [filemtime compare:urlmtime] == NSOrderedAscending) && ![urlsize isEqualToNumber:filesize])
                         download = YES;
                 } else {
                     download = YES;
