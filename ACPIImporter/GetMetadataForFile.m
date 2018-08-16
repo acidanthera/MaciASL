@@ -102,10 +102,10 @@ Boolean GetMetadataForFile(void *thisInterface, CFMutableDictionaryRef attribute
 
 //==============================================================================
 //
-//	Get metadata attributes from document files
+//  Get metadata attributes from document files
 //
-//	The purpose of this function is to extract useful information from the
-//	file formats for your document, and set the values into the attribute
+//  The purpose of this function is to extract useful information from the
+//  file formats for your document, and set the values into the attribute
 //  dictionary for Spotlight to include.
 //
 //==============================================================================
@@ -115,9 +115,9 @@ Boolean GetMetadataForFile(void *thisInterface, CFMutableDictionaryRef attribute
     // Pull any available metadata from the file at the specified path
     // Return the attribute keys and attribute values in the dict
     // Return TRUE if successful, FALSE if there was no data provided
-	// The path could point to either a Core Data store file in which
-	// case we import the store's metadata, or it could point to a Core
-	// Data external record file for a specific record instances
+    // The path could point to either a Core Data store file in which
+    // case we import the store's metadata, or it could point to a Core
+    // Data external record file for a specific record instances
 
     Boolean ok = FALSE;
     CFURLRef url = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, false);
@@ -168,6 +168,6 @@ Boolean GetMetadataForFile(void *thisInterface, CFMutableDictionaryRef attribute
     CFReadStreamClose(stream);
     CFRelease(stream);
     
-	// Return the status
+    // Return the status
     return ok;
 }

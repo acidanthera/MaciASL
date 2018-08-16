@@ -76,7 +76,10 @@ static SourceList *sharedList;
         SCNetworkReachabilityContext context = {0, (__bridge void *)self, CFRetain, CFRelease, CFCopyDescription};
         SCNetworkReachabilitySetCallback(_reachability, ReachabilityDidChange, &context);
         SCNetworkReachabilitySetDispatchQueue(_reachability, dispatch_get_main_queue());
-        [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"sources" options:0 context:nil];
+        [NSUserDefaults.standardUserDefaults addObserver:self
+                                              forKeyPath:@"sources"
+                                                 options:NSKeyValueObservingOptionInitial
+                                                 context:nil];
         sharedList = self;
     }
     return self;

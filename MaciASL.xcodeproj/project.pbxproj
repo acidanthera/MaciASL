@@ -132,7 +132,7 @@
 		B0A7EAF0173CA9A300363AD1 /* ACPI.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = ACPI.icns; sourceTree = SOURCE_ROOT; };
 		B0CABE541652CE8A00A04C7E /* MaciASL.sdef */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MaciASL.sdef; sourceTree = "<group>"; };
 		B0E0184C161531B2008CAC9B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		B0E0184D161531B2008CAC9B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B0E0184D161531B2008CAC9B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; usesTabs = 0; };
 		B0E01850161532EB008CAC9B /* iASL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iASL.h; sourceTree = "<group>"; usesTabs = 0; };
 		B0E01851161532EB008CAC9B /* iASL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iASL.m; sourceTree = "<group>"; usesTabs = 0; };
 		B0E0185316154CBD008CAC9B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -188,6 +188,7 @@
 				B013B823160C529600F6A7F2 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		B013B823160C529600F6A7F2 /* Products */ = {
 			isa = PBXGroup;
