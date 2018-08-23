@@ -1,5 +1,8 @@
 MaciASL Changelog
 =================
+#### v1.5.2
+- Fixed 10.14 compatibility
+
 #### v1.5.1
 - Based on the latest development-1.5 branch targetting 10.7 and newer
 - Added handling of external tables and refs.txt in the same directory
