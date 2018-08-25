@@ -40,6 +40,7 @@
 		B0E0186416157084008CAC9B /* Navigator.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E0186316157084008CAC9B /* Navigator.m */; };
 		B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B0FD8AB1165D847C0074DC84 /* iasl4 */; };
 		CE297C0720676C5800A5EF9F /* iasl62 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE297C052067690E00A5EF9F /* iasl62 */; };
+		CEC419DE213077FC002FB644 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEC419DC213077FC002FB644 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +145,7 @@
 		CE775907211C24190063EAE6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CE775908211C24190063EAE6 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		CE77590D211C54530063EAE6 /* Changelog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
+		CEC419DD213077FC002FB644 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +266,7 @@
 				B013B82E160C529600F6A7F2 /* MaciASL-Info.plist */,
 				B013B832160C529600F6A7F2 /* main.m */,
 				B013B834160C529600F6A7F2 /* MaciASL-Prefix.pch */,
+				CEC419DC213077FC002FB644 /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */,
 				B0899354161D781C00FE7BD8 /* AML.icns in Resources */,
 				B0899355161D781C00FE7BD8 /* DSL.icns in Resources */,
+				CEC419DE213077FC002FB644 /* Localizable.strings in Resources */,
 				B0CABE551652CE8A00A04C7E /* MaciASL.sdef in Resources */,
 				B06352E5177EA65F00956EB1 /* SSDT.xib in Resources */,
 				B0A7EAF1173CA9A300363AD1 /* ACPI.icns in Resources */,
@@ -546,6 +550,14 @@
 				B06352E6177EA65F00956EB1 /* en */,
 			);
 			name = SSDT.xib;
+			sourceTree = "<group>";
+		};
+		CEC419DC213077FC002FB644 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEC419DD213077FC002FB644 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
