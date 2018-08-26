@@ -2,8 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>        
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -179,7 +178,7 @@
                                     <action selector="delete:" target="-1" id="1325"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Выбрать Всё" keyEquivalent="a" id="1272">
+                            <menuItem title="Выбрать все" keyEquivalent="a" id="1272">
                                 <connections>
                                     <action selector="selectAll:" target="-1" id="1328"/>
                                 </connections>
