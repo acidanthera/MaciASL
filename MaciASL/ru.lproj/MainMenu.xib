@@ -17,7 +17,7 @@
                 <menuItem title="MaciASL" id="56">
                     <menu key="submenu" title="MaciASL" systemMenu="apple" id="57">
                         <items>
-                            <menuItem title="О MaciASL" id="58">
+                            <menuItem title="О программе MaciASL" id="58">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
@@ -104,7 +104,7 @@
                                     <action selector="saveDocument:" target="-1" id="1987"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Скохранить как…" id="1973">
+                            <menuItem title="Сохранить как…" id="1973">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="saveDocumentAs:" target="-1" id="1985"/>
