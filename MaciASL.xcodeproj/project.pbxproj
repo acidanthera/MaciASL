@@ -97,6 +97,7 @@
 		40A56200212FFC7E00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		40A56201212FFC7E00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/Patch.xib; sourceTree = "<group>"; };
 		40A56202212FFC7E00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/SSDT.xib; sourceTree = "<group>"; };
+		40A562032132A16000C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B01056A1161CE6CB006A21AC /* MaciASL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MaciASL.icns; sourceTree = SOURCE_ROOT; };
 		B013B822160C529600F6A7F2 /* MaciASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaciASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B013B826160C529600F6A7F2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -561,6 +562,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				CEC419DD213077FC002FB644 /* en */,
+				40A562032132A16000C83428 /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
