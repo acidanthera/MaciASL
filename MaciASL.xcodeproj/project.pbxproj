@@ -88,6 +88,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		40A561FB212FFC5800C83428 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		40A561FC212FFC5800C83428 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Patch.xib; sourceTree = "<group>"; };
+		40A561FD212FFC5800C83428 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Document.xib; sourceTree = "<group>"; };
+		40A561FE212FFC5800C83428 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SSDT.xib; sourceTree = "<group>"; };
+		40A561FF212FFC7D00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/Document.xib; sourceTree = "<group>"; };
+		40A56200212FFC7E00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		40A56201212FFC7E00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/Patch.xib; sourceTree = "<group>"; };
+		40A56202212FFC7E00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/SSDT.xib; sourceTree = "<group>"; };
 		B01056A1161CE6CB006A21AC /* MaciASL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MaciASL.icns; sourceTree = SOURCE_ROOT; };
 		B013B822160C529600F6A7F2 /* MaciASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaciASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B013B826160C529600F6A7F2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -98,8 +106,6 @@
 		B013B834160C529600F6A7F2 /* MaciASL-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MaciASL-Prefix.pch"; sourceTree = "<group>"; };
 		B013B838160C529600F6A7F2 /* Document.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Document.h; sourceTree = "<group>"; };
 		B013B839160C529600F6A7F2 /* Document.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Document.m; sourceTree = "<group>"; usesTabs = 0; };
-		B013B83C160C529600F6A7F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Document.xib; sourceTree = "<group>"; };
-		B013B83F160C529700F6A7F2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		B017FB2A1861532200DA033A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B01968081BC18F6600160692 /* iasl6 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl6; path = Dist/iasl6; sourceTree = SOURCE_ROOT; };
 		B01A8101169C1CEB0056B5C6 /* SSDT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDT.h; sourceTree = "<group>"; };
@@ -112,8 +118,6 @@
 		B03153A31956A21B0056C7F2 /* MaciASL_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaciASL_Tests.m; sourceTree = "<group>"; usesTabs = 0; };
 		B03153A51956A21B0056C7F2 /* MaciASL Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MaciASL Tests-Prefix.pch"; sourceTree = "<group>"; };
 		B034202B19FB54770049C764 /* iasl51 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl51; path = Dist/iasl51; sourceTree = SOURCE_ROOT; };
-		B06352E3177EA65B00956EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Patch.xib; sourceTree = "<group>"; };
-		B06352E6177EA65F00956EB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SSDT.xib; sourceTree = "<group>"; };
 		B0663F3417E815EB008D6686 /* ACPI.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ACPI.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0663F3517E815EB008D6686 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		B0663F3F17E815EB008D6686 /* ACPIImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ACPIImporter-Info.plist"; sourceTree = "<group>"; };
@@ -405,6 +409,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ru,
 			);
 			mainGroup = B013B817160C529600F6A7F2;
 			productRefGroup = B013B823160C529600F6A7F2 /* Products */;
@@ -450,13 +455,9 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 			);
 			name = Archive;
-			outputFileListPaths = (
-			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,7 +520,8 @@
 		B013B83B160C529600F6A7F2 /* Document.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B013B83C160C529600F6A7F2 /* en */,
+				40A561FD212FFC5800C83428 /* en */,
+				40A561FF212FFC7D00C83428 /* ru */,
 			);
 			name = Document.xib;
 			sourceTree = "<group>";
@@ -527,7 +529,8 @@
 		B013B83E160C529700F6A7F2 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B013B83F160C529700F6A7F2 /* en */,
+				40A561FB212FFC5800C83428 /* en */,
+				40A56200212FFC7E00C83428 /* ru */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -535,7 +538,8 @@
 		B06352E4177EA65B00956EB1 /* Patch.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B06352E3177EA65B00956EB1 /* en */,
+				40A561FC212FFC5800C83428 /* en */,
+				40A56201212FFC7E00C83428 /* ru */,
 			);
 			name = Patch.xib;
 			sourceTree = "<group>";
@@ -543,7 +547,8 @@
 		B06352E7177EA65F00956EB1 /* SSDT.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B06352E6177EA65F00956EB1 /* en */,
+				40A561FE212FFC5800C83428 /* en */,
+				40A56202212FFC7E00C83428 /* ru */,
 			);
 			name = SSDT.xib;
 			sourceTree = "<group>";
@@ -555,6 +560,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
@@ -610,6 +616,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_SECURITY_FLOATLOOPCOUNTER = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_RAND = YES;
 				CLANG_ANALYZER_SECURITY_INSECUREAPI_STRCPY = YES;
