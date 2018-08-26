@@ -105,7 +105,7 @@
                                     <action selector="saveDocument:" target="-1" id="1987"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Скохранить как…" id="1973">
+                            <menuItem title="Сохранить как…" id="1973">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="saveDocumentAs:" target="-1" id="1985"/>
