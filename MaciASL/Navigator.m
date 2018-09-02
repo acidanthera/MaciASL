@@ -247,7 +247,8 @@ static NSDictionary *attr;
 
 +(void)load {
     font = [NSFont systemFontOfSize:12.0];
-    separator = [[NSAttributedString alloc] initWithString:@" \u2023 " attributes:@{NSForegroundColorAttributeName:NSColor.grayColor, NSFontAttributeName:font}];
+    separator = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"triangular-bullet", @" \u2023 ")
+                                                attributes:@{NSForegroundColorAttributeName:NSColor.grayColor, NSFontAttributeName:font}];
     attr = @{NSFontAttributeName:font};
 }
 

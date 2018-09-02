@@ -192,7 +192,7 @@
 
 -(IBAction)exportTableset:(id)sender {
     NSSavePanel *save = [NSSavePanel savePanel];
-    save.prompt = @"Export Tableset";
+    save.prompt = NSLocalizedString(@"export-tableset", @"Export Tableset");
     save.nameFieldStringValue = NSHost.currentHost.localizedName;
     save.allowedFileTypes = @[kUTTypeTableset];
     if ([save runModal] == NSFileHandlingPanelOKButton) {

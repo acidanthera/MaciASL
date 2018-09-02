@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>        
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.13.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="Document">
@@ -38,7 +38,7 @@
                                         <rect key="frame" x="0.0" y="22" width="173" height="438"/>
                                         <clipView key="contentView" drawsBackground="NO" id="65A-IA-qPu">
                                             <rect key="frame" x="1" y="1" width="171" height="436"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="20" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="101413" id="101410">
                                                     <rect key="frame" x="0.0" y="0.0" width="171" height="436"/>
@@ -47,7 +47,7 @@
                                                     <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn identifier="" editable="NO" width="168" minWidth="16" maxWidth="1000" id="101413">
+                                                        <tableColumn editable="NO" width="168" minWidth="16" maxWidth="1000" id="101413">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -130,7 +130,7 @@
                                             <outlet property="nextKeyView" destination="101596" id="101655"/>
                                         </connections>
                                     </scrollView>
-                                    <searchField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101596">
+                                    <searchField wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101596">
                                         <rect key="frame" x="2" y="2" width="169" height="19"/>
                                         <searchFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="Поиск по древу" usesSingleLineMode="YES" bezelStyle="round" sendsSearchStringImmediately="YES" id="101597">
                                             <font key="font" metaFont="smallSystem"/>
@@ -162,17 +162,18 @@
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="100067">
                                 <rect key="frame" x="182" y="0.0" width="550" height="460"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <clipView key="contentView" id="7jC-dT-zbU">
+                                <clipView key="contentView" drawsBackground="NO" id="7jC-dT-zbU">
                                     <rect key="frame" x="1" y="1" width="548" height="458"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textView importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" usesFontPanel="YES" findStyle="bar" incrementalSearchingEnabled="YES" allowsUndo="YES" usesRuler="YES" spellingCorrection="YES" id="100068" customClass="FSTextView">
                                             <rect key="frame" x="0.0" y="0.0" width="548" height="458"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <size key="minSize" width="548" height="458"/>
                                             <size key="maxSize" width="10000000" height="10000000"/>
-                                            <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <allowedInputSourceLocales>
                                                 <string>NSAllRomanInputSourcesLocaleIdentifier</string>
                                             </allowedInputSourceLocales>
@@ -182,7 +183,6 @@
                                             </connections>
                                         </textView>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="100069">
                                     <rect key="frame" x="1" y="444" width="463" height="15"/>
@@ -281,7 +281,7 @@
                 <outlet property="initialFirstResponder" destination="100068" id="101478"/>
             </connections>
         </window>
-        <window title="Перейти на линию" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="101816">
+        <window title="Перейти к строке" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="101816">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="207" width="211" height="100"/>
@@ -317,13 +317,13 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101826">
-                        <rect key="frame" x="71" y="58" width="120" height="22"/>
+                        <rect key="frame" x="78" y="58" width="113" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="101827">
                             <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="101843">
                                 <real key="minimum" value="1"/>
                             </numberFormatter>
                             <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                         <connections>
@@ -335,8 +335,8 @@ Gw
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101831">
-                        <rect key="frame" x="18" y="61" width="47" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Линия:" id="101832">
+                        <rect key="frame" x="18" y="61" width="54" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Строка:" id="101832">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

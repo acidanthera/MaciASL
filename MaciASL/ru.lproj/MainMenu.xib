@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>        
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.13.2"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -219,7 +219,7 @@
                                                 <action selector="centerSelectionInVisibleArea:" target="-1" id="1337"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Перейти на линию" keyEquivalent="l" id="1960">
+                                        <menuItem title="Перейти к строке" keyEquivalent="l" id="1960">
                                             <connections>
                                                 <action selector="jumpToLine:" target="-1" id="1961"/>
                                             </connections>
@@ -515,7 +515,7 @@
                         <rect key="frame" x="-1" y="-1" width="680" height="212"/>
                         <clipView key="contentView" id="0Q4-ap-cEB">
                             <rect key="frame" x="1" y="0.0" width="678" height="211"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="14" headerView="681" id="679">
                                     <rect key="frame" x="0.0" y="0.0" width="678" height="188"/>
@@ -524,7 +524,7 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="" editable="NO" width="116" minWidth="40" maxWidth="1000" id="683">
+                                        <tableColumn editable="NO" width="116" minWidth="40" maxWidth="1000" id="683">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Метка времени">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -541,7 +541,7 @@
                                                 <binding destination="647" name="value" keyPath="arrangedObjects.timestamp" id="695"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="" editable="NO" width="556" minWidth="40" maxWidth="1000" id="684">
+                                        <tableColumn editable="NO" width="556" minWidth="40" maxWidth="1000" id="684">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Запись">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -615,7 +615,7 @@
                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="" editable="NO" width="16" minWidth="16" maxWidth="1000" id="2059">
+                                        <tableColumn editable="NO" width="16" minWidth="16" maxWidth="1000" id="2059">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -634,8 +634,8 @@
                                                 </binding>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="" editable="NO" width="47" minWidth="40" maxWidth="1000" id="2058">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Линия">
+                                        <tableColumn editable="NO" width="48" minWidth="40" maxWidth="1000" id="2058">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Строка">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -651,7 +651,7 @@
                                                 <binding destination="2039" name="value" keyPath="selection.notices.line" id="2069"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="" editable="NO" width="46" minWidth="10" maxWidth="3.4028234663852886e+38" id="2057">
+                                        <tableColumn editable="NO" width="46" minWidth="10" maxWidth="3.4028234663852886e+38" id="2057">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Код">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -668,7 +668,7 @@
                                                 <binding destination="2039" name="value" keyPath="selection.notices.code" id="2070"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="" editable="NO" width="251" minWidth="10" maxWidth="3.4028234663852886e+38" id="2056">
+                                        <tableColumn editable="NO" width="250" minWidth="10" maxWidth="3.4028234663852886e+38" id="2056">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Сообщение">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -798,16 +798,16 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="777">
-                    <rect key="frame" x="18" y="343" width="134" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Опции Компилятора" id="778">
+                    <rect key="frame" x="18" y="343" width="132" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Опции компилятора" id="778">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8c6-s8-R6a">
-                    <rect key="frame" x="30" y="176" width="179" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Экстра Arg декомпилятору:" id="xbe-ZZ-cSz">
+                    <rect key="frame" x="30" y="176" width="176" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Доп. арг. к декомпилятору:" id="xbe-ZZ-cSz">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -912,7 +912,7 @@
                         <binding destination="763" name="selectedObject" keyPath="values.acpi" id="2272"/>
                     </connections>
                 </popUpButton>
-                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" maxValue="1" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="iHw-yh-MgN">
+                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" maxValue="1" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="iHw-yh-MgN">
                     <rect key="frame" x="167" y="151" width="16" height="16"/>
                     <connections>
                         <binding destination="534" name="hidden" keyPath="update" id="YdI-t8-7uK">
@@ -926,7 +926,7 @@
                     </connections>
                 </progressIndicator>
                 <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oyo-Ks-EMD">
-                    <rect key="frame" x="215" y="203" width="245" height="22"/>
+                    <rect key="frame" x="212" y="203" width="248" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="DaV-he-lL9">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -937,7 +937,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OVG-do-rXt">
-                    <rect key="frame" x="215" y="171" width="245" height="22"/>
+                    <rect key="frame" x="212" y="171" width="248" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="ab7-h3-7OM">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -958,8 +958,8 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lg0-L7-kgT">
-                    <rect key="frame" x="30" y="205" width="164" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Экстра Arg компилятору:" id="6cG-yS-yU6">
+                    <rect key="frame" x="30" y="205" width="161" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Доп. арг. к компилятору:" id="6cG-yS-yU6">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1002,7 +1002,7 @@
                 <constraint firstItem="828" firstAttribute="leading" secondItem="wGR-aH-r8c" secondAttribute="leading" id="rNT-4d-oBB"/>
                 <constraint firstItem="Oyo-Ks-EMD" firstAttribute="trailing" secondItem="OVG-do-rXt" secondAttribute="trailing" id="tDo-bf-6zn"/>
                 <constraint firstItem="8c6-s8-R6a" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Lg0-L7-kgT" secondAttribute="bottom" constant="8" symbolic="YES" id="z3Q-vN-oXB"/>
-                <constraint firstItem="iHw-yh-MgN" firstAttribute="leading" secondItem="728" secondAttribute="leading" constant="132" id="zuY-WG-BNQ"/>
+                <constraint firstItem="iHw-yh-MgN" firstAttribute="leading" secondItem="728" secondAttribute="leading" constant="167" id="zuY-WG-BNQ"/>
             </constraints>
             <point key="canvasLocation" x="93" y="167"/>
         </customView>
@@ -1011,8 +1011,8 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="759">
-                    <rect key="frame" x="30" y="319" width="355" height="18"/>
-                    <buttonCell key="cell" type="check" title="Открывать системную таблицу DSDT по-умолчанию" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="760">
+                    <rect key="frame" x="30" y="319" width="353" height="18"/>
+                    <buttonCell key="cell" type="check" title="Открывать системную таблицу DSDT по умолчанию" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="760">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -1151,7 +1151,7 @@
                     <rect key="frame" x="20" y="20" width="440" height="315"/>
                     <clipView key="contentView" id="dGI-pT-bTf">
                         <rect key="frame" x="1" y="0.0" width="438" height="314"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="1141" id="1139">
                                 <rect key="frame" x="0.0" y="0.0" width="438" height="291"/>
@@ -1160,7 +1160,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="" width="116" minWidth="40" maxWidth="1000" id="1143">
+                                    <tableColumn width="116" minWidth="40" maxWidth="1000" id="1143">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Имя">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1176,7 +1176,7 @@
                                             <binding destination="1153" name="value" keyPath="arrangedObjects.name" id="1159"/>
                                         </connections>
                                     </tableColumn>
-                                    <tableColumn identifier="" width="316" minWidth="40" maxWidth="1000" id="1144">
+                                    <tableColumn width="316" minWidth="40" maxWidth="1000" id="1144">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="URL">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1415,7 +1415,7 @@ Gw
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="" editable="NO" width="147" minWidth="16" maxWidth="1000" id="2166">
+                                        <tableColumn editable="NO" width="147" minWidth="16" maxWidth="1000" id="2166">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Имя">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -1435,7 +1435,7 @@ Gw
                                                 </binding>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn identifier="" editable="NO" width="225" minWidth="40" maxWidth="1000" id="2167">
+                                        <tableColumn editable="NO" width="225" minWidth="40" maxWidth="1000" id="2167">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Значение">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

@@ -129,7 +129,7 @@
         NSURL *file = [iASL wasInjected:name];
         if (save && !file) {
             NSSavePanel *panel = [NSSavePanel savePanel];
-            panel.prompt = @"Presave";
+            panel.prompt = NSLocalizedString(@"presave", @"Presave");
             panel.nameFieldStringValue = name;
             panel.allowedFileTypes = @[kUTTypeAML];
             if ([panel runModal] == NSFileHandlingPanelOKButton && [aml writeToURL:panel.URL atomically:true])
