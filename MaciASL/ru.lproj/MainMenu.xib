@@ -81,11 +81,11 @@
                                     <action selector="openDocument:" target="-1" id="1981"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Открыть недавние" id="1969">
+                            <menuItem title="Недавние" id="1969">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Открыть недавние" systemMenu="recentDocuments" id="1978">
+                                <menu key="submenu" title="Недавние" systemMenu="recentDocuments" id="1978">
                                     <items>
-                                        <menuItem title="Очистить список" id="1979">
+                                        <menuItem title="Очистить меню" id="1979">
                                             <connections>
                                                 <action selector="clearRecentDocuments:" target="-1" id="1984"/>
                                             </connections>
@@ -123,7 +123,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1975"/>
-                            <menuItem title="Настройки страницы…" keyEquivalent="P" id="1976">
+                            <menuItem title="Параметры страницы…" keyEquivalent="P" id="1976">
                                 <connections>
                                     <action selector="runPageLayout:" target="-1" id="1986"/>
                                 </connections>
@@ -156,7 +156,7 @@
                                     <action selector="cut:" target="-1" id="1310"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Копировать" keyEquivalent="c" id="1268">
+                            <menuItem title="Скопировать" keyEquivalent="c" id="1268">
                                 <connections>
                                     <action selector="copy:" target="-1" id="1309"/>
                                 </connections>
@@ -166,7 +166,7 @@
                                     <action selector="paste:" target="-1" id="1315"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Вставить с соблюдением стиля" keyEquivalent="V" id="1270">
+                            <menuItem title="Вставить и согласовать стиль" keyEquivalent="V" id="1270">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="pasteAsPlainText:" target="-1" id="1332"/>
@@ -184,9 +184,9 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1273"/>
-                            <menuItem title="Найти" id="1274">
+                            <menuItem title="Поиск" id="1274">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Найти" id="1302">
+                                <menu key="submenu" title="Поиск" id="1302">
                                     <items>
                                         <menuItem title="Найти…" tag="1" keyEquivalent="f" id="1303">
                                             <connections>
@@ -214,12 +214,12 @@
                                                 <action selector="performFindPanelAction:" target="-1" id="1335"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Перейти к выбранному" keyEquivalent="j" id="1307">
+                                        <menuItem title="Перейти к выбранному тексту" keyEquivalent="j" id="1307">
                                             <connections>
                                                 <action selector="centerSelectionInVisibleArea:" target="-1" id="1337"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Перейти к строке" keyEquivalent="l" id="1960">
+                                        <menuItem title="Выбрать строку…" keyEquivalent="l" id="1960">
                                             <connections>
                                                 <action selector="jumpToLine:" target="-1" id="1961"/>
                                             </connections>
@@ -227,9 +227,9 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Трансформации" id="1277">
+                            <menuItem title="Преобразования" id="1277">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Трансформации" id="1282">
+                                <menu key="submenu" title="Преобразования" id="1282">
                                     <items>
                                         <menuItem title="Прописные" id="1283">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -243,7 +243,7 @@
                                                 <action selector="lowercaseWord:" target="-1" id="1321"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="С заглавной" id="1285">
+                                        <menuItem title="С заглавной буквы" id="1285">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="capitalizeWord:" target="-1" id="1327"/>
@@ -262,17 +262,17 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Озвучить" id="1278">
+                            <menuItem title="Речь" id="1278">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Озвучить" id="1279">
+                                <menu key="submenu" title="Речь" id="1279">
                                     <items>
-                                        <menuItem title="Начать голосовой ввод" id="1280">
+                                        <menuItem title="Начать" id="1280">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="startSpeaking:" target="-1" id="1308"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Остановить голосовой ввод" id="1281">
+                                        <menuItem title="Остановить" id="1281">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="stopSpeaking:" target="-1" id="1329"/>
@@ -288,26 +288,26 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Шрифт" systemMenu="font" id="1481">
                         <items>
-                            <menuItem title="Показать Шрифты" keyEquivalent="t" id="1482">
+                            <menuItem title="Панель шрифтов" keyEquivalent="t" id="1482">
                                 <connections>
                                     <action selector="orderFrontFontPanel:" target="419" id="1516"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1486"/>
-                            <menuItem title="Увеличить текст" tag="3" keyEquivalent="+" id="1487">
+                            <menuItem title="Увеличить" tag="3" keyEquivalent="+" id="1487">
                                 <connections>
                                     <action selector="modifyFont:" target="419" id="1513"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Уменьшить текст" tag="4" keyEquivalent="-" id="1488">
+                            <menuItem title="Уменьшить" tag="4" keyEquivalent="-" id="1488">
                                 <connections>
                                     <action selector="modifyFont:" target="419" id="1515"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1489"/>
-                            <menuItem title="Керн" id="1490">
+                            <menuItem title="Кернинг" id="1490">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Керн" id="1508">
+                                <menu key="submenu" title="Кернинг" id="1508">
                                     <items>
                                         <menuItem title="Стандартно" id="1509">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -321,13 +321,13 @@
                                                 <action selector="turnOffKerning:" target="-1" id="1533"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Сжать" id="1511">
+                                        <menuItem title="Уменьшить" id="1511">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="tightenKerning:" target="-1" id="1527"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Растянуть" id="1512">
+                                        <menuItem title="Разрядить" id="1512">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="loosenKerning:" target="-1" id="1518"/>
@@ -340,7 +340,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Лигатуры" id="1504">
                                     <items>
-                                        <menuItem title="Использовать стандарт" id="1505">
+                                        <menuItem title="По умолчанию" id="1505">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="useStandardLigatures:" target="-1" id="1531"/>
@@ -361,35 +361,35 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Выравнивание" id="1492">
+                            <menuItem title="Базовая линия" id="1492">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Выравнивание" id="1498">
+                                <menu key="submenu" title="Базовая линия" id="1498">
                                     <items>
-                                        <menuItem title="Стандартно" id="1499">
+                                        <menuItem title="По умолчанию" id="1499">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="unscript:" target="-1" id="1529"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Расширить" id="1500">
+                                        <menuItem title="Верхний индекс" id="1500">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="superscript:" target="-1" id="1524"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Собрать" id="1501">
+                                        <menuItem title="Подстрочная" id="1501">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="subscript:" target="-1" id="1526"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Поднять" id="1502">
+                                        <menuItem title="Выше" id="1502">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="raiseBaseline:" target="-1" id="1520"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Опустить" id="1503">
+                                        <menuItem title="Ниже" id="1503">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="lowerBaseline:" target="-1" id="1523"/>
@@ -399,7 +399,7 @@
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1493"/>
-                            <menuItem title="Показать Colors" keyEquivalent="C" id="1494">
+                            <menuItem title="Показать цвета" keyEquivalent="C" id="1494">
                                 <connections>
                                     <action selector="orderFrontColorPanel:" target="-1" id="1519"/>
                                 </connections>
@@ -470,7 +470,7 @@
                             <menuItem isSeparatorItem="YES" id="92">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Лог выхлоп" keyEquivalent="0" id="565">
+                            <menuItem title="Лог" keyEquivalent="0" id="565">
                                 <connections>
                                     <action selector="showLog:" target="534" id="891"/>
                                 </connections>
@@ -606,7 +606,7 @@
                         <rect key="frame" x="-1" y="19" width="374" height="170"/>
                         <clipView key="contentView" id="qyE-E1-0Q5">
                             <rect key="frame" x="1" y="0.0" width="372" height="169"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="2053" id="2055" customClass="FSTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="372" height="146"/>
