@@ -1,7 +1,7 @@
 MaciASL Changelog
 =================
 #### v1.5.2
-- Added Russian localisation
+- Added Russian localization
 - Fixed 10.14 compatibility
 
 #### v1.5.1

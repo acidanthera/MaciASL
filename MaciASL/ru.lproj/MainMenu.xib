@@ -806,8 +806,8 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8c6-s8-R6a">
-                    <rect key="frame" x="30" y="176" width="176" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Доп. арг. к декомпилятору:" id="xbe-ZZ-cSz">
+                    <rect key="frame" x="30" y="176" width="180" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Аргументы декомпилятору:" id="xbe-ZZ-cSz">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -926,7 +926,7 @@
                     </connections>
                 </progressIndicator>
                 <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oyo-Ks-EMD">
-                    <rect key="frame" x="212" y="203" width="248" height="22"/>
+                    <rect key="frame" x="216" y="203" width="244" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="DaV-he-lL9">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -937,7 +937,7 @@
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OVG-do-rXt">
-                    <rect key="frame" x="212" y="171" width="248" height="22"/>
+                    <rect key="frame" x="216" y="171" width="244" height="22"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="ab7-h3-7OM">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -958,8 +958,8 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lg0-L7-kgT">
-                    <rect key="frame" x="30" y="205" width="161" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Доп. арг. к компилятору:" id="6cG-yS-yU6">
+                    <rect key="frame" x="30" y="206" width="165" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Аргументы компилятору:" id="6cG-yS-yU6">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1011,8 +1011,8 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="759">
-                    <rect key="frame" x="30" y="319" width="353" height="18"/>
-                    <buttonCell key="cell" type="check" title="Открывать системную таблицу DSDT по умолчанию" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="760">
+                    <rect key="frame" x="30" y="319" width="258" height="18"/>
+                    <buttonCell key="cell" type="check" title="Открывать системную таблицу DSDT" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="760">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
@@ -1037,8 +1037,8 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1677">
-                    <rect key="frame" x="18" y="230" width="68" height="17"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Итерфейс" id="1678">
+                    <rect key="frame" x="18" y="230" width="76" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Интерфейс" id="1678">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
