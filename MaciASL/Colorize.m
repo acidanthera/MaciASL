@@ -44,8 +44,8 @@ static NSDictionary *themes;
 
 @implementation Colorize {
     @private
-    __unsafe_unretained NSTextView *_view;
-    __unsafe_unretained NSLayoutManager *_manager;
+    NSTextView *_view;
+    NSLayoutManager *_manager;
     ColorTheme *_theme;
 }
 
