@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		408DF5582163618D00AF9A58 /* iasl62 in Resources */ = {isa = PBXBuildFile; fileRef = 408DF5572163618D00AF9A58 /* iasl62 */; };
 		B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */ = {isa = PBXBuildFile; fileRef = B01056A1161CE6CB006A21AC /* MaciASL.icns */; };
 		B013B827160C529600F6A7F2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B013B826160C529600F6A7F2 /* Cocoa.framework */; };
 		B013B833160C529600F6A7F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B013B832160C529600F6A7F2 /* main.m */; };
@@ -39,7 +40,6 @@
 		B0E0186116155CB3008CAC9B /* iasl5 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B0E0185D1615512A008CAC9B /* iasl5 */; };
 		B0E0186416157084008CAC9B /* Navigator.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E0186316157084008CAC9B /* Navigator.m */; };
 		B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B0FD8AB1165D847C0074DC84 /* iasl4 */; };
-		CE297C0720676C5800A5EF9F /* iasl62 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE297C052067690E00A5EF9F /* iasl62 */; };
 		CEC419DE213077FC002FB644 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEC419DC213077FC002FB644 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -78,7 +78,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				CE297C0720676C5800A5EF9F /* iasl62 in CopyFiles */,
 				B0E0186116155CB3008CAC9B /* iasl5 in CopyFiles */,
 				B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */,
 				B034202D19FB66C80049C764 /* iasl51 in CopyFiles */,
@@ -89,6 +88,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		408DF5572163618D00AF9A58 /* iasl62 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl62; path = "../../acpica-master_20180927/generate/unix/bin/iasl62"; sourceTree = "<group>"; };
 		40A561FB212FFC5800C83428 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		40A561FC212FFC5800C83428 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Patch.xib; sourceTree = "<group>"; };
 		40A561FD212FFC5800C83428 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Document.xib; sourceTree = "<group>"; };
@@ -146,7 +146,6 @@
 		B0E0186216157084008CAC9B /* Navigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Navigator.h; sourceTree = "<group>"; };
 		B0E0186316157084008CAC9B /* Navigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Navigator.m; sourceTree = "<group>"; };
 		B0FD8AB1165D847C0074DC84 /* iasl4 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl4; sourceTree = "<group>"; };
-		CE297C052067690E00A5EF9F /* iasl62 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl62; path = Dist/iasl62; sourceTree = SOURCE_ROOT; };
 		CE775907211C24190063EAE6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CE775908211C24190063EAE6 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		CE77590D211C54530063EAE6 /* Changelog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
@@ -326,7 +325,7 @@
 		CE77590C211C43B20063EAE6 /* Dist */ = {
 			isa = PBXGroup;
 			children = (
-				CE297C052067690E00A5EF9F /* iasl62 */,
+				408DF5572163618D00AF9A58 /* iasl62 */,
 				B01968081BC18F6600160692 /* iasl6 */,
 				B034202B19FB54770049C764 /* iasl51 */,
 				B0E0185D1615512A008CAC9B /* iasl5 */,
@@ -436,6 +435,7 @@
 				B013B840160C529700F6A7F2 /* MainMenu.xib in Resources */,
 				B06352E2177EA65B00956EB1 /* Patch.xib in Resources */,
 				B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */,
+				408DF5582163618D00AF9A58 /* iasl62 in Resources */,
 				B0899354161D781C00FE7BD8 /* AML.icns in Resources */,
 				B0899355161D781C00FE7BD8 /* DSL.icns in Resources */,
 				CEC419DE213077FC002FB644 /* Localizable.strings in Resources */,
