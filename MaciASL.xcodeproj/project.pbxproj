@@ -39,6 +39,7 @@
 		B0E0186116155CB3008CAC9B /* iasl5 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B0E0185D1615512A008CAC9B /* iasl5 */; };
 		B0E0186416157084008CAC9B /* Navigator.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E0186316157084008CAC9B /* Navigator.m */; };
 		B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B0FD8AB1165D847C0074DC84 /* iasl4 */; };
+		CE0F9D3D217144EA00A5EA23 /* iasl0 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE0F9D3B217144C900A5EA23 /* iasl0 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE297C0720676C5800A5EF9F /* iasl62 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE297C052067690E00A5EF9F /* iasl62 */; };
 		CEC419DE213077FC002FB644 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEC419DC213077FC002FB644 /* Localizable.strings */; };
 /* End PBXBuildFile section */
@@ -82,6 +83,7 @@
 				B0E0186116155CB3008CAC9B /* iasl5 in CopyFiles */,
 				B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */,
 				B034202D19FB66C80049C764 /* iasl51 in CopyFiles */,
+				CE0F9D3D217144EA00A5EA23 /* iasl0 in CopyFiles */,
 				B019680A1BC18F7F00160692 /* iasl6 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,6 +148,7 @@
 		B0E0186216157084008CAC9B /* Navigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Navigator.h; sourceTree = "<group>"; };
 		B0E0186316157084008CAC9B /* Navigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Navigator.m; sourceTree = "<group>"; };
 		B0FD8AB1165D847C0074DC84 /* iasl4 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl4; sourceTree = "<group>"; };
+		CE0F9D3B217144C900A5EA23 /* iasl0 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl0; sourceTree = "<group>"; };
 		CE297C052067690E00A5EF9F /* iasl62 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl62; path = Dist/iasl62; sourceTree = SOURCE_ROOT; };
 		CE775907211C24190063EAE6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CE775908211C24190063EAE6 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
@@ -331,6 +334,7 @@
 				B034202B19FB54770049C764 /* iasl51 */,
 				B0E0185D1615512A008CAC9B /* iasl5 */,
 				B0FD8AB1165D847C0074DC84 /* iasl4 */,
+				CE0F9D3B217144C900A5EA23 /* iasl0 */,
 			);
 			path = Dist;
 			sourceTree = "<group>";

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.3.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -515,7 +515,7 @@
                         <rect key="frame" x="-1" y="-1" width="680" height="212"/>
                         <clipView key="contentView" id="0Q4-ap-cEB">
                             <rect key="frame" x="1" y="0.0" width="678" height="211"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="14" headerView="681" id="679">
                                     <rect key="frame" x="0.0" y="0.0" width="678" height="188"/>
@@ -606,7 +606,7 @@
                         <rect key="frame" x="-1" y="19" width="374" height="170"/>
                         <clipView key="contentView" id="qyE-E1-0Q5">
                             <rect key="frame" x="1" y="0.0" width="372" height="169"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="2053" id="2055" customClass="FSTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="372" height="146"/>
@@ -873,7 +873,7 @@
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2263">
                     <rect key="frame" x="157" y="312" width="65" height="26"/>
-                    <popUpButtonCell key="cell" type="push" title="6.2A" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="f7f-js-Z3e" id="2264">
+                    <popUpButtonCell key="cell" type="push" title="4.0" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2266" id="2264">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
                         <menu key="menu" title="OtherViews" id="2265">
@@ -910,6 +910,13 @@
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="representedObject">
                                             <integer key="value" value="62"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </menuItem>
+                                <menuItem title="Dev" id="QQx-LY-MKv">
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="representedObject">
+                                            <integer key="value" value="0"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </menuItem>
@@ -1405,7 +1412,7 @@ Gw
                         <rect key="frame" x="-1" y="-1" width="380" height="278"/>
                         <clipView key="contentView" id="PWG-Sl-59T">
                             <rect key="frame" x="1" y="0.0" width="378" height="277"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" headerView="2164" indentationPerLevel="16" outlineTableColumn="2166" id="2162">
                                     <rect key="frame" x="0.0" y="0.0" width="378" height="254"/>

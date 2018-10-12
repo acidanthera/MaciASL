@@ -165,7 +165,7 @@
     [sender setEnabled:false];
     muteWithNotice(self, update, _update = [NSProgress progressWithTotalUnitCount:3]);
     dispatch_group_t g = dispatch_group_create();
-    for (NSNumber *iasl in @[@4, @5, @51, @6, @62]) {
+    for (NSNumber *iasl in @[@4, @5, @51, @6, @62, @0]) {
         [_update becomeCurrentWithPendingUnitCount:1];
         dispatch_group_enter(g);
         NSURL *src = [NSURL URLWithString:[NSString stringWithFormat:@"https://github.com/acidanthera/MaciASL/raw/master/Dist/iasl%ld", iasl.unsignedIntegerValue]];
