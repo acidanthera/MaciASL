@@ -88,6 +88,8 @@
 	</dict>
 	<key>NSAppleScriptEnabled</key>
 	<true/>
+	<key>NSRequiresAquaSystemAppearance</key>
+	<false/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt</string>
 	<key>NSMainNibFile</key>

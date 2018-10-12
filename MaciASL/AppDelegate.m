@@ -341,7 +341,7 @@ static NSDictionary *style;
 #else
     font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
 #endif
-    style = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:[temp copy]};
+    style = @{NSFontAttributeName:font, NSForegroundColorAttributeName:NSColor.textColor, NSParagraphStyleAttributeName:[temp copy]};
 }
 
 -(instancetype)init {
