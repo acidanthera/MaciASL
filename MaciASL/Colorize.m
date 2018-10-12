@@ -14,43 +14,55 @@
 static NSDictionary *themes;
 
 +(void)load {
+    ColorTheme *light = [[ColorTheme alloc] initWithColors:@[NSColor.blackColor, NSColor.whiteColor,
+                                                             ColorRGB(196.0, 26.0, 22.0),
+                                                             ColorRGB(28.0,0,207.0),
+                                                             ColorRGB(0,116.0,0),
+                                                             ColorRGB(92.0,38.0,153.0),
+                                                             ColorRGB(92.0,38.0,153.0),
+                                                             ColorRGB(170.0,13.0,145.0),
+                                                             ColorRGB(63.0,110.0,116.0),
+                                                             ColorRGB(100.0,56.0,32.0)
+                                                             ]
+                         ];
+    ColorTheme *dark = [[ColorTheme alloc] initWithColors:@[NSColor.whiteColor,
+                                                            ColorRGB(30.0,32.0,40.0),
+                                                            ColorRGB(219.0,44.0,56.0),
+                                                            ColorRGB(120.0,109.0,196.0),
+                                                            ColorRGB(65.0,182.0,69.0),
+                                                            ColorRGB(0,160.0,190.0),
+                                                            ColorRGB(0,160.0,190.0),
+                                                            ColorRGB(178.0,24.0,137.0),
+                                                            ColorRGB(131.0,192.0,87.0),
+                                                            ColorRGB(198.0,124.0,72.0)
+                                                            ]
+                        ];
+
+
+    ColorTheme *sunset = [[ColorTheme alloc] initWithColors:@[NSColor.blackColor,
+                                                              ColorRGB(255.0,255.0,224.0),
+                                                              ColorRGB(226.0, 97.0, 2.0),
+                                                              ColorRGB(28.0,0,208.0),
+                                                              ColorRGB(61.0, 149.0, 3.0),
+                                                              ColorRGB(92.0,38.0,153.0),
+                                                              ColorRGB(92.0,38.0,153.0),
+                                                              ColorRGB(170.0,13.0,145.0),
+                                                              ColorRGB(63.0,110.0,116.0),
+                                                              ColorRGB(100.0,56.0,32.0)
+                                                              ]
+                          ];
+
+    ColorTheme *def = light;
+    if (NSFoundationVersionNumber >= NSFoundationVersionNumber10_9 &&
+        NSAppearance.currentAppearance.name != NSAppearanceNameAqua) {
+        def = dark;
+    }
+
     themes = @{
-        @"Light":[[ColorTheme alloc] initWithColors:@[NSColor.blackColor, NSColor.whiteColor,
-                                                      ColorRGB(196.0, 26.0, 22.0),
-                                                      ColorRGB(28.0,0,207.0),
-                                                      ColorRGB(0,116.0,0),
-                                                      ColorRGB(92.0,38.0,153.0),
-                                                      ColorRGB(92.0,38.0,153.0),
-                                                      ColorRGB(170.0,13.0,145.0),
-                                                      ColorRGB(63.0,110.0,116.0),
-                                                      ColorRGB(100.0,56.0,32.0)
-                                                    ]
-                  ],
-        @"Dark":[[ColorTheme alloc] initWithColors:@[NSColor.whiteColor,
-                                                     ColorRGB(30.0,32.0,40.0),
-                                                     ColorRGB(219.0,44.0,56.0),
-                                                     ColorRGB(120.0,109.0,196.0),
-                                                     ColorRGB(65.0,182.0,69.0),
-                                                     ColorRGB(0,160.0,190.0),
-                                                     ColorRGB(0,160.0,190.0),
-                                                     ColorRGB(178.0,24.0,137.0),
-                                                     ColorRGB(131.0,192.0,87.0),
-                                                     ColorRGB(198.0,124.0,72.0)
-                                                    ]
-                 ],
-        @"Sunset":[[ColorTheme alloc] initWithColors:@[NSColor.blackColor,
-                                                    ColorRGB(255.0,255.0,224.0),
-                                                    ColorRGB(226.0, 97.0, 2.0),
-                                                    ColorRGB(28.0,0,208.0),
-                                                    ColorRGB(61.0, 149.0, 3.0),
-                                                    ColorRGB(92.0,38.0,153.0),
-                                                    ColorRGB(92.0,38.0,153.0),
-                                                    ColorRGB(170.0,13.0,145.0),
-                                                    ColorRGB(63.0,110.0,116.0),
-                                                    ColorRGB(100.0,56.0,32.0)
-                                                       ]
-                   ]
-        
+        @"Default":def,
+        @"Light":light,
+        @"Dark":dark,
+        @"Sunset":sunset
         };
 }
 
@@ -429,7 +441,7 @@ static NSRegularExpression *regString, *regNumber, *regComment, *regOperator, *r
     if (self) {
         _view = textView;
         _manager = textView.textContainer.layoutManager;
-        [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"theme" options:NSKeyValueObservingOptionInitial context:NULL];
+        [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"style" options:NSKeyValueObservingOptionInitial context:NULL];
         [NSUserDefaults.standardUserDefaults addObserver:self forKeyPath:@"colorize" options:NSKeyValueObservingOptionInitial context:NULL];
     }
     return self;
@@ -439,7 +451,7 @@ static NSRegularExpression *regString, *regNumber, *regComment, *regOperator, *r
     if ([NSUserDefaults.standardUserDefaults boolForKey:@"colorize"])
         [self disarm];
     [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:@"colorize"];
-    [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:@"theme"];
+    [NSUserDefaults.standardUserDefaults removeObserver:self forKeyPath:@"style"];
 }
 
 #pragma mark Observation
@@ -451,7 +463,7 @@ static NSRegularExpression *regString, *regNumber, *regComment, *regOperator, *r
         }
         else [self disarm];
     }
-    else if ([keyPath isEqualToString:@"theme"]) {
+    else if ([keyPath isEqualToString:@"style"]) {
         if (!(_theme = [themes objectForKey:[NSUserDefaults.standardUserDefaults stringForKey:keyPath]]))
             _theme = themes.allKeys.firstObject;
         _view.backgroundColor = _theme.background;

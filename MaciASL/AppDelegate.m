@@ -50,7 +50,7 @@
     _log = [NSMutableArray array];
     [NSUserDefaults.standardUserDefaults registerDefaults:
     @{
-      @"theme": @"Light",
+      @"style": @"Default",
       @"dsdt": @(YES),
       @"suggest": @(NO),
       @"acpi": @62,

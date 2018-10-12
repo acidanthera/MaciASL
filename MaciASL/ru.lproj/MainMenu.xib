@@ -1106,7 +1106,7 @@
                     </popUpButtonCell>
                     <connections>
                         <binding destination="534" name="content" keyPath="themes" id="2207"/>
-                        <binding destination="763" name="selectedValue" keyPath="values.theme" previousBinding="2207" id="2208"/>
+                        <binding destination="763" name="selectedValue" keyPath="values.style" previousBinding="2207" id="2208"/>
                     </connections>
                 </popUpButton>
             </subviews>
