@@ -97,7 +97,7 @@ static NSCharacterSet *set;
 static NSRegularExpression *lbl, *adr, *hid, *field;
 
 +(void)load {
-    black = @{NSForegroundColorAttributeName:NSColor.blackColor};
+    black = @{NSForegroundColorAttributeName:NSColor.controlTextColor};
     extents = @[@"into", @"into_all"];
     scopes = @[@"all", @"definitionblock", @"scope", @"method", @"device", @"processor", @"thermalzone"];
     predicates = @[@"label", @"name_adr", @"name_hid", @"code_regex", @"code_regex_not", @"parent_label", @"parent_type", @"parent_adr", @"parent_hid"];
