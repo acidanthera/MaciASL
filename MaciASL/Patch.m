@@ -524,6 +524,11 @@ static NSRegularExpression *lbl, *adr, *hid, *field;
     SplitView([[_window.contentView subviews] firstObject]);
     SplitView([[[[[[_window.contentView subviews] firstObject] subviews] objectAtIndex:1] subviews] firstObject]);
     _patchView.enabledTextCheckingTypes = 0;
+    // This is a bugfix for Xcode 10 XIB builder when used on macOS 10.13.
+    // WARN: Not reproducible when building with Xcode 9 or Xcode 10 on macOS 10.14.
+    // For some reason patchView does not get NSTextViewColor, which results
+    // in black text on black background in Dark Mode on macOS 10.14.
+    [_patchView setTextColor:NSColor.textColor];
     if (!_sourceView.sortDescriptors.count)
         _sourceView.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:true selector:@selector(localizedStandardCompare:)]];
     [self expandTree:nil];
