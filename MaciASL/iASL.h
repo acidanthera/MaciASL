@@ -111,6 +111,15 @@ extern NSURL *const kSystemTableset;
 
 @interface URLTask : NSObject
 
+/*! \brief Fetches the remote URL, replacing the given path, and passing the success of the operation to the handler
+ *
+ * \param url The remote HTTP URL to fetch conditionally
+ * \param file The file URL to replace
+ * \param handler The block, dispatched on the main thread, which receives the success value of the operation
+ */
++(void)get:(NSURL *)url toURL:(NSURL *)file perform:(void(^)(bool))handler;
+
+
 /*! \brief Fetches the remote URL conditionally, replacing the given path, and passing the success of the operation to the handler
  *
  * \param url The remote HTTP URL to fetch conditionally

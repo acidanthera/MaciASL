@@ -573,6 +573,35 @@ static NSDateFormatter *rfc822;
     rfc822.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"GMT"];
 }
 
++(void)get:(NSURL *)url toURL:(NSURL *)file perform:(void(^)(bool))handler {
+    NSError *err = nil;
+    NSDate *filemtime = nil;
+    NSProgress *progress = [NSProgress progressWithTotalUnitCount:1];
+    BOOL present = [file getResourceValue:&filemtime forKey:NSURLContentModificationDateKey error:&err];
+    
+    if ((present && !ModalError(err)) || !present) {
+        dispatch_async(dispatch_queue_create(nil, 0), ^{
+            NSError *error;
+            bool result = [[NSData dataWithContentsOfURL:url options:0 error:&error] writeToURL:file
+                                                                                   options:NSDataWritingAtomic
+                                                                                     error:nil];
+            if (!ModalError(error) && result) {
+                [[NSFileManager defaultManager] setAttributes:@{ NSFilePosixPermissions : @0755 }
+                                                 ofItemAtPath:file.path
+                                                        error:nil];
+            }
+            progress.completedUnitCount++;
+            dispatch_async(dispatch_get_main_queue(), ^{ handler(result); });
+
+        });
+    }
+    else {
+        progress.completedUnitCount++;
+        dispatch_async(dispatch_get_main_queue(), ^{ handler(false); });
+    }
+}
+
+
 +(void)conditionalGet:(NSURL *)url toURL:(NSURL *)file perform:(void(^)(bool))handler {
     NSError *err = nil;
     NSDate *filemtime = nil;

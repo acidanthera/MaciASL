@@ -163,15 +163,17 @@
 
 -(IBAction)update:(id)sender {
     [sender setEnabled:false];
-    muteWithNotice(self, update, _update = [NSProgress progressWithTotalUnitCount:3]);
     dispatch_group_t g = dispatch_group_create();
-    for (NSNumber *iasl in @[@4, @5, @51, @6, @62, @0]) {
+    NSArray * versions = @[@4, @5, @51, @6, @62, @0];
+    muteWithNotice(self, update, _update = [NSProgress progressWithTotalUnitCount:versions.count]);
+
+    for (NSNumber *iasl in versions) {
         [_update becomeCurrentWithPendingUnitCount:1];
         dispatch_group_enter(g);
         NSURL *src = [NSURL URLWithString:[NSString stringWithFormat:@"https://github.com/acidanthera/MaciASL/raw/master/Dist/iasl%ld", iasl.unsignedIntegerValue]];
         NSURL *dst = [[[NSBundle.mainBundle executableURL] URLByDeletingLastPathComponent] URLByAppendingPathComponent:[NSString stringWithFormat:@"iasl%ld", iasl.unsignedIntegerValue]];
-        [URLTask conditionalGet:src toURL:dst perform:^(bool success){
-            muteWithNotice(self->_update, fractionCompleted,);
+        [URLTask get:src toURL:dst perform:^(bool success){
+            muteWithNotice(self->_update, fractionCompleted, self->_update.completedUnitCount++);
             if (success && [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == iasl.unsignedIntegerValue)
                 [iASL observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
             dispatch_group_leave(g);
