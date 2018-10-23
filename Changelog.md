@@ -1,11 +1,11 @@
 MaciASL Changelog
 =================
-- Update iasl compiler files unconditionally on Update press
 
 #### v1.5.3
 - Added dark mode support on 10.14
 - Added dev branch for iasl
 - Fixed rare UI crash on scrolling
+- Update iasl compiler files unconditionally on Update press
 
 #### v1.5.2
 - Added Russian localization
