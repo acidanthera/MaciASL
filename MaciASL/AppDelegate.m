@@ -76,12 +76,12 @@
         @{@"name": @"Intel Series 8", @"url": @"http://maciasl.sourceforge.net/pjalm/intel8"},
         @{@"name": @"Intel Series 9", @"url": @"http://maciasl.sourceforge.net/pjalm/intel9"},
         @{@"name": @"MSI", @"url": @"http://maciasl.sourceforge.net/pjalm/msi"},
-        @{@"name": @"Rehabman", @"url": @"http://raw.github.com/RehabMan/Laptop-DSDT-Patch/master"},
+        @{@"name": @"Rehabman", @"url": @"http://raw.githubusercontent.com/RehabMan/Laptop-DSDT-Patch/master"},
         @{@"name": @"Sourceforge", @"url": @"http://maciasl.sourceforge.net"},
-        @{@"name": @"Toleda HDMI", @"url": @"http://raw.github.com/toleda/audio_hdmi_uefi/master"},
-        @{@"name": @"Toleda HDMI 8", @"url": @"http://raw.github.com/toleda/audio_hdmi_8series/master"},
-        @{@"name": @"Toleda ALC", @"url": @"http://raw.github.com/toleda/audio_ALCInjection/master"},
-        @{@"name": @"VoodooI2C-Patches", @"url": @"http://raw.github.com/alexandred/VoodooI2C-Patches/master"},
+        @{@"name": @"Toleda HDMI", @"url": @"http://raw.githubusercontent.com/toleda/audio_hdmi_uefi/master"},
+        @{@"name": @"Toleda HDMI 8", @"url": @"http://raw.githubusercontent.com/toleda/audio_hdmi_8series/master"},
+        @{@"name": @"Toleda ALC", @"url": @"http://raw.githubusercontent.com/toleda/audio_ALCInjection/master"},
+        @{@"name": @"VoodooI2C-Patches", @"url": @"http://raw.githubusercontent.com/alexandred/VoodooI2C-Patches/master"},
         @{@"name": @"Zotac", @"url": @"http://maciasl.sourceforge.net/pjalm/zotac"},
     ]}];
     NSFontManager.sharedFontManager.target = self;
