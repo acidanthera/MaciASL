@@ -68,6 +68,7 @@
       @"sources": @[
         @{@"name": @"ASRock", @"url": @"http://maciasl.sourceforge.net/pjalm/asrock"},
         @{@"name": @"ASUS", @"url": @"http://maciasl.sourceforge.net/pjalm/asus"},
+        @{@"name": @"AsusSMC-Patches", @"url": @"https://raw.githubusercontent.com/hieplpvip/AsusSMC/master"},
         @{@"name": @"General", @"url": @"http://maciasl.sourceforge.net/pjalm/general"},
         @{@"name": @"Gigabyte", @"url": @"http://maciasl.sourceforge.net/pjalm/gigabyte"},
         @{@"name": @"Graphics", @"url": @"http://maciasl.sourceforge.net/pjalm/graphics"},
@@ -76,7 +77,6 @@
         @{@"name": @"Intel Series 8", @"url": @"http://maciasl.sourceforge.net/pjalm/intel8"},
         @{@"name": @"Intel Series 9", @"url": @"http://maciasl.sourceforge.net/pjalm/intel9"},
         @{@"name": @"MSI", @"url": @"http://maciasl.sourceforge.net/pjalm/msi"},
-        @{@"name": @"AsusSMC-Patches", @"url": @"https://raw.githubusercontent.com/hieplpvip/AsusSMC/master"},
         @{@"name": @"Rehabman", @"url": @"http://raw.githubusercontent.com/RehabMan/Laptop-DSDT-Patch/master"},
         @{@"name": @"Sourceforge", @"url": @"http://maciasl.sourceforge.net"},
         @{@"name": @"Toleda HDMI", @"url": @"http://raw.githubusercontent.com/toleda/audio_hdmi_uefi/master"},
