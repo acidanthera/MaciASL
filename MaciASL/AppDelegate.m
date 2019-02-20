@@ -76,6 +76,7 @@
         @{@"name": @"Intel Series 8", @"url": @"http://maciasl.sourceforge.net/pjalm/intel8"},
         @{@"name": @"Intel Series 9", @"url": @"http://maciasl.sourceforge.net/pjalm/intel9"},
         @{@"name": @"MSI", @"url": @"http://maciasl.sourceforge.net/pjalm/msi"},
+        @{@"name": @"AsusSMC-Patches", @"url": @"https://raw.githubusercontent.com/hieplpvip/AsusSMC/master"},
         @{@"name": @"Rehabman", @"url": @"http://raw.githubusercontent.com/RehabMan/Laptop-DSDT-Patch/master"},
         @{@"name": @"Sourceforge", @"url": @"http://maciasl.sourceforge.net"},
         @{@"name": @"Toleda HDMI", @"url": @"http://raw.githubusercontent.com/toleda/audio_hdmi_uefi/master"},
