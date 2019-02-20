@@ -68,6 +68,7 @@
       @"sources": @[
         @{@"name": @"ASRock", @"url": @"http://maciasl.sourceforge.net/pjalm/asrock"},
         @{@"name": @"ASUS", @"url": @"http://maciasl.sourceforge.net/pjalm/asus"},
+        @{@"name": @"AsusSMC-Patches", @"url": @"https://raw.githubusercontent.com/hieplpvip/AsusSMC/master"},
         @{@"name": @"General", @"url": @"http://maciasl.sourceforge.net/pjalm/general"},
         @{@"name": @"Gigabyte", @"url": @"http://maciasl.sourceforge.net/pjalm/gigabyte"},
         @{@"name": @"Graphics", @"url": @"http://maciasl.sourceforge.net/pjalm/graphics"},
