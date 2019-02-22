@@ -1,0 +1,11 @@
+/* New from ACPI */
+"new-from-acpi" = "新的 ACPI";
+
+/* Export Tableset */
+"export-tableset" = "导出 ACPI 表组";
+
+/* Presave */
+"presave" = "预保存";
+
+/* \u2023 */
+"triangular-bullet" = " ‣ ";

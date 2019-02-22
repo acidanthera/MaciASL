@@ -100,6 +100,11 @@
 		40A56201212FFC7E00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/Patch.xib; sourceTree = "<group>"; };
 		40A56202212FFC7E00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/SSDT.xib; sourceTree = "<group>"; };
 		40A562032132A16000C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		50CCDC5D22202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/Document.xib"; sourceTree = "<group>"; };
+		50CCDC5E22202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/MainMenu.xib"; sourceTree = "<group>"; };
+		50CCDC5F22202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/Patch.xib"; sourceTree = "<group>"; };
+		50CCDC6022202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/SSDT.xib"; sourceTree = "<group>"; };
+		50CCDC6122202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		B01056A1161CE6CB006A21AC /* MaciASL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MaciASL.icns; sourceTree = SOURCE_ROOT; };
 		B013B822160C529600F6A7F2 /* MaciASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaciASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B013B826160C529600F6A7F2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -418,6 +423,7 @@
 			knownRegions = (
 				en,
 				ru,
+				"zh-Hans",
 			);
 			mainGroup = B013B817160C529600F6A7F2;
 			productRefGroup = B013B823160C529600F6A7F2 /* Products */;
@@ -531,6 +537,7 @@
 			children = (
 				40A561FD212FFC5800C83428 /* en */,
 				40A561FF212FFC7D00C83428 /* ru */,
+				50CCDC5D22202620000981B0 /* zh-Hans */,
 			);
 			name = Document.xib;
 			sourceTree = "<group>";
@@ -540,6 +547,7 @@
 			children = (
 				40A561FB212FFC5800C83428 /* en */,
 				40A56200212FFC7E00C83428 /* ru */,
+				50CCDC5E22202620000981B0 /* zh-Hans */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -549,6 +557,7 @@
 			children = (
 				40A561FC212FFC5800C83428 /* en */,
 				40A56201212FFC7E00C83428 /* ru */,
+				50CCDC5F22202620000981B0 /* zh-Hans */,
 			);
 			name = Patch.xib;
 			sourceTree = "<group>";
@@ -558,6 +567,7 @@
 			children = (
 				40A561FE212FFC5800C83428 /* en */,
 				40A56202212FFC7E00C83428 /* ru */,
+				50CCDC6022202620000981B0 /* zh-Hans */,
 			);
 			name = SSDT.xib;
 			sourceTree = "<group>";
@@ -567,6 +577,7 @@
 			children = (
 				CEC419DD213077FC002FB644 /* en */,
 				40A562032132A16000C83428 /* ru */,
+				50CCDC6122202620000981B0 /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

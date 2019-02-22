@@ -1,0 +1,1506 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="534" id="852"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <menu title="AMainMenu" systemMenu="main" id="29">
+            <items>
+                <menuItem title="MaciASL" id="56">
+                    <menu key="submenu" title="MaciASL" systemMenu="apple" id="57">
+                        <items>
+                            <menuItem title="关于 MaciASL" id="58">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="236">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="偏好设置…" keyEquivalent="," id="129">
+                                <connections>
+                                    <action selector="makeKeyAndOrderFront:" target="705" id="727"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="143">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="服务" id="131">
+                                <menu key="submenu" title="服务" systemMenu="services" id="130"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="144">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="隐藏 MaciASL" keyEquivalent="h" id="134">
+                                <connections>
+                                    <action selector="hide:" target="-1" id="367"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="隐藏其他" keyEquivalent="h" id="145">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="hideOtherApplications:" target="-1" id="368"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="显示全部" id="150">
+                                <connections>
+                                    <action selector="unhideAllApplications:" target="-1" id="370"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="149">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="退出 MaciASL" keyEquivalent="q" id="136">
+                                <connections>
+                                    <action selector="terminate:" target="-3" id="448"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="文件" id="1965">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="文件" id="1966">
+                        <items>
+                            <menuItem title="新建" keyEquivalent="n" id="1967">
+                                <connections>
+                                    <action selector="newDocument:" target="-1" id="1983"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="打开…" keyEquivalent="o" id="1968">
+                                <connections>
+                                    <action selector="openDocument:" target="-1" id="1981"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="最近打开" id="1969">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="最近打开" systemMenu="recentDocuments" id="1978">
+                                    <items>
+                                        <menuItem title="清空菜单" id="1979">
+                                            <connections>
+                                                <action selector="clearRecentDocuments:" target="-1" id="1984"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1970"/>
+                            <menuItem title="关闭" keyEquivalent="w" id="1971">
+                                <connections>
+                                    <action selector="performClose:" target="-1" id="1982"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="保存" keyEquivalent="s" id="1972">
+                                <connections>
+                                    <action selector="saveDocument:" target="-1" id="1987"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="另存为" id="1973">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="saveDocumentAs:" target="-1" id="1985"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="恢复保存" id="1974">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="revertDocumentToSaved:" target="-1" id="1988"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="导出表组..." id="2101">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportTableset:" target="534" id="2102"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1975"/>
+                            <menuItem title="页面设置" keyEquivalent="P" id="1976">
+                                <connections>
+                                    <action selector="runPageLayout:" target="-1" id="1986"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="打印" keyEquivalent="p" id="1977">
+                                <connections>
+                                    <action selector="print:" target="-1" id="1980"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="编辑" id="1262">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="编辑" id="1263">
+                        <items>
+                            <menuItem title="撤销" keyEquivalent="z" id="1264">
+                                <connections>
+                                    <action selector="undo:" target="-1" id="1330"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="重做" keyEquivalent="Z" id="1265">
+                                <connections>
+                                    <action selector="redo:" target="-1" id="1324"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1266"/>
+                            <menuItem title="剪切" keyEquivalent="x" id="1267">
+                                <connections>
+                                    <action selector="cut:" target="-1" id="1310"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="拷贝" keyEquivalent="c" id="1268">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="1309"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="粘贴" keyEquivalent="v" id="1269">
+                                <connections>
+                                    <action selector="paste:" target="-1" id="1315"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="粘贴并匹配格式" keyEquivalent="V" id="1270">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="pasteAsPlainText:" target="-1" id="1332"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="删除" keyEquivalent="" id="1271">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="delete:" target="-1" id="1325"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="全选" keyEquivalent="a" id="1272">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="1328"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1273"/>
+                            <menuItem title="查找" id="1274">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="查找" id="1302">
+                                    <items>
+                                        <menuItem title="查找…" tag="1" keyEquivalent="f" id="1303">
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="1336"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="查找并替换…" tag="12" keyEquivalent="f" id="1333">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="performTextFinderAction:" target="-1" id="1338"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="查找下一个" tag="2" keyEquivalent="g" id="1304">
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="1334"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="查找上一个" tag="3" keyEquivalent="G" id="1305">
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="1339"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="使用当前选中来查找" tag="7" keyEquivalent="e" id="1306">
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="1335"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="跳转到选中内容" keyEquivalent="j" id="1307">
+                                            <connections>
+                                                <action selector="centerSelectionInVisibleArea:" target="-1" id="1337"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="跳转到行" keyEquivalent="l" id="1960">
+                                            <connections>
+                                                <action selector="jumpToLine:" target="-1" id="1961"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="转换" id="1277">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="转换" id="1282">
+                                    <items>
+                                        <menuItem title="转换为大写" id="1283">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="uppercaseWord:" target="-1" id="1320"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="转换为小写" id="1284">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="lowercaseWord:" target="-1" id="1321"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="大写" id="1285">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="capitalizeWord:" target="-1" id="1327"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="提交选择" keyEquivalent="/" id="2190">
+                                            <connections>
+                                                <action selector="comment:" target="-1" id="2191"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="转换为16进制" keyEquivalent="b" id="1962">
+                                            <connections>
+                                                <action selector="hexConvert:" target="-1" id="1963"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="听写" id="1278">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="听写" id="1279">
+                                    <items>
+                                        <menuItem title="开始听写" id="1280">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="startSpeaking:" target="-1" id="1308"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="停止听写" id="1281">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="stopSpeaking:" target="-1" id="1329"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="字体" id="1480">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="字体" systemMenu="font" id="1481">
+                        <items>
+                            <menuItem title="查看字体" keyEquivalent="t" id="1482">
+                                <connections>
+                                    <action selector="orderFrontFontPanel:" target="419" id="1516"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1486"/>
+                            <menuItem title="增大字号" tag="3" keyEquivalent="+" id="1487">
+                                <connections>
+                                    <action selector="modifyFont:" target="419" id="1513"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="减小字号" tag="4" keyEquivalent="-" id="1488">
+                                <connections>
+                                    <action selector="modifyFont:" target="419" id="1515"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1489"/>
+                            <menuItem title="字间距" id="1490">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="字间距" id="1508">
+                                    <items>
+                                        <menuItem title="使用默认" id="1509">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="useStandardKerning:" target="-1" id="1530"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="不使用" id="1510">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="turnOffKerning:" target="-1" id="1533"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="紧凑" id="1511">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="tightenKerning:" target="-1" id="1527"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="松散" id="1512">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="loosenKerning:" target="-1" id="1518"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="字间松弛度" id="1491">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="字间松弛度" id="1504">
+                                    <items>
+                                        <menuItem title="使用默认" id="1505">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="useStandardLigatures:" target="-1" id="1531"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="不使用" id="1506">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="turnOffLigatures:" target="-1" id="1532"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="使用全部" id="1507">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="useAllLigatures:" target="-1" id="1528"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="垂直字间距" id="1492">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="垂直字间距" id="1498">
+                                    <items>
+                                        <menuItem title="使用默认" id="1499">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="unscript:" target="-1" id="1529"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="向下松弛" id="1500">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="superscript:" target="-1" id="1524"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="向上紧凑" id="1501">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="subscript:" target="-1" id="1526"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="更上" id="1502">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="raiseBaseline:" target="-1" id="1520"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="更下" id="1503">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="lowerBaseline:" target="-1" id="1523"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1493"/>
+                            <menuItem title="显示颜色" keyEquivalent="C" id="1494">
+                                <connections>
+                                    <action selector="orderFrontColorPanel:" target="-1" id="1519"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1495"/>
+                            <menuItem title="复制样式" keyEquivalent="c" id="1496">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="copyFont:" target="-1" id="1522"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="粘贴样式" keyEquivalent="v" id="1497">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="pasteFont:" target="-1" id="1525"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="工具" id="872">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="工具" id="873">
+                        <items>
+                            <menuItem title="编译" keyEquivalent="i" id="874">
+                                <connections>
+                                    <action selector="compile:" target="-1" id="888"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="打补丁" keyEquivalent="k" id="875">
+                                <connections>
+                                    <action selector="patch:" target="-1" id="889"/>
+                                    <binding destination="2040" name="enabled" keyPath="selection.isLocked" id="2078">
+                                        <dictionary key="options">
+                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                        </dictionary>
+                                    </binding>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="1615"/>
+                            <menuItem title="生成 SSDT" keyEquivalent="d" id="1614">
+                                <connections>
+                                    <action selector="show:" target="2228" id="2229"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="窗口" id="19">
+                    <menu key="submenu" title="窗口" systemMenu="window" id="24">
+                        <items>
+                            <menuItem title="全屏" keyEquivalent="f" id="2075">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="toggleFullScreen:" target="-1" id="2076"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="最小化" keyEquivalent="m" id="23">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="37"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="最大化" id="239">
+                                <connections>
+                                    <action selector="performZoom:" target="-1" id="240"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="92">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="日志" keyEquivalent="0" id="565">
+                                <connections>
+                                    <action selector="showLog:" target="534" id="891"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="设备属性" keyEquivalent="1" id="2158">
+                                <connections>
+                                    <action selector="makeKeyAndOrderFront:" target="2159" id="2184"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="前置所有窗口" id="5">
+                                <connections>
+                                    <action selector="arrangeInFront:" target="-1" id="39"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="帮助" id="491">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="帮助" systemMenu="help" id="492">
+                        <items>
+                            <menuItem title="MaciASL 帮助" keyEquivalent="?" id="493">
+                                <connections>
+                                    <action selector="showHelp:" target="-1" id="494"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+            </items>
+        </menu>
+        <window title="iASL 日志" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="logFrame" animationBehavior="default" id="645" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="112" width="678" height="210"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" id="646">
+                <rect key="frame" x="0.0" y="0.0" width="678" height="210"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="16" horizontalPageScroll="10" verticalLineScroll="16" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="678">
+                        <rect key="frame" x="-1" y="-1" width="680" height="212"/>
+                        <clipView key="contentView" id="0Q4-ap-cEB">
+                            <rect key="frame" x="1" y="0.0" width="678" height="211"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="14" headerView="681" id="679">
+                                    <rect key="frame" x="0.0" y="0.0" width="678" height="188"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <size key="intercellSpacing" width="3" height="2"/>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <tableColumns>
+                                        <tableColumn editable="NO" width="116" minWidth="40" maxWidth="1000" id="683">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="时间节点">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="686">
+                                                <dateFormatter key="formatter" dateStyle="short" timeStyle="medium" id="698"/>
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="647" name="value" keyPath="arrangedObjects.timestamp" id="695"/>
+                                            </connections>
+                                        </tableColumn>
+                                        <tableColumn editable="NO" width="556" minWidth="40" maxWidth="1000" id="684">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="入口">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" controlSize="small" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="685">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="647" name="value" keyPath="arrangedObjects.entry" id="697"/>
+                                            </connections>
+                                        </tableColumn>
+                                    </tableColumns>
+                                    <connections>
+                                        <binding destination="647" name="content" keyPath="arrangedObjects" id="693"/>
+                                        <binding destination="647" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="693" id="2155"/>
+                                        <binding destination="647" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="2155" id="2157"/>
+                                    </connections>
+                                </tableView>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="680">
+                            <rect key="frame" x="1" y="117" width="235" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="682">
+                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <tableHeaderView key="headerView" id="681">
+                            <rect key="frame" x="0.0" y="0.0" width="678" height="23"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </tableHeaderView>
+                    </scrollView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="678" firstAttribute="top" secondItem="646" secondAttribute="top" constant="-1" id="688"/>
+                    <constraint firstItem="678" firstAttribute="leading" secondItem="646" secondAttribute="leading" constant="-1" id="690"/>
+                    <constraint firstAttribute="bottom" secondItem="678" secondAttribute="bottom" constant="-1" id="691"/>
+                    <constraint firstAttribute="trailing" secondItem="678" secondAttribute="trailing" constant="-1" id="692"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="534" id="2192"/>
+                <outlet property="initialFirstResponder" destination="679" id="1260"/>
+            </connections>
+        </window>
+        <window title="编译报告" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="compilerFrame" animationBehavior="default" id="2038" customClass="FSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES"/>
+            <rect key="contentRect" x="1280" y="366" width="372" height="188"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" id="2041">
+                <rect key="frame" x="0.0" y="0.0" width="372" height="188"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2042">
+                        <rect key="frame" x="-1" y="19" width="374" height="170"/>
+                        <clipView key="contentView" id="qyE-E1-0Q5">
+                            <rect key="frame" x="1" y="0.0" width="372" height="169"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="2053" id="2055" customClass="FSTableView">
+                                    <rect key="frame" x="0.0" y="0.0" width="372" height="146"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <size key="intercellSpacing" width="3" height="2"/>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <tableColumns>
+                                        <tableColumn editable="NO" width="16" minWidth="16" maxWidth="1000" id="2059">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <imageCell key="dataCell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="2060">
+                                                <font key="font" metaFont="system"/>
+                                            </imageCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="2039" name="value" keyPath="selection.notices.type" id="2068">
+                                                    <dictionary key="options">
+                                                        <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                                        <string key="NSValueTransformerName">TypeTransformer</string>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </tableColumn>
+                                        <tableColumn editable="NO" width="48" minWidth="40" maxWidth="1000" id="2058">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="行">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Тext Cell" id="2061">
+                                                <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="2062"/>
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="2039" name="value" keyPath="selection.notices.line" id="2069"/>
+                                            </connections>
+                                        </tableColumn>
+                                        <tableColumn editable="NO" width="46" minWidth="10" maxWidth="3.4028234663852886e+38" id="2057">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="代码">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="2063">
+                                                <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="2064"/>
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="2039" name="value" keyPath="selection.notices.code" id="2070"/>
+                                            </connections>
+                                        </tableColumn>
+                                        <tableColumn editable="NO" width="250" minWidth="10" maxWidth="3.4028234663852886e+38" id="2056">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="信息">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="2065">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="2039" name="value" keyPath="selection.notices.message" id="2071"/>
+                                            </connections>
+                                        </tableColumn>
+                                    </tableColumns>
+                                    <connections>
+                                        <binding destination="2039" name="content" keyPath="selection.notices" id="2067"/>
+                                        <outlet property="delegate" destination="534" id="2080"/>
+                                    </connections>
+                                </tableView>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2054">
+                            <rect key="frame" x="1" y="363" width="276" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2052">
+                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <tableHeaderView key="headerView" id="2053">
+                            <rect key="frame" x="0.0" y="0.0" width="372" height="23"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </tableHeaderView>
+                    </scrollView>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2043">
+                        <rect key="frame" x="18" y="1" width="336" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="标签" id="2051">
+                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="2039" name="value" keyPath="selection.string" id="2225"/>
+                        </connections>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2042" firstAttribute="top" secondItem="2041" secondAttribute="top" constant="-1" id="2044"/>
+                    <constraint firstItem="2042" firstAttribute="leading" secondItem="2041" secondAttribute="leading" constant="-1" id="2045"/>
+                    <constraint firstAttribute="trailing" secondItem="2042" secondAttribute="trailing" constant="-1" id="2046"/>
+                    <constraint firstAttribute="bottom" secondItem="2042" secondAttribute="bottom" constant="19" id="2047"/>
+                    <constraint firstItem="2043" firstAttribute="leading" secondItem="2041" secondAttribute="leading" constant="20" symbolic="YES" id="2048"/>
+                    <constraint firstAttribute="trailing" secondItem="2043" secondAttribute="trailing" constant="20" symbolic="YES" id="2049"/>
+                    <constraint firstAttribute="bottom" secondItem="2043" secondAttribute="bottom" constant="1" id="2050"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="534" id="2193"/>
+                <outlet property="initialFirstResponder" destination="2055" id="2066"/>
+            </connections>
+        </window>
+        <window title="偏好设置" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="prefFrame" animationBehavior="default" id="705">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <rect key="contentRect" x="196" y="207" width="480" height="280"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" id="706">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="280"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            </view>
+            <toolbar key="toolbar" implicitIdentifier="63D59A2C-71A9-4377-8345-49D9E7F1B5F1" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="718">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="E856F0D1-CCA6-41DC-8351-CEB05DD9C891" label="通用" paletteLabel="通用" image="NSPreferencesGeneral" selectable="YES" id="724">
+                        <connections>
+                            <action selector="swapPreference:" target="534" id="805"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="719"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="722"/>
+                    <toolbarItem implicitItemIdentifier="6EC7308C-9711-4A2B-9110-70983193274C" label="iASL" paletteLabel="iASL" tag="1" image="ToolbarUtilitiesFolderIcon" selectable="YES" id="725">
+                        <connections>
+                            <action selector="swapPreference:" target="534" id="806"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="5BE613DD-5E22-4886-9B39-66FD3CFCF3EE" label="补丁源" paletteLabel="补丁源" tag="2" image="NSFolderSmart" selectable="YES" id="893">
+                        <connections>
+                            <action selector="swapPreference:" target="534" id="933"/>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="724"/>
+                    <toolbarItem reference="725"/>
+                    <toolbarItem reference="893"/>
+                    <toolbarItem reference="722"/>
+                </defaultToolbarItems>
+            </toolbar>
+            <connections>
+                <outlet property="delegate" destination="534" id="807"/>
+                <outlet property="initialFirstResponder" destination="706" id="1261"/>
+            </connections>
+            <point key="canvasLocation" x="143" y="707"/>
+        </window>
+        <customView id="728" userLabel="iASL">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="380"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="737">
+                    <rect key="frame" x="30" y="232" width="102" height="18"/>
+                    <buttonCell key="cell" type="check" title="启用备注信息" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="738">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.remarks" id="769"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="741">
+                    <rect key="frame" x="30" y="292" width="102" height="18"/>
+                    <buttonCell key="cell" type="check" title="启用优化信息" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="742">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.optimizations" id="771"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="777">
+                    <rect key="frame" x="18" y="343" width="58" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="编译选项" id="778">
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8c6-s8-R6a">
+                    <rect key="frame" x="30" y="176" width="111" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="额外反编译选项：" id="xbe-ZZ-cSz">
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="785">
+                    <rect key="frame" x="18" y="151" width="84" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="当前编译器：" id="786">
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" preferredMaxLayoutWidth="430" translatesAutoresizingMaskIntoConstraints="NO" id="789">
+                    <rect key="frame" x="30" y="126" width="432" height="17"/>
+                    <textFieldCell key="cell" allowsUndo="NO" sendsActionOnEndEditing="YES" title="多行标签" id="790">
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="534" name="value" keyPath="compiler" id="849"/>
+                    </connections>
+                </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="828">
+                    <rect key="frame" x="30" y="272" width="115" height="18"/>
+                    <buttonCell key="cell" type="check" title="将警告视为错误" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="829">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.werror" id="834"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="wGR-aH-r8c">
+                    <rect key="frame" x="30" y="252" width="182" height="18"/>
+                    <buttonCell key="cell" type="check" title="自动加载位于同一目录的表" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gJB-Jr-pRb">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        <connections>
+                            <binding destination="763" name="value" keyPath="values.autoloadtables" id="Znc-Xx-uYz"/>
+                        </connections>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.autoloadtables" id="Im5-wF-U4Y"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2259">
+                    <rect key="frame" x="33" y="318" width="77" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="ACPI 规范：" id="2260">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2263">
+                    <rect key="frame" x="114" y="313" width="66" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="4.0" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2266" id="2264">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" title="其它" id="2265">
+                            <items>
+                                <menuItem title="4.0" state="on" id="2266">
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="representedObject">
+                                            <integer key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </menuItem>
+                                <menuItem title="5.0A" id="2267">
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="representedObject">
+                                            <integer key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </menuItem>
+                                <menuItem title="5.1" id="2268">
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="representedObject">
+                                            <integer key="value" value="51"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </menuItem>
+                                <menuItem title="6.0" id="y6q-2M-LEO">
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="representedObject">
+                                            <integer key="value" value="6"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </menuItem>
+                                <menuItem title="6.2A" id="f7f-js-Z3e">
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="representedObject">
+                                            <integer key="value" value="62"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </menuItem>
+                                <menuItem title="开发" id="peh-av-hdf">
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="representedObject">
+                                            <integer key="value" value="0"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </menuItem>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="763" name="selectedObject" keyPath="values.acpi" id="2272"/>
+                    </connections>
+                </popUpButton>
+                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" maxValue="1" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="iHw-yh-MgN">
+                    <rect key="frame" x="167" y="151" width="16" height="16"/>
+                    <connections>
+                        <binding destination="534" name="hidden" keyPath="update" id="YdI-t8-7uK">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSIsNil</string>
+                            </dictionary>
+                        </binding>
+                        <binding destination="534" name="value" keyPath="update.fractionCompleted" id="d5h-iW-pep"/>
+                        <binding destination="534" name="animate" keyPath="update.indeterminate" id="RgI-5J-Mgz"/>
+                        <binding destination="534" name="isIndeterminate" keyPath="update.indeterminate" previousBinding="RgI-5J-Mgz" id="Wi8-H9-IfG"/>
+                    </connections>
+                </progressIndicator>
+                <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oyo-Ks-EMD">
+                    <rect key="frame" x="147" y="203" width="313" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="DaV-he-lL9">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.extracomp" id="fd8-Go-D9Y"/>
+                    </connections>
+                </textField>
+                <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OVG-do-rXt">
+                    <rect key="frame" x="147" y="171" width="313" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="ab7-h3-7OM">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.extradecomp" id="Jq7-ej-ok2"/>
+                    </connections>
+                </textField>
+                <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1255">
+                    <rect key="frame" x="14" y="85" width="100" height="32"/>
+                    <buttonCell key="cell" type="push" title="更新 iASL" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1256">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="update:" target="534" id="1259"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lg0-L7-kgT">
+                    <rect key="frame" x="30" y="206" width="111" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="额外编译器选项：" id="6cG-yS-yU6">
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="777" firstAttribute="leading" secondItem="785" secondAttribute="leading" id="0TK-yB-4bE"/>
+                <constraint firstItem="OVG-do-rXt" firstAttribute="leading" secondItem="8c6-s8-R6a" secondAttribute="trailing" constant="8" symbolic="YES" id="6ta-cq-rmy"/>
+                <constraint firstItem="741" firstAttribute="leading" secondItem="728" secondAttribute="leading" constant="32" id="96z-cj-92R"/>
+                <constraint firstItem="2259" firstAttribute="baseline" secondItem="2263" secondAttribute="baseline" id="AEh-R1-Ewf"/>
+                <constraint firstItem="1255" firstAttribute="top" secondItem="789" secondAttribute="bottom" constant="8" symbolic="YES" id="BzK-1k-AZN"/>
+                <constraint firstItem="wGR-aH-r8c" firstAttribute="leading" secondItem="737" secondAttribute="leading" id="Cw5-Fa-l7u"/>
+                <constraint firstItem="2259" firstAttribute="top" secondItem="777" secondAttribute="bottom" constant="8" symbolic="YES" id="EAy-br-Pm7"/>
+                <constraint firstItem="Oyo-Ks-EMD" firstAttribute="top" relation="greaterThanOrEqual" secondItem="737" secondAttribute="bottom" constant="8" symbolic="YES" id="GtX-lf-SzM"/>
+                <constraint firstItem="2263" firstAttribute="leading" secondItem="2259" secondAttribute="trailing" constant="8" symbolic="YES" id="IUh-B6-9FU"/>
+                <constraint firstItem="wGR-aH-r8c" firstAttribute="top" secondItem="828" secondAttribute="bottom" constant="6" symbolic="YES" id="Imo-NQ-r7z"/>
+                <constraint firstItem="OVG-do-rXt" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Oyo-Ks-EMD" secondAttribute="bottom" constant="10" symbolic="YES" id="Jj8-yJ-EsM"/>
+                <constraint firstItem="785" firstAttribute="top" secondItem="8c6-s8-R6a" secondAttribute="bottom" constant="8" symbolic="YES" id="LrK-oF-CMA"/>
+                <constraint firstAttribute="trailing" secondItem="Oyo-Ks-EMD" secondAttribute="trailing" constant="20" symbolic="YES" id="MyU-9j-ARW"/>
+                <constraint firstItem="741" firstAttribute="leading" secondItem="828" secondAttribute="leading" id="RP5-ky-1J8"/>
+                <constraint firstItem="789" firstAttribute="top" secondItem="785" secondAttribute="bottom" constant="8" symbolic="YES" id="ST2-dk-tGu"/>
+                <constraint firstItem="2259" firstAttribute="leading" secondItem="728" secondAttribute="leading" constant="35" id="UPh-XX-dBw"/>
+                <constraint firstItem="737" firstAttribute="top" secondItem="wGR-aH-r8c" secondAttribute="bottom" constant="6" symbolic="YES" id="UW8-3k-lo3"/>
+                <constraint firstItem="777" firstAttribute="top" secondItem="728" secondAttribute="top" constant="20" symbolic="YES" id="Uia-wJ-cec"/>
+                <constraint firstItem="785" firstAttribute="leading" secondItem="1255" secondAttribute="leading" id="Y0Y-Tv-cDO"/>
+                <constraint firstItem="741" firstAttribute="top" secondItem="2263" secondAttribute="bottom" constant="8" symbolic="YES" id="cGR-fc-yiM"/>
+                <constraint firstItem="Lg0-L7-kgT" firstAttribute="leading" secondItem="8c6-s8-R6a" secondAttribute="leading" id="eTS-bJ-r4V"/>
+                <constraint firstItem="Lg0-L7-kgT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="737" secondAttribute="bottom" constant="8" symbolic="YES" id="eWH-ns-QvJ"/>
+                <constraint firstItem="789" firstAttribute="leading" secondItem="728" secondAttribute="leading" constant="32" id="fCx-s8-E9w"/>
+                <constraint firstItem="Oyo-Ks-EMD" firstAttribute="leading" secondItem="OVG-do-rXt" secondAttribute="leading" id="g7r-FW-mvS"/>
+                <constraint firstItem="828" firstAttribute="top" secondItem="741" secondAttribute="bottom" constant="6" symbolic="YES" id="go1-ad-XlW"/>
+                <constraint firstAttribute="trailing" secondItem="789" secondAttribute="trailing" constant="20" symbolic="YES" id="hqb-jB-Dfd"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="1255" secondAttribute="bottom" constant="20" symbolic="YES" id="huB-u9-ErQ"/>
+                <constraint firstItem="737" firstAttribute="leading" secondItem="Lg0-L7-kgT" secondAttribute="leading" id="iTR-Y4-67a"/>
+                <constraint firstItem="789" firstAttribute="top" secondItem="iHw-yh-MgN" secondAttribute="bottom" constant="8" symbolic="YES" id="jNF-7z-wes"/>
+                <constraint firstItem="Oyo-Ks-EMD" firstAttribute="centerY" secondItem="Lg0-L7-kgT" secondAttribute="centerY" id="kzL-ex-eQv"/>
+                <constraint firstItem="OVG-do-rXt" firstAttribute="centerY" secondItem="8c6-s8-R6a" secondAttribute="centerY" id="mRT-l1-Ezm"/>
+                <constraint firstItem="777" firstAttribute="leading" secondItem="728" secondAttribute="leading" constant="20" symbolic="YES" id="nid-EA-xM2"/>
+                <constraint firstItem="828" firstAttribute="leading" secondItem="wGR-aH-r8c" secondAttribute="leading" id="rNT-4d-oBB"/>
+                <constraint firstItem="Oyo-Ks-EMD" firstAttribute="trailing" secondItem="OVG-do-rXt" secondAttribute="trailing" id="tDo-bf-6zn"/>
+                <constraint firstItem="8c6-s8-R6a" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Lg0-L7-kgT" secondAttribute="bottom" constant="8" symbolic="YES" id="z3Q-vN-oXB"/>
+                <constraint firstItem="iHw-yh-MgN" firstAttribute="leading" secondItem="728" secondAttribute="leading" constant="167" id="zuY-WG-BNQ"/>
+            </constraints>
+            <point key="canvasLocation" x="93" y="167"/>
+        </customView>
+        <customView id="758" userLabel="Главная">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="380"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="759">
+                    <rect key="frame" x="30" y="319" width="142" height="18"/>
+                    <buttonCell key="cell" type="check" title="默认打开系统 DSDT" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="760">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.dsdt" id="944"/>
+                    </connections>
+                </button>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1642">
+                    <rect key="frame" x="18" y="296" width="31" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="主题" id="1643">
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1658">
+                    <rect key="frame" x="18" y="343" width="31" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="启动" id="1659">
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1677">
+                    <rect key="frame" x="18" y="230" width="31" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="界面" id="1678">
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="1681">
+                    <rect key="frame" x="30" y="206" width="115" height="18"/>
+                    <buttonCell key="cell" type="check" title="显示补丁上下文" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1682">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.context" id="1686"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="1717">
+                    <rect key="frame" x="30" y="186" width="102" height="18"/>
+                    <buttonCell key="cell" type="check" title="显示错误建议" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1718">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.suggest" id="1721"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="2081">
+                    <rect key="frame" x="30" y="166" width="115" height="18"/>
+                    <buttonCell key="cell" type="check" title="独立选中的补丁" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2082">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.isolation" id="2087"/>
+                    </connections>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="2095">
+                    <rect key="frame" x="30" y="146" width="76" height="18"/>
+                    <buttonCell key="cell" type="check" title="彩色代码" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="2096">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <binding destination="763" name="value" keyPath="values.colorize" id="2100"/>
+                    </connections>
+                </button>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2195">
+                    <rect key="frame" x="30" y="264" width="77" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="项目 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2198" id="2196">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" title="其他" id="2197">
+                            <items>
+                                <menuItem title="项目 1" state="on" id="2198"/>
+                                <menuItem title="项目 2" id="2199"/>
+                                <menuItem title="项目 3" id="2200"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                    <connections>
+                        <binding destination="534" name="content" keyPath="themes" id="2207"/>
+                        <binding destination="763" name="selectedValue" keyPath="values.style" previousBinding="2207" id="2208"/>
+                    </connections>
+                </popUpButton>
+            </subviews>
+            <constraints>
+                <constraint firstItem="1642" firstAttribute="leading" secondItem="758" secondAttribute="leading" constant="20" symbolic="YES" id="1654"/>
+                <constraint firstItem="1658" firstAttribute="top" secondItem="758" secondAttribute="top" constant="20" symbolic="YES" id="1661"/>
+                <constraint firstItem="759" firstAttribute="top" secondItem="1658" secondAttribute="bottom" constant="8" symbolic="YES" id="1664"/>
+                <constraint firstItem="1642" firstAttribute="top" secondItem="759" secondAttribute="bottom" constant="8" symbolic="YES" id="1666"/>
+                <constraint firstItem="1681" firstAttribute="top" secondItem="1677" secondAttribute="bottom" constant="8" symbolic="YES" id="1683"/>
+                <constraint firstItem="1717" firstAttribute="leading" secondItem="1681" secondAttribute="leading" id="1719"/>
+                <constraint firstItem="1717" firstAttribute="top" secondItem="1681" secondAttribute="bottom" constant="6" symbolic="YES" id="1720"/>
+                <constraint firstItem="2081" firstAttribute="top" secondItem="1717" secondAttribute="bottom" constant="6" symbolic="YES" id="2085"/>
+                <constraint firstItem="2081" firstAttribute="leading" secondItem="1717" secondAttribute="leading" id="2086"/>
+                <constraint firstItem="1658" firstAttribute="leading" secondItem="758" secondAttribute="leading" constant="20" symbolic="YES" id="2091"/>
+                <constraint firstItem="1677" firstAttribute="leading" secondItem="758" secondAttribute="leading" constant="20" symbolic="YES" id="2092"/>
+                <constraint firstItem="2095" firstAttribute="leading" secondItem="2081" secondAttribute="leading" id="2097"/>
+                <constraint firstItem="2095" firstAttribute="top" secondItem="2081" secondAttribute="bottom" constant="6" symbolic="YES" id="2098"/>
+                <constraint firstItem="759" firstAttribute="leading" secondItem="758" secondAttribute="leading" constant="32" id="2211"/>
+                <constraint firstItem="2195" firstAttribute="top" secondItem="1642" secondAttribute="bottom" constant="8" symbolic="YES" id="2212"/>
+                <constraint firstItem="2195" firstAttribute="leading" secondItem="759" secondAttribute="leading" id="2213"/>
+                <constraint firstItem="2195" firstAttribute="leading" secondItem="1681" secondAttribute="leading" id="2214"/>
+                <constraint firstItem="1677" firstAttribute="top" secondItem="758" secondAttribute="top" constant="133" id="2215"/>
+            </constraints>
+        </customView>
+        <customView id="894" userLabel="Источники">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="380"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="895">
+                    <rect key="frame" x="18" y="343" width="44" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="补丁源" id="896">
+                        <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="924">
+                    <rect key="frame" x="18" y="0.0" width="202" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="17" id="928"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="MaciASL 和它的开发者对这些补丁不尽任何义务" id="925">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1138">
+                    <rect key="frame" x="20" y="20" width="440" height="315"/>
+                    <clipView key="contentView" id="dGI-pT-bTf">
+                        <rect key="frame" x="1" y="0.0" width="438" height="314"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="1141" id="1139">
+                                <rect key="frame" x="0.0" y="0.0" width="438" height="291"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <size key="intercellSpacing" width="3" height="2"/>
+                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                <tableColumns>
+                                    <tableColumn width="116" minWidth="40" maxWidth="1000" id="1143">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="名称">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="1146">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="1153" name="value" keyPath="arrangedObjects.name" id="1159"/>
+                                        </connections>
+                                    </tableColumn>
+                                    <tableColumn width="316" minWidth="40" maxWidth="1000" id="1144">
+                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="URL地址">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                        </tableHeaderCell>
+                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="1145">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                        <connections>
+                                            <binding destination="1153" name="value" keyPath="arrangedObjects.url" id="1162"/>
+                                        </connections>
+                                    </tableColumn>
+                                </tableColumns>
+                                <connections>
+                                    <binding destination="1153" name="content" keyPath="arrangedObjects" id="1157"/>
+                                    <binding destination="1153" name="selectionIndexes" keyPath="selectionIndexes" previousBinding="1157" id="1832"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="1140">
+                        <rect key="frame" x="1" y="119" width="223" height="15"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="1142">
+                        <rect key="frame" x="224" y="17" width="15" height="102"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <tableHeaderView key="headerView" id="1141">
+                        <rect key="frame" x="0.0" y="0.0" width="438" height="23"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </tableHeaderView>
+                </scrollView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1777">
+                    <rect key="frame" x="415" y="339" width="23" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="1782"/>
+                        <constraint firstAttribute="width" constant="23" id="1785"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" inset="2" id="1778">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="newSource:" target="534" id="1794"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1786">
+                    <rect key="frame" x="437" y="339" width="23" height="23"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="23" id="1792"/>
+                    </constraints>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" inset="2" id="1787">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="remove:" target="1153" id="1795"/>
+                        <binding destination="1153" name="enabled" keyPath="canRemove" id="1850"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="895" firstAttribute="leading" secondItem="894" secondAttribute="leading" constant="20" symbolic="YES" id="897"/>
+                <constraint firstItem="895" firstAttribute="top" secondItem="894" secondAttribute="top" constant="20" symbolic="YES" id="898"/>
+                <constraint firstItem="924" firstAttribute="bottom" secondItem="894" secondAttribute="bottom" id="930"/>
+                <constraint firstItem="924" firstAttribute="leading" secondItem="894" secondAttribute="leading" constant="20" symbolic="YES" id="931"/>
+                <constraint firstItem="1138" firstAttribute="leading" secondItem="894" secondAttribute="leading" constant="20" symbolic="YES" id="1147"/>
+                <constraint firstItem="1138" firstAttribute="top" secondItem="895" secondAttribute="bottom" constant="8" symbolic="YES" id="1150"/>
+                <constraint firstAttribute="trailing" secondItem="1138" secondAttribute="trailing" constant="20" symbolic="YES" id="1151"/>
+                <constraint firstAttribute="bottom" secondItem="1138" secondAttribute="bottom" constant="20" symbolic="YES" id="1152"/>
+                <constraint firstItem="1786" firstAttribute="baseline" secondItem="1777" secondAttribute="baseline" id="1788"/>
+                <constraint firstItem="1786" firstAttribute="top" secondItem="1777" secondAttribute="top" id="1791"/>
+                <constraint firstItem="1777" firstAttribute="baseline" secondItem="895" secondAttribute="baseline" id="1798"/>
+                <constraint firstAttribute="trailing" secondItem="1786" secondAttribute="trailing" constant="20" symbolic="YES" id="1799"/>
+                <constraint firstAttribute="trailing" secondItem="1777" secondAttribute="trailing" constant="42" id="1801"/>
+            </constraints>
+        </customView>
+        <customObject id="534" customClass="AppDelegate">
+            <connections>
+                <outlet property="_general" destination="758" id="2217"/>
+                <outlet property="_iasl" destination="728" id="2218"/>
+                <outlet property="_logView" destination="645" id="2219"/>
+                <outlet property="_sourceController" destination="1153" id="2220"/>
+                <outlet property="_sourceView" destination="1139" id="2222"/>
+                <outlet property="_sources" destination="894" id="2221"/>
+                <outlet property="_summaryView" destination="2038" id="2223"/>
+            </connections>
+        </customObject>
+        <customObject id="419" customClass="NSFontManager"/>
+        <customObject id="2185" customClass="DocumentController">
+            <connections>
+                <outlet property="_tableView" destination="2103" id="2216"/>
+            </connections>
+        </customObject>
+        <customObject id="2228" customClass="SSDTGen"/>
+        <treeController objectClassName="DictionaryArray" editable="NO" childrenKeyPath="children" id="2177" userLabel="Свойства устройств">
+            <connections>
+                <binding destination="534" name="contentArray" keyPath="deviceProperties" id="2179"/>
+            </connections>
+        </treeController>
+        <arrayController objectClassName="LogEntry" editable="NO" preservesSelection="NO" selectsInsertedObjects="NO" avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" id="647" userLabel="Лог">
+            <connections>
+                <binding destination="534" name="contentArray" keyPath="log" id="676"/>
+            </connections>
+        </arrayController>
+        <arrayController avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" id="1153" userLabel="Источники">
+            <declaredKeys>
+                <string>name</string>
+                <string>url</string>
+            </declaredKeys>
+            <connections>
+                <binding destination="763" name="contentArray" keyPath="values.sources" id="1837">
+                    <dictionary key="options">
+                        <bool key="NSConditionallySetsEditable" value="NO"/>
+                        <bool key="NSDeletesObjectsOnRemove" value="YES"/>
+                        <bool key="NSHandlesContentAsCompoundValue" value="YES"/>
+                    </dictionary>
+                </binding>
+            </connections>
+        </arrayController>
+        <userDefaultsController representsSharedInstance="YES" id="763"/>
+        <objectController objectClassName="iASLCompilationResult" editable="NO" id="2039" userLabel="Результат">
+            <connections>
+                <binding destination="2040" name="contentObject" keyPath="selection.result" id="2227"/>
+            </connections>
+        </objectController>
+        <objectController objectClassName="Document" id="2040" userLabel="Текущий документ">
+            <connections>
+                <binding destination="-3" name="contentObject" keyPath="mainWindow.document" id="2074"/>
+            </connections>
+        </objectController>
+        <window title="选择表集" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="2103">
+            <windowStyleMask key="styleMask" titled="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="207" width="408" height="102"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" id="2104">
+                <rect key="frame" x="0.0" y="0.0" width="408" height="102"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2109">
+                        <rect key="frame" x="287" y="13" width="107" height="32"/>
+                        <buttonCell key="cell" type="push" title="打开选中项" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2110">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="finishTableset:" target="2185" id="2189"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2113">
+                        <rect key="frame" x="14" y="13" width="67" height="32"/>
+                        <buttonCell key="cell" type="push" title="取消" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2114">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="finishTableset:" target="2185" id="2187"/>
+                        </connections>
+                    </button>
+                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2117">
+                        <rect key="frame" x="18" y="58" width="373" height="25"/>
+                        <popUpButtonCell key="cell" type="push" title="项目 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" altersStateOfSelectedItem="NO" selectedItem="2120" id="2118">
+                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="menu"/>
+                            <menu key="menu" title="其它" autoenablesItems="NO" id="2119">
+                                <items>
+                                    <menuItem title="项目 1" id="2120"/>
+                                    <menuItem title="项目 2" id="2121"/>
+                                    <menuItem title="项目 3" id="2122"/>
+                                </items>
+                            </menu>
+                        </popUpButtonCell>
+                        <connections>
+                            <binding destination="2185" name="content" keyPath="tableNames" id="2239"/>
+                            <binding destination="2185" name="selectedIndex" keyPath="tableSelection" previousBinding="2239" id="2240"/>
+                        </connections>
+                    </popUpButton>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2126">
+                        <rect key="frame" x="81" y="13" width="94" height="32"/>
+                        <buttonCell key="cell" type="push" title="全部打开" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2127">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="finishTableset:" target="2185" id="2188"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2113" firstAttribute="leading" secondItem="2104" secondAttribute="leading" constant="20" symbolic="YES" id="2115"/>
+                    <constraint firstItem="2117" firstAttribute="leading" secondItem="2104" secondAttribute="leading" constant="20" symbolic="YES" id="2132"/>
+                    <constraint firstAttribute="trailing" secondItem="2117" secondAttribute="trailing" constant="20" symbolic="YES" id="2134"/>
+                    <constraint firstAttribute="bottom" secondItem="2109" secondAttribute="bottom" constant="20" symbolic="YES" id="2141"/>
+                    <constraint firstAttribute="bottom" secondItem="2113" secondAttribute="bottom" constant="20" symbolic="YES" id="2142"/>
+                    <constraint firstAttribute="bottom" secondItem="2126" secondAttribute="bottom" constant="20" symbolic="YES" id="2143"/>
+                    <constraint firstItem="2117" firstAttribute="top" secondItem="2104" secondAttribute="top" constant="20" symbolic="YES" id="2145"/>
+                    <constraint firstItem="2126" firstAttribute="leading" secondItem="2113" secondAttribute="trailing" constant="12" symbolic="YES" id="2146"/>
+                    <constraint firstAttribute="trailing" secondItem="2109" secondAttribute="trailing" constant="20" symbolic="YES" id="2148"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="initialFirstResponder" destination="2117" id="2149"/>
+            </connections>
+            <point key="canvasLocation" x="168" y="-602"/>
+        </window>
+        <window title="设备选项" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="propertiesFrame" animationBehavior="default" id="2159" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="112" width="378" height="276"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" id="2160">
+                <rect key="frame" x="0.0" y="0.0" width="378" height="276"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2161">
+                        <rect key="frame" x="-1" y="-1" width="380" height="278"/>
+                        <clipView key="contentView" id="PWG-Sl-59T">
+                            <rect key="frame" x="1" y="0.0" width="378" height="277"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" headerView="2164" indentationPerLevel="16" outlineTableColumn="2166" id="2162">
+                                    <rect key="frame" x="0.0" y="0.0" width="378" height="254"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <size key="intercellSpacing" width="3" height="2"/>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <tableColumns>
+                                        <tableColumn editable="NO" width="147" minWidth="16" maxWidth="1000" id="2166">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="名称">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" controlSize="small" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="2169">
+                                                <font key="font" metaFont="fixedUser" size="11"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="2177" name="value" keyPath="arrangedObjects.key" id="2181">
+                                                    <dictionary key="options">
+                                                        <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </tableColumn>
+                                        <tableColumn editable="NO" width="225" minWidth="40" maxWidth="1000" id="2167">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="值">
+                                                <font key="font" metaFont="smallSystem"/>
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" controlSize="small" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="2168">
+                                                <font key="font" metaFont="fixedUser" size="11"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="2177" name="value" keyPath="arrangedObjects.value" id="2183">
+                                                    <dictionary key="options">
+                                                        <bool key="NSConditionallySetsEditable" value="YES"/>
+                                                    </dictionary>
+                                                </binding>
+                                            </connections>
+                                        </tableColumn>
+                                    </tableColumns>
+                                    <connections>
+                                        <outlet property="delegate" destination="534" id="2176"/>
+                                    </connections>
+                                </outlineView>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="2163">
+                            <rect key="frame" x="1" y="119" width="223" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="2165">
+                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <tableHeaderView key="headerView" id="2164">
+                            <rect key="frame" x="0.0" y="0.0" width="378" height="23"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </tableHeaderView>
+                    </scrollView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2161" firstAttribute="leading" secondItem="2160" secondAttribute="leading" constant="-1" id="2171"/>
+                    <constraint firstItem="2161" firstAttribute="top" secondItem="2160" secondAttribute="top" constant="-1" id="2172"/>
+                    <constraint firstAttribute="trailing" secondItem="2161" secondAttribute="trailing" constant="-1" id="2174"/>
+                    <constraint firstAttribute="bottom" secondItem="2161" secondAttribute="bottom" constant="-1" id="2175"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="534" id="2194"/>
+            </connections>
+        </window>
+    </objects>
+    <resources>
+        <image name="NSAddTemplate" width="11" height="11"/>
+        <image name="NSFolderSmart" width="32" height="32"/>
+        <image name="NSPreferencesGeneral" width="32" height="32"/>
+        <image name="NSRemoveTemplate" width="11" height="11"/>
+        <image name="ToolbarUtilitiesFolderIcon" width="512" height="512"/>
+    </resources>
+</document>

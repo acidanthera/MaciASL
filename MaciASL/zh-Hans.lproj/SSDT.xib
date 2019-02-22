@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SSDTGen">
+            <connections>
+                <outlet property="_generatorView" destination="711" id="cCH-qH-IMp"/>
+                <outlet property="_sourceView" destination="783" id="Xqi-sU-UEG"/>
+                <outlet property="_window" destination="1" id="var-1a-BSO"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="生成 SSDT" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="ssdtFrame" animationBehavior="default" id="1">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+            <rect key="contentRect" x="196" y="207" width="577" height="401"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" id="2">
+                <rect key="frame" x="0.0" y="0.0" width="577" height="401"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <splitView autosaveName="ssdtMainFrame" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="93">
+                        <rect key="frame" x="0.0" y="0.0" width="577" height="401"/>
+                        <subviews>
+                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="782">
+                                <rect key="frame" x="0.0" y="0.0" width="181" height="401"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <clipView key="contentView" drawsBackground="NO" id="A9j-u9-Tqw">
+                                    <rect key="frame" x="1" y="1" width="179" height="399"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="20" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="786" id="783">
+                                            <rect key="frame" x="0.0" y="0.0" width="179" height="399"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <size key="intercellSpacing" width="3" height="0.0"/>
+                                            <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                            <tableColumns>
+                                                <tableColumn identifier="AutomaticTableColumnIdentifier.0" width="176" minWidth="16" maxWidth="1000" id="786">
+                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                        <font key="font" metaFont="smallSystem"/>
+                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </tableHeaderCell>
+                                                    <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="787">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                    <prototypeCellViews>
+                                                        <tableCellView id="853">
+                                                            <rect key="frame" x="1" y="0.0" width="176" height="20"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <imageView translatesAutoresizingMaskIntoConstraints="NO" id="860">
+                                                                    <rect key="frame" x="2" y="2" width="16" height="16"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="16" id="861"/>
+                                                                        <constraint firstAttribute="height" constant="16" id="862"/>
+                                                                    </constraints>
+                                                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="863"/>
+                                                                    <connections>
+                                                                        <binding destination="853" name="value" keyPath="objectValue.class" id="869">
+                                                                            <dictionary key="options">
+                                                                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                                                                <string key="NSValueTransformerName">SrcClassTransformer</string>
+                                                                            </dictionary>
+                                                                        </binding>
+                                                                    </connections>
+                                                                </imageView>
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="859">
+                                                                    <rect key="frame" x="26" y="3" width="149" height="17"/>
+                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="864">
+                                                                        <font key="font" metaFont="system"/>
+                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                    </textFieldCell>
+                                                                    <connections>
+                                                                        <binding destination="853" name="value" keyPath="objectValue.name" id="868"/>
+                                                                    </connections>
+                                                                </textField>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="860" firstAttribute="leading" secondItem="853" secondAttribute="leading" constant="2" id="854"/>
+                                                                <constraint firstItem="860" firstAttribute="centerY" secondItem="853" secondAttribute="centerY" id="855"/>
+                                                                <constraint firstItem="859" firstAttribute="leading" secondItem="853" secondAttribute="leading" constant="28" id="856"/>
+                                                                <constraint firstAttribute="trailing" secondItem="859" secondAttribute="trailing" constant="3" id="857"/>
+                                                                <constraint firstAttribute="bottom" secondItem="859" secondAttribute="bottom" constant="3" id="858"/>
+                                                            </constraints>
+                                                            <connections>
+                                                                <outlet property="imageView" destination="860" id="865"/>
+                                                                <outlet property="textField" destination="859" id="866"/>
+                                                            </connections>
+                                                        </tableCellView>
+                                                    </prototypeCellViews>
+                                                </tableColumn>
+                                            </tableColumns>
+                                            <connections>
+                                                <action selector="chooseGenerator:" target="-2" id="830"/>
+                                                <binding destination="640" name="content" keyPath="arrangedObjects" id="829"/>
+                                                <binding destination="640" name="selectionIndexPaths" keyPath="selectionIndexPaths" previousBinding="829" id="898"/>
+                                                <binding destination="640" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="898" id="900"/>
+                                            </connections>
+                                        </outlineView>
+                                    </subviews>
+                                    <nil key="backgroundColor"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="784">
+                                    <rect key="frame" x="1" y="119" width="238" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="785">
+                                    <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <splitView fixedFrame="YES" autosaveName="ssdtSubFrame" dividerStyle="thin" id="102">
+                                <rect key="frame" x="182" y="0.0" width="395" height="401"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <customView id="103">
+                                        <rect key="frame" x="0.0" y="0.0" width="395" height="186"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <subviews>
+                                            <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="131">
+                                                <rect key="frame" x="210" y="146" width="144" height="22"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="" drawsBackground="YES" id="163">
+                                                    <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="165">
+                                                        <integer key="minimum" value="5"/>
+                                                        <integer key="maximum" value="150"/>
+                                                    </numberFormatter>
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="tdp" id="378">
+                                                        <dictionary key="options">
+                                                            <bool key="NSConditionallySetsEditable" value="NO"/>
+                                                            <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                                            <integer key="NSNullPlaceholder" value="65"/>
+                                                        </dictionary>
+                                                    </binding>
+                                                </connections>
+                                            </textField>
+                                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="135">
+                                                <rect key="frame" x="359" y="143" width="19" height="27"/>
+                                                <stepperCell key="cell" continuous="YES" alignment="left" minValue="5" maxValue="150" doubleValue="65" id="158"/>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="tdp" id="364">
+                                                        <dictionary key="options">
+                                                            <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                                            <integer key="NSNullPlaceholder" value="65"/>
+                                                        </dictionary>
+                                                    </binding>
+                                                </connections>
+                                            </stepper>
+                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="137">
+                                                <rect key="frame" x="18" y="149" width="70" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="TDP (瓦特)" id="156">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="413">
+                                                <rect key="frame" x="210" y="114" width="144" height="22"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="" drawsBackground="YES" id="438">
+                                                    <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="439">
+                                                        <integer key="minimum" value="1000"/>
+                                                        <integer key="maximum" value="5000"/>
+                                                    </numberFormatter>
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="mtf" id="446">
+                                                        <dictionary key="options">
+                                                            <bool key="NSConditionallySetsEditable" value="NO"/>
+                                                            <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                                            <integer key="NSNullPlaceholder" value="2900"/>
+                                                        </dictionary>
+                                                    </binding>
+                                                </connections>
+                                            </textField>
+                                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="416">
+                                                <rect key="frame" x="359" y="111" width="19" height="27"/>
+                                                <stepperCell key="cell" continuous="YES" alignment="left" increment="100" minValue="1000" maxValue="5000" doubleValue="2900" id="435"/>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="mtf" id="447">
+                                                        <dictionary key="options">
+                                                            <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                                            <integer key="NSNullPlaceholder" value="2900"/>
+                                                        </dictionary>
+                                                    </binding>
+                                                </connections>
+                                            </stepper>
+                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="417">
+                                                <rect key="frame" x="18" y="118" width="126" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="最大睿频频率 (MHz)" id="434">
+                                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="505">
+                                                <rect key="frame" x="359" y="79" width="19" height="27"/>
+                                                <stepperCell key="cell" continuous="YES" alignment="left" minValue="1" maxValue="32" doubleValue="1" id="520"/>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="logicalcpus" id="524">
+                                                        <dictionary key="options">
+                                                            <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                                        </dictionary>
+                                                    </binding>
+                                                </connections>
+                                            </stepper>
+                                            <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="506">
+                                                <rect key="frame" x="210" y="82" width="144" height="22"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="" drawsBackground="YES" id="518">
+                                                    <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="519">
+                                                        <integer key="minimum" value="1"/>
+                                                        <integer key="maximum" value="32"/>
+                                                    </numberFormatter>
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="logicalcpus" id="523">
+                                                        <dictionary key="options">
+                                                            <bool key="NSConditionallySetsEditable" value="NO"/>
+                                                            <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                                        </dictionary>
+                                                    </binding>
+                                                </connections>
+                                            </textField>
+                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="507">
+                                                <rect key="frame" x="18" y="86" width="150" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="逻辑处理器数量 (大于 0)" id="517">
+                                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="568">
+                                                <rect key="frame" x="18" y="53" width="102" height="17"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="CPU 频率 (MHz)" id="576">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="569">
+                                                <rect key="frame" x="210" y="50" width="144" height="22"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="" drawsBackground="YES" id="574">
+                                                    <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="575">
+                                                        <integer key="minimum" value="2000"/>
+                                                        <integer key="maximum" value="5000"/>
+                                                    </numberFormatter>
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="cpufrequency" id="583">
+                                                        <dictionary key="options">
+                                                            <bool key="NSConditionallySetsEditable" value="NO"/>
+                                                            <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                                        </dictionary>
+                                                    </binding>
+                                                </connections>
+                                            </textField>
+                                            <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="570">
+                                                <rect key="frame" x="359" y="47" width="19" height="27"/>
+                                                <stepperCell key="cell" continuous="YES" alignment="left" increment="100" minValue="2000" maxValue="5000" doubleValue="2000" id="573"/>
+                                                <connections>
+                                                    <binding destination="-2" name="value" keyPath="cpufrequency" id="582">
+                                                        <dictionary key="options">
+                                                            <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                                        </dictionary>
+                                                    </binding>
+                                                </connections>
+                                            </stepper>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="613">
+                                                <rect key="frame" x="314" y="14" width="67" height="32"/>
+                                                <buttonCell key="cell" type="push" title="确定" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="618">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="generate:" target="-2" id="621"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="614">
+                                                <rect key="frame" x="14" y="14" width="67" height="32"/>
+                                                <buttonCell key="cell" type="push" title="取消" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="617">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="performClose:" target="1" id="620"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="615">
+                                                <rect key="frame" x="164" y="14" width="67" height="32"/>
+                                                <buttonCell key="cell" type="push" title="重置" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="616">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" size="13" name=".PingFangSC-Regular"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="resetGenerator:" target="-2" id="kjS-i0-7OB"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="137" firstAttribute="leading" secondItem="103" secondAttribute="leading" constant="20" symbolic="YES" id="318"/>
+                                            <constraint firstItem="131" firstAttribute="top" secondItem="135" secondAttribute="top" id="410"/>
+                                            <constraint firstItem="135" firstAttribute="leading" secondItem="131" secondAttribute="trailing" constant="8" symbolic="YES" id="412"/>
+                                            <constraint firstItem="417" firstAttribute="leading" secondItem="103" secondAttribute="leading" constant="20" symbolic="YES" id="489"/>
+                                            <constraint firstItem="131" firstAttribute="leading" secondItem="413" secondAttribute="leading" id="492"/>
+                                            <constraint firstItem="413" firstAttribute="top" secondItem="131" secondAttribute="bottom" constant="10" symbolic="YES" id="493"/>
+                                            <constraint firstItem="416" firstAttribute="top" secondItem="413" secondAttribute="top" id="495"/>
+                                            <constraint firstItem="416" firstAttribute="leading" secondItem="413" secondAttribute="trailing" constant="8" symbolic="YES" id="496"/>
+                                            <constraint firstItem="417" firstAttribute="baseline" secondItem="413" secondAttribute="baseline" id="497"/>
+                                            <constraint firstItem="413" firstAttribute="leading" secondItem="417" secondAttribute="trailing" constant="8" symbolic="YES" id="498"/>
+                                            <constraint firstItem="137" firstAttribute="baseline" secondItem="131" secondAttribute="baseline" id="501"/>
+                                            <constraint firstItem="506" firstAttribute="top" secondItem="413" secondAttribute="bottom" constant="10" symbolic="YES" id="552"/>
+                                            <constraint firstItem="506" firstAttribute="leading" secondItem="413" secondAttribute="leading" id="554"/>
+                                            <constraint firstItem="505" firstAttribute="leading" secondItem="506" secondAttribute="trailing" constant="8" symbolic="YES" id="561"/>
+                                            <constraint firstItem="505" firstAttribute="top" secondItem="506" secondAttribute="top" id="562"/>
+                                            <constraint firstItem="507" firstAttribute="baseline" secondItem="506" secondAttribute="baseline" id="564"/>
+                                            <constraint firstItem="507" firstAttribute="leading" secondItem="103" secondAttribute="leading" constant="20" symbolic="YES" id="565"/>
+                                            <constraint firstItem="569" firstAttribute="top" secondItem="506" secondAttribute="bottom" constant="10" symbolic="YES" id="603"/>
+                                            <constraint firstItem="569" firstAttribute="leading" secondItem="506" secondAttribute="leading" id="605"/>
+                                            <constraint firstItem="570" firstAttribute="top" secondItem="569" secondAttribute="top" id="608"/>
+                                            <constraint firstItem="570" firstAttribute="leading" secondItem="569" secondAttribute="trailing" constant="8" symbolic="YES" id="609"/>
+                                            <constraint firstItem="568" firstAttribute="leading" secondItem="103" secondAttribute="leading" constant="20" symbolic="YES" id="611"/>
+                                            <constraint firstItem="568" firstAttribute="baseline" secondItem="569" secondAttribute="baseline" id="612"/>
+                                            <constraint firstItem="614" firstAttribute="leading" secondItem="103" secondAttribute="leading" constant="20" symbolic="YES" id="639"/>
+                                            <constraint firstItem="416" firstAttribute="leading" secondItem="505" secondAttribute="leading" id="879"/>
+                                            <constraint firstItem="416" firstAttribute="leading" secondItem="135" secondAttribute="leading" id="881"/>
+                                            <constraint firstItem="570" firstAttribute="leading" secondItem="505" secondAttribute="leading" id="882"/>
+                                            <constraint firstItem="613" firstAttribute="trailing" secondItem="570" secondAttribute="trailing" id="883"/>
+                                            <constraint firstItem="613" firstAttribute="baseline" secondItem="615" secondAttribute="baseline" id="890"/>
+                                            <constraint firstItem="615" firstAttribute="baseline" secondItem="614" secondAttribute="baseline" id="892"/>
+                                            <constraint firstItem="506" firstAttribute="centerY" secondItem="103" secondAttribute="centerY" id="893"/>
+                                            <constraint firstItem="615" firstAttribute="centerX" secondItem="103" secondAttribute="centerX" id="894"/>
+                                            <constraint firstAttribute="trailing" secondItem="613" secondAttribute="trailing" constant="20" symbolic="YES" id="895"/>
+                                            <constraint firstItem="613" firstAttribute="top" secondItem="569" secondAttribute="bottom" constant="8" symbolic="YES" id="896"/>
+                                        </constraints>
+                                    </customView>
+                                    <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="710">
+                                        <rect key="frame" x="0.0" y="187" width="395" height="214"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <clipView key="contentView" drawsBackground="NO" id="uwd-4a-e41">
+                                            <rect key="frame" x="1" y="1" width="378" height="212"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="bar" incrementalSearchingEnabled="YES" allowsUndo="YES" spellingCorrection="YES" id="711">
+                                                    <rect key="frame" x="0.0" y="0.0" width="378" height="212"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <size key="minSize" width="378" height="212"/>
+                                                    <size key="maxSize" width="463" height="10000000"/>
+                                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <connections>
+                                                        <binding destination="-2" name="value" keyPath="generator" id="873">
+                                                            <dictionary key="options">
+                                                                <bool key="NSConditionallySetsEditable" value="NO"/>
+                                                                <bool key="NSContinuouslyUpdatesValue" value="YES"/>
+                                                                <string key="NSNullPlaceholder">Generator Text</string>
+                                                            </dictionary>
+                                                        </binding>
+                                                        <binding destination="342" name="font" keyPath="selectedFont" id="729"/>
+                                                    </connections>
+                                                </textView>
+                                            </subviews>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="712">
+                                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="713">
+                                            <rect key="frame" x="379" y="1" width="15" height="212"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                </subviews>
+                                <holdingPriorities>
+                                    <real value="249"/>
+                                    <real value="250"/>
+                                </holdingPriorities>
+                            </splitView>
+                        </subviews>
+                        <holdingPriorities>
+                            <real value="250"/>
+                            <real value="249"/>
+                        </holdingPriorities>
+                    </splitView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="93" firstAttribute="top" secondItem="2" secondAttribute="top" id="126"/>
+                    <constraint firstItem="93" firstAttribute="leading" secondItem="2" secondAttribute="leading" id="127"/>
+                    <constraint firstItem="93" firstAttribute="bottom" secondItem="2" secondAttribute="bottom" id="129"/>
+                    <constraint firstItem="93" firstAttribute="trailing" secondItem="2" secondAttribute="trailing" id="130"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="initialFirstResponder" destination="131" id="872"/>
+            </connections>
+            <point key="canvasLocation" x="139.5" y="147.5"/>
+        </window>
+        <treeController objectClassName="SourceProvider" editable="NO" childrenKeyPath="children.SSDT" avoidsEmptySelection="NO" preservesSelection="NO" selectsInsertedObjects="NO" id="640" userLabel="Sources">
+            <connections>
+                <binding destination="343" name="contentArray" keyPath="providers" id="642"/>
+            </connections>
+        </treeController>
+        <customObject id="342" userLabel="Font Manager" customClass="NSFontManager"/>
+        <customObject id="343" userLabel="Source List" customClass="SourceList"/>
+    </objects>
+    <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
+    </resources>
+</document>
