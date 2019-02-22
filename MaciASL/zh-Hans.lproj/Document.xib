@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +22,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES"/>
             <rect key="contentRect" x="494" y="288" width="732" height="480"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <value key="minSize" type="size" width="94" height="86"/>
             <view key="contentView" id="6">
                 <rect key="frame" x="0.0" y="0.0" width="732" height="480"/>
@@ -132,7 +133,7 @@
                                     </scrollView>
                                     <searchField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101596">
                                         <rect key="frame" x="2" y="2" width="169" height="19"/>
-                                        <searchFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="Filter Tree" usesSingleLineMode="YES" bezelStyle="round" sendsSearchStringImmediately="YES" id="101597">
+                                        <searchFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="查找" usesSingleLineMode="YES" bezelStyle="round" sendsSearchStringImmediately="YES" id="101597">
                                             <font key="font" metaFont="smallSystem"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -255,7 +256,7 @@
                             <action selector="showLog:" target="-1" id="100455"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="FE256CD2-686C-46EC-8FC5-322EFF5A1AD5" label="补丁" paletteLabel="补丁" tag="-1" image="NSFolderSmart" autovalidates="NO" id="100453">
+                    <toolbarItem implicitItemIdentifier="FE256CD2-686C-46EC-8FC5-322EFF5A1AD5" label="补丁库" paletteLabel="补丁库" tag="-1" image="NSFolderSmart" autovalidates="NO" id="100453">
                         <connections>
                             <action selector="patch:" target="-2" id="100454"/>
                             <binding destination="-2" name="enabled" keyPath="isLocked" id="101849">
@@ -285,7 +286,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="207" width="173" height="95"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="101817">
                 <rect key="frame" x="0.0" y="0.0" width="173" height="95"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -317,7 +318,7 @@ Gw
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101826">
-                        <rect key="frame" x="55" y="53" width="98" height="22"/>
+                        <rect key="frame" x="50" y="53" width="103" height="22"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="101827">
                             <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="101843">
                                 <real key="minimum" value="1"/>
@@ -335,8 +336,8 @@ Gw
                         </connections>
                     </textField>
                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101831">
-                        <rect key="frame" x="18" y="57" width="31" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="行：" id="101832">
+                        <rect key="frame" x="18" y="57" width="26" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="行: " id="101832">
                             <font key="font" size="13" name=".PingFangSC-Regular"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
