@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,7 +19,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="207" width="599" height="368"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="599" height="368"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -146,7 +147,7 @@
                                                                     <dictionary key="options">
                                                                         <bool key="NSConditionallySetsEditable" value="NO"/>
                                                                         <bool key="NSContinuouslyUpdatesValue" value="YES"/>
-                                                                        <string key="NSNullPlaceholder">Patch Text</string>
+                                                                        <string key="NSNullPlaceholder">补丁内容</string>
                                                                     </dictionary>
                                                                 </binding>
                                                                 <binding destination="401" name="font" keyPath="selectedFont" id="414"/>
@@ -179,7 +180,7 @@
                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                             <tableColumns>
                                                                 <tableColumn editable="NO" width="230" minWidth="40" maxWidth="1000" id="288">
-                                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="使用补丁前">
+                                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="使用前">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -202,7 +203,7 @@
                                                                     </connections>
                                                                 </tableColumn>
                                                                 <tableColumn editable="NO" width="231" minWidth="40" maxWidth="1000" id="289">
-                                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="使用补丁后">
+                                                                    <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="使用后">
                                                                         <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -262,8 +263,8 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="24">
-                                        <rect key="frame" x="14" y="4" width="120" height="32"/>
-                                        <buttonCell key="cell" type="push" title="打开本地补丁" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="56">
+                                        <rect key="frame" x="14" y="4" width="147" height="32"/>
+                                        <buttonCell key="cell" type="push" title="应用本地补丁文件" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="56">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" size="13" name=".PingFangSC-Regular"/>
                                         </buttonCell>
@@ -287,7 +288,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="376">
-                                        <rect key="frame" x="134" y="13" width="127" height="17"/>
+                                        <rect key="frame" x="161" y="13" width="127" height="17"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="10 个补丁, 10 个变化" id="377">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
