@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -167,13 +166,13 @@
                                     <action selector="paste:" target="-1" id="1315"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="粘贴并匹配格式" keyEquivalent="V" id="1270">
+                            <menuItem title="粘贴并匹配样式" keyEquivalent="V" id="1270">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="pasteAsPlainText:" target="-1" id="1332"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="删除" keyEquivalent="" id="1271">
+                            <menuItem title="删除" id="1271">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="delete:" target="-1" id="1325"/>
@@ -210,17 +209,17 @@
                                                 <action selector="performFindPanelAction:" target="-1" id="1339"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="使用当前选中来查找" tag="7" keyEquivalent="e" id="1306">
+                                        <menuItem title="查找所选内容" tag="7" keyEquivalent="e" id="1306">
                                             <connections>
                                                 <action selector="performFindPanelAction:" target="-1" id="1335"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="跳转到选中内容" keyEquivalent="j" id="1307">
+                                        <menuItem title="跳到所选内容" keyEquivalent="j" id="1307">
                                             <connections>
                                                 <action selector="centerSelectionInVisibleArea:" target="-1" id="1337"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="跳转到行" keyEquivalent="l" id="1960">
+                                        <menuItem title="选择行…" keyEquivalent="l" id="1960">
                                             <connections>
                                                 <action selector="jumpToLine:" target="-1" id="1961"/>
                                             </connections>
@@ -232,19 +231,19 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="转换" id="1282">
                                     <items>
-                                        <menuItem title="转换为大写" id="1283">
+                                        <menuItem title="变为大写" id="1283">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="uppercaseWord:" target="-1" id="1320"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="转换为小写" id="1284">
+                                        <menuItem title="变为小写" id="1284">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="lowercaseWord:" target="-1" id="1321"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="大写" id="1285">
+                                        <menuItem title="首字母大写" id="1285">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="capitalizeWord:" target="-1" id="1327"/>
@@ -289,26 +288,26 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="字体" systemMenu="font" id="1481">
                         <items>
-                            <menuItem title="查看字体" keyEquivalent="t" id="1482">
+                            <menuItem title="显示字体" keyEquivalent="t" id="1482">
                                 <connections>
                                     <action selector="orderFrontFontPanel:" target="419" id="1516"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1486"/>
-                            <menuItem title="增大字号" tag="3" keyEquivalent="+" id="1487">
+                            <menuItem title="较大" tag="3" keyEquivalent="+" id="1487">
                                 <connections>
                                     <action selector="modifyFont:" target="419" id="1513"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="减小字号" tag="4" keyEquivalent="-" id="1488">
+                            <menuItem title="较小" tag="4" keyEquivalent="-" id="1488">
                                 <connections>
                                     <action selector="modifyFont:" target="419" id="1515"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1489"/>
-                            <menuItem title="字间距" id="1490">
+                            <menuItem title="字距调整" id="1490">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="字间距" id="1508">
+                                <menu key="submenu" title="字距调整" id="1508">
                                     <items>
                                         <menuItem title="使用默认" id="1509">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -316,19 +315,19 @@
                                                 <action selector="useStandardKerning:" target="-1" id="1530"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="不使用" id="1510">
+                                        <menuItem title="都不使用" id="1510">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="turnOffKerning:" target="-1" id="1533"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="紧凑" id="1511">
+                                        <menuItem title="紧排" id="1511">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="tightenKerning:" target="-1" id="1527"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="松散" id="1512">
+                                        <menuItem title="松排" id="1512">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="loosenKerning:" target="-1" id="1518"/>
@@ -337,9 +336,9 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="字间松弛度" id="1491">
+                            <menuItem title="连字" id="1491">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="字间松弛度" id="1504">
+                                <menu key="submenu" title="连字" id="1504">
                                     <items>
                                         <menuItem title="使用默认" id="1505">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -362,9 +361,9 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="垂直字间距" id="1492">
+                            <menuItem title="基线" id="1492">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="垂直字间距" id="1498">
+                                <menu key="submenu" title="基线" id="1498">
                                     <items>
                                         <menuItem title="使用默认" id="1499">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -372,25 +371,25 @@
                                                 <action selector="unscript:" target="-1" id="1529"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="向下松弛" id="1500">
+                                        <menuItem title="上标" id="1500">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="superscript:" target="-1" id="1524"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="向上紧凑" id="1501">
+                                        <menuItem title="下标" id="1501">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="subscript:" target="-1" id="1526"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="更上" id="1502">
+                                        <menuItem title="升高" id="1502">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="raiseBaseline:" target="-1" id="1520"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="更下" id="1503">
+                                        <menuItem title="降低" id="1503">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="lowerBaseline:" target="-1" id="1523"/>
@@ -406,7 +405,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="1495"/>
-                            <menuItem title="复制样式" keyEquivalent="c" id="1496">
+                            <menuItem title="拷贝样式" keyEquivalent="c" id="1496">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="copyFont:" target="-1" id="1522"/>
@@ -507,7 +506,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="112" width="678" height="210"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="646">
                 <rect key="frame" x="0.0" y="0.0" width="678" height="210"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -598,7 +597,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES"/>
             <rect key="contentRect" x="1280" y="366" width="372" height="188"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="2041">
                 <rect key="frame" x="0.0" y="0.0" width="372" height="188"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -736,7 +735,7 @@
         <window title="偏好设置" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="prefFrame" animationBehavior="default" id="705">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="196" y="207" width="480" height="280"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="706">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="280"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -774,7 +773,7 @@
             </connections>
             <point key="canvasLocation" x="143" y="707"/>
         </window>
-        <customView id="728" userLabel="iASL">
+        <customView id="728" userLabel="编译器">
             <rect key="frame" x="0.0" y="0.0" width="480" height="380"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -1294,7 +1293,7 @@
                 <binding destination="534" name="contentArray" keyPath="log" id="676"/>
             </connections>
         </arrayController>
-        <arrayController avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" id="1153" userLabel="Источники">
+        <arrayController avoidsEmptySelection="NO" clearsFilterPredicateOnInsertion="NO" id="1153" userLabel="补丁源">
             <declaredKeys>
                 <string>name</string>
                 <string>url</string>
@@ -1310,12 +1309,12 @@
             </connections>
         </arrayController>
         <userDefaultsController representsSharedInstance="YES" id="763"/>
-        <objectController objectClassName="iASLCompilationResult" editable="NO" id="2039" userLabel="Результат">
+        <objectController objectClassName="iASLCompilationResult" editable="NO" id="2039" userLabel="结果">
             <connections>
                 <binding destination="2040" name="contentObject" keyPath="selection.result" id="2227"/>
             </connections>
         </objectController>
-        <objectController objectClassName="Document" id="2040" userLabel="Текущий документ">
+        <objectController objectClassName="Document" id="2040" userLabel="当前文档">
             <connections>
                 <binding destination="-3" name="contentObject" keyPath="mainWindow.document" id="2074"/>
             </connections>
@@ -1324,7 +1323,7 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="207" width="408" height="102"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="2104">
                 <rect key="frame" x="0.0" y="0.0" width="408" height="102"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -1405,7 +1404,7 @@ Gw
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="112" width="378" height="276"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="2160">
                 <rect key="frame" x="0.0" y="0.0" width="378" height="276"/>
                 <autoresizingMask key="autoresizingMask"/>
