@@ -1,6 +1,11 @@
 MaciASL Changelog
 =================
 
+#### v1.5.4
+- Updated iasl compiler set with ACPI 6.3 support
+- Added Chinese translation by williambj1
+- Added more repositories by williambj1
+
 #### v1.5.3
 - Added dark mode support on 10.14
 - Added dev branch for iasl
