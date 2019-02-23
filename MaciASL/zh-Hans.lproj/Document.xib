@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="文件拥有者" customClass="Document">
+            <connections>
+                <outlet property="_filter" destination="101596" id="tT2-94-RhR"/>
+                <outlet property="_jump" destination="101816" id="wzB-HK-aAs"/>
+                <outlet property="_navController" destination="100085" id="9CA-49-TWg"/>
+                <outlet property="_navView" destination="101410" id="LfH-XP-bWS"/>
+                <outlet property="_textView" destination="100068" id="dQD-ML-okh"/>
+                <outlet property="window" destination="5" id="18"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="第一响应" customClass="FirstResponder"/>
+        <window title="窗口" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="docFrame" animationBehavior="default" id="5" userLabel="Window">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES"/>
+            <rect key="contentRect" x="494" y="288" width="732" height="480"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <value key="minSize" type="size" width="94" height="86"/>
+            <view key="contentView" id="6">
+                <rect key="frame" x="0.0" y="0.0" width="732" height="480"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <splitView autosaveName="docDivFrame" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="100029">
+                        <rect key="frame" x="0.0" y="20" width="732" height="460"/>
+                        <subviews>
+                            <customView id="100030">
+                                <rect key="frame" x="0.0" y="0.0" width="173" height="460"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <subviews>
+                                    <scrollView autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="101409">
+                                        <rect key="frame" x="0.0" y="22" width="173" height="438"/>
+                                        <clipView key="contentView" drawsBackground="NO" id="65A-IA-qPu">
+                                            <rect key="frame" x="1" y="1" width="171" height="436"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="20" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="101413" id="101410">
+                                                    <rect key="frame" x="0.0" y="0.0" width="171" height="436"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <size key="intercellSpacing" width="3" height="0.0"/>
+                                                    <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                                    <tableColumns>
+                                                        <tableColumn editable="NO" width="168" minWidth="16" maxWidth="1000" id="101413">
+                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
+                                                                <font key="font" metaFont="smallSystem"/>
+                                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </tableHeaderCell>
+                                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" alignment="left" title="Text Cell" id="101414">
+                                                                <font key="font" metaFont="system"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                                            <prototypeCellViews>
+                                                                <tableCellView id="101752">
+                                                                    <rect key="frame" x="1" y="0.0" width="168" height="20"/>
+                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                    <subviews>
+                                                                        <imageView translatesAutoresizingMaskIntoConstraints="NO" id="101753">
+                                                                            <rect key="frame" x="2" y="2" width="16" height="16"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="16" id="101782"/>
+                                                                                <constraint firstAttribute="height" constant="16" id="101814"/>
+                                                                            </constraints>
+                                                                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSActionTemplate" id="101756"/>
+                                                                            <connections>
+                                                                                <binding destination="101752" name="value" keyPath="objectValue.class" id="101792">
+                                                                                    <dictionary key="options">
+                                                                                        <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                                                                        <string key="NSValueTransformerName">NavClassTransformer</string>
+                                                                                    </dictionary>
+                                                                                </binding>
+                                                                            </connections>
+                                                                        </imageView>
+                                                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="101754">
+                                                                            <rect key="frame" x="26" y="3" width="141" height="17"/>
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="101755">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                            <connections>
+                                                                                <binding destination="101752" name="value" keyPath="objectValue.name" id="101788"/>
+                                                                            </connections>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="101753" firstAttribute="leading" secondItem="101752" secondAttribute="leading" constant="2" id="101785"/>
+                                                                        <constraint firstItem="101754" firstAttribute="leading" secondItem="101752" secondAttribute="leading" constant="28" id="101797"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="101754" secondAttribute="trailing" constant="3" id="101798"/>
+                                                                        <constraint firstItem="101753" firstAttribute="centerY" secondItem="101752" secondAttribute="centerY" id="101808"/>
+                                                                        <constraint firstAttribute="bottom" secondItem="101754" secondAttribute="bottom" constant="3" id="101813"/>
+                                                                    </constraints>
+                                                                    <connections>
+                                                                        <outlet property="imageView" destination="101753" id="101757"/>
+                                                                        <outlet property="textField" destination="101754" id="101758"/>
+                                                                    </connections>
+                                                                </tableCellView>
+                                                            </prototypeCellViews>
+                                                        </tableColumn>
+                                                    </tableColumns>
+                                                    <connections>
+                                                        <binding destination="100085" name="content" keyPath="arrangedObjects" id="101450"/>
+                                                        <binding destination="100085" name="selectionIndexPaths" keyPath="selectionIndexPaths" previousBinding="101450" id="101452"/>
+                                                        <binding destination="100085" name="sortDescriptors" keyPath="sortDescriptors" previousBinding="101452" id="101866"/>
+                                                        <outlet property="dataSource" destination="-2" id="101864"/>
+                                                        <outlet property="delegate" destination="-2" id="101654"/>
+                                                    </connections>
+                                                </outlineView>
+                                            </subviews>
+                                            <nil key="backgroundColor"/>
+                                        </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="101411">
+                                            <rect key="frame" x="1" y="119" width="238" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="101412">
+                                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <connections>
+                                            <outlet property="nextKeyView" destination="101596" id="101655"/>
+                                        </connections>
+                                    </scrollView>
+                                    <searchField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101596">
+                                        <rect key="frame" x="2" y="2" width="169" height="19"/>
+                                        <searchFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="查找" usesSingleLineMode="YES" bezelStyle="round" sendsSearchStringImmediately="YES" id="101597">
+                                            <font key="font" metaFont="smallSystem"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </searchFieldCell>
+                                        <connections>
+                                            <action selector="filterTree:" target="-2" id="101608"/>
+                                            <outlet property="nextKeyView" destination="100068" id="101656"/>
+                                        </connections>
+                                    </searchField>
+                                    <box autoresizesSubviews="NO" horizontalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="101609">
+                                        <rect key="frame" x="170" y="0.0" width="5" height="460"/>
+                                    </box>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="101409" firstAttribute="leading" secondItem="100030" secondAttribute="leading" id="101444"/>
+                                    <constraint firstItem="101409" firstAttribute="top" secondItem="100030" secondAttribute="top" id="101593"/>
+                                    <constraint firstAttribute="bottom" secondItem="101409" secondAttribute="bottom" constant="22" id="101594"/>
+                                    <constraint firstItem="101609" firstAttribute="bottom" secondItem="100030" secondAttribute="bottom" id="101613"/>
+                                    <constraint firstItem="101609" firstAttribute="top" secondItem="100030" secondAttribute="top" id="101628"/>
+                                    <constraint firstItem="101596" firstAttribute="leading" secondItem="100030" secondAttribute="leading" constant="2" id="101634"/>
+                                    <constraint firstItem="101409" firstAttribute="trailing" secondItem="101609" secondAttribute="trailing" id="101858"/>
+                                    <constraint firstAttribute="trailing" secondItem="101596" secondAttribute="trailing" constant="2" id="101860"/>
+                                    <constraint firstAttribute="bottom" secondItem="101596" secondAttribute="bottom" constant="2" id="101861"/>
+                                    <constraint firstItem="101409" firstAttribute="trailing" secondItem="100030" secondAttribute="trailing" id="101862"/>
+                                </constraints>
+                            </customView>
+                            <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="100067">
+                                <rect key="frame" x="182" y="0.0" width="550" height="460"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <clipView key="contentView" drawsBackground="NO" id="7jC-dT-zbU">
+                                    <rect key="frame" x="1" y="1" width="548" height="458"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" usesFontPanel="YES" findStyle="bar" incrementalSearchingEnabled="YES" allowsUndo="YES" usesRuler="YES" spellingCorrection="YES" id="100068" customClass="FSTextView">
+                                            <rect key="frame" x="0.0" y="0.0" width="548" height="458"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="548" height="458"/>
+                                            <size key="maxSize" width="10000000" height="10000000"/>
+                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <allowedInputSourceLocales>
+                                                <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                            </allowedInputSourceLocales>
+                                            <connections>
+                                                <binding destination="100274" name="font" keyPath="selectedFont" id="100276"/>
+                                                <outlet property="delegate" destination="-2" id="100269"/>
+                                            </connections>
+                                        </textView>
+                                    </subviews>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="100069">
+                                    <rect key="frame" x="1" y="444" width="463" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="100070">
+                                    <rect key="frame" x="464" y="1" width="15" height="443"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <connections>
+                                    <outlet property="nextKeyView" destination="101410" id="101657"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
+                        <holdingPriorities>
+                            <real value="250"/>
+                            <real value="150"/>
+                        </holdingPriorities>
+                    </splitView>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="100100">
+                        <rect key="frame" x="18" y="3" width="696" height="16"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Label" id="100101">
+                            <font key="font" metaFont="cellTitle"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="100085" name="value" keyPath="selectedNodes" id="100245">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NavTransformer</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </textField>
+                    <box autoresizesSubviews="NO" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="101580">
+                        <rect key="frame" x="0.0" y="18" width="732" height="5"/>
+                    </box>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="100029" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="100033"/>
+                    <constraint firstItem="100029" firstAttribute="top" secondItem="6" secondAttribute="top" id="100035"/>
+                    <constraint firstItem="100029" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" id="100037"/>
+                    <constraint firstAttribute="bottom" secondItem="100029" secondAttribute="bottom" constant="20" symbolic="YES" id="100099"/>
+                    <constraint firstItem="100100" firstAttribute="leading" secondItem="6" secondAttribute="leading" constant="20" symbolic="YES" id="100103"/>
+                    <constraint firstAttribute="trailing" secondItem="100100" secondAttribute="trailing" constant="20" symbolic="YES" id="100106"/>
+                    <constraint firstItem="101580" firstAttribute="leading" secondItem="6" secondAttribute="leading" id="101588"/>
+                    <constraint firstItem="101580" firstAttribute="trailing" secondItem="6" secondAttribute="trailing" id="101590"/>
+                    <constraint firstAttribute="bottom" secondItem="101580" secondAttribute="bottom" constant="20" symbolic="YES" id="101591"/>
+                    <constraint firstAttribute="bottom" secondItem="100100" secondAttribute="bottom" constant="3" id="101640"/>
+                </constraints>
+            </view>
+            <toolbar key="toolbar" implicitIdentifier="96B97E5D-C9E7-4DA7-A5D7-E1DAACE2D72A" displayMode="iconAndLabel" sizeMode="regular" id="100077">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="100080"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="100082"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="100078"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="100081"/>
+                    <toolbarItem implicitItemIdentifier="5952A668-45C2-4A5A-97AF-A8E7CA5A8233" label="编译" paletteLabel="编译" tag="-1" image="ToolbarUtilitiesFolderIcon" id="100270">
+                        <connections>
+                            <action selector="compile:" target="-2" id="100317"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="3AFB2E98-965D-4579-A8E3-B4CE91C4BED3" label="总结" paletteLabel="总结" tag="-1" image="NSInfo" id="100271">
+                        <connections>
+                            <action selector="showSummary:" target="-1" id="101851"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="D8339D20-AA4F-4500-9C05-3E9E9CFCDE89" label="日志" paletteLabel="日志" tag="-1" image="NSMultipleDocuments" id="100452">
+                        <connections>
+                            <action selector="showLog:" target="-1" id="100455"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="FE256CD2-686C-46EC-8FC5-322EFF5A1AD5" label="补丁库" paletteLabel="补丁库" tag="-1" image="NSFolderSmart" autovalidates="NO" id="100453">
+                        <connections>
+                            <action selector="patch:" target="-2" id="100454"/>
+                            <binding destination="-2" name="enabled" keyPath="isLocked" id="101849">
+                                <dictionary key="options">
+                                    <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="100080"/>
+                    <toolbarItem reference="100081"/>
+                    <toolbarItem reference="100270"/>
+                    <toolbarItem reference="100453"/>
+                    <toolbarItem reference="100081"/>
+                    <toolbarItem reference="100271"/>
+                    <toolbarItem reference="100452"/>
+                    <toolbarItem reference="100082"/>
+                </defaultToolbarItems>
+            </toolbar>
+            <connections>
+                <outlet property="initialFirstResponder" destination="100068" id="101478"/>
+            </connections>
+        </window>
+        <window title="跳转到行" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="101816">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="207" width="173" height="95"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <view key="contentView" id="101817">
+                <rect key="frame" x="0.0" y="0.0" width="173" height="95"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101818">
+                        <rect key="frame" x="92" y="13" width="67" height="32"/>
+                        <buttonCell key="cell" type="push" title="跳转" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="101819">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="landOnLine:" target="-2" id="101840"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101822">
+                        <rect key="frame" x="14" y="13" width="67" height="32"/>
+                        <buttonCell key="cell" type="push" title="取消" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="101823">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="landOnLine:" target="-2" id="101842"/>
+                        </connections>
+                    </button>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101826">
+                        <rect key="frame" x="50" y="53" width="103" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="101827">
+                            <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="101843">
+                                <real key="minimum" value="1"/>
+                            </numberFormatter>
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                        <connections>
+                            <binding destination="-2" name="value" keyPath="jumpLine" id="101846">
+                                <dictionary key="options">
+                                    <integer key="NSNullPlaceholder" value="1"/>
+                                </dictionary>
+                            </binding>
+                        </connections>
+                    </textField>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="101831">
+                        <rect key="frame" x="18" y="57" width="26" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="行: " id="101832">
+                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="101818" secondAttribute="trailing" constant="20" symbolic="YES" id="101820"/>
+                    <constraint firstAttribute="bottom" secondItem="101818" secondAttribute="bottom" constant="20" symbolic="YES" id="101821"/>
+                    <constraint firstItem="101822" firstAttribute="leading" secondItem="101817" secondAttribute="leading" constant="20" symbolic="YES" id="101824"/>
+                    <constraint firstAttribute="bottom" secondItem="101822" secondAttribute="bottom" constant="20" symbolic="YES" id="101825"/>
+                    <constraint firstItem="101826" firstAttribute="top" secondItem="101817" secondAttribute="top" constant="20" symbolic="YES" id="101829"/>
+                    <constraint firstItem="101831" firstAttribute="baseline" secondItem="101826" secondAttribute="baseline" id="101834"/>
+                    <constraint firstItem="101826" firstAttribute="leading" secondItem="101831" secondAttribute="trailing" constant="8" symbolic="YES" id="101835"/>
+                    <constraint firstAttribute="trailing" secondItem="101826" secondAttribute="trailing" constant="20" symbolic="YES" id="101837"/>
+                    <constraint firstItem="101831" firstAttribute="leading" secondItem="101817" secondAttribute="leading" constant="20" symbolic="YES" id="101838"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="initialFirstResponder" destination="101826" id="101841"/>
+            </connections>
+        </window>
+        <treeController objectClassName="Navigator" editable="NO" childrenKeyPath="children" selectsInsertedObjects="NO" id="100085" userLabel="树">
+            <connections>
+                <binding destination="-2" name="contentObject" keyPath="nav" id="100122"/>
+            </connections>
+        </treeController>
+        <customObject id="100274" userLabel="字体管理器" customClass="NSFontManager"/>
+        <customObject id="-3" userLabel="应用程序" customClass="NSObject"/>
+        <userDefaultsController representsSharedInstance="YES" id="101393"/>
+    </objects>
+    <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSFolderSmart" width="32" height="32"/>
+        <image name="NSInfo" width="32" height="32"/>
+        <image name="NSMultipleDocuments" width="32" height="32"/>
+        <image name="ToolbarUtilitiesFolderIcon" width="512" height="512"/>
+    </resources>
+</document>
