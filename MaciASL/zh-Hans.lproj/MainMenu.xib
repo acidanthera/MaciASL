@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -347,7 +346,7 @@
                                                 <action selector="useStandardLigatures:" target="-1" id="1531"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="不使用" id="1506">
+                                        <menuItem title="都不使用" id="1506">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="turnOffLigatures:" target="-1" id="1532"/>
@@ -430,7 +429,7 @@
                                     <action selector="compile:" target="-1" id="888"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="打补丁" keyEquivalent="k" id="875">
+                            <menuItem title="补丁库" keyEquivalent="k" id="875">
                                 <connections>
                                     <action selector="patch:" target="-1" id="889"/>
                                     <binding destination="2040" name="enabled" keyPath="selection.isLocked" id="2078">
@@ -507,7 +506,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="112" width="678" height="210"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="646">
                 <rect key="frame" x="0.0" y="0.0" width="678" height="210"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -516,7 +515,7 @@
                         <rect key="frame" x="-1" y="-1" width="680" height="212"/>
                         <clipView key="contentView" id="0Q4-ap-cEB">
                             <rect key="frame" x="1" y="0.0" width="678" height="211"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" columnReordering="NO" emptySelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="14" headerView="681" id="679">
                                     <rect key="frame" x="0.0" y="0.0" width="678" height="188"/>
@@ -526,7 +525,7 @@
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
                                         <tableColumn editable="NO" width="116" minWidth="40" maxWidth="1000" id="683">
-                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="时间">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="时间节点">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -598,7 +597,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES"/>
             <rect key="contentRect" x="1280" y="366" width="372" height="188"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="2041">
                 <rect key="frame" x="0.0" y="0.0" width="372" height="188"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -607,7 +606,7 @@
                         <rect key="frame" x="-1" y="19" width="374" height="170"/>
                         <clipView key="contentView" id="qyE-E1-0Q5">
                             <rect key="frame" x="1" y="0.0" width="372" height="169"/>
-                            <autoresizingMask key="autoresizingMask"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="2053" id="2055" customClass="FSTableView">
                                     <rect key="frame" x="0.0" y="0.0" width="372" height="146"/>
@@ -736,7 +735,7 @@
         <window title="偏好设置" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="prefFrame" animationBehavior="default" id="705">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="196" y="207" width="480" height="280"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="706">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="280"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -779,7 +778,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="737">
-                    <rect key="frame" x="30" y="230" width="102" height="18"/>
+                    <rect key="frame" x="30" y="231" width="102" height="18"/>
                     <buttonCell key="cell" type="check" title="启用备注信息" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="738">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="13" name=".PingFangSC-Regular"/>
@@ -789,7 +788,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="741">
-                    <rect key="frame" x="30" y="290" width="102" height="18"/>
+                    <rect key="frame" x="30" y="291" width="102" height="18"/>
                     <buttonCell key="cell" type="check" title="启用优化信息" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="742">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="13" name=".PingFangSC-Regular"/>
@@ -842,7 +841,7 @@
                     </connections>
                 </textField>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="828">
-                    <rect key="frame" x="30" y="270" width="115" height="18"/>
+                    <rect key="frame" x="30" y="271" width="115" height="18"/>
                     <buttonCell key="cell" type="check" title="将警告视为错误" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="829">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="13" name=".PingFangSC-Regular"/>
@@ -852,7 +851,7 @@
                     </connections>
                 </button>
                 <button translatesAutoresizingMaskIntoConstraints="NO" id="wGR-aH-r8c">
-                    <rect key="frame" x="30" y="250" width="182" height="18"/>
+                    <rect key="frame" x="30" y="251" width="182" height="18"/>
                     <buttonCell key="cell" type="check" title="自动加载位于同一目录的表" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="gJB-Jr-pRb">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="13" name=".PingFangSC-Regular"/>
@@ -873,7 +872,7 @@
                     </textFieldCell>
                 </textField>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2263">
-                    <rect key="frame" x="76" y="311" width="86" height="26"/>
+                    <rect key="frame" x="76" y="312" width="92" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="4.0" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2266" id="2264">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -1093,7 +1092,7 @@
                     </connections>
                 </button>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2195">
-                    <rect key="frame" x="30" y="264" width="73" height="26"/>
+                    <rect key="frame" x="30" y="264" width="77" height="25"/>
                     <popUpButtonCell key="cell" type="push" title="项目 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2198" id="2196">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -1145,11 +1144,11 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="924">
-                    <rect key="frame" x="18" y="0.0" width="187" height="17"/>
+                    <rect key="frame" x="18" y="0.0" width="202" height="17"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="17" id="928"/>
                     </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="MaciASL 和它的开发者对这些补丁不尽任何义务" id="925">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="MaciASL 和它的开发者对这些补丁不负任何责任" id="925">
                         <font key="font" metaFont="miniSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1159,7 +1158,7 @@
                     <rect key="frame" x="20" y="20" width="440" height="315"/>
                     <clipView key="contentView" id="dGI-pT-bTf">
                         <rect key="frame" x="1" y="0.0" width="438" height="314"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="1141" id="1139">
                                 <rect key="frame" x="0.0" y="0.0" width="438" height="291"/>
@@ -1324,13 +1323,13 @@
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="207" width="408" height="102"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="2104">
                 <rect key="frame" x="0.0" y="0.0" width="408" height="102"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2109">
-                        <rect key="frame" x="293" y="13" width="101" height="32"/>
+                        <rect key="frame" x="287" y="13" width="107" height="32"/>
                         <buttonCell key="cell" type="push" title="打开选中项" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2110">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1343,7 +1342,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2113">
-                        <rect key="frame" x="14" y="13" width="65" height="32"/>
+                        <rect key="frame" x="14" y="13" width="67" height="32"/>
                         <buttonCell key="cell" type="push" title="取消" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2114">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1356,7 +1355,7 @@ Gw
                         </connections>
                     </button>
                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2117">
-                        <rect key="frame" x="18" y="58" width="373" height="26"/>
+                        <rect key="frame" x="18" y="58" width="373" height="25"/>
                         <popUpButtonCell key="cell" type="push" title="项目 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" autoenablesItems="NO" altersStateOfSelectedItem="NO" selectedItem="2120" id="2118">
                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
@@ -1374,7 +1373,7 @@ Gw
                         </connections>
                     </popUpButton>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2126">
-                        <rect key="frame" x="79" y="13" width="89" height="32"/>
+                        <rect key="frame" x="81" y="13" width="94" height="32"/>
                         <buttonCell key="cell" type="push" title="全部打开" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2127">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -1405,7 +1404,7 @@ Gw
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="112" width="378" height="276"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <view key="contentView" id="2160">
                 <rect key="frame" x="0.0" y="0.0" width="378" height="276"/>
                 <autoresizingMask key="autoresizingMask"/>
