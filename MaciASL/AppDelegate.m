@@ -272,6 +272,7 @@
     NSFont *font = [manager convertFont:[manager selectedFont]];
     [NSUserDefaults.standardUserDefaults setObject:@{@"name":font.displayName, @"size":@(font.pointSize)} forKey:@"font"];
     muteWithNotice(manager, selectedFont, [manager setSelectedFont:font isMultiple:false])
+    [NSNotificationCenter.defaultCenter postNotificationName:@"documentFontOrTextChanged" object:nil];
 }
 
 #pragma mark NSTableViewDelegate
@@ -327,6 +328,10 @@
         [(id<NSTextFinderIndication>)delegate textViewDidShowFindIndicator:[NSNotification notificationWithName:@"NSTextViewDidShowFindIndicatorNotification" object:self userInfo:@{@"NSFindIndicatorRange":[NSValue valueWithRange:range]}]];
 }
 
+-(void)didChangeText {
+    [NSNotificationCenter.defaultCenter postNotificationName:@"documentFontOrTextChanged" object:nil];
+}
+
 @end
 
 @implementation FSRulerView
@@ -336,37 +341,59 @@ static NSDictionary *style;
     NSMutableParagraphStyle *temp = [NSMutableParagraphStyle new];
     temp.alignment = NSRightTextAlignment;
     NSFont *font = nil;
+    font = [NSFont fontWithName:@"Xcode Digits" size:NSFont.smallSystemFontSize];
+    if (font == nil) {
 #ifdef __MAC_10_11
-    if ([NSFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
-        font = [NSFont monospacedDigitSystemFontOfSize:NSFont.smallSystemFontSize weight:NSFontWeightRegular];
-    else
-        font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
+        if ([NSFont respondsToSelector:@selector(monospacedDigitSystemFontOfSize:weight:)])
+            font = [NSFont monospacedDigitSystemFontOfSize:NSFont.smallSystemFontSize weight:NSFontWeightLight];
+        else
+            font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize weight:NSFontWeightLight];
 #else
-    font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize];
+        font = [NSFont systemFontOfSize:NSFont.smallSystemFontSize weight:NSFontWeightLight];
 #endif
-    style = @{NSFontAttributeName:font, NSForegroundColorAttributeName:NSColor.textColor, NSParagraphStyleAttributeName:[temp copy]};
+    }
+    style = @{NSFontAttributeName:font, NSForegroundColorAttributeName:NSColor.disabledControlTextColor, NSParagraphStyleAttributeName:[temp copy]};
 }
 
 -(instancetype)init {
+    [FSRulerView load];
     self = [super init];
     if (self)
         super.reservedThicknessForMarkers = 0;
+    [NSNotificationCenter.defaultCenter addObserverForName:@"documentFontOrTextChanged" object:nil queue:nil usingBlock:^(NSNotification * _Nonnull note) {
+        [self setNeedsDisplay:YES];
+    }];
     return self;
 }
 
 -(void)drawHashMarksAndLabelsInRect:(NSRect)rect {
     NSScrollView *scrollView = self.scrollView;
     if (!scrollView) return;
-    NSInteger height = (NSInteger)[[(NSTextView *)scrollView.documentView layoutManager] defaultLineHeightForFont:NSFontManager.sharedFontManager.selectedFont], start = (NSInteger)floor((scrollView.documentVisibleRect.origin.y + rect.origin.y) / height) + 1, stop = 1 + start + (NSInteger)ceil(rect.size.height / height);
+    
+    CGFloat lineHeight = [[(NSTextView *)scrollView.documentView layoutManager] defaultLineHeightForFont:NSFontManager.sharedFontManager.selectedFont];
+    
+    NSUInteger textLength = NSUIntegerMax;
+    if ([scrollView.documentView isKindOfClass:NSTextView.class]) {
+        NSTextView *textView = (NSTextView*)scrollView.documentView;
+        textLength = [[textView.string componentsSeparatedByString:@"\n"] count];
+    }
+    
+    NSInteger height = (NSInteger)lineHeight, start = (NSInteger)((NSInteger)scrollView.documentVisibleRect.origin.y / lineHeight) + 1, stop = 1 + start + MIN((textLength - start), (NSInteger)ceil(scrollView.documentVisibleRect.size.height / height));
     if (self.ruleThickness < MAX(16,((NSInteger)log10(stop)+1)*8)) {
         self.ruleThickness = ((NSInteger)log10(stop)+1)*8;
         return;
     }
+    
     rect.size.width -= 2;
-    rect.origin.y -= (NSInteger)(scrollView.documentVisibleRect.origin.y+rect.origin.y) % height - (height-(NSFont.smallSystemFontSize+2))/2 + 1;
+    rect.origin.y -= (NSInteger)(scrollView.documentVisibleRect.origin.y) % height + 1;
     rect.size.height = height;
     while (start < stop) {
-        [[NSString stringWithFormat:@"%ld", start++] drawWithRect:rect options:NSStringDrawingUsesLineFragmentOrigin attributes:style];
+        if (start > 0) {
+            NSAttributedString *str = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", start++] attributes:style];
+            [str drawInRect:rect];
+        }
+        else
+            start++;
         rect.origin.y += height;
     }
 }
