@@ -275,6 +275,11 @@
     [NSNotificationCenter.defaultCenter postNotificationName:@"documentFontOrTextChanged" object:nil];
 }
 
+- (IBAction)generateSSDT:(id)sender {
+    [[SSDTGen sharedGenerator] show:sender];
+}
+
+
 #pragma mark NSTableViewDelegate
 -(void)tableViewSelectionDidChange:(NSNotification *)notification {
     [[NSDocumentController.sharedDocumentController documentForWindow:[NSApp mainWindow]] tableViewSelectionDidChange:notification];
