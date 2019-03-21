@@ -1,5 +1,6 @@
 MaciASL Changelog
 =================
+#### v1.5.5
 
 #### v1.5.4
 - Updated iasl compiler set with ACPI 6.3 support
