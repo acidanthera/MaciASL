@@ -49,8 +49,10 @@
     NSDictionary *tables = [NSDictionary dictionaryWithContentsOfURL:url];
     NSString *prefix = [[tables objectForKey:@"Hostname"] stringByAppendingString:@" "];
     tables = [tables objectForKey:@"Tables"];
-    _tableView.titleWithRepresentedFilename = [url path];
-    _tableView.representedURL = url;
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        self->_tableView.titleWithRepresentedFilename = [url path];
+        self->_tableView.representedURL = url;
+    });
     NSMutableArray *tempNames = [NSMutableArray array], *tempTables = [NSMutableArray array];
     for (NSString *name in [tables.allKeys sortedArrayUsingSelector:@selector(localizedStandardCompare:)]) {
         NSString *type;
