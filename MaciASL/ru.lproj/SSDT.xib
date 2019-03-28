@@ -259,7 +259,7 @@
                                                 <rect key="frame" x="254" y="50" width="100" height="22"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="" drawsBackground="YES" id="574">
                                                     <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="575">
-                                                        <integer key="minimum" value="2000"/>
+                                                        <integer key="minimum" value="1000"/>
                                                         <integer key="maximum" value="5000"/>
                                                     </numberFormatter>
                                                     <font key="font" metaFont="system"/>
