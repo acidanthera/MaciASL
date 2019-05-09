@@ -137,7 +137,7 @@ Boolean GetMetadataForFile(void *thisInterface, CFMutableDictionaryRef attribute
         // import from an external record file
         
         CFPropertyListRef set = CFPropertyListCreateWithStream(kCFAllocatorDefault, stream, 0, kCFPropertyListImmutable, NULL, NULL);
-        if (CFGetTypeID(set) == CFDictionaryGetTypeID()) {
+        if (set != nil && CFGetTypeID(set) == CFDictionaryGetTypeID()) {
             CFDictionaryAddValue(attributes, kMDItemSubject, CFDictionaryGetValue(set, CFSTR("Hostname")));
             CFDictionaryRef tables = CFDictionaryGetValue(set, CFSTR("Tables"));
             CFIndex i = 0, j = CFDictionaryGetCount(tables);
