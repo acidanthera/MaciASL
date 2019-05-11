@@ -137,33 +137,35 @@ Boolean GetMetadataForFile(void *thisInterface, CFMutableDictionaryRef attribute
         // import from an external record file
         
         CFPropertyListRef set = CFPropertyListCreateWithStream(kCFAllocatorDefault, stream, 0, kCFPropertyListImmutable, NULL, NULL);
-        if (set != nil && CFGetTypeID(set) == CFDictionaryGetTypeID()) {
-            CFDictionaryAddValue(attributes, kMDItemSubject, CFDictionaryGetValue(set, CFSTR("Hostname")));
-            CFDictionaryRef tables = CFDictionaryGetValue(set, CFSTR("Tables"));
-            CFIndex i = 0, j = CFDictionaryGetCount(tables);
-            CFTypeRef keys[j], values[j];
-            CFDictionaryGetKeysAndValues(tables, keys, values);
-            CFMutableArrayRef strings = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
-            while (i < j) {
-                CFArrayAppendValue(strings, keys[i]);
-                CFReadStreamRef data = CFReadStreamCreateWithBytesNoCopy(kCFAllocatorDefault, CFDataGetBytePtr(values[i]), CFDataGetLength(values[i]), kCFAllocatorNull);
-                CFReadStreamOpen(data);
-                CFArrayRef array = CFArrayCreateWithAML(data);
-                if (array) {
-                    CFArrayAppendArray(strings, array, CFRangeMake(0, CFArrayGetCount(array)));
-                    CFRelease(array);
+        if (set != nil) {
+            if (CFGetTypeID(set) == CFDictionaryGetTypeID()) {
+                CFDictionaryAddValue(attributes, kMDItemSubject, CFDictionaryGetValue(set, CFSTR("Hostname")));
+                CFDictionaryRef tables = CFDictionaryGetValue(set, CFSTR("Tables"));
+                CFIndex i = 0, j = CFDictionaryGetCount(tables);
+                CFTypeRef keys[j], values[j];
+                CFDictionaryGetKeysAndValues(tables, keys, values);
+                CFMutableArrayRef strings = CFArrayCreateMutable(kCFAllocatorDefault, 0, &kCFTypeArrayCallBacks);
+                while (i < j) {
+                    CFArrayAppendValue(strings, keys[i]);
+                    CFReadStreamRef data = CFReadStreamCreateWithBytesNoCopy(kCFAllocatorDefault, CFDataGetBytePtr(values[i]), CFDataGetLength(values[i]), kCFAllocatorNull);
+                    CFReadStreamOpen(data);
+                    CFArrayRef array = CFArrayCreateWithAML(data);
+                    if (array) {
+                        CFArrayAppendArray(strings, array, CFRangeMake(0, CFArrayGetCount(array)));
+                        CFRelease(array);
+                    }
+                    CFReadStreamClose(data);
+                    CFRelease(data);
+                    i++;
                 }
-                CFReadStreamClose(data);
-                CFRelease(data);
-                i++;
+                CFStringRef string = CFStringCreateByCombiningStrings(kCFAllocatorDefault, strings, CFSTR(" "));
+                CFRelease(strings);
+                CFDictionaryAddValue(attributes, kMDItemTextContent, string);
+                CFRelease(string);
+                ok = TRUE;
             }
-            CFStringRef string = CFStringCreateByCombiningStrings(kCFAllocatorDefault, strings, CFSTR(" "));
-            CFRelease(strings);
-            CFDictionaryAddValue(attributes, kMDItemTextContent, string);
-            CFRelease(string);
-            ok = TRUE;
+            CFRelease(set);
         }
-        CFRelease(set);
     }
     CFReadStreamClose(stream);
     CFRelease(stream);
