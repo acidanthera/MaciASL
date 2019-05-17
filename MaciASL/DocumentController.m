@@ -101,9 +101,9 @@
 }
 
 -(IBAction)finishTableset:(id)sender {
-    if ([[sender title] isEqualToString:@"Cancel"])
+    if ([[sender title] isEqualToString:NSLocalizedString(@"cancel",@"Cancel")])
         [NSApp abortModal];
-    else if ([[sender title] isEqualToString:@"Open Selected"])
+    else if ([[sender title] isEqualToString:NSLocalizedString(@"open-selected",@"Open Selected")])
         [NSApp stopModal];
     else
         [NSApp stopModalWithCode:NSModalResponseContinue];

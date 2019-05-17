@@ -9,3 +9,9 @@
 
 /* \u2023 */
 "triangular-bullet" = " ‣ ";
+
+/* Cancel */
+"cancel" = "取消";
+
+/* Open Selected */
+"open-selected" = "打开选中项";
