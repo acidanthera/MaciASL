@@ -9,3 +9,9 @@
 
 /* \u2023 */
 "triangular-bullet" = " ‣ ";
+
+/* Cancel */
+"cancel" = "Отмена";
+
+/* Open Selected */
+"open-selected" = "Открыть выбранные";
