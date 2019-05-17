@@ -101,30 +101,9 @@
 }
 
 -(IBAction)finishTableset:(id)sender {
-    
-    //Chinese
-    
-    if ([[sender title] isEqualToString:@"取消"])
+    if ([[sender title] isEqualToString:NSLocalizedString(@"cancel",@"Cancel")])
         [NSApp abortModal];
-    else if ([[sender title] isEqualToString:@"打开选中项"])
-        [NSApp stopModal];
-    else if ([[sender title] isEqualToString:@"打开全部"])
-        [NSApp stopModalWithCode:NSModalResponseContinue];
-    
-    //Russian
-    
-    else if ([[sender title] isEqualToString:@"Отмена"])
-        [NSApp abortModal];
-    else if ([[sender title] isEqualToString:@"Открыть выбранные"])
-        [NSApp stopModal];
-    else if ([[sender title] isEqualToString:@"Открыть все"])
-        [NSApp stopModalWithCode:NSModalResponseContinue];
-    
-    //English
-    
-    else if ([[sender title] isEqualToString:@"Cancel"])
-        [NSApp abortModal];
-    else if ([[sender title] isEqualToString:@"Open Selected"])
+    else if ([[sender title] isEqualToString:NSLocalizedString(@"open-selected",@"Open Selected")])
         [NSApp stopModal];
     else
         [NSApp stopModalWithCode:NSModalResponseContinue];
