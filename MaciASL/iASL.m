@@ -519,7 +519,18 @@ static NSUInteger _build;
         [d setObject:@"Compilation Error" forKey:NSLocalizedDescriptionKey];
         result = [NSError errorWithDomain:kMaciASLDomain code:kCompilerError userInfo:[d copy]];
     }
-    return [[iASLCompilationResult alloc] initWithError:!result && [url checkResourceIsReachableAndReturnError:&err] ? nil : result string:[[output.lastObject componentsSeparatedByString:@". "] lastObject] notices:[notices copy] url:url];
+
+    // New compilers may append extra strings after error count
+    NSString *str = @"";
+    NSUInteger count = [output count];
+    if (count > 0) {
+        str = [[output.lastObject componentsSeparatedByString:@". "] lastObject];
+        if (count > 1 && [str hasPrefix:@"No AML files were generated"]) {
+            str = [[[output objectAtIndex:count-2] componentsSeparatedByString:@". "] lastObject];
+        }
+    }
+
+    return [[iASLCompilationResult alloc] initWithError:!result && [url checkResourceIsReachableAndReturnError:&err] ? nil : result string:str notices:[notices copy] url:url];
 }
 
 @end

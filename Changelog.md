@@ -4,6 +4,9 @@ MaciASL Changelog
 - Workaround line number width on 10.13
 - Fixed crash in ACPI spotlight plugin
 - Fixed opening selected ACPI table in some locales ([#313](https://github.com/acidanthera/bugtracker/issues/313))
+- Fixed crash when updating iasl
+- Fixed showing error count for latest iasl
+- Supported iasl compiler versions changed to 20100331, 20190405, 20190509
 
 #### v1.5.4
 - Updated iasl compiler set with ACPI 6.3 support
