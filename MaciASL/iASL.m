@@ -237,7 +237,7 @@ static NSUInteger _build;
         NSMenu *acpi = [[[NSApp mainMenu] itemAtIndex:1] submenu];
         [[acpi insertItemWithTitle:NSLocalizedString(@"new-from-acpi", @"New from ACPI") action:NULL keyEquivalent:@"" atIndex:1] setSubmenu:menu];
     }
-    [NSUserDefaults.standardUserDefaults addObserver:(id)self forKeyPath:@"acpi" options:NSKeyValueObservingOptionInitial context:NULL];
+    [NSUserDefaults.standardUserDefaults addObserver:(id)self forKeyPath:@"iasl" options:NSKeyValueObservingOptionInitial context:NULL];
 }
 
 
@@ -246,7 +246,8 @@ static NSUInteger _build;
     AppDelegate *delegate = (AppDelegate *)[(NSApplication *)NSApp delegate];
     NSTask *t = [NSTask new];
     @try {
-        t.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"]]];
+        t.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:
+                        [NSString stringWithFormat:@"iasl-%@", [NSUserDefaults.standardUserDefaults stringForKey:@"iasl"]]];
         t.standardOutput = [NSPipe pipe];
         [[t.standardOutput fileHandleForReading] setReadabilityHandler:^(NSFileHandle *h) { [d appendData:h.availableData]; }];
         [t launch];
@@ -351,16 +352,16 @@ static NSUInteger _build;
     NSTask *task = [NSTask new];
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
     NSMutableArray *args = [NSMutableArray arrayWithObjects:@"-vs", @"-vi", nil];
-    NSUInteger acpi = [defaults integerForKey:@"acpi"];
+    NSString *iasl = [defaults stringForKey:@"iasl"];
     if (![defaults boolForKey:@"remarks"])
         [args addObject:@"-vr"];
     if ([defaults boolForKey:@"optimizations"])
         [args addObject:@"-vo"];
-    if ([defaults boolForKey:@"werror"] && acpi > 4)
+    if ([defaults boolForKey:@"werror"] && ![iasl isEqualToString:@"legacy"])
         [args addObject:@"-we"];
     [args addObjectsFromArray:arguments];
     @try {
-        task.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl%ld", acpi]];
+        task.launchPath = [NSBundle.mainBundle pathForAuxiliaryExecutable:[NSString stringWithFormat:@"iasl-%@", iasl]];
         task.arguments = [args copy];
         task.currentDirectoryPath = url.URLByDeletingLastPathComponent.path;
         task.standardOutput = [NSPipe pipe];
@@ -436,7 +437,7 @@ static NSUInteger _build;
     }
 
     if (externals) {
-        if ([NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == 4)
+        if ([[NSUserDefaults.standardUserDefaults stringForKey:@"iasl"] isEqualToString:@"legacy"])
             [args addObjectsFromArray:@[@"-e", [[externals valueForKey:@"lastPathComponent"] componentsJoinedByString:@","]]];
         else
             [args addObjectsFromArray:[@[@"-e"] arrayByAddingObjectsFromArray:[externals valueForKey:@"lastPathComponent"]]];
@@ -508,7 +509,7 @@ static NSUInteger _build;
         if ((notice = [[Notice alloc] initWithLine:line]))
             [notices addObject:notice];
     // Custom-compiled iasl may output errors to stderr instead of stdout.
-    if ([NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] != 4) {
+    if (![[NSUserDefaults.standardUserDefaults stringForKey:@"iasl"] isEqualToString:@"legacy"]) {
         for (NSString *line in error)
             if ((notice = [[Notice alloc] initWithLine:line]))
                 [notices addObject:notice];

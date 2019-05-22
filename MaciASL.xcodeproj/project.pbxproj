@@ -14,12 +14,10 @@
 		B013B83D160C529600F6A7F2 /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = B013B83B160C529600F6A7F2 /* Document.xib */; };
 		B013B840160C529700F6A7F2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B013B83E160C529700F6A7F2 /* MainMenu.xib */; };
 		B017FB2B1861532200DA033A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B017FB2A1861532200DA033A /* SystemConfiguration.framework */; };
-		B019680A1BC18F7F00160692 /* iasl6 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B01968081BC18F6600160692 /* iasl6 */; };
 		B01A8103169C1CEB0056B5C6 /* SSDT.m in Sources */ = {isa = PBXBuildFile; fileRef = B01A8102169C1CEB0056B5C6 /* SSDT.m */; };
 		B01CAF951618EB4900AB9F0C /* Colorize.m in Sources */ = {isa = PBXBuildFile; fileRef = B01CAF941618EB4900AB9F0C /* Colorize.m */; };
 		B031539C1956A21B0056C7F2 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B031539B1956A21B0056C7F2 /* XCTest.framework */; };
 		B03153A41956A21B0056C7F2 /* MaciASL_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B03153A31956A21B0056C7F2 /* MaciASL_Tests.m */; };
-		B034202D19FB66C80049C764 /* iasl51 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B034202B19FB54770049C764 /* iasl51 */; };
 		B06352E2177EA65B00956EB1 /* Patch.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06352E4177EA65B00956EB1 /* Patch.xib */; };
 		B06352E5177EA65F00956EB1 /* SSDT.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06352E7177EA65F00956EB1 /* SSDT.xib */; };
 		B0663F4417E815EB008D6686 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B0663F4317E815EB008D6686 /* main.c */; };
@@ -36,11 +34,10 @@
 		B0E0184E161531B2008CAC9B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E0184D161531B2008CAC9B /* AppDelegate.m */; };
 		B0E01852161532EB008CAC9B /* iASL.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E01851161532EB008CAC9B /* iASL.m */; };
 		B0E0185416154CBD008CAC9B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0E0185316154CBD008CAC9B /* IOKit.framework */; };
-		B0E0186116155CB3008CAC9B /* iasl5 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B0E0185D1615512A008CAC9B /* iasl5 */; };
 		B0E0186416157084008CAC9B /* Navigator.m in Sources */ = {isa = PBXBuildFile; fileRef = B0E0186316157084008CAC9B /* Navigator.m */; };
-		B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */ = {isa = PBXBuildFile; fileRef = B0FD8AB1165D847C0074DC84 /* iasl4 */; };
-		CE0F9D3D217144EA00A5EA23 /* iasl0 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE0F9D3B217144C900A5EA23 /* iasl0 */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		CE297C0720676C5800A5EF9F /* iasl62 in CopyFiles */ = {isa = PBXBuildFile; fileRef = CE297C052067690E00A5EF9F /* iasl62 */; };
+		CEA014F62295F09B003EF39B /* iasl-dev in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEA014F22295EEDC003EF39B /* iasl-dev */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CEA014F72295F09B003EF39B /* iasl-legacy in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEA014F02295EEDC003EF39B /* iasl-legacy */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CEA014F82295F09B003EF39B /* iasl-stable in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEA014F12295EEDC003EF39B /* iasl-stable */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CEC419DE213077FC002FB644 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEC419DC213077FC002FB644 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -79,12 +76,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
-				CE297C0720676C5800A5EF9F /* iasl62 in CopyFiles */,
-				B0E0186116155CB3008CAC9B /* iasl5 in CopyFiles */,
-				B0FD8AB4165D84820074DC84 /* iasl4 in CopyFiles */,
-				B034202D19FB66C80049C764 /* iasl51 in CopyFiles */,
-				CE0F9D3D217144EA00A5EA23 /* iasl0 in CopyFiles */,
-				B019680A1BC18F7F00160692 /* iasl6 in CopyFiles */,
+				CEA014F62295F09B003EF39B /* iasl-dev in CopyFiles */,
+				CEA014F72295F09B003EF39B /* iasl-legacy in CopyFiles */,
+				CEA014F82295F09B003EF39B /* iasl-stable in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,7 +110,6 @@
 		B013B838160C529600F6A7F2 /* Document.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Document.h; sourceTree = "<group>"; };
 		B013B839160C529600F6A7F2 /* Document.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Document.m; sourceTree = "<group>"; usesTabs = 0; };
 		B017FB2A1861532200DA033A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		B01968081BC18F6600160692 /* iasl6 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl6; path = Dist/iasl6; sourceTree = SOURCE_ROOT; };
 		B01A8101169C1CEB0056B5C6 /* SSDT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSDT.h; sourceTree = "<group>"; };
 		B01A8102169C1CEB0056B5C6 /* SSDT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSDT.m; sourceTree = "<group>"; };
 		B01CAF931618EB4900AB9F0C /* Colorize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Colorize.h; sourceTree = "<group>"; };
@@ -126,7 +119,6 @@
 		B031539F1956A21B0056C7F2 /* MaciASL Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MaciASL Tests-Info.plist"; sourceTree = "<group>"; };
 		B03153A31956A21B0056C7F2 /* MaciASL_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MaciASL_Tests.m; sourceTree = "<group>"; usesTabs = 0; };
 		B03153A51956A21B0056C7F2 /* MaciASL Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MaciASL Tests-Prefix.pch"; sourceTree = "<group>"; };
-		B034202B19FB54770049C764 /* iasl51 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl51; path = Dist/iasl51; sourceTree = SOURCE_ROOT; };
 		B0663F3417E815EB008D6686 /* ACPI.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ACPI.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0663F3517E815EB008D6686 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		B0663F3F17E815EB008D6686 /* ACPIImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ACPIImporter-Info.plist"; sourceTree = "<group>"; };
@@ -149,15 +141,14 @@
 		B0E01850161532EB008CAC9B /* iASL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iASL.h; sourceTree = "<group>"; usesTabs = 0; };
 		B0E01851161532EB008CAC9B /* iASL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iASL.m; sourceTree = "<group>"; usesTabs = 0; };
 		B0E0185316154CBD008CAC9B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		B0E0185D1615512A008CAC9B /* iasl5 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl5; path = Dist/iasl5; sourceTree = SOURCE_ROOT; };
 		B0E0186216157084008CAC9B /* Navigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Navigator.h; sourceTree = "<group>"; };
 		B0E0186316157084008CAC9B /* Navigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Navigator.m; sourceTree = "<group>"; };
-		B0FD8AB1165D847C0074DC84 /* iasl4 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl4; sourceTree = "<group>"; };
-		CE0F9D3B217144C900A5EA23 /* iasl0 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = iasl0; sourceTree = "<group>"; };
-		CE297C052067690E00A5EF9F /* iasl62 */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = iasl62; path = Dist/iasl62; sourceTree = SOURCE_ROOT; };
 		CE775907211C24190063EAE6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CE775908211C24190063EAE6 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		CE77590D211C54530063EAE6 /* Changelog.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Changelog.md; sourceTree = "<group>"; };
+		CEA014F02295EEDC003EF39B /* iasl-legacy */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "iasl-legacy"; sourceTree = "<group>"; };
+		CEA014F12295EEDC003EF39B /* iasl-stable */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "iasl-stable"; sourceTree = "<group>"; };
+		CEA014F22295EEDC003EF39B /* iasl-dev */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "iasl-dev"; sourceTree = "<group>"; };
 		CEC419DD213077FC002FB644 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -334,12 +325,9 @@
 		CE77590C211C43B20063EAE6 /* Dist */ = {
 			isa = PBXGroup;
 			children = (
-				CE297C052067690E00A5EF9F /* iasl62 */,
-				B01968081BC18F6600160692 /* iasl6 */,
-				B034202B19FB54770049C764 /* iasl51 */,
-				B0E0185D1615512A008CAC9B /* iasl5 */,
-				B0FD8AB1165D847C0074DC84 /* iasl4 */,
-				CE0F9D3B217144C900A5EA23 /* iasl0 */,
+				CEA014F22295EEDC003EF39B /* iasl-dev */,
+				CEA014F02295EEDC003EF39B /* iasl-legacy */,
+				CEA014F12295EEDC003EF39B /* iasl-stable */,
 			);
 			path = Dist;
 			sourceTree = "<group>";
@@ -421,6 +409,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				ru,
 				"zh-Hans",

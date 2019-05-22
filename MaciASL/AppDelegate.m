@@ -53,7 +53,7 @@
       @"style": @"Default",
       @"dsdt": @(YES),
       @"suggest": @(NO),
-      @"acpi": @62,
+      @"iasl": @"stable",
       @"context": @(NO),
       @"isolation": @(NO),
       @"colorize": @(YES),
@@ -165,17 +165,17 @@
 -(IBAction)update:(id)sender {
     [sender setEnabled:false];
     dispatch_group_t g = dispatch_group_create();
-    NSArray * versions = @[@4, @5, @51, @6, @62, @0];
+    NSArray * versions = @[@"stable", @"dev", @"legacy"];
     muteWithNotice(self, update, _update = [NSProgress progressWithTotalUnitCount:versions.count]);
 
-    for (NSNumber *iasl in versions) {
+    for (NSString *iasl in versions) {
         [_update becomeCurrentWithPendingUnitCount:1];
         dispatch_group_enter(g);
-        NSURL *src = [NSURL URLWithString:[NSString stringWithFormat:@"https://github.com/acidanthera/MaciASL/raw/master/Dist/iasl%ld", iasl.unsignedIntegerValue]];
-        NSURL *dst = [[[NSBundle.mainBundle executableURL] URLByDeletingLastPathComponent] URLByAppendingPathComponent:[NSString stringWithFormat:@"iasl%ld", iasl.unsignedIntegerValue]];
+        NSURL *src = [NSURL URLWithString:[NSString stringWithFormat:@"https://github.com/acidanthera/MaciASL/raw/master/Dist/iasl-%@", iasl]];
+        NSURL *dst = [[[NSBundle.mainBundle executableURL] URLByDeletingLastPathComponent] URLByAppendingPathComponent:[NSString stringWithFormat:@"iasl-%@", iasl]];
         [URLTask get:src toURL:dst perform:^(bool success){
             muteWithNotice(self->_update, fractionCompleted, self->_update.completedUnitCount++);
-            if (success && [NSUserDefaults.standardUserDefaults integerForKey:@"acpi"] == iasl.unsignedIntegerValue)
+            if (success && [[NSUserDefaults.standardUserDefaults stringForKey:@"iasl"] isEqualToString:iasl])
                 [iASL observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
             dispatch_group_leave(g);
         }];
