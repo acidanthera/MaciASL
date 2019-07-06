@@ -1,5 +1,8 @@
 MaciASL Changelog
 =================
+#### v1.5.6
+- Unified release archive names
+
 #### v1.5.5
 - Workaround line number width on 10.13
 - Fixed crash in ACPI spotlight plugin
