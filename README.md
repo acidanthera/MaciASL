@@ -24,4 +24,4 @@ CFLAGS="-mmacosx-version-min=10.7 -O3" \
 LDFLAGS="-mmacosx-version-min=10.7" \
 make iasl -j $(getconf _NPROCESSORS_ONLN)
 ```
-The binary will be present at `generate/unix/bin/iasl` path, and should replace `iasl62` in the project dir.
+The binary will be present at `generate/unix/bin/iasl` path, and should replace `iasl-stable` or `iasl-dev` in the project dir.
