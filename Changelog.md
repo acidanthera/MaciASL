@@ -1,5 +1,8 @@
 MaciASL Changelog
 =================
+#### v1.5.7
+- Added Acidanthera as default BundleIdentifier
+
 #### v1.5.6
 - Unified release archive names
 
