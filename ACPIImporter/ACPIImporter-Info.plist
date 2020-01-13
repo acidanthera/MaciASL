@@ -12,7 +12,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>org.acpica.aml</string>
-				<string>net.sourceforge.maciasl.tableset</string>
+				<string>org.acidanthera.maciasl.tableset</string>
 			</array>
 		</dict>
 	</array>

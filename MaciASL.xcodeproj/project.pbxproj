@@ -687,7 +687,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaciASL/MaciASL-Prefix.pch";
 				INFOPLIST_FILE = "MaciASL/MaciASL-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -700,7 +700,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaciASL/MaciASL-Prefix.pch";
 				INFOPLIST_FILE = "MaciASL/MaciASL-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -728,7 +728,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "MaciASL Tests/MaciASL Tests-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -754,7 +754,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "MaciASL Tests/MaciASL Tests-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -773,7 +773,7 @@
 				INFOPLIST_FILE = "ACPIImporter/ACPIImporter-Info.plist";
 				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
 				LIBRARY_STYLE = BUNDLE;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = ACPI;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = mdimporter;
@@ -792,7 +792,7 @@
 				INFOPLIST_FILE = "ACPIImporter/ACPIImporter-Info.plist";
 				INSTALL_PATH = "@executable_path/../Contents/Library/Spotlight";
 				LIBRARY_STYLE = BUNDLE;
-				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = ACPI;
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = mdimporter;

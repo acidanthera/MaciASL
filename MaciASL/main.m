@@ -18,7 +18,7 @@ void handle_exception(NSException *exception) {
         if (exception.callStackReturnAddresses) [d setObject:exception.callStackReturnAddresses forKey:@"callStackReturnAddresses"];
         if (exception.callStackSymbols) [d setObject:exception.callStackSymbols forKey:@"callStackSymbols"];
         [d writeToFile:file atomically:true];
-        NSRunAlertPanel(@"Uncaught Exception", @"An uncaught exception has occurred, and the program will now terminate. Please post the revealed file (may contain personal information), to %@", nil, nil, nil, @"http://sourceforge.net/projects/maciasl/support");
+        NSRunAlertPanel(@"Uncaught Exception", @"An uncaught exception has occurred, and the program will now terminate. Please post the revealed file (may contain personal information), to %@", nil, nil, nil, @"http://github.com/acidanthera/bugtracker/issues");
         [NSWorkspace.sharedWorkspace selectFile:file inFileViewerRootedAtPath:file];
     } @catch (NSException *e) {}
 }

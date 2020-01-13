@@ -43,7 +43,7 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>net.sourceforge.maciasl.tableset</string>
+				<string>org.acidanthera.maciasl.tableset</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>Document</string>
@@ -55,7 +55,7 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>net.sourceforge.iojones</string>
+				<string>org.acidanthera.iojones</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>Document</string>
@@ -88,14 +88,14 @@
 	</dict>
 	<key>NSAppleScriptEnabled</key>
 	<true/>
-	<key>NSRequiresAquaSystemAppearance</key>
-	<false/>
 	<key>NSHumanReadableCopyright</key>
 	<string>Licensed under GPLv3, full text at http://www.gnu.org/licenses/gpl-3.0.txt</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSRequiresAquaSystemAppearance</key>
+	<false/>
 	<key>OSAScriptingDefinition</key>
 	<string>MaciASL.sdef</string>
 	<key>UTExportedTypeDeclarations</key>
@@ -142,7 +142,7 @@
 			<key>UTTypeDescription</key>
 			<string>ACPI Tableset</string>
 			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.maciasl.tableset</string>
+			<string>org.acidanthera.maciasl.tableset</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
@@ -162,7 +162,7 @@
 			<key>UTTypeDescription</key>
 			<string>IOJones Document</string>
 			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.iojones</string>
+			<string>org.acidanthera.iojones</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>

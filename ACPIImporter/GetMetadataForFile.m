@@ -133,7 +133,7 @@ Boolean GetMetadataForFile(void *thisInterface, CFMutableDictionaryRef attribute
         
         ok = CFDictionaryAppendMetadataWithAML(stream, attributes);
         
-    } else if (CFStringCompare(contentTypeUTI, CFSTR("net.sourceforge.maciasl.tableset"), 0) == kCFCompareEqualTo) {
+    } else if (CFStringCompare(contentTypeUTI, CFSTR("org.acidanthera.maciasl.tableset"), 0) == kCFCompareEqualTo) {
         // import from an external record file
         
         CFPropertyListRef set = CFPropertyListCreateWithStream(kCFAllocatorDefault, stream, 0, kCFPropertyListImmutable, NULL, NULL);

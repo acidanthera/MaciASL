@@ -64,7 +64,7 @@
       @"extracomp": @"",
       @"extradecomp": @"",
       @"preference": @0,
-      @"font": @{@"name": @"Menlo", @"size": @11},
+      @"font": @{@"name": @"Menlo", @"size": @12},
       @"sources": @[
         @{@"name": @"ASRock", @"url": @"http://maciasl.sourceforge.net/pjalm/asrock"},
         @{@"name": @"ASUS", @"url": @"http://maciasl.sourceforge.net/pjalm/asus"},
