@@ -71,4 +71,12 @@ action remove_entry,remove_matched,removeall_matched,replace_matched,replaceall_
       
     ```
 
+    For instance, renaming a `SAT0` with `SATA` ACPI device:
+
+    ```
+      into device label SAT0 set_label begin SATA end;
+      into_all all code_regex SAT0 replaceall_matched begin SATA end;
+      
+    ```
+
     
