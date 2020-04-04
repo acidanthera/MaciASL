@@ -38,6 +38,7 @@
 		CEA014F62295F09B003EF39B /* iasl-dev in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEA014F22295EEDC003EF39B /* iasl-dev */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CEA014F72295F09B003EF39B /* iasl-legacy in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEA014F02295EEDC003EF39B /* iasl-legacy */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CEA014F82295F09B003EF39B /* iasl-stable in CopyFiles */ = {isa = PBXBuildFile; fileRef = CEA014F12295EEDC003EF39B /* iasl-stable */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CEC086382438A30D00F5B701 /* PATCH.md in Resources */ = {isa = PBXBuildFile; fileRef = CEC086372438A30D00F5B701 /* PATCH.md */; };
 		CEC419DE213077FC002FB644 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEC419DC213077FC002FB644 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
@@ -149,6 +150,7 @@
 		CEA014F02295EEDC003EF39B /* iasl-legacy */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "iasl-legacy"; sourceTree = "<group>"; };
 		CEA014F12295EEDC003EF39B /* iasl-stable */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "iasl-stable"; sourceTree = "<group>"; };
 		CEA014F22295EEDC003EF39B /* iasl-dev */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "iasl-dev"; sourceTree = "<group>"; };
+		CEC086372438A30D00F5B701 /* PATCH.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = PATCH.md; sourceTree = "<group>"; };
 		CEC419DD213077FC002FB644 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -315,6 +317,7 @@
 		CE775906211C24080063EAE6 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
+				CEC086372438A30D00F5B701 /* PATCH.md */,
 				CE77590D211C54530063EAE6 /* Changelog.md */,
 				CE775908211C24190063EAE6 /* LICENSE.txt */,
 				CE775907211C24190063EAE6 /* README.md */,
@@ -432,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B013B83D160C529600F6A7F2 /* Document.xib in Resources */,
+				CEC086382438A30D00F5B701 /* PATCH.md in Resources */,
 				B013B840160C529700F6A7F2 /* MainMenu.xib in Resources */,
 				B06352E2177EA65B00956EB1 /* Patch.xib in Resources */,
 				B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */,
