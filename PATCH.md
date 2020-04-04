@@ -66,8 +66,9 @@ action remove_entry,remove_matched,removeall_matched,replace_matched,replaceall_
 3. In order to rename a device via ACPI use the following template:
 
     ```
-      into device label $OLD_NAME set_label begin $NEW_NAME end;```
- 
-    ```into_all all code_regex EHC1 replaceall_matched begin EH01 end;```
+      into device label $OLD_NAME set_label begin $NEW_NAME end;
+      into_all all code_regex EHC1 replaceall_matched begin EH01 end;
+      
+    ```
 
     
