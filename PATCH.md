@@ -62,3 +62,17 @@ action remove_entry,remove_matched,removeall_matched,replace_matched,replaceall_
     ```
     into device label <DEVICE_NAME> insert begin <ACPI code> end;
     ```
+
+3. In order to rename a device via ACPI use the following template:
+
+    ```
+    into device label <OLD_NAME> set_label begin <NEW_NAME> end;
+    into_all all code_regex <OLD_NAME> replaceall_matched begin <NEW_NAME> end;
+    ```
+
+    For instance, renaming a `SAT0` with `SATA` ACPI device:
+
+    ```
+    into device label SAT0 set_label begin SATA end;
+    into_all all code_regex SAT0 replaceall_matched begin SATA end;
+    ```
