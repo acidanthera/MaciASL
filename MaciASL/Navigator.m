@@ -153,7 +153,7 @@ static NSCharacterSet *unset;
                         [realprefix appendString:tmpprefix];
                     else
                         realprefix = [NSMutableString stringWithString:tmpprefix];
-                    scan.scanLocation += prefix.length + 1;
+                    scan.scanLocation += tmpprefix.length + 1;
                     continue;
                 }
             }
