@@ -1,5 +1,8 @@
 MaciASL Changelog
 =================
+#### v1.5.8
+- Fixed parse error
+
 #### v1.5.7
 - Added Acidanthera as default BundleIdentifier
 
