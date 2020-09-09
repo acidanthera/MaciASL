@@ -688,6 +688,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_MARKETING_VERSION = 1.5.9;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaciASL/MaciASL-Prefix.pch";
 				INFOPLIST_FILE = "MaciASL/MaciASL-Info.plist";
@@ -701,6 +702,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_MARKETING_VERSION = 1.5.9;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaciASL/MaciASL-Prefix.pch";
 				INFOPLIST_FILE = "MaciASL/MaciASL-Info.plist";
