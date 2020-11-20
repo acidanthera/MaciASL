@@ -1,5 +1,8 @@
 MaciASL Changelog
 =================
+#### v1.5.9
+- Update icons for Big Sur UI
+
 #### v1.5.8
 - Fixed parse error
 
