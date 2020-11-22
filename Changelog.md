@@ -3,6 +3,7 @@ MaciASL Changelog
 #### v1.5.9
 - Updated iasl compiler versions
 - Updated icons for Big Sur UI
+- Fixed ToolBar appearance in Big Sur
 
 #### v1.5.8
 - Fixed parse error
