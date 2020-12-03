@@ -201,14 +201,14 @@ static NSCharacterSet *unset;
                     [path removeLastObject];
                     if (path.lastObject == NSNull.null) {
                         NSUInteger item = path.count - 2;
-                        while ((id)(container = child = [path objectAtIndex:item]) == NSNull.null) {
+                        while ((id)(container = [path objectAtIndex:item]) == NSNull.null) {
                             if (item == 0)
                                 break;
                             item--;
                         }
                     }
                     else
-                        container = child = path.lastObject;
+                        container = path.lastObject;
                 }
             }
         }
