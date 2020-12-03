@@ -10,7 +10,7 @@
 
 void handle_exception(NSException *exception) {
     @try {
-        NSString *file = [NSString stringWithFormat:@"/tmp/%ld.plist", roundtol([[NSDate date] timeIntervalSince1970])];
+        NSString *file = [NSString stringWithFormat:@"/tmp/%ld.plist", lround([[NSDate date] timeIntervalSince1970])];
         NSMutableDictionary *d = [NSMutableDictionary dictionary];
         if (exception.name) [d setObject:exception.name forKey:@"name"];
         if (exception.reason) [d setObject:exception.reason forKey:@"reason"];

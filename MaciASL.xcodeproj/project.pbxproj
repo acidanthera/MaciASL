@@ -86,10 +86,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		40A561FB212FFC5800C83428 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		40A561FC212FFC5800C83428 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Patch.xib; sourceTree = "<group>"; };
-		40A561FD212FFC5800C83428 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Document.xib; sourceTree = "<group>"; };
-		40A561FE212FFC5800C83428 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SSDT.xib; sourceTree = "<group>"; };
 		40A561FF212FFC7D00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/Document.xib; sourceTree = "<group>"; };
 		40A56200212FFC7E00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		40A56201212FFC7E00C83428 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ru; path = ru.lproj/Patch.xib; sourceTree = "<group>"; };
@@ -150,6 +146,10 @@
 		CEA014F02295EEDC003EF39B /* iasl-legacy */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "iasl-legacy"; sourceTree = "<group>"; };
 		CEA014F12295EEDC003EF39B /* iasl-stable */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "iasl-stable"; sourceTree = "<group>"; };
 		CEA014F22295EEDC003EF39B /* iasl-dev */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = "iasl-dev"; sourceTree = "<group>"; };
+		CEA354F025799E7900E17556 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Document.xib; sourceTree = "<group>"; };
+		CEA354F125799E7900E17556 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		CEA354F225799E7900E17556 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/Patch.xib; sourceTree = "<group>"; };
+		CEA354F325799E7900E17556 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SSDT.xib; sourceTree = "<group>"; };
 		CEC086372438A30D00F5B701 /* PATCH.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = PATCH.md; sourceTree = "<group>"; };
 		CEC419DD213077FC002FB644 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -399,7 +399,7 @@
 		B013B819160C529600F6A7F2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = Sourceforge;
 				TargetAttributes = {
 					B03153991956A21B0056C7F2 = {
@@ -409,13 +409,13 @@
 			};
 			buildConfigurationList = B013B81C160C529600F6A7F2 /* Build configuration list for PBXProject "MaciASL" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				ru,
 				"zh-Hans",
+				Base,
 			);
 			mainGroup = B013B817160C529600F6A7F2;
 			productRefGroup = B013B823160C529600F6A7F2 /* Products */;
@@ -528,9 +528,9 @@
 		B013B83B160C529600F6A7F2 /* Document.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				40A561FD212FFC5800C83428 /* en */,
 				40A561FF212FFC7D00C83428 /* ru */,
 				50CCDC5D22202620000981B0 /* zh-Hans */,
+				CEA354F025799E7900E17556 /* Base */,
 			);
 			name = Document.xib;
 			sourceTree = "<group>";
@@ -538,9 +538,9 @@
 		B013B83E160C529700F6A7F2 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				40A561FB212FFC5800C83428 /* en */,
 				40A56200212FFC7E00C83428 /* ru */,
 				50CCDC5E22202620000981B0 /* zh-Hans */,
+				CEA354F125799E7900E17556 /* Base */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -548,9 +548,9 @@
 		B06352E4177EA65B00956EB1 /* Patch.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				40A561FC212FFC5800C83428 /* en */,
 				40A56201212FFC7E00C83428 /* ru */,
 				50CCDC5F22202620000981B0 /* zh-Hans */,
+				CEA354F225799E7900E17556 /* Base */,
 			);
 			name = Patch.xib;
 			sourceTree = "<group>";
@@ -558,9 +558,9 @@
 		B06352E7177EA65F00956EB1 /* SSDT.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				40A561FE212FFC5800C83428 /* en */,
 				40A56202212FFC7E00C83428 /* ru */,
 				50CCDC6022202620000981B0 /* zh-Hans */,
+				CEA354F325799E7900E17556 /* Base */,
 			);
 			name = SSDT.xib;
 			sourceTree = "<group>";
@@ -598,6 +598,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
@@ -628,7 +629,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -654,6 +655,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_RECEIVER_WEAK = YES;
 				CLANG_WARN_OBJC_REPEATED_USE_OF_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_IMPLICIT_CONVERSION = YES;
@@ -679,7 +681,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				SDKROOT = macosx;
 			};
 			name = Release;

@@ -264,7 +264,7 @@ static NSRegularExpression *lbl, *adr, *hid, *field;
             NSInteger offset = 0;
             for (NSValue *point in offsets)
                 if (point.pointValue.x < before.location+offset)
-                    offset+=point.pointValue.y;
+                    offset+=(NSInteger)point.pointValue.y;
             for (NSValue *range in exclusions)
                 if (NSLocationInRange(before.location, range.rangeValue) || NSLocationInRange(range.rangeValue.location, before)) {
                     before.location += offset;

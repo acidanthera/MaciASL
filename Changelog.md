@@ -3,6 +3,8 @@ MaciASL Changelog
 #### v1.5.9
 - Updated iasl compiler versions
 - Updated icons for Big Sur UI
+- Updated bundled iasl compilers
+- Compatibility with macOS 10.8 or older is not guaranteed
 
 #### v1.5.8
 - Fixed parse error
