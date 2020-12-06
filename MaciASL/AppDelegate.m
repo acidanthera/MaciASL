@@ -95,7 +95,9 @@
 -(BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender {
     if (![NSUserDefaults.standardUserDefaults boolForKey:@"dsdt"])
         return true;
+#if defined(__i386__) || defined(__x86_64__)
     [DocumentController.sharedDocumentController newDocumentFromACPI:@"DSDT" saveFirst:false];
+#endif
     return false;
 }
 

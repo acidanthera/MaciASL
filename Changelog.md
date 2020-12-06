@@ -6,6 +6,7 @@ MaciASL Changelog
 - Updated bundled iasl compilers
 - Compatibility with macOS 10.8 or older is not guaranteed
 - Fixed crashes when processing certain ACPI files
+- Fixed DSDT fetch error on Apple Silicon
 
 #### v1.5.8
 - Fixed parse error
