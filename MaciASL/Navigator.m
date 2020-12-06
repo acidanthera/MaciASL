@@ -143,7 +143,9 @@ static NSCharacterSet *unset;
     while (![scan isAtEnd] && (id)container != NSNull.null) {
         __block bool found = false;
         NSMutableString *realprefix = nil;
-        while ([scan scanUpToCharactersFromSet:braces intoString:&tmpprefix]) {
+        // If no characters in stopSet are present in the scanner's source string, the remainder of the source string
+        // is put into stringValue, the receiver’s scanLocation is advanced to the end of the source string, and the method returns YES.
+        while ([scan scanUpToCharactersFromSet:braces intoString:&tmpprefix] && !scan.isAtEnd) {
             // This is an ugly hack to ignore curly braces within comments.
             NSRange comment = [tmpprefix rangeOfString:@"//" options:NSBackwardsSearch];
             if (comment.location != NSNotFound) {

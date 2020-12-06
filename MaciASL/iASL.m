@@ -371,12 +371,12 @@ static NSUInteger _build;
     @catch (NSException *e) {
         return [NSError errorWithDomain:kMaciASLDomain code:0 userInfo:@{NSLocalizedRecoverySuggestionErrorKey:@"The compiler could not be found, or is not executable."}];
     }
+    AppDelegate *delegate = (AppDelegate *)[(NSApplication *)NSApp delegate];
     dispatch_apply(2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t isOutput) {
         NSFileHandle *h = [isOutput ? task.standardOutput : task.standardError fileHandleForReading];
         NSData *d;
         NSMutableArray *lines = [NSMutableArray array];
         NSMutableString *buffer = [NSMutableString string];
-        AppDelegate *delegate = (AppDelegate *)[(NSApplication *)NSApp delegate];;
         while ((d = h.availableData)) {
             if (!d.length)
                 break;

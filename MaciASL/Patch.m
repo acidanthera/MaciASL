@@ -493,8 +493,8 @@ static NSRegularExpression *lbl, *adr, *hid, *field;
         else break;
     i = tab;
     if ([line characterAtIndex:0] == '}') offset = -1;
-    else if ([previous characterAtIndex:tab] == '/') ;
-    else if ([previous characterAtIndex:tab] == '}') offset = 0;
+    else if (tab < previous.length && [previous characterAtIndex:tab] == '/') ;
+    else if (tab < previous.length && [previous characterAtIndex:tab] == '}') offset = 0;
     else while (i < previous.length)
         switch ([previous characterAtIndex:i++]) {
             case '{': offset++; break;
