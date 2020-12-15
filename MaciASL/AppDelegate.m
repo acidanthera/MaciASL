@@ -82,6 +82,7 @@
         @{@"name": @"Toleda HDMI", @"url": @"http://raw.githubusercontent.com/toleda/audio_hdmi_uefi/master"},
         @{@"name": @"Toleda HDMI 8", @"url": @"http://raw.githubusercontent.com/toleda/audio_hdmi_8series/master"},
         @{@"name": @"Toleda ALC", @"url": @"http://raw.githubusercontent.com/toleda/audio_ALCInjection/master"},
+        @{@"name": @"Utopia Team", @"url": @"https://raw.githubusercontent.com/utopia-team/dsdt-patches/master"},
         @{@"name": @"VoodooI2C-Patches", @"url": @"http://raw.githubusercontent.com/alexandred/VoodooI2C-Patches/master"},
         @{@"name": @"Zotac", @"url": @"http://maciasl.sourceforge.net/pjalm/zotac"},
     ]}];
