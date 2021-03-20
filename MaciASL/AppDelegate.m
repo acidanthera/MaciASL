@@ -156,6 +156,17 @@
     [DocumentController.sharedDocumentController newDocumentFromACPI:[sender title] saveFirst:NSEvent.modifierFlags&NSAlternateKeyMask];
 }
 
++(AppDelegate *)safeDelegate {
+    __block AppDelegate *delegate;
+    if (NSThread.isMainThread)
+        delegate = (AppDelegate *)[NSApp delegate];
+    else
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            delegate = (AppDelegate *)[(NSApplication *)NSApp delegate];
+        });
+    return delegate;
+}
+
 -(IBAction)showLog:(id)sender {
     [_logView makeKeyAndOrderFront:sender];
 }

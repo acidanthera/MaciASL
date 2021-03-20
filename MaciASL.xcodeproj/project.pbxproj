@@ -399,7 +399,7 @@
 		B013B819160C529600F6A7F2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = Sourceforge;
 				TargetAttributes = {
 					B03153991956A21B0056C7F2 = {

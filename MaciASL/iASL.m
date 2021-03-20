@@ -371,7 +371,7 @@ static NSUInteger _build;
     @catch (NSException *e) {
         return [NSError errorWithDomain:kMaciASLDomain code:0 userInfo:@{NSLocalizedRecoverySuggestionErrorKey:@"The compiler could not be found, or is not executable."}];
     }
-    AppDelegate *delegate = (AppDelegate *)[(NSApplication *)NSApp delegate];
+    AppDelegate *delegate = [AppDelegate safeDelegate];
     dispatch_apply(2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t isOutput) {
         NSFileHandle *h = [isOutput ? task.standardOutput : task.standardError fileHandleForReading];
         NSData *d;
@@ -469,7 +469,7 @@ static NSUInteger _build;
         return [[iASLDecompilationResult alloc] initWithError:nil string:dsl];
     }
     else if (externals) {
-        [(AppDelegate *)[(NSApplication *)NSApp delegate] logEntry:@"Decompilation with resolution failed, trying without resolution"];
+        [[AppDelegate safeDelegate] logEntry:@"Decompilation with resolution failed, trying without resolution"];
         return [self decompileAML:aml name:name tableset:nil refs:nil];
     }
     else {

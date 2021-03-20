@@ -18,6 +18,7 @@
 -(void)changeFont:(id)sender;
 -(IBAction)showSummary:(id)sender;
 -(IBAction)documentFromACPI:(id)sender;
++(AppDelegate *)safeDelegate;
 
 @end
 

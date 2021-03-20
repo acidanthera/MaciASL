@@ -1,5 +1,9 @@
 MaciASL Changelog
 =================
+#### v1.6.0
+- Updated iasl compiler versions
+- Fixed exceptions generated when performing certain tasks
+
 #### v1.5.9
 - Updated iasl compiler versions
 - Updated icons for Big Sur UI

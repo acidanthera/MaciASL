@@ -155,7 +155,7 @@ static NSCharacterSet *unset;
                         [realprefix appendString:tmpprefix];
                     else
                         realprefix = [NSMutableString stringWithString:tmpprefix];
-                    scan.scanLocation += tmpprefix.length + 1;
+                    scan.scanLocation += prefix.length + 1;
                     continue;
                 }
             }
@@ -201,7 +201,7 @@ static NSCharacterSet *unset;
                     if ((id)(child = path.lastObject) != NSNull.null)
                         child.range = NSMakeRange(child.range.location, scan.scanLocation - child.range.location);
                     [path removeLastObject];
-                    if (path.lastObject == NSNull.null) {
+                    if (path.lastObject == NSNull.null && path.count >= 2) {
                         NSUInteger item = path.count - 2;
                         while ((id)(container = [path objectAtIndex:item]) == NSNull.null) {
                             if (item == 0)
