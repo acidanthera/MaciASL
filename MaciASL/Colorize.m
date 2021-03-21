@@ -425,7 +425,7 @@ static NSRegularExpression *regString, *regNumber, *regComment, *regOperator, *r
         @"Transfer16"
     ];
     predefined = @[@"__DATE__", @"__FILE__", @"__LINE__", @"__PATH__"];
-    regString = [NSRegularExpression regularExpressionWithPattern:@"\"[^\"]*\"" options:0 error:nil];
+    regString = [NSRegularExpression regularExpressionWithPattern:@"\"[^\"\n]*\"" options:0 error:nil];
     regNumber = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"(?<=\\W)(0x[0-9A-Fa-f]+|\\d+|%@)(?=\\W)", [constants componentsJoinedByString:@"|"]] options:0 error:nil];
     regComment = [NSRegularExpression regularExpressionWithPattern:@"//.*$" options:NSRegularExpressionAnchorsMatchLines error:nil];
     regOperator = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"(?<=\\W|^)(%@)\\s*\\(", [operators componentsJoinedByString:@"|"]] options:NSRegularExpressionCaseInsensitive error:nil];
