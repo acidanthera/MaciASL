@@ -18,24 +18,56 @@ jobs:
       JOB_TYPE: BUILD
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: brew install create-dmg
+        env:
+          HOMEBREW_NO_INSTALL_CLEANUP: 1
+          HOMEBREW_NO_AUTO_UPDATE: 1
+
       - name: CI Bootstrap
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/ci-bootstrap.sh) && eval "$src" || exit 1
+          /usr/bin/curl -OL "https://github.com/acidanthera/ocbuild/raw/master/codesign/appsign.sh" || exit 1
+          chmod a+x appsign.sh || exit 1
 
-      - run: xcodebuild -jobs 1 -configuration Debug
-      - run: xcodebuild -jobs 1 -configuration Release
+      - name: Compile with codesign (DEBUG)
+        if: github.repository_owner == 'acidanthera'
+        env:
+          MAC_CERTIFICATE_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
+          MAC_ACCOUNT_NAME: ${{ secrets.MAC_ACCOUNT_NAME }}
+          MAC_ACCOUNT_PASSWORD: ${{ secrets.MAC_ACCOUNT_PASSWORD }}
+        run: DEPLOY_SCRIPT="$(pwd)/appsign.sh" xcodebuild -jobs 1 -configuration Debug
+    
+      - name: Compile with codesign (RELEASE)
+        if: github.repository_owner == 'acidanthera'
+        env:
+          MAC_CERTIFICATE_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
+          MAC_ACCOUNT_NAME: ${{ secrets.MAC_ACCOUNT_NAME }}
+          MAC_ACCOUNT_PASSWORD: ${{ secrets.MAC_ACCOUNT_PASSWORD }}
+        run: DEPLOY_SCRIPT="$(pwd)/appsign.sh" xcodebuild -jobs 1 -configuration Release
+
+      - name: Compile (DEBUG)
+        if: github.repository_owner != 'acidanthera'
+        run: xcodebuild -jobs 1 -configuration Debug
+
+      - name: Compile (RELEASE)
+        if: github.repository_owner != 'acidanthera'
+        run: xcodebuild -jobs 1 -configuration Release
 
       - name: Upload to Artifacts
+        if: github.repository_owner == 'acidanthera'
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
-          path: build/*/*.zip
+          path: build/*/*.dmg
+
       - name: Upload to Release
-        if: github.event_name == 'release'
+        if: github.event_name == 'release' && github.repository_owner == 'acidanthera'
         uses: svenstaro/upload-release-action@e74ff71f7d8a4c4745b560a485cc5fdb9b5b999d
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/*/*.zip
+          file: build/*/*.dmg
           tag: ${{ github.ref }}
           file_glob: true
 

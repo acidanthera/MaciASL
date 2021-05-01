@@ -176,6 +176,7 @@
 }
 
 -(IBAction)update:(id)sender {
+#ifdef ALLOW_ONLINE_UPDATES
     [sender setEnabled:false];
     dispatch_group_t g = dispatch_group_create();
     NSArray * versions = @[@"stable", @"dev", @"legacy"];
@@ -198,6 +199,9 @@
         muteWithNotice(self, update, self->_update = nil);
         [sender setEnabled:true];
     });
+#else
+    ModalError([NSError errorWithDomain:kMaciASLDomain code:kPackageError userInfo:@{NSLocalizedDescriptionKey:@"Application modification not allowed", NSLocalizedRecoverySuggestionErrorKey:@"Signed application bundles cannot be modified."}]);
+#endif
 }
 
 -(IBAction)newSource:(id)sender {

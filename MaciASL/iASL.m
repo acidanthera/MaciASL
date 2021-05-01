@@ -174,7 +174,6 @@ static NSUInteger _build;
         @"TPM2":@"Trusted Platform Module 2.0 H/W Interface Table",
         @"UEFI":@"UEFI Boot Optimization Table",
         @"VRTC":@"Virtual Real-Time Clock Table",
-        @"WPBT":@"Windows Platform Binary Table",
         @"WAET":@"Windows ACPI Emulated Devices Table",
         @"WDAT":@"Watchdog Action Table",
         @"WDDT":@"Watchdog Timer Description",

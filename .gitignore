@@ -4,3 +4,5 @@ project.xcworkspace
 xcuserdata
 clang-analyze
 build
+Dist/acpica
+Dist/iasl-*.*

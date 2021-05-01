@@ -32,7 +32,8 @@ typedef NS_ENUM(NSUInteger, MaciASLError) {
     kStoreError,
     kTablesetError,
     kiASLBuildError,
-    kiASLCheckError
+    kiASLCheckError,
+    kPackageError
 };
 
 NS_INLINE NSError* ModalError(NSError *error){

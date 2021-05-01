@@ -399,7 +399,7 @@
 		B013B819160C529600F6A7F2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = Sourceforge;
 				TargetAttributes = {
 					B03153991956A21B0056C7F2 = {
@@ -470,7 +470,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"${TARGET_BUILD_DIR}\"\n\ndist=(\"$FULL_PRODUCT_NAME\")\nif [ -d \"$DWARF_DSYM_FILE_NAME\" ]; then dist+=(\"$DWARF_DSYM_FILE_NAME\"); fi\n\narchive=\"${PRODUCT_NAME}-${CURRENT_MARKETING_VERSION}-$(echo $CONFIGURATION | tr /a-z/ /A-Z/).zip\"\nrm -rf *.zip\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n  strip -x -T \"${EXECUTABLE_PATH}\" &>/dev/null || strip -x \"${EXECUTABLE_PATH}\"\nfi\nzip -qry -FS \"${archive}\" \"${dist[@]}\"\n";
+			shellScript = "cd \"${TARGET_BUILD_DIR}\"\n\ndist=(\"$FULL_PRODUCT_NAME\")\nif [ -d \"$DWARF_DSYM_FILE_NAME\" ]; then dist+=(\"$DWARF_DSYM_FILE_NAME\"); fi\n\nrm -rf *.zip *.dmg\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n  strip -x -T \"${EXECUTABLE_PATH}\" &>/dev/null || strip -x \"${EXECUTABLE_PATH}\"\nfi\nif [ \"$DEPLOY_SCRIPT\" != \"\" ]; then\n  archive=\"${PRODUCT_NAME}-${CURRENT_MARKETING_VERSION}-$(echo $CONFIGURATION | tr /a-z/ /A-Z/).dmg\"\n  \"$DEPLOY_SCRIPT\" \"$FULL_PRODUCT_NAME\" \"${archive}\"\nelse\n  archive=\"${PRODUCT_NAME}-${CURRENT_MARKETING_VERSION}-$(echo $CONFIGURATION | tr /a-z/ /A-Z/).zip\"\n  zip -qry -FS \"${archive}\" \"${dist[@]}\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

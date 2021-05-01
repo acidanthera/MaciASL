@@ -1,5 +1,10 @@
 MaciASL Changelog
 =================
+#### v1.6.1
+- Enabled codesigning and notarisation
+- Added native ARM builds for iasl compilers
+- Updated iasl compiler versions
+
 #### v1.6.0
 - Updated iasl compiler versions
 - Fixed exceptions generated when performing certain tasks

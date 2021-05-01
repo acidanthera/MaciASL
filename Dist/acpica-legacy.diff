@@ -1,0 +1,136 @@
+diff --git a/generate/unix/Makefile.config b/generate/unix/Makefile.config
+index 63be0df86..fd262fe9b 100644
+--- a/generate/unix/Makefile.config
++++ b/generate/unix/Makefile.config
+@@ -11,7 +11,7 @@
+ # Configuration
+ #
+ HOST =          _CYGWIN
+-CC =            gcc-4
++CC =            gcc
+ ACPICA_SRC =    ../../../source
+ DIRS =          acpiexec acpisrc acpixtract iasl
+ 
+@@ -24,13 +24,13 @@ ACPICA_CORE =   $(ACPICA_SRC)/components
+ ACPICA_TOOLS =  $(ACPICA_SRC)/tools
+ ACPICA_OSL =    $(ACPICA_SRC)/os_specific/service_layers
+ COMPILE =       $(CC) -c $(CFLAGS) $(CWARNINGFLAGS) -o$@ $?
+-COPYPROG =      @mkdir -p ../bin; rm -f ../bin/$(PROG); cp --remove-destination $(PROG) ../bin
++COPYPROG =      @mkdir -p ../bin; rm -f ../bin/$(PROG); cp $(PROG) ../bin
+ 
+ #
+ # Common compiler flags. The warning flags in addition to -Wall are not
+ # automatically included in -Wall.
+ #
+-CFLAGS+= -Os -D$(HOST) -I$(ACPICA_SRC)/include
++CFLAGS+= -D$(HOST) -I$(ACPICA_SRC)/include
+ CWARNINGFLAGS = \
+ 	-ansi -D_ANSI \
+ 	-Wall \
+@@ -54,14 +54,13 @@ CWARNINGFLAGS+= \
+ 	-Waggregate-return \
+ 	-Wchar-subscripts \
+ 	-Wempty-body \
+-	-Wlogical-op \
+ 	-Wmissing-declarations \
+ 	-Wmissing-field-initializers \
+-	-Wmissing-parameter-type \
+ 	-Wnested-externs \
+-	-Wold-style-declaration \
+ 	-Wold-style-definition \
+ 	-Wredundant-decls \
++	-Wno-format-nonliteral \
++	-Wno-deprecated-declarations \
+ 	-Wtype-limits
+ 
+ #
+diff --git a/generate/unix/iasl/Makefile b/generate/unix/iasl/Makefile
+index 9da637c67..ea79b519c 100644
+--- a/generate/unix/iasl/Makefile
++++ b/generate/unix/iasl/Makefile
+@@ -149,7 +149,7 @@ aslcompilerlex.c :   $(ASL_COMPILER)/aslcompiler.l
+ 
+ aslcompilerparse.c : $(ASL_COMPILER)/aslcompiler.y
+ 	${YACC} ${YFLAGS} -o$@ $?
+-	@mv -f aslcompilerparse.h aslcompiler.y.h
++	@cp aslcompilerparse.h aslcompiler.y.h
+ 
+ #
+ # Parser and Lexer - final object files
+diff --git a/source/include/platform/accygwin.h b/source/include/platform/accygwin.h
+index 693602483..cf6ae9061 100644
+--- a/source/include/platform/accygwin.h
++++ b/source/include/platform/accygwin.h
+@@ -116,6 +116,8 @@
+ #ifndef __ACCYGWIN_H__
+ #define __ACCYGWIN_H__
+ 
++#include <pthread.h>
++
+ /*
+  * ACPICA configuration
+  */
+@@ -136,7 +138,7 @@
+ #include <ctype.h>
+ #include <unistd.h>
+ 
+-#if defined(__ia64__) || defined(__x86_64__)
++#if defined(__ia64__) || defined(__x86_64__) || defined(__arm64__)
+ #define ACPI_MACHINE_WIDTH          64
+ #define COMPILER_DEPENDENT_INT64    long
+ #define COMPILER_DEPENDENT_UINT64   unsigned long
+diff --git a/source/os_specific/service_layers/osunixxf.c b/source/os_specific/service_layers/osunixxf.c
+index e62ed738b..8cf0657d6 100644
+--- a/source/os_specific/service_layers/osunixxf.c
++++ b/source/os_specific/service_layers/osunixxf.c
+@@ -528,8 +528,23 @@ AcpiOsCreateSemaphore (
+         return (AE_BAD_PARAMETER);
+     }
+ 
+-    Sem = AcpiOsAllocate (sizeof (sem_t));
++#ifdef __APPLE__
++    {
++        static int      SemaphoreCount = 0;
++        char            SemaphoreName[32];
+ 
++        snprintf (SemaphoreName, sizeof (SemaphoreName), "acpi_sem_%d",
++            SemaphoreCount++);
++        Sem = sem_open (SemaphoreName, O_EXCL|O_CREAT, 0755, InitialUnits);
++        if (!Sem)
++        {
++            return (AE_NO_MEMORY);
++        }
++        sem_unlink (SemaphoreName); /* This just deletes the name */
++    }
++
++#else
++    Sem = AcpiOsAllocate (sizeof (sem_t));
+     if (!Sem)
+     {
+         return (AE_NO_MEMORY);
+@@ -540,6 +555,7 @@ AcpiOsCreateSemaphore (
+         AcpiOsFree (Sem);
+         return (AE_BAD_PARAMETER);
+     }
++#endif
+ 
+     *OutHandle = (ACPI_HANDLE) Sem;
+     return (AE_OK);
+@@ -570,10 +586,17 @@ AcpiOsDeleteSemaphore (
+         return (AE_BAD_PARAMETER);
+     }
+ 
++#ifdef __APPLE__
++    if (sem_close (Sem) == -1)
++    {
++        return (AE_BAD_PARAMETER);
++    }
++#else
+     if (sem_destroy (Sem) == -1)
+     {
+         return (AE_BAD_PARAMETER);
+     }
++#endif
+ 
+     return (AE_OK);
+ }
