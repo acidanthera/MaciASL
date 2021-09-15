@@ -5,21 +5,37 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         <item>
-          <title>Version 1.6.1</title>
-            <link>https://github.com/acidanthera/MaciASL</link>
-            <sparkle:version>1.6.1</sparkle:version>
-            <description><![CDATA[
-                <ul>
-                    <li>Enabled codesigning and notarisation</li>
-                    <li>Added native ARM builds for iasl compilers</li>
-                    <li>Updated iasl compiler versions</li>
-                </ul>  
-            ]]>
-            </description>
-            <pubDate>Mon, 03 May 2021 18:00:00 +0000</pubDate>
-            <enclosure url="https://github.com/acidanthera/MaciASL/releases/download/1.6.1/MaciASL-1.6.1-RELEASE.dmg"
-                        length="5230000"
-                        type="application/octet-stream" />
+            <title>Version 2.0 (2 bugs fixed; 3 new features)</title>
+            <sparkle:releaseNotesLink>
+                http://you.com/app/2.0.html
+            </sparkle:releaseNotesLink>
+            <pubDate>Wed, 09 Jan 2006 19:20:11 +0000</pubDate>
+            <!-- Sparkle 1.21+ uses sparkle::edSignature="ed25519" instead of sparkle::dsaSignature="deprecated DSA" -->
+            <enclosure url="http://you.com/app/Your%20Great%20App%202.0.zip" sparkle:version="2.0" length="1623481" type="application/octet-stream" sparkle:dsaSignature="BAFJW4B6B1K1JyW30nbkBwainOzrN6EQuAh" />
+            <sparkle:minimumSystemVersion>10.9</sparkle:minimumSystemVersion>
+        </item>
+
+        <item>
+            <title>Version 1.5 (8 bugs fixed; 2 new features)</title>
+            <sparkle:releaseNotesLink>
+                http://you.com/app/1.5.html
+            </sparkle:releaseNotesLink>
+            <pubDate>Wed, 01 Jan 2006 12:20:11 +0000</pubDate>
+            <!-- Sparkle 1.21+ uses sparkle::edSignature="ed25519" instead of sparkle::dsaSignature="deprecated DSA" -->
+            <enclosure url="http://you.com/app/Your%20Great%20App%201.5.zip" sparkle:version="1.5" length="1472893" type="application/octet-stream" sparkle:dsaSignature="234818feCa1JyW30nbkBwainOzrN6EQuAh" />
+            <sparkle:minimumSystemVersion>10.9</sparkle:minimumSystemVersion>
+        </item>
+
+        <!-- Now here's an example of a version with a weird internal version number (like an SVN revision) but a human-readable external one. -->
+        <item>
+            <title>Version 1.4 (5 bugs fixed; 2 new features)</title>
+            <sparkle:releaseNotesLink>
+                http://you.com/app/1.4.html
+            </sparkle:releaseNotesLink>
+            <pubDate>Wed, 25 Dec 2005 12:20:11 +0000</pubDate>
+            <!-- Sparkle 1.21+ uses sparkle::edSignature="ed25519" instead of sparkle::dsaSignature="deprecated DSA" -->
+            <enclosure url="http://you.com/app/Your%20Great%20App%201.4.zip" sparkle:version="241" sparkle:shortVersionString="1.4" sparkle:dsaSignature="MC0CFBfeCa1JyW30nbkBwainOzrN6EQuAh=" length="1472349" type="application/octet-stream" />
+            <sparkle:minimumSystemVersion>10.9</sparkle:minimumSystemVersion>
         </item>
     </channel>
 </rss>
