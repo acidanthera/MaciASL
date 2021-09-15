@@ -6,4 +6,3 @@ clang-analyze
 build
 Dist/acpica
 Dist/iasl-*.*
-Sparkle.framework
