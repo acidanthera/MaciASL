@@ -99,7 +99,7 @@
 	<key>OSAScriptingDefinition</key>
 	<string>MaciASL.sdef</string>
 	<key>SUFeedURL</key>
-	<string>https://raw.githubusercontent.com/SkyrilHD/MaciASL/master/appcast.xml</string>
+	<string>https://raw.githubusercontent.com/acidanthera/MaciASL/master/appcast.xml</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
