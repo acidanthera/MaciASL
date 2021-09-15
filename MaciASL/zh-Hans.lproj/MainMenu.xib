@@ -24,6 +24,12 @@
                                     <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="检查更新..." id="gsf-TN-eBx">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="checkForUpdates:" target="tlC-hl-PNw" id="oLG-Lt-CNK"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="236">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -542,7 +548,7 @@
                                                 <binding destination="647" name="value" keyPath="arrangedObjects.timestamp" id="695"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn editable="NO" width="547" minWidth="40" maxWidth="1000" id="684">
+                                        <tableColumn editable="NO" width="518" minWidth="40" maxWidth="1000" id="684">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="条目">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -665,7 +671,7 @@
                                                 <binding destination="2039" name="value" keyPath="selection.notices.code" id="2070"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn editable="NO" width="234" minWidth="10" maxWidth="3.4028234663852886e+38" id="2056">
+                                        <tableColumn editable="NO" width="205" minWidth="10" maxWidth="3.4028234663852886e+38" id="2056">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="信息">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -1157,7 +1163,7 @@
                                             <binding destination="1153" name="value" keyPath="arrangedObjects.name" id="1159"/>
                                         </connections>
                                     </tableColumn>
-                                    <tableColumn width="307" minWidth="40" maxWidth="1000" id="1144">
+                                    <tableColumn width="278" minWidth="40" maxWidth="1000" id="1144">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="URL地址">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -1417,7 +1423,7 @@ Gw
                                                 </binding>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn editable="NO" width="216" minWidth="40" maxWidth="1000" id="2167">
+                                        <tableColumn editable="NO" width="187" minWidth="40" maxWidth="1000" id="2167">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="值">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -1468,6 +1474,7 @@ Gw
                 <outlet property="delegate" destination="534" id="2194"/>
             </connections>
         </window>
+        <customObject id="tlC-hl-PNw" customClass="SUUpdater"/>
     </objects>
     <resources>
         <image name="NSAddTemplate" width="15" height="13"/>
