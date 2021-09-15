@@ -37,7 +37,6 @@ jobs:
           chmod a+x appsign.sh || exit 1
 
       - name: Compile with codesign (DEBUG)
-        if: github.repository_owner == 'acidanthera'
         env:
           MAC_CERTIFICATE_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
           MAC_ACCOUNT_NAME: ${{ secrets.MAC_ACCOUNT_NAME }}
@@ -45,7 +44,6 @@ jobs:
         run: DEPLOY_SCRIPT="$(pwd)/appsign.sh" xcodebuild -jobs 1 -configuration Debug
     
       - name: Compile with codesign (RELEASE)
-        if: github.repository_owner == 'acidanthera'
         env:
           MAC_CERTIFICATE_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
           MAC_ACCOUNT_NAME: ${{ secrets.MAC_ACCOUNT_NAME }}
@@ -53,15 +51,15 @@ jobs:
         run: DEPLOY_SCRIPT="$(pwd)/appsign.sh" xcodebuild -jobs 1 -configuration Release
 
       - name: Compile (DEBUG)
-        if: github.repository_owner != 'acidanthera'
+        if: github.repository_owner == 'acidanthera'
         run: xcodebuild -jobs 1 -configuration Debug
 
       - name: Compile (RELEASE)
-        if: github.repository_owner != 'acidanthera'
+        if: github.repository_owner == 'acidanthera'
         run: xcodebuild -jobs 1 -configuration Release
 
       - name: Upload to Artifacts
-        if: github.repository_owner == 'acidanthera'
+        if: github.repository_owner != 'acidanthera'
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
