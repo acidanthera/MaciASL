@@ -78,7 +78,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>${CURRENT_PROJECT_VERSION}</string>
+	<string>${CURRENT_MARKETING_VERSION}</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSAppTransportSecurity</key>
@@ -98,6 +98,8 @@
 	<false/>
 	<key>OSAScriptingDefinition</key>
 	<string>MaciASL.sdef</string>
+	<key>SUFeedURL</key>
+	<string>https://raw.githubusercontent.com/SkyrilHD/MaciASL/master/appcast.xml</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

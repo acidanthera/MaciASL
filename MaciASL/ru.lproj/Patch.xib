@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19158" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>        
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19158"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="Patcher">
@@ -14,35 +15,34 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Окно" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="patchFrame" animationBehavior="default" id="1">
+        <window title="Окно" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" visibleAtLaunch="NO" frameAutosaveName="patchFrame" animationBehavior="default" id="1">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="207" width="599" height="368"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1366" height="743"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="599" height="368"/>
+                <rect key="frame" x="0.0" y="0.0" width="599" height="374"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <splitView autosaveName="patchMainFrame" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3">
-                        <rect key="frame" x="0.0" y="0.0" width="599" height="368"/>
+                        <rect key="frame" x="0.0" y="0.0" width="599" height="374"/>
                         <subviews>
                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="20" horizontalPageScroll="10" verticalLineScroll="20" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="306">
-                                <rect key="frame" x="0.0" y="0.0" width="129" height="368"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <rect key="frame" x="0.0" y="0.0" width="129" height="374"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <clipView key="contentView" drawsBackground="NO" id="KVD-U6-BMx">
-                                    <rect key="frame" x="1" y="1" width="127" height="366"/>
+                                    <rect key="frame" x="1" y="1" width="127" height="372"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" rowHeight="20" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="16" outlineTableColumn="310" id="307">
-                                            <rect key="frame" x="0.0" y="0.0" width="127" height="366"/>
-                                            <autoresizingMask key="autoresizingMask"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="127" height="372"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <size key="intercellSpacing" width="3" height="0.0"/>
                                             <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="" editable="NO" width="124" minWidth="16" maxWidth="1000" id="310">
+                                                <tableColumn editable="NO" width="95" minWidth="16" maxWidth="1000" id="310">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
-                                                        <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                                     </tableHeaderCell>
@@ -54,11 +54,11 @@
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="452">
-                                                            <rect key="frame" x="1" y="0.0" width="124" height="20"/>
+                                                            <rect key="frame" x="11" y="0.0" width="104" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="459">
-                                                                    <rect key="frame" x="2" y="2" width="16" height="16"/>
+                                                                    <rect key="frame" x="2" y="-1" width="16" height="22"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="16" id="460"/>
                                                                         <constraint firstAttribute="height" constant="16" id="461"/>
@@ -74,7 +74,7 @@
                                                                     </connections>
                                                                 </imageView>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="458">
-                                                                    <rect key="frame" x="26" y="3" width="97" height="17"/>
+                                                                    <rect key="frame" x="26" y="3" width="77" height="16"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Ячейка вида таблицы" id="463">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -120,26 +120,27 @@
                                 </scroller>
                             </scrollView>
                             <customView id="8">
-                                <rect key="frame" x="130" y="0.0" width="469" height="368"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <rect key="frame" x="130" y="0.0" width="469" height="374"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <splitView autosaveName="patchSubFrame" dividerStyle="thin" translatesAutoresizingMaskIntoConstraints="NO" id="25">
-                                        <rect key="frame" x="0.0" y="39" width="469" height="329"/>
+                                        <rect key="frame" x="0.0" y="38" width="469" height="336"/>
                                         <subviews>
                                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="403">
-                                                <rect key="frame" x="0.0" y="0.0" width="469" height="162"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <clipView key="contentView" id="Kve-VF-TGB">
-                                                    <rect key="frame" x="1" y="1" width="467" height="160"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="469" height="165"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <clipView key="contentView" drawsBackground="NO" id="Kve-VF-TGB">
+                                                    <rect key="frame" x="1" y="1" width="467" height="163"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" findStyle="bar" incrementalSearchingEnabled="YES" allowsUndo="YES" spellingCorrection="YES" id="404">
-                                                            <rect key="frame" x="0.0" y="0.0" width="467" height="160"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="467" height="163"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <size key="minSize" width="467" height="160"/>
+                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            <size key="minSize" width="467" height="163"/>
                                                             <size key="maxSize" width="469" height="10000000"/>
-                                                            <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                             <connections>
                                                                 <binding destination="-2" name="value" keyPath="patch" id="470">
                                                                     <dictionary key="options">
@@ -153,7 +154,6 @@
                                                             </connections>
                                                         </textView>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </clipView>
                                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="405">
                                                     <rect key="frame" x="1" y="147" width="452" height="15"/>
@@ -165,22 +165,21 @@
                                                 </scroller>
                                             </scrollView>
                                             <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="283">
-                                                <rect key="frame" x="0.0" y="163" width="469" height="166"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <rect key="frame" x="0.0" y="166" width="469" height="170"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <clipView key="contentView" id="6ez-VO-6DU">
-                                                    <rect key="frame" x="1" y="0.0" width="467" height="165"/>
+                                                    <rect key="frame" x="1" y="1" width="467" height="168"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" selectionHighlightStyle="none" alternatingRowBackgroundColors="YES" columnReordering="NO" multipleSelection="NO" autosaveColumns="NO" typeSelect="NO" headerView="286" id="284">
-                                                            <rect key="frame" x="0.0" y="0.0" width="467" height="142"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="467" height="145"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <size key="intercellSpacing" width="3" height="2"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                             <tableColumns>
-                                                                <tableColumn identifier="" editable="NO" width="230" minWidth="40" maxWidth="1000" id="288">
+                                                                <tableColumn editable="NO" width="225" minWidth="40" maxWidth="1000" id="288">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="До">
-                                                                        <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </tableHeaderCell>
@@ -201,9 +200,8 @@
                                                                         </binding>
                                                                     </connections>
                                                                 </tableColumn>
-                                                                <tableColumn identifier="" editable="NO" width="231" minWidth="40" maxWidth="1000" id="289">
+                                                                <tableColumn editable="NO" width="227" minWidth="40" maxWidth="1000" id="289">
                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="После">
-                                                                        <font key="font" metaFont="smallSystem"/>
                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </tableHeaderCell>
@@ -240,7 +238,7 @@
                                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </scroller>
-                                                <tableHeaderView key="headerView" id="286">
+                                                <tableHeaderView key="headerView" wantsLayer="YES" id="286">
                                                     <rect key="frame" x="0.0" y="0.0" width="467" height="23"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </tableHeaderView>
@@ -252,7 +250,7 @@
                                         </holdingPriorities>
                                     </splitView>
                                     <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="22">
-                                        <rect key="frame" x="374" y="4" width="93" height="32"/>
+                                        <rect key="frame" x="374" y="10" width="93" height="32"/>
                                         <buttonCell key="cell" type="push" title="Закрыть" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="58">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -262,7 +260,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="24">
-                                        <rect key="frame" x="1" y="4" width="94" height="32"/>
+                                        <rect key="frame" x="1" y="10" width="94" height="32"/>
                                         <buttonCell key="cell" type="push" title="Открыть" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="56">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -272,7 +270,7 @@
                                         </connections>
                                     </button>
                                     <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="376">
-                                        <rect key="frame" x="102" y="13" width="165" height="17"/>
+                                        <rect key="frame" x="102" y="19" width="165" height="17"/>
                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="10 Патчей, 10 Изменений" id="377">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -283,7 +281,7 @@
                                         </connections>
                                     </textField>
                                     <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="23">
-                                        <rect key="frame" x="267" y="4" width="112" height="32"/>
+                                        <rect key="frame" x="267" y="10" width="112" height="32"/>
                                         <buttonCell key="cell" type="push" title="Применить" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="57">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -331,8 +329,10 @@
                 <outlet property="delegate" destination="-2" id="373"/>
                 <outlet property="initialFirstResponder" destination="404" id="419"/>
             </connections>
+            <point key="canvasLocation" x="141" y="104"/>
         </window>
         <treeController objectClassName="SourceProvider" editable="NO" childrenKeyPath="children.DSDT" avoidsEmptySelection="NO" preservesSelection="NO" selectsInsertedObjects="NO" id="80" userLabel="Sources">
+            <classReference key="objectClass" className="SourceProvider"/>
             <connections>
                 <binding destination="427" name="contentArray" keyPath="providers" id="431"/>
             </connections>
@@ -342,6 +342,7 @@
                 <string>before</string>
                 <string>after</string>
             </declaredKeys>
+            <classReference key="objectClass" className="NSDictionary"/>
             <connections>
                 <binding destination="-2" name="contentArray" keyPath="patchFile.preview" id="172"/>
             </connections>
@@ -350,6 +351,6 @@
         <customObject id="427" userLabel="Source List" customClass="SourceList"/>
     </objects>
     <resources>
-        <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSActionTemplate" width="15" height="15"/>
     </resources>
 </document>
