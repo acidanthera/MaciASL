@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7174EFA226F177200029896C /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7174EFA026F176EC0029896C /* Sparkle.framework */; };
-		7174EFA326F177200029896C /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7174EFA026F176EC0029896C /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		71DD425326F233A000E1C7C4 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71DD425126F2329C00E1C7C4 /* Sparkle.framework */; };
+		71DD425426F233A000E1C7C4 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 71DD425126F2329C00E1C7C4 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */ = {isa = PBXBuildFile; fileRef = B01056A1161CE6CB006A21AC /* MaciASL.icns */; };
 		B013B827160C529600F6A7F2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B013B826160C529600F6A7F2 /* Cocoa.framework */; };
 		B013B833160C529600F6A7F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B013B832160C529600F6A7F2 /* main.m */; };
@@ -62,13 +62,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7174EFA426F177200029896C /* Embed Frameworks */ = {
+		71DD425526F233A000E1C7C4 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7174EFA326F177200029896C /* Sparkle.framework in Embed Frameworks */,
+				71DD425426F233A000E1C7C4 /* Sparkle.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,7 +109,7 @@
 		50CCDC5F22202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/Patch.xib"; sourceTree = "<group>"; };
 		50CCDC6022202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/SSDT.xib"; sourceTree = "<group>"; };
 		50CCDC6122202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		7174EFA026F176EC0029896C /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		71DD425126F2329C00E1C7C4 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		B01056A1161CE6CB006A21AC /* MaciASL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MaciASL.icns; sourceTree = SOURCE_ROOT; };
 		B013B822160C529600F6A7F2 /* MaciASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaciASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B013B826160C529600F6A7F2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -176,7 +176,7 @@
 				B017FB2B1861532200DA033A /* SystemConfiguration.framework in Frameworks */,
 				B0E0185416154CBD008CAC9B /* IOKit.framework in Frameworks */,
 				B013B827160C529600F6A7F2 /* Cocoa.framework in Frameworks */,
-				7174EFA226F177200029896C /* Sparkle.framework in Frameworks */,
+				71DD425326F233A000E1C7C4 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,7 +226,7 @@
 		B013B825160C529600F6A7F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7174EFA026F176EC0029896C /* Sparkle.framework */,
+				71DD425126F2329C00E1C7C4 /* Sparkle.framework */,
 				B017FB2A1861532200DA033A /* SystemConfiguration.framework */,
 				B013B826160C529600F6A7F2 /* Cocoa.framework */,
 				B0663F3517E815EB008D6686 /* CoreServices.framework */,
@@ -364,7 +364,7 @@
 				B0E0186016155C85008CAC9B /* CopyFiles */,
 				B0663F4F17E81809008D6686 /* Copy Spotlight Importer */,
 				CE775909211C252C0063EAE6 /* Archive */,
-				7174EFA426F177200029896C /* Embed Frameworks */,
+				71DD425526F233A000E1C7C4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
