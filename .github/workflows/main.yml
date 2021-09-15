@@ -64,7 +64,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
-          path: MaciASL/build/*/*.dmg
+          path: build/*/*.dmg
 
       - name: Upload to Release
         if: github.event_name == 'release' && github.repository_owner == 'acidanthera'
