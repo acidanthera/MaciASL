@@ -548,7 +548,7 @@
                                                 <binding destination="647" name="value" keyPath="arrangedObjects.timestamp" id="695"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn editable="NO" width="547" minWidth="40" maxWidth="1000" id="684">
+                                        <tableColumn editable="NO" width="518" minWidth="40" maxWidth="1000" id="684">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Entry">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -671,7 +671,7 @@
                                                 <binding destination="2039" name="value" keyPath="selection.notices.code" id="2070"/>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn editable="NO" width="242" minWidth="10" maxWidth="3.4028234663852886e+38" id="2056">
+                                        <tableColumn editable="NO" width="213" minWidth="10" maxWidth="3.4028234663852886e+38" id="2056">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Message">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -1163,7 +1163,7 @@
                                             <binding destination="1153" name="value" keyPath="arrangedObjects.name" id="1159"/>
                                         </connections>
                                     </tableColumn>
-                                    <tableColumn width="307" minWidth="40" maxWidth="1000" id="1144">
+                                    <tableColumn width="278" minWidth="40" maxWidth="1000" id="1144">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="URL">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -1422,7 +1422,7 @@ Gw
                                                 </binding>
                                             </connections>
                                         </tableColumn>
-                                        <tableColumn editable="NO" width="216" minWidth="40" maxWidth="1000" id="2167">
+                                        <tableColumn editable="NO" width="187" minWidth="40" maxWidth="1000" id="2167">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Value">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
