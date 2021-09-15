@@ -88,9 +88,10 @@ jobs:
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/ci-bootstrap.sh) && eval "$src" || exit 1
           
-      - name: Add Sparkle
+      - name: Get latest Sparkle
         run: |
-          curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/1.26.0/Sparkle-1.26.0.tar.xz" -o Sparkle.tar.xz
+          tag=$(curl --silent "https://api.github.com/repos/sparkle-project/Sparkle/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+          curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/$tag/Sparkle-$tag.tar.xz" -o Sparkle.tar.xz
           tar -xf Sparkle.tar.xz Sparkle.framework
 
       - run: xcodebuild analyze -quiet -scheme MaciASL -configuration Debug CLANG_ANALYZER_OUTPUT=plist-html CLANG_ANALYZER_OUTPUT_DIR="$(pwd)/clang-analyze" && [ "$(find clang-analyze -name "*.html")" = "" ]
@@ -109,9 +110,10 @@ jobs:
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/ci-bootstrap.sh) && eval "$src" || exit 1
           
-      - name: Add Sparkle
+      - name: Get latest Sparkle
         run: |
-          curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/1.26.0/Sparkle-1.26.0.tar.xz" -o Sparkle.tar.xz
+          tag=$(curl --silent "https://api.github.com/repos/sparkle-project/Sparkle/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+          curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/$tag/Sparkle-$tag.tar.xz" -o Sparkle.tar.xz
           tar -xf Sparkle.tar.xz Sparkle.framework
 
       - name: Run Coverity
