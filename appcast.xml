@@ -1,17 +1,25 @@
-<item>
-    <title>Version 1.6.1</title>
-    <link>https://github.com/acidanthera/MaciASL</link>
-    <sparkle:version>1.6.1</sparkle:version>
-    <description><![CDATA[
-        <ul>
-          <li>Enabled codesigning and notarisation</li>
-          <li>Added native ARM builds for iasl compilers</li>
-          <li>Updated iasl compiler versions</li>
-        </ul>  
-    ]]>
-    </description>
-    <pubDate>Mon, 03 May 2021 18:00:00 +0000</pubDate>
-    <enclosure url="https://github.com/acidanthera/MaciASL/releases/download/1.6.1/MaciASL-1.6.1-RELEASE.dmg"
-                length="5230000"
-                type="application/octet-stream" />
-</item>
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>Your Great App's Changelog</title>
+        <description>Most recent changes with links to updates.</description>
+        <language>en</language>
+        <item>
+          <title>Version 1.6.1</title>
+            <link>https://github.com/acidanthera/MaciASL</link>
+            <sparkle:version>1.6.1</sparkle:version>
+            <description><![CDATA[
+                <ul>
+                    <li>Enabled codesigning and notarisation</li>
+                    <li>Added native ARM builds for iasl compilers</li>
+                    <li>Updated iasl compiler versions</li>
+                </ul>  
+            ]]>
+            </description>
+            <pubDate>Mon, 03 May 2021 18:00:00 +0000</pubDate>
+            <enclosure url="https://github.com/acidanthera/MaciASL/releases/download/1.6.1/MaciASL-1.6.1-RELEASE.dmg"
+                        length="5230000"
+                        type="application/octet-stream" />
+        </item>
+    </channel>
+</rss>
