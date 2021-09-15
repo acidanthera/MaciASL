@@ -24,6 +24,11 @@ jobs:
         env:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
           HOMEBREW_NO_AUTO_UPDATE: 1
+          
+      - name: Add Sparkle
+        run: |
+          curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/1.26.0/Sparkle-1.26.0.tar.xz" -o Sparkle.tar.xz
+          tar -xf Sparkle.tar.xz Sparkle.framework
 
       - name: CI Bootstrap
         run: |
