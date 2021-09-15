@@ -61,7 +61,6 @@ jobs:
         run: xcodebuild -jobs 1 -configuration Release
 
       - name: Upload to Artifacts
-        if: github.repository_owner == 'acidanthera'
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
