@@ -25,12 +25,6 @@ jobs:
           HOMEBREW_NO_INSTALL_CLEANUP: 1
           HOMEBREW_NO_AUTO_UPDATE: 1
           
-      - name: Get latest Sparkle
-        run: |
-          tag=$(curl --silent "https://api.github.com/repos/sparkle-project/Sparkle/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-          curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/$tag/Sparkle-$tag.tar.xz" -o Sparkle.tar.xz
-          tar -xf Sparkle.tar.xz Sparkle.framework
-
       - name: CI Bootstrap
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/ci-bootstrap.sh) && eval "$src" || exit 1
@@ -88,12 +82,6 @@ jobs:
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/ci-bootstrap.sh) && eval "$src" || exit 1
           
-      - name: Get latest Sparkle
-        run: |
-          tag=$(curl "https://api.github.com/repos/sparkle-project/Sparkle/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-          curl -L "https://github.com/sparkle-project/Sparkle/releases/download/$tag/Sparkle-$tag.tar.xz" -o Sparkle.tar.xz
-          tar -xf Sparkle.tar.xz Sparkle.framework
-
       - run: xcodebuild analyze -quiet -scheme MaciASL -configuration Debug CLANG_ANALYZER_OUTPUT=plist-html CLANG_ANALYZER_OUTPUT_DIR="$(pwd)/clang-analyze" && [ "$(find clang-analyze -name "*.html")" = "" ]
       - run: xcodebuild clean -quiet -scheme MaciASL
       - run: xcodebuild analyze -quiet -scheme MaciASL -configuration Release CLANG_ANALYZER_OUTPUT=plist-html CLANG_ANALYZER_OUTPUT_DIR="$(pwd)/clang-analyze" && [ "$(find clang-analyze -name "*.html")" = "" ]
@@ -110,12 +98,6 @@ jobs:
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/ci-bootstrap.sh) && eval "$src" || exit 1
           
-      - name: Get latest Sparkle
-        run: |
-          tag=$(curl --silent "https://api.github.com/repos/sparkle-project/Sparkle/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
-          curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/$tag/Sparkle-$tag.tar.xz" -o Sparkle.tar.xz
-          tar -xf Sparkle.tar.xz Sparkle.framework
-
       - name: Run Coverity
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/coverity/covstrap.sh) && eval "$src" || exit 1
