@@ -235,6 +235,11 @@ static NSUInteger _build;
         IOObjectRelease(expert);
         NSMenu *acpi = [[[NSApp mainMenu] itemAtIndex:1] submenu];
         [[acpi insertItemWithTitle:NSLocalizedString(@"new-from-acpi", @"New from ACPI") action:NULL keyEquivalent:@"" atIndex:1] setSubmenu:menu];
+#ifndef DEBUG
+#else
+        NSMenu *updates = [[[NSApp mainMenu] itemAtIndex:0] submenu];
+        [updates removeItemAtIndex:1];
+#endif
     }
     [NSUserDefaults.standardUserDefaults addObserver:(id)self forKeyPath:@"iasl" options:NSKeyValueObservingOptionInitial context:NULL];
 }
