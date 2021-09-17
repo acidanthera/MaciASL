@@ -74,11 +74,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>${CURRENT_MARKETING_VERSION}</string>
+	<string>1.6.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>${CURRENT_MARKETING_VERSION}</string>
+	<string>1.6.0</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>NSAppTransportSecurity</key>
@@ -98,8 +98,6 @@
 	<false/>
 	<key>OSAScriptingDefinition</key>
 	<string>MaciASL.sdef</string>
-	<key>SUFeedURL</key>
-	<string>https://raw.githubusercontent.com/acidanthera/MaciASL/master/appcast.xml</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
