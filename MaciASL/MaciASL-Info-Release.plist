@@ -106,6 +106,8 @@
 	<string>https://raw.githubusercontent.com/acidanthera/MaciASL/appcast/appcast.xml</string>
 	<key>#SUPublicEDKey</key>
 	<string>ENTER PUBLIC KEY</string>
+	<key>SUScheduledCheckInterval</key>
+	<integer>86400</integer>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
