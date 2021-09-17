@@ -98,6 +98,8 @@
 	<false/>
 	<key>OSAScriptingDefinition</key>
 	<string>MaciASL.sdef</string>
+	<key>SUAllowsAutomaticUpdates</key>
+	<true/>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
