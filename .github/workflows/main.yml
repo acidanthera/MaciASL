@@ -83,13 +83,13 @@ jobs:
       - uses: actions/checkout@v2
       
       - name: Get Tag
-        run: echo "TAG_VER=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+        run: TAG_VER=${GITHUB_REF/refs\/tags\//}
       
       - name: Get Information & Sign
         run: |
-           echo "DATE=$(date -R)" >> $GITHUB_ENV
-           echo "SIGNATURE=$(./bin/sign_update -s ${{ secrets.SIGNATURE_FOR_SIGNING }} build/Release/MaciASL-${{ env.TAG_VER }}-RELEASE.dmg)" >> $GITHUB_ENV
-           ./bin/generate_appcast -o appcast.xml -s ${{ secrets.SIGNATURE_FOR_SIGNING }} --download-url-prefix https://github.com/acidanthera/MaciASL/releases/download/${{ env.TAG_VER }}/ build/Release
+           DATE=$(date -R)
+           SIGNATURE=$(./bin/sign_update -s ${{ secrets.SIGNATURE_FOR_SIGNING }} build/Release/MaciASL-${{ env.TAG_VER }}-RELEASE.dmg)
+           ./bin/generate_appcast -o appcast.xml -s ${{ secrets.SIGNATURE_FOR_SIGNING }} --download-url-prefix https://github.com/acidanthera/MaciASL/releases/download/${{ env.TAG_VER }}/ build/Release || exit 1
       
       - name: Commit Appcast
         run: |
