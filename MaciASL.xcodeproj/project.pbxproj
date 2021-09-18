@@ -494,7 +494,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+			shellScript = "plutil -insert \"SUAllowsAutomaticUpdates\" -bool true build/Release/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUEnableAutomaticChecks\" -bool true build/Release/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUFeedURL\" -string \"https://raw.githubusercontent.com/acidanthera/MaciASL/appcast/appcast.xml\" build/Release/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUPublicEDKey\" -string \"d6TTl9OeRP+CH+IiQwgLCUsxj6DXK+Fnrcfmcj61ANk=\" build/Release/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUScheduledCheckInterval\" -integer \"86400\" build/Release/MaciASL.app/Contents/Info.plist\n";
 		};
 		CE775909211C252C0063EAE6 /* Archive */ = {
 			isa = PBXShellScriptBuildPhase;
