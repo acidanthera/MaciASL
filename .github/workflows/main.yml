@@ -82,6 +82,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
+      - name: Get Sparkle 1.26
+        run: |
+          curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/1.26.0/Sparkle-1.26.0.tar.xz" -o Sparkle.tar.xz
+          tar -xf Sparkle.tar.xz
+      
       - name: Get Information & Sign
         run: |
            TAG_VER=${GITHUB_REF/refs\/tags\//}
