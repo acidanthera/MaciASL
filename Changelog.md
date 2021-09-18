@@ -1,5 +1,8 @@
 MaciASL Changelog
 =================
+#### v1.6.2
+- Implement automatic updates with Sparkle, thanks to @SkyrilHD
+
 #### v1.6.1
 - Enabled codesigning and notarisation
 - Added native ARM builds for iasl compilers

@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		71BF358426F520A5005D5374 /* MaciASL-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71BF358226F520A5005D5374 /* MaciASL-Info.plist */; };
 		71DD425326F233A000E1C7C4 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71DD425126F2329C00E1C7C4 /* Sparkle.framework */; };
 		71DD425426F233A000E1C7C4 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 71DD425126F2329C00E1C7C4 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */ = {isa = PBXBuildFile; fileRef = B01056A1161CE6CB006A21AC /* MaciASL.icns */; };
@@ -364,9 +363,9 @@
 				B013B820160C529600F6A7F2 /* Resources */,
 				B0E0186016155C85008CAC9B /* CopyFiles */,
 				B0663F4F17E81809008D6686 /* Copy Spotlight Importer */,
+				71DD425526F233A000E1C7C4 /* Embed Frameworks */,
 				712536FB26F63EE900C5FC40 /* Set Sparkle entries */,
 				CE775909211C252C0063EAE6 /* Archive */,
-				71DD425526F233A000E1C7C4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -458,7 +457,6 @@
 				B013B840160C529700F6A7F2 /* MainMenu.xib in Resources */,
 				B06352E2177EA65B00956EB1 /* Patch.xib in Resources */,
 				B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */,
-				71BF358426F520A5005D5374 /* MaciASL-Info.plist in Resources */,
 				B0899354161D781C00FE7BD8 /* AML.icns in Resources */,
 				B0899355161D781C00FE7BD8 /* DSL.icns in Resources */,
 				CEC419DE213077FC002FB644 /* Localizable.strings in Resources */,
@@ -480,6 +478,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		712536FB26F63EE900C5FC40 /* Set Sparkle entries */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -494,7 +493,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"$CONFIGURATION\" == \"Release\" ]; then\nplutil -insert \"SUAllowsAutomaticUpdates\" -bool true ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUEnableAutomaticChecks\" -bool true ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUFeedURL\" -string \"https://raw.githubusercontent.com/acidanthera/MaciASL/appcast/appcast.xml\" ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUPublicEDKey\" -string \"d6TTl9OeRP+CH+IiQwgLCUsxj6DXK+Fnrcfmcj61ANk=\" ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUScheduledCheckInterval\" -integer \"86400\" ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist\nfi\n";
+			shellScript = "if [ \"$CONFIGURATION\" = \"Release\" ]; then\necho \"Providing Sparkle entry support for ${TARGET_BUILD_DIR}/MaciASL.app in $CONFIGURATION mode\"\nplutil -insert \"SUAllowsAutomaticUpdates\" -bool true ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist || echo \"Skipping\"\nplutil -insert \"SUEnableAutomaticChecks\" -bool true ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist || echo \"Skipping\"\nplutil -insert \"SUFeedURL\" -string \"https://raw.githubusercontent.com/acidanthera/MaciASL/appcast/appcast.xml\" ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist || echo \"Skipping\"\nplutil -insert \"SUPublicEDKey\" -string \"d6TTl9OeRP+CH+IiQwgLCUsxj6DXK+Fnrcfmcj61ANk=\" ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist || echo \"Skipping\"\nplutil -insert \"SUScheduledCheckInterval\" -integer \"86400\" ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist || echo \"Skipping\"\nelse\necho \"Skipping Sparkle support for ${TARGET_BUILD_DIR}/MaciASL.app in $CONFIGURATION mode\"\nfi\n";
 		};
 		CE775909211C252C0063EAE6 /* Archive */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -735,7 +734,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaciASL/MaciASL-Prefix.pch";
 				INFOPLIST_FILE = "MaciASL/MaciASL-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -753,7 +755,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaciASL/MaciASL-Prefix.pch";
 				INFOPLIST_FILE = "MaciASL/MaciASL-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
