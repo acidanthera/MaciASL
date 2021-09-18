@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		71BF358426F520A5005D5374 /* MaciASL-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71BF358226F520A5005D5374 /* MaciASL-Info.plist */; };
+		71DD425326F233A000E1C7C4 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71DD425126F2329C00E1C7C4 /* Sparkle.framework */; };
+		71DD425426F233A000E1C7C4 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 71DD425126F2329C00E1C7C4 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */ = {isa = PBXBuildFile; fileRef = B01056A1161CE6CB006A21AC /* MaciASL.icns */; };
 		B013B827160C529600F6A7F2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B013B826160C529600F6A7F2 /* Cocoa.framework */; };
 		B013B833160C529600F6A7F2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B013B832160C529600F6A7F2 /* main.m */; };
@@ -60,6 +63,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		71DD425526F233A000E1C7C4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				71DD425426F233A000E1C7C4 /* Sparkle.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B0663F4F17E81809008D6686 /* Copy Spotlight Importer */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -96,12 +110,13 @@
 		50CCDC5F22202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/Patch.xib"; sourceTree = "<group>"; };
 		50CCDC6022202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/SSDT.xib"; sourceTree = "<group>"; };
 		50CCDC6122202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		71BF358226F520A5005D5374 /* MaciASL-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MaciASL-Info.plist"; sourceTree = "<group>"; };
+		71DD425126F2329C00E1C7C4 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		B01056A1161CE6CB006A21AC /* MaciASL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MaciASL.icns; sourceTree = SOURCE_ROOT; };
 		B013B822160C529600F6A7F2 /* MaciASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaciASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B013B826160C529600F6A7F2 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		B013B829160C529600F6A7F2 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		B013B82B160C529600F6A7F2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		B013B82E160C529600F6A7F2 /* MaciASL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MaciASL-Info.plist"; sourceTree = "<group>"; };
 		B013B832160C529600F6A7F2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B013B834160C529600F6A7F2 /* MaciASL-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MaciASL-Prefix.pch"; sourceTree = "<group>"; };
 		B013B838160C529600F6A7F2 /* Document.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Document.h; sourceTree = "<group>"; };
@@ -162,6 +177,7 @@
 				B017FB2B1861532200DA033A /* SystemConfiguration.framework in Frameworks */,
 				B0E0185416154CBD008CAC9B /* IOKit.framework in Frameworks */,
 				B013B827160C529600F6A7F2 /* Cocoa.framework in Frameworks */,
+				71DD425326F233A000E1C7C4 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -211,6 +227,7 @@
 		B013B825160C529600F6A7F2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				71DD425126F2329C00E1C7C4 /* Sparkle.framework */,
 				B017FB2A1861532200DA033A /* SystemConfiguration.framework */,
 				B013B826160C529600F6A7F2 /* Cocoa.framework */,
 				B0663F3517E815EB008D6686 /* CoreServices.framework */,
@@ -269,7 +286,7 @@
 				B0899352161D781C00FE7BD8 /* AML.icns */,
 				B0CABE541652CE8A00A04C7E /* MaciASL.sdef */,
 				B0899353161D781C00FE7BD8 /* DSL.icns */,
-				B013B82E160C529600F6A7F2 /* MaciASL-Info.plist */,
+				71BF358226F520A5005D5374 /* MaciASL-Info.plist */,
 				B013B832160C529600F6A7F2 /* main.m */,
 				B013B834160C529600F6A7F2 /* MaciASL-Prefix.pch */,
 				CEC419DC213077FC002FB644 /* Localizable.strings */,
@@ -347,7 +364,9 @@
 				B013B820160C529600F6A7F2 /* Resources */,
 				B0E0186016155C85008CAC9B /* CopyFiles */,
 				B0663F4F17E81809008D6686 /* Copy Spotlight Importer */,
+				712536FB26F63EE900C5FC40 /* Set Sparkle entries */,
 				CE775909211C252C0063EAE6 /* Archive */,
+				71DD425526F233A000E1C7C4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -439,6 +458,7 @@
 				B013B840160C529700F6A7F2 /* MainMenu.xib in Resources */,
 				B06352E2177EA65B00956EB1 /* Patch.xib in Resources */,
 				B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */,
+				71BF358426F520A5005D5374 /* MaciASL-Info.plist in Resources */,
 				B0899354161D781C00FE7BD8 /* AML.icns in Resources */,
 				B0899355161D781C00FE7BD8 /* DSL.icns in Resources */,
 				CEC419DE213077FC002FB644 /* Localizable.strings in Resources */,
@@ -458,6 +478,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		712536FB26F63EE900C5FC40 /* Set Sparkle entries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Set Sparkle entries";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"$CONFIGURATION\" == \"Release\" ]; then\nplutil -insert \"SUAllowsAutomaticUpdates\" -bool true ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUEnableAutomaticChecks\" -bool true ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUFeedURL\" -string \"https://raw.githubusercontent.com/acidanthera/MaciASL/appcast/appcast.xml\" ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUPublicEDKey\" -string \"d6TTl9OeRP+CH+IiQwgLCUsxj6DXK+Fnrcfmcj61ANk=\" ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist\nplutil -insert \"SUScheduledCheckInterval\" -integer \"86400\" ${TARGET_BUILD_DIR}/MaciASL.app/Contents/Info.plist\nfi\n";
+		};
 		CE775909211C252C0063EAE6 /* Archive */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -629,7 +667,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -681,7 +719,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -690,9 +728,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaciASL/MaciASL-Prefix.pch";
 				INFOPLIST_FILE = "MaciASL/MaciASL-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -703,9 +746,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaciASL/MaciASL-Prefix.pch";
 				INFOPLIST_FILE = "MaciASL/MaciASL-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
