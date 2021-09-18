@@ -84,14 +84,14 @@ jobs:
       
       - name: Get Sparkle 1.26
         run: |
-          curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/1.26.0/Sparkle-1.26.0.tar.xz" -o Sparkle.tar.xz
+          curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/1.26.0/Sparkle-1.26.0.tar.xz" -o Sparkle.tar.xz || exit 1
           tar -xf Sparkle.tar.xz
       
       - name: Get Information & Sign
         run: |
            TAG_VER=${GITHUB_REF/refs\/tags\//}
            DATE=$(date -R)
-           ./bin/sign_update -s ${{ secrets.SIGNATURE_FOR_SIGNING }} build/Release/MaciASL-${TAG_VER}-RELEASE.dmg
+           ./bin/sign_update -s ${{ secrets.SIGNATURE_FOR_SIGNING }} build/Release/MaciASL-${TAG_VER}-RELEASE.dmg || exit 1
            ./bin/generate_appcast -o appcast.xml -s ${{ secrets.SIGNATURE_FOR_SIGNING }} --download-url-prefix https://github.com/acidanthera/MaciASL/releases/download/${TAG_VER}/ build/Release || exit 1
       
       - name: Commit Appcast
