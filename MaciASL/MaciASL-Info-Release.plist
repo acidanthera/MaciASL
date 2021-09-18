@@ -104,8 +104,8 @@
 	<true/>
 	<key>SUFeedURL</key>
 	<string>https://raw.githubusercontent.com/acidanthera/MaciASL/appcast/appcast.xml</string>
-	<key>#SUPublicEDKey</key>
-	<string>ENTER PUBLIC KEY</string>
+	<key>SUPublicEDKey</key>
+	<string>d6TTl9OeRP+CH+IiQwgLCUsxj6DXK+Fnrcfmcj61ANk=</string>
 	<key>SUScheduledCheckInterval</key>
 	<integer>86400</integer>
 	<key>UTExportedTypeDeclarations</key>
