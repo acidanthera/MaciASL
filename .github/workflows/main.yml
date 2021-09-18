@@ -85,7 +85,7 @@ jobs:
       - name: Get Sparkle 1.26
         run: |
           curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/1.26.0/Sparkle-1.26.0.tar.xz" -o Sparkle.tar.xz || exit 1
-          tar -xf Sparkle.tar.xz
+          tar -xf Sparkle.tar.xz || exit 1
       
       - name: Get Information & Sign
         run: |
