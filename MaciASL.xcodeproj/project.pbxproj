@@ -364,7 +364,7 @@
 				B013B820160C529600F6A7F2 /* Resources */,
 				B0E0186016155C85008CAC9B /* CopyFiles */,
 				B0663F4F17E81809008D6686 /* Copy Spotlight Importer */,
-				712536FB26F63EE900C5FC40 /* Set Spakle entries */,
+				712536FB26F63EE900C5FC40 /* Set Sparkle entries */,
 				CE775909211C252C0063EAE6 /* Archive */,
 				71DD425526F233A000E1C7C4 /* Embed Frameworks */,
 			);
@@ -478,7 +478,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		712536FB26F63EE900C5FC40 /* Set Spakle entries */ = {
+		712536FB26F63EE900C5FC40 /* Set Sparkle entries */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -487,7 +487,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Set Spakle entries";
+			name = "Set Sparkle entries";
 			outputFileListPaths = (
 			);
 			outputPaths = (
