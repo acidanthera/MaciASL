@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		71BF358426F520A5005D5374 /* MaciASL-Info-Release.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71BF358226F520A5005D5374 /* MaciASL-Info-Release.plist */; };
-		71BF358526F520A5005D5374 /* MaciASL-Info-Debug.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71BF358326F520A5005D5374 /* MaciASL-Info-Debug.plist */; };
+		71BF358426F520A5005D5374 /* MaciASL-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 71BF358226F520A5005D5374 /* MaciASL-Info.plist */; };
 		71DD425326F233A000E1C7C4 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71DD425126F2329C00E1C7C4 /* Sparkle.framework */; };
 		71DD425426F233A000E1C7C4 /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 71DD425126F2329C00E1C7C4 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */ = {isa = PBXBuildFile; fileRef = B01056A1161CE6CB006A21AC /* MaciASL.icns */; };
@@ -111,8 +110,7 @@
 		50CCDC5F22202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/Patch.xib"; sourceTree = "<group>"; };
 		50CCDC6022202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "zh-Hans"; path = "zh-Hans.lproj/SSDT.xib"; sourceTree = "<group>"; };
 		50CCDC6122202620000981B0 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		71BF358226F520A5005D5374 /* MaciASL-Info-Release.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MaciASL-Info-Release.plist"; sourceTree = "<group>"; };
-		71BF358326F520A5005D5374 /* MaciASL-Info-Debug.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MaciASL-Info-Debug.plist"; sourceTree = "<group>"; };
+		71BF358226F520A5005D5374 /* MaciASL-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MaciASL-Info.plist"; sourceTree = "<group>"; };
 		71DD425126F2329C00E1C7C4 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		B01056A1161CE6CB006A21AC /* MaciASL.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MaciASL.icns; sourceTree = SOURCE_ROOT; };
 		B013B822160C529600F6A7F2 /* MaciASL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaciASL.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -288,8 +286,7 @@
 				B0899352161D781C00FE7BD8 /* AML.icns */,
 				B0CABE541652CE8A00A04C7E /* MaciASL.sdef */,
 				B0899353161D781C00FE7BD8 /* DSL.icns */,
-				71BF358326F520A5005D5374 /* MaciASL-Info-Debug.plist */,
-				71BF358226F520A5005D5374 /* MaciASL-Info-Release.plist */,
+				71BF358226F520A5005D5374 /* MaciASL-Info.plist */,
 				B013B832160C529600F6A7F2 /* main.m */,
 				B013B834160C529600F6A7F2 /* MaciASL-Prefix.pch */,
 				CEC419DC213077FC002FB644 /* Localizable.strings */,
@@ -367,6 +364,7 @@
 				B013B820160C529600F6A7F2 /* Resources */,
 				B0E0186016155C85008CAC9B /* CopyFiles */,
 				B0663F4F17E81809008D6686 /* Copy Spotlight Importer */,
+				712536FB26F63EE900C5FC40 /* Set Spakle entries */,
 				CE775909211C252C0063EAE6 /* Archive */,
 				71DD425526F233A000E1C7C4 /* Embed Frameworks */,
 			);
@@ -460,12 +458,11 @@
 				B013B840160C529700F6A7F2 /* MainMenu.xib in Resources */,
 				B06352E2177EA65B00956EB1 /* Patch.xib in Resources */,
 				B01056A2161CE6CB006A21AC /* MaciASL.icns in Resources */,
-				71BF358426F520A5005D5374 /* MaciASL-Info-Release.plist in Resources */,
+				71BF358426F520A5005D5374 /* MaciASL-Info.plist in Resources */,
 				B0899354161D781C00FE7BD8 /* AML.icns in Resources */,
 				B0899355161D781C00FE7BD8 /* DSL.icns in Resources */,
 				CEC419DE213077FC002FB644 /* Localizable.strings in Resources */,
 				B0CABE551652CE8A00A04C7E /* MaciASL.sdef in Resources */,
-				71BF358526F520A5005D5374 /* MaciASL-Info-Debug.plist in Resources */,
 				B06352E5177EA65F00956EB1 /* SSDT.xib in Resources */,
 				B0A7EAF1173CA9A300363AD1 /* ACPI.icns in Resources */,
 			);
@@ -481,6 +478,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		712536FB26F63EE900C5FC40 /* Set Spakle entries */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Set Spakle entries";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
 		CE775909211C252C0063EAE6 /* Archive */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -719,7 +734,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaciASL/MaciASL-Prefix.pch";
-				INFOPLIST_FILE = "MaciASL/MaciASL-Info-Debug.plist";
+				INFOPLIST_FILE = "MaciASL/MaciASL-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -737,7 +752,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MaciASL/MaciASL-Prefix.pch";
-				INFOPLIST_FILE = "MaciASL/MaciASL-Info-Release.plist";
+				INFOPLIST_FILE = "MaciASL/MaciASL-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.acidanthera.MaciASL;
 				PRODUCT_NAME = "$(TARGET_NAME)";
