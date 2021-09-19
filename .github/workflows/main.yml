@@ -63,7 +63,7 @@ jobs:
           path: build/*/*.dmg
 
       - name: Upload to Release
-        if: github.event_name == 'release' && github.repository_owner == 'acidanthera' && github.event_name != 'pull_request'
+        if: github.event_name == 'release' && github.repository_owner == 'acidanthera'
         uses: svenstaro/upload-release-action@e74ff71f7d8a4c4745b560a485cc5fdb9b5b999d
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -72,13 +72,13 @@ jobs:
           file_glob: true
 
       - name: Get Sparkle 1.26
-        if: github.event_name == 'release' && github.repository_owner == 'acidanthera' && github.event_name != 'pull_request'
+        if: github.event_name == 'release' && github.repository_owner == 'acidanthera'
         run: |
           curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/1.26.0/Sparkle-1.26.0.tar.xz" -o Sparkle.tar.xz || exit 1
           tar -xf Sparkle.tar.xz || exit 1
 
       - name: Get Information & Sign
-        if: github.event_name == 'release' && github.repository_owner == 'acidanthera' && github.event_name != 'pull_request'
+        if: github.event_name == 'release' && github.repository_owner == 'acidanthera'
         run: |
            TAG_VER=${GITHUB_REF/refs\/tags\//}
            DATE=$(date -R)
@@ -86,7 +86,7 @@ jobs:
            ./bin/generate_appcast -o appcast.xml -s ${{ secrets.SIGNATURE_FOR_SIGNING }} --download-url-prefix https://github.com/acidanthera/MaciASL/releases/download/${TAG_VER}/ build/Release || exit 1
 
       - name: Commit Appcast
-        if: github.event_name == 'release' && github.repository_owner == 'acidanthera' && github.event_name != 'pull_request'
+        if: github.event_name == 'release' && github.repository_owner == 'acidanthera'
         run: |
           # The 41898282 identifier comes from the GitHub Actions API: https://api.github.com/users/github-actions%5Bbot%5D.
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
