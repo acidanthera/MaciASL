@@ -70,7 +70,7 @@ jobs:
           file: build/*/*.dmg
           tag: ${{ github.ref }}
           file_glob: true
-          
+
       - name: Get Sparkle 1.26
         if: github.event_name == 'release' && github.repository_owner == 'acidanthera'
         run: |
