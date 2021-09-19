@@ -32,7 +32,7 @@ jobs:
           chmod a+x appsign.sh || exit 1
 
       - name: Compile with codesign (DEBUG)
-        if: github.repository_owner == 'acidanthera'
+        if: github.repository_owner == 'acidanthera' && github.event_name != 'pull_request'
         env:
           MAC_CERTIFICATE_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
           MAC_ACCOUNT_NAME: ${{ secrets.MAC_ACCOUNT_NAME }}
@@ -40,7 +40,7 @@ jobs:
         run: DEPLOY_SCRIPT="$(pwd)/appsign.sh" xcodebuild -jobs 1 -configuration Debug
 
       - name: Compile with codesign (RELEASE)
-        if: github.repository_owner == 'acidanthera'
+        if: github.repository_owner == 'acidanthera' && github.event_name != 'pull_request'
         env:
           MAC_CERTIFICATE_PASSWORD: ${{ secrets.MAC_CERTIFICATE_PASSWORD }}
           MAC_ACCOUNT_NAME: ${{ secrets.MAC_ACCOUNT_NAME }}
@@ -48,15 +48,15 @@ jobs:
         run: DEPLOY_SCRIPT="$(pwd)/appsign.sh" xcodebuild -jobs 1 -configuration Release
 
       - name: Compile (DEBUG)
-        if: github.repository_owner != 'acidanthera'
+        if: github.repository_owner != 'acidanthera' || github.event_name == 'pull_request'
         run: xcodebuild -jobs 1 -configuration Debug
 
       - name: Compile (RELEASE)
-        if: github.repository_owner != 'acidanthera'
+        if: github.repository_owner != 'acidanthera' || github.event_name == 'pull_request'
         run: xcodebuild -jobs 1 -configuration Release
 
       - name: Upload to Artifacts
-        if: github.repository_owner == 'acidanthera'
+        if: github.repository_owner == 'acidanthera' && github.event_name != 'pull_request'
         uses: actions/upload-artifact@v2
         with:
           name: Artifacts
@@ -71,21 +71,14 @@ jobs:
           tag: ${{ github.ref }}
           file_glob: true
 
-  appcast:
-    name: Set Appcast
-    needs: build
-    runs-on: macos-latest
-    env:
-      JOB_TYPE: BUILD
-      SIGNATURE_FOR_SIGNING: ${{ secrets.SIGNATURE_FOR_SIGNING }}
-    if: github.event_name == 'release'
-    steps:
       - name: Get Sparkle 1.26
+        if: github.event_name == 'release' && github.repository_owner == 'acidanthera'
         run: |
           curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/1.26.0/Sparkle-1.26.0.tar.xz" -o Sparkle.tar.xz || exit 1
           tar -xf Sparkle.tar.xz || exit 1
 
       - name: Get Information & Sign
+        if: github.event_name == 'release' && github.repository_owner == 'acidanthera'
         run: |
            TAG_VER=${GITHUB_REF/refs\/tags\//}
            DATE=$(date -R)
@@ -93,6 +86,7 @@ jobs:
            ./bin/generate_appcast -o appcast.xml -s ${{ secrets.SIGNATURE_FOR_SIGNING }} --download-url-prefix https://github.com/acidanthera/MaciASL/releases/download/${TAG_VER}/ build/Release || exit 1
 
       - name: Commit Appcast
+        if: github.event_name == 'release' && github.repository_owner == 'acidanthera'
         run: |
           # The 41898282 identifier comes from the GitHub Actions API: https://api.github.com/users/github-actions%5Bbot%5D.
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
