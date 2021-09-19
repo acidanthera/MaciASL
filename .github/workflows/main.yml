@@ -80,8 +80,6 @@ jobs:
       SIGNATURE_FOR_SIGNING: ${{ secrets.SIGNATURE_FOR_SIGNING }}
     if: github.event_name == 'release'
     steps:
-      - uses: actions/checkout@v2
-
       - name: Get Sparkle 1.26
         run: |
           curl -L -s "https://github.com/sparkle-project/Sparkle/releases/download/1.26.0/Sparkle-1.26.0.tar.xz" -o Sparkle.tar.xz || exit 1
