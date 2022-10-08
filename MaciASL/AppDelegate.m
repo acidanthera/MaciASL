@@ -401,7 +401,7 @@ static NSDictionary *style;
     }
 
     // TODO: Calculate string width based on actual values instead of trying to estimate it.
-    NSInteger height = (NSInteger)lineHeight, start = (NSInteger)(((NSInteger)scrollView.documentVisibleRect.origin.y + rect.origin.y) / lineHeight) + 1, stop = 1 + start + MIN((textLength - start), (NSInteger)ceil(scrollView.documentVisibleRect.size.height / height));
+    NSInteger height = (NSInteger)lineHeight, start = (NSInteger)(((NSInteger)scrollView.documentVisibleRect.origin.y + rect.origin.y) / lineHeight) + 1, stop = 1 + start + MIN((textLength - start), (NSInteger)ceil(rect.size.height / height));
     if (self.ruleThickness < MAX(18,((NSInteger)log10(stop)+1)*9)) {
         self.ruleThickness = ((NSInteger)log10(stop)+1)*9;
         return;
