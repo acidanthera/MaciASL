@@ -1,5 +1,8 @@
 MaciASL Changelog
 =================
+#### v1.6.3
+- Fix line number breaking during scroll, thanks to @SkyrilHD
+
 #### v1.6.2
 - Implement automatic updates with Sparkle, thanks to @SkyrilHD
 
