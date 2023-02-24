@@ -1,5 +1,8 @@
 MaciASL Changelog
 =================
+#### v1.6.4
+- Deleted broken URLs patches
+
 #### v1.6.3
 - Fix line number breaking during scroll, thanks to @SkyrilHD
 
