@@ -28,7 +28,7 @@ jobs:
       - name: CI Bootstrap
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/acidanthera/ocbuild/master/ci-bootstrap.sh) && eval "$src" || exit 1
-          /usr/bin/curl -OL "https://github.com/acidanthera/ocbuild/raw/1f674988fa868841c9bf089f7f234eb0c988acff/codesign/appsign.sh" || exit 1
+          /usr/bin/curl -OL "https://github.com/acidanthera/ocbuild/raw/master/codesign/appsign.sh" || exit 1
           chmod a+x appsign.sh || exit 1
 
       - name: Compile with codesign (DEBUG)
