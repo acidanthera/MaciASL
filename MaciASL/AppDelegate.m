@@ -329,6 +329,14 @@
 
 @implementation FSTextView
 
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        _lineCount = 0;
+    }
+    return self;
+}
+
 -(void)scrollRangeToVisible:(NSRange)range {
     [super scrollRangeToVisible:range];
     id delegate = self.delegate;
@@ -340,6 +348,11 @@
 
 -(void)didChangeText {
     [NSNotificationCenter.defaultCenter postNotificationName:@"documentFontOrTextChanged" object:nil];
+    NSUInteger numberOfLines, index, stringLength = [self.string length];
+    for (index = 0, numberOfLines = 0; index < stringLength; numberOfLines++)
+        index = NSMaxRange([self.string lineRangeForRange:NSMakeRange(index, 0)]);
+
+    self.lineCount = numberOfLines;
 }
 
 @end
@@ -381,14 +394,9 @@ static NSDictionary *style;
     if (!scrollView) return;
     
     CGFloat lineHeight = [[(NSTextView *)scrollView.documentView layoutManager] defaultLineHeightForFont:NSFontManager.sharedFontManager.selectedFont];
-    
-    NSUInteger textLength = NSUIntegerMax;
-    if ([scrollView.documentView isKindOfClass:NSTextView.class]) {
-        NSTextView *textView = (NSTextView*)scrollView.documentView;
-        textLength = [[textView.string componentsSeparatedByString:@"\n"] count];
-    }
+    FSTextView *textView = (FSTextView*)scrollView.documentView;
+    NSUInteger textLength = textView.lineCount;
 
-    // TODO: Calculate string width based on actual values instead of trying to estimate it.
     NSInteger height = (NSInteger)lineHeight, start = (NSInteger)(((NSInteger)scrollView.documentVisibleRect.origin.y + rect.origin.y) / lineHeight) + 1, stop = 1 + start + MIN((textLength - start), (NSInteger)ceil(rect.size.height / height));
     if (self.ruleThickness < MAX(18,((NSInteger)log10(stop)+1)*9)) {
         self.ruleThickness = ((NSInteger)log10(stop)+1)*9;
