@@ -42,6 +42,8 @@
 
 @interface FSTextView : NSTextView
 
+@property NSUInteger lineCount;
+
 -(void)scrollRangeToVisible:(NSRange)range;
 
 @end
