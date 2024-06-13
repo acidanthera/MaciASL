@@ -67,6 +67,7 @@
       @"font": @{@"name": @"Menlo", @"size": @12},
       @"sources": @[
         @{@"name": @"AsusSMC-Patches", @"url": @"https://raw.githubusercontent.com/hieplpvip/AsusSMC/master"},
+        @{@"name": @"Hackintosh Brasil", @"url": @"https://raw.githubusercontent.com/samcabral/Notebook-DSDT-Patch/master"},
         @{@"name": @"Rehabman", @"url": @"https://raw.githubusercontent.com/RehabMan/Laptop-DSDT-Patch/master"},
         @{@"name": @"Toleda HDMI", @"url": @"https://raw.githubusercontent.com/toleda/audio_hdmi_uefi/master"},
         @{@"name": @"Toleda HDMI 8", @"url": @"https://raw.githubusercontent.com/toleda/audio_hdmi_8series/master"},
