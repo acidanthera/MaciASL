@@ -1,5 +1,9 @@
 MaciASL Changelog
 =================
+#### v1.6.5
+- Fixed slow line number generation, thanks to @metacollin
+- Add new acpi repository, thanks to @jonasw8
+
 #### v1.6.4
 - Deleted broken URLs patches
 
