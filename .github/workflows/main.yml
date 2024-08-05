@@ -98,7 +98,7 @@ jobs:
 
   analyze-clang:
     name: Analyze Clang
-    runs-on: macos-latest
+    runs-on: macos-12
     env:
       JOB_TYPE: ANALYZE
     steps:
@@ -113,7 +113,7 @@ jobs:
 
   analyze-coverity:
     name: Analyze Coverity
-    runs-on: macos-latest
+    runs-on: macos-12
     env:
       JOB_TYPE: COVERITY
     if: github.repository_owner == 'acidanthera' && github.event_name != 'pull_request'
