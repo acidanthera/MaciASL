@@ -1,7 +1,7 @@
 MaciASL
 =======
 
-[![Build Status](https://github.com/acidanthera/MaciASL/workflows/CI/badge.svg?branch=master)](https://github.com/acidanthera/MaciASL/actions) [![Scan Status](https://scan.coverity.com/projects/16447/badge.svg?flat=1)](https://scan.coverity.com/projects/16447)
+[![Build Status](https://github.com/acidanthera/MaciASL/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/acidanthera/MaciASL/actions) [![Scan Status](https://scan.coverity.com/projects/16447/badge.svg?flat=1)](https://scan.coverity.com/projects/16447)
 
 _This repository is an unfortunate necessity, as the [original project](https://sourceforge.net/projects/maciasl/) is not maintained, crashes very often, and the license requires me to publish the source code. If you are phpdev32, you are welcome to take over and merge the changes upstream._
 
